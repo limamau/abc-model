@@ -2,7 +2,7 @@ import copy as cp
 
 import numpy as np
 
-from .surface_layer import SurfaceLayerModel
+from .surface_layer import AbstractSurfaceLayerModel
 from .utils import PhysicalConstants, get_esat, get_qsat
 
 
@@ -94,7 +94,7 @@ class Model:
         gammav: float,
         advv: float,
         # 2. surface layer
-        surface_layer: SurfaceLayerModel,
+        surface_layer: AbstractSurfaceLayerModel,
         # 3. radiation
         sw_rad: bool,
         lat: float,
@@ -471,22 +471,21 @@ class Model:
         if self.sw_rad:
             self.run_radiation()
 
-        if self.surface_layer.sw_sl:
-            for _ in range(10):
-                assert isinstance(self.thetav, float)
-                self.surface_layer.run(
-                    self.u,
-                    self.v,
-                    self.theta,
-                    self.thetav,
-                    self.wstar,
-                    self.wtheta,
-                    self.wq,
-                    self.surf_pressure,
-                    self.rs,
-                    self.q,
-                    self.abl_height,
-                )
+        for _ in range(10):
+            assert isinstance(self.thetav, float)
+            self.surface_layer.run(
+                self.u,
+                self.v,
+                self.theta,
+                self.thetav,
+                self.wstar,
+                self.wtheta,
+                self.wq,
+                self.surf_pressure,
+                self.rs,
+                self.q,
+                self.abl_height,
+            )
 
         if self.sw_ls:
             self.run_land_surface()
@@ -506,21 +505,20 @@ class Model:
             self.run_radiation()
 
         # run surface layer model
-        if self.surface_layer.sw_sl:
-            assert isinstance(self.thetav, float)
-            self.surface_layer.run(
-                self.u,
-                self.v,
-                self.theta,
-                self.thetav,
-                self.wstar,
-                self.wtheta,
-                self.wq,
-                self.surf_pressure,
-                self.rs,
-                self.q,
-                self.abl_height,
-            )
+        assert isinstance(self.thetav, float)
+        self.surface_layer.run(
+            self.u,
+            self.v,
+            self.theta,
+            self.thetav,
+            self.wstar,
+            self.wtheta,
+            self.wq,
+            self.surf_pressure,
+            self.rs,
+            self.q,
+            self.abl_height,
+        )
 
         # run land surface model
         if self.sw_ls:
@@ -621,15 +619,6 @@ class Model:
             self.wCO2M = 0.0
 
     def run_mixed_layer(self):
-        if not self.surface_layer.sw_sl:
-            # decompose ustar along the wind components
-            self.surface_layer.uw = -np.sign(self.u) * (
-                self.surface_layer.ustar**4.0 / (self.v**2.0 / self.u**2.0 + 1.0)
-            ) ** (0.5)
-            self.surface_layer.vw = -np.sign(self.v) * (
-                self.surface_layer.ustar**4.0 / (self.u**2.0 / self.v**2.0 + 1.0)
-            ) ** (0.5)
-
         # calculate large-scale vertical velocity (subsidence)
         self.ws = -self.divU * self.abl_height
 
@@ -939,13 +928,7 @@ class Model:
         self.wCO2 = self.wCO2A + self.wCO2R
 
     def run_land_surface(self):
-        # compute ra
-        ueff = np.sqrt(self.u**2.0 + self.v**2.0 + self.wstar**2.0)
-
-        if self.surface_layer.sw_sl:
-            self.surface_layer.ra = (self.surface_layer.drag_s * ueff) ** -1.0
-        else:
-            self.surface_layer.ra = ueff / max(1.0e-3, self.surface_layer.ustar) ** 2.0
+        self.surface_layer.compute_ra(self.u, self.v, self.wstar)
 
         # first calculate essential thermodynamic variables
         self.esat = get_esat(self.theta)

@@ -1,21 +1,19 @@
+from abc import abstractmethod
+
 import numpy as np
 
 from .utils import PhysicalConstants, get_psih, get_psim, get_qsat, get_ribtol
 
 
-class SurfaceLayerModel:
+class AbstractSurfaceLayerModel:
     def __init__(
         self,
-        sw_sl: bool,
         ustar: float,
         z0m: float,
         z0h: float,
     ):
         # constants
         self.const = PhysicalConstants()
-
-        # surface layer switch
-        self.sw_sl = sw_sl
         # surface friction velocity [m s-1]
         self.ustar = ustar
         # roughness length for momentum [m]
@@ -37,6 +35,52 @@ class SurfaceLayerModel:
         # aerodynamic resistance [s m-1]
         self.ra = None
 
+    @abstractmethod
+    def run(
+        self,
+        u: float,
+        v: float,
+        theta: float,
+        thetav: float,
+        wstar: float,
+        wtheta: float,
+        wq: float,
+        surf_pressure: float,
+        rs: float,
+        q: float,
+        abl_height: float,
+    ):
+        raise NotImplementedError
+
+    @abstractmethod
+    def compute_ra(self, u: float, v: float, wstar: float):
+        raise NotImplementedError
+
+
+class InertSurfaceLayerModel(AbstractSurfaceLayerModel):
+    def run(
+        self,
+        u: float,
+        v: float,
+        theta: float,
+        thetav: float,
+        wstar: float,
+        wtheta: float,
+        wq: float,
+        surf_pressure: float,
+        rs: float,
+        q: float,
+        abl_height: float,
+    ):
+        self.uw = -np.sign(u) * (self.ustar**4.0 / (v**2.0 / u**2.0 + 1.0)) ** (0.5)
+        self.vw = -np.sign(v) * (self.ustar**4.0 / (u**2.0 / v**2.0 + 1.0)) ** (0.5)
+
+    def compute_ra(self, u: float, v: float, wstar: float):
+        ueff = np.sqrt(u**2.0 + v**2.0 + wstar**2.0)
+        self.ra = ueff / max(1.0e-3, self.ustar) ** 2.0
+
+
+class StandardSurfaceLayerModel(AbstractSurfaceLayerModel):
     def run(
         self,
         u: float,
@@ -135,3 +179,7 @@ class SurfaceLayerModel:
             17.2694 * (self.temp_2m - 273.16) / (self.temp_2m - 35.86)
         )
         self.e2m = self.q2m * surf_pressure / 0.622
+
+    def compute_ra(self, u: float, v: float, wstar: float):
+        ueff = np.sqrt(u**2.0 + v**2.0 + wstar**2.0)
+        self.ra = (self.drag_s * ueff) ** -1.0

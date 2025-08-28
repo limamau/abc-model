@@ -1,7 +1,8 @@
 import matplotlib.pyplot as plt
 
 from abcmodel.abcmodel import LandSurfaceInput, Model
-from abcmodel.surface_layer import SurfaceLayerModel
+from abcmodel.mixed_layer import MixedLayerModel
+from abcmodel.surface_layer import InertSurfaceLayerModel, StandardSurfaceLayerModel
 
 
 def main():
@@ -12,8 +13,7 @@ def main():
     dt = 60.0  # time step [s]
     runtime = 12 * 3600.0  # total run time [s]
 
-    # 1. mixed-layer input:
-    # 1.1. mixed layer switches
+    # 1. define mixed layer model
     # mixed-layer model switch
     sw_ml = True
     # shear growth mixed-layer switch
@@ -85,9 +85,7 @@ def main():
     advv = 0.0
 
     # 2. define surface layer model
-    surface_layer_model = SurfaceLayerModel(
-        # surface layer switch
-        sw_sl=True,
+    surface_layer_model = InertSurfaceLayerModel(
         # surface friction velocity [m s-1]
         ustar=0.3,
         # roughness length for momentum [m]
@@ -116,7 +114,7 @@ def main():
 
     # 4. land surface switch
     # land surface switch
-    run1input.sw_ls = False
+    run1input.sw_ls = True
     # land-surface parameterization ('js' for Jarvis-Stewart or 'ags' for A-Gs)
     run1input.ls_type = "js"
     # volumetric water content top soil layer [m3 m-3]
@@ -169,7 +167,7 @@ def main():
 
     # 5. cumulus parameterization
     # cumulus parameterization switch
-    sw_cu = True
+    sw_cu = False
     # Transition layer thickness [m]
     dz_h = 150.0
 
