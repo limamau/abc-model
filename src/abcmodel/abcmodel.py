@@ -2,7 +2,8 @@ import copy as cp
 
 import numpy as np
 
-from .utils import esat, qsat
+from .surface_layer import SurfaceLayerModel
+from .utils import PhysicalConstants, get_esat, get_qsat
 
 
 # class for storing mixed-layer model input data
@@ -93,10 +94,7 @@ class Model:
         gammav: float,
         advv: float,
         # 2. surface layer
-        sw_sl: bool,
-        ustar: float,
-        z0m: float,
-        z0h: float,
+        surface_layer: SurfaceLayerModel,
         # 3. radiation
         sw_rad: bool,
         lat: float,
@@ -114,30 +112,7 @@ class Model:
         model_input: LandSurfaceInput,
     ):
         # constants
-        # heat of vaporization [J kg-1]
-        self.lv = 2.5e6
-        # specific heat of dry air [J kg-1 K-1]
-        self.cp = 1005.0
-        # density of air [kg m-3]
-        self.rho = 1.2
-        # Von Karman constant [-]
-        self.k = 0.4
-        # gravity acceleration [m s-2]
-        self.g = 9.81
-        # gas constant for dry air [J kg-1 K-1]
-        self.rd = 287.0
-        # gas constant for moist air [J kg-1 K-1]
-        self.rv = 461.5
-        # Bolzman constant [-]
-        self.bolz = 5.67e-8
-        # density of water [kg m-3]
-        self.rhow = 1000.0
-        # solar constant [W m-2]
-        self.solar_in = 1368.0
-        # molecular weight CO2 [g mol -1]
-        self.mco2 = 44.0
-        # molecular weight air [g mol -1]
-        self.mair = 28.9
+        self.const = PhysicalConstants()
 
         # 0. running configuration
         self.dt = dt
@@ -255,7 +230,7 @@ class Model:
         self.wthetave = None
         # 1.11. CO2
         # conversion factor mgC m-2 s-1 to ppm m s-1
-        fac = self.mair / (self.rho * self.mco2)
+        fac = self.const.mair / (self.const.rho * self.const.mco2)
         # initial mixed-layer CO2 [ppm]
         self.co2 = co2
         # initial CO2 jump at h [ppm]
@@ -319,29 +294,8 @@ class Model:
         # tendency of transition layer thickness [m s-1]
         self.dztend = None
 
-        # 2. surface layer parameters
-        # surface layer switch
-        self.sw_sl = sw_sl
-        # surface friction velocity [m s-1]
-        self.ustar = ustar
-        # roughness length for momentum [m]
-        self.z0m = z0m
-        # roughness length for scalars [m]
-        self.z0h = z0h
-        # surface momentum flux in u-direction [m2 s-2]
-        self.uw = None
-        # surface momentum flux in v-direction [m2 s-2]
-        self.vw = None
-        # drag coefficient for momentum [-]
-        self.drag_m = 1e12
-        # drag coefficient for scalars [-]
-        self.drag_s = 1e12
-        # Obukhov length [m]
-        self.obukhov_length = None
-        # bulk Richardson number [-]
-        self.rib_number = None
-        # aerodynamic resistance [s m-1]
-        self.ra = None
+        # 2. surface layer
+        self.surface_layer = surface_layer
 
         # 3. radiation
         # radiation switch
@@ -517,9 +471,22 @@ class Model:
         if self.sw_rad:
             self.run_radiation()
 
-        if self.sw_sl:
+        if self.surface_layer.sw_sl:
             for _ in range(10):
-                self.run_surface_layer()
+                assert isinstance(self.thetav, float)
+                self.surface_layer.run(
+                    self.u,
+                    self.v,
+                    self.theta,
+                    self.thetav,
+                    self.wstar,
+                    self.wtheta,
+                    self.wq,
+                    self.surf_pressure,
+                    self.rs,
+                    self.q,
+                    self.abl_height,
+                )
 
         if self.sw_ls:
             self.run_land_surface()
@@ -539,8 +506,21 @@ class Model:
             self.run_radiation()
 
         # run surface layer model
-        if self.sw_sl:
-            self.run_surface_layer()
+        if self.surface_layer.sw_sl:
+            assert isinstance(self.thetav, float)
+            self.surface_layer.run(
+                self.u,
+                self.v,
+                self.theta,
+                self.thetav,
+                self.wstar,
+                self.wtheta,
+                self.wq,
+                self.surf_pressure,
+                self.rs,
+                self.q,
+                self.abl_height,
+            )
 
         # run land surface model
         if self.sw_ls:
@@ -574,9 +554,11 @@ class Model:
         ) - self.theta * (1.0 + 0.61 * self.q)
 
         # Mixed-layer top properties
-        self.top_p = self.surf_pressure - self.rho * self.g * self.abl_height
-        self.top_T = self.theta - self.g / self.cp * self.abl_height
-        self.top_rh = self.q / qsat(self.top_T, self.top_p)
+        self.top_p = (
+            self.surf_pressure - self.const.rho * self.const.g * self.abl_height
+        )
+        self.top_T = self.theta - self.const.g / self.const.cp * self.abl_height
+        self.top_rh = self.q / get_qsat(self.top_T, self.top_p)
 
         # Find lifting condensation level iteratively
         if self.t == 0:
@@ -589,9 +571,9 @@ class Model:
         it = 0
         while ((RHlcl <= 0.9999) or (RHlcl >= 1.0001)) and it < itmax:
             self.lcl += (1.0 - RHlcl) * 1000.0
-            p_lcl = self.surf_pressure - self.rho * self.g * self.lcl
-            T_lcl = self.theta - self.g / self.cp * self.lcl
-            RHlcl = self.q / qsat(T_lcl, p_lcl)
+            p_lcl = self.surf_pressure - self.const.rho * self.const.g * self.lcl
+            T_lcl = self.theta - self.const.g / self.const.cp * self.lcl
+            RHlcl = self.q / get_qsat(T_lcl, p_lcl)
             it += 1
 
         if it == itmax:
@@ -624,7 +606,8 @@ class Model:
             + (
                 0.36
                 * np.arctan(
-                    1.55 * ((self.q - qsat(self.top_T, self.top_p)) / self.q2_h**0.5)
+                    1.55
+                    * ((self.q - get_qsat(self.top_T, self.top_p)) / self.q2_h**0.5)
                 )
             ),
         )
@@ -638,13 +621,13 @@ class Model:
             self.wCO2M = 0.0
 
     def run_mixed_layer(self):
-        if not self.sw_sl:
+        if not self.surface_layer.sw_sl:
             # decompose ustar along the wind components
-            self.uw = -np.sign(self.u) * (
-                self.ustar**4.0 / (self.v**2.0 / self.u**2.0 + 1.0)
+            self.surface_layer.uw = -np.sign(self.u) * (
+                self.surface_layer.ustar**4.0 / (self.v**2.0 / self.u**2.0 + 1.0)
             ) ** (0.5)
-            self.vw = -np.sign(self.v) * (
-                self.ustar**4.0 / (self.u**2.0 / self.v**2.0 + 1.0)
+            self.surface_layer.vw = -np.sign(self.v) * (
+                self.surface_layer.ustar**4.0 / (self.u**2.0 / self.v**2.0 + 1.0)
             ) ** (0.5)
 
         # calculate large-scale vertical velocity (subsidence)
@@ -661,13 +644,13 @@ class Model:
             w_CO2_ft = 0.0
 
         # calculate mixed-layer growth due to cloud top radiative divergence
-        self.wf = self.dFz / (self.rho * self.cp * self.dtheta)
+        self.wf = self.dFz / (self.const.rho * self.const.cp * self.dtheta)
 
         # calculate convective velocity scale w*
         if self.wthetav > 0.0:
-            self.wstar = ((self.g * self.abl_height * self.wthetav) / self.thetav) ** (
-                1.0 / 3.0
-            )
+            self.wstar = (
+                (self.const.g * self.abl_height * self.wthetav) / self.thetav
+            ) ** (1.0 / 3.0)
         else:
             self.wstar = 1e-6
 
@@ -678,7 +661,10 @@ class Model:
         if self.sw_shearwe:
             self.we = (
                 -self.wthetave
-                + 5.0 * self.ustar**3.0 * self.thetav / (self.g * self.abl_height)
+                + 5.0
+                * self.surface_layer.ustar**3.0
+                * self.thetav
+                / (self.const.g * self.abl_height)
             ) / self.dthetav
         else:
             self.we = -self.wthetave / self.dthetav
@@ -716,12 +702,12 @@ class Model:
         if self.sw_wind:
             self.utend = (
                 -self.coriolis_param * self.dv
-                + (self.uw + self.we * self.du) / self.abl_height
+                + (self.surface_layer.uw + self.we * self.du) / self.abl_height
                 + self.advu
             )
             self.vtend = (
                 self.coriolis_param * self.du
-                + (self.vw + self.we * self.dv) / self.abl_height
+                + (self.surface_layer.vw + self.we * self.dv) / self.abl_height
                 + self.advv
             )
 
@@ -784,192 +770,18 @@ class Model:
         sinlea = max(sinlea, 0.0001)
 
         Ta = self.theta * (
-            (self.surf_pressure - 0.1 * self.abl_height * self.rho * self.g)
+            (self.surf_pressure - 0.1 * self.abl_height * self.const.rho * self.const.g)
             / self.surf_pressure
-        ) ** (self.rd / self.cp)
+        ) ** (self.const.rd / self.const.cp)
 
         Tr = (0.6 + 0.2 * sinlea) * (1.0 - 0.4 * self.cc)
 
-        self.in_srad = self.solar_in * Tr * sinlea
-        self.out_srad = self.alpha * self.solar_in * Tr * sinlea
-        self.in_lrad = 0.8 * self.bolz * Ta**4.0
-        self.out_lrad = self.bolz * self.Ts**4.0
+        self.in_srad = self.const.solar_in * Tr * sinlea
+        self.out_srad = self.alpha * self.const.solar_in * Tr * sinlea
+        self.in_lrad = 0.8 * self.const.bolz * Ta**4.0
+        self.out_lrad = self.const.bolz * self.Ts**4.0
 
         self.net_rad = self.in_srad - self.out_srad + self.in_lrad - self.out_lrad
-
-    def run_surface_layer(self):
-        ueff = max(0.01, np.sqrt(self.u**2.0 + self.v**2.0 + self.wstar**2.0))
-        self.thetasurf = self.theta + self.wtheta / (self.drag_s * ueff)
-        qsatsurf = qsat(self.thetasurf, self.surf_pressure)
-        cq = (1.0 + self.drag_s * ueff * self.rs) ** -1.0
-        self.qsurf = (1.0 - cq) * self.q + cq * qsatsurf
-
-        self.thetavsurf = self.thetasurf * (1.0 + 0.61 * self.qsurf)
-
-        zsl = 0.1 * self.abl_height
-        self.rib_number = (
-            self.g / self.thetav * zsl * (self.thetav - self.thetavsurf) / ueff**2.0
-        )
-        self.rib_number = min(self.rib_number, 0.2)
-
-        self.obukhov_length = self.ribtol(
-            self.rib_number, zsl, self.z0m, self.z0h
-        )  # Slow python iteration
-        # self.L    = ribtol.ribtol(self.Rib, zsl, self.z0m, self.z0h) # Fast C++ iteration
-
-        self.drag_m = (
-            self.k**2.0
-            / (
-                np.log(zsl / self.z0m)
-                - self.psim(zsl / self.obukhov_length)
-                + self.psim(self.z0m / self.obukhov_length)
-            )
-            ** 2.0
-        )
-        self.drag_s = (
-            self.k**2.0
-            / (
-                np.log(zsl / self.z0m)
-                - self.psim(zsl / self.obukhov_length)
-                + self.psim(self.z0m / self.obukhov_length)
-            )
-            / (
-                np.log(zsl / self.z0h)
-                - self.psih(zsl / self.obukhov_length)
-                + self.psih(self.z0h / self.obukhov_length)
-            )
-        )
-
-        self.ustar = np.sqrt(self.drag_m) * ueff
-        self.uw = -self.drag_m * ueff * self.u
-        self.vw = -self.drag_m * ueff * self.v
-
-        # diagnostic meteorological variables
-        self.temp_2m = self.thetasurf - self.wtheta / self.ustar / self.k * (
-            np.log(2.0 / self.z0h)
-            - self.psih(2.0 / self.obukhov_length)
-            + self.psih(self.z0h / self.obukhov_length)
-        )
-        self.q2m = self.qsurf - self.wq / self.ustar / self.k * (
-            np.log(2.0 / self.z0h)
-            - self.psih(2.0 / self.obukhov_length)
-            + self.psih(self.z0h / self.obukhov_length)
-        )
-        self.u2m = (
-            -self.uw
-            / self.ustar
-            / self.k
-            * (
-                np.log(2.0 / self.z0m)
-                - self.psim(2.0 / self.obukhov_length)
-                + self.psim(self.z0m / self.obukhov_length)
-            )
-        )
-        self.v2m = (
-            -self.vw
-            / self.ustar
-            / self.k
-            * (
-                np.log(2.0 / self.z0m)
-                - self.psim(2.0 / self.obukhov_length)
-                + self.psim(self.z0m / self.obukhov_length)
-            )
-        )
-        self.esat2m = 0.611e3 * np.exp(
-            17.2694 * (self.temp_2m - 273.16) / (self.temp_2m - 35.86)
-        )
-        self.e2m = self.q2m * self.surf_pressure / 0.622
-
-    def ribtol(self, Rib, zsl, z0m, z0h):
-        if Rib > 0.0:
-            L = 1.0
-            L0 = 2.0
-        else:
-            L = -1.0
-            L0 = -2.0
-
-        while abs(L - L0) > 0.001:
-            L0 = L
-            fx = (
-                Rib
-                - zsl
-                / L
-                * (np.log(zsl / z0h) - self.psih(zsl / L) + self.psih(z0h / L))
-                / (np.log(zsl / z0m) - self.psim(zsl / L) + self.psim(z0m / L)) ** 2.0
-            )
-            Lstart = L - 0.001 * L
-            Lend = L + 0.001 * L
-            fxdif = (
-                (
-                    -zsl
-                    / Lstart
-                    * (
-                        np.log(zsl / z0h)
-                        - self.psih(zsl / Lstart)
-                        + self.psih(z0h / Lstart)
-                    )
-                    / (
-                        np.log(zsl / z0m)
-                        - self.psim(zsl / Lstart)
-                        + self.psim(z0m / Lstart)
-                    )
-                    ** 2.0
-                )
-                - (
-                    -zsl
-                    / Lend
-                    * (
-                        np.log(zsl / z0h)
-                        - self.psih(zsl / Lend)
-                        + self.psih(z0h / Lend)
-                    )
-                    / (
-                        np.log(zsl / z0m)
-                        - self.psim(zsl / Lend)
-                        + self.psim(z0m / Lend)
-                    )
-                    ** 2.0
-                )
-            ) / (Lstart - Lend)
-            L = L - fx / fxdif
-
-            if abs(L) > 1e15:
-                break
-
-        return L
-
-    def psim(self, zeta):
-        if zeta <= 0:
-            x = (1.0 - 16.0 * zeta) ** (0.25)
-            psim = (
-                3.14159265 / 2.0
-                - 2.0 * np.arctan(x)
-                + np.log((1.0 + x) ** 2.0 * (1.0 + x**2.0) / 8.0)
-            )
-            # x     = (1. + 3.6 * abs(zeta) ** (2./3.)) ** (-0.5)
-            # psim = 3. * np.log( (1. + 1. / x) / 2.)
-        else:
-            psim = (
-                -2.0 / 3.0 * (zeta - 5.0 / 0.35) * np.exp(-0.35 * zeta)
-                - zeta
-                - (10.0 / 3.0) / 0.35
-            )
-        return psim
-
-    def psih(self, zeta):
-        if zeta <= 0:
-            x = (1.0 - 16.0 * zeta) ** (0.25)
-            psih = 2.0 * np.log((1.0 + x * x) / 2.0)
-            # x     = (1. + 7.9 * abs(zeta) ** (2./3.)) ** (-0.5)
-            # psih  = 3. * np.log( (1. + 1. / x) / 2.)
-        else:
-            psih = (
-                -2.0 / 3.0 * (zeta - 5.0 / 0.35) * np.exp(-0.35 * zeta)
-                - (1.0 + (2.0 / 3.0) * zeta) ** (1.5)
-                - (10.0 / 3.0) / 0.35
-                + 1.0
-            )
-        return psih
 
     def jarvis_stewart(self):
         # calculate surface resistances using Jarvis-Stewart model
@@ -1021,7 +833,7 @@ class Model:
         # calculate CO2 compensation concentration
         CO2comp = (
             self.CO2comp298[c]
-            * self.rho
+            * self.const.rho
             * pow(self.net_rad10CO2[c], (0.1 * (self.thetasurf - 298.0)))
         )
 
@@ -1042,12 +854,12 @@ class Model:
             (pow(fmin0, 2.0) + 4 * self.gmin[c] / self.nuco2q * gm), 0.5
         ) / (2.0 * gm)
 
-        Ds = (esat(self.Ts) - self.e) / 1000.0  # kPa
+        Ds = (get_esat(self.Ts) - self.e) / 1000.0  # kPa
         D0 = (self.f0[c] - fmin) / self.ad[c]
 
         cfrac = self.f0[c] * (1.0 - (Ds / D0)) + fmin * (Ds / D0)
         co2abs = (
-            self.co2 * (self.mco2 / self.mair) * self.rho
+            self.co2 * (self.const.mco2 / self.const.mair) * self.const.rho
         )  # conversion mumol mol-1 (ppm) to mgCO2 m3
         ci = cfrac * (co2abs - CO2comp) + CO2comp
 
@@ -1111,7 +923,7 @@ class Model:
         rsCO2 = 1.0 / gcco2
 
         # calculate net flux of CO2 into the plant (An)
-        An = -(co2abs - ci) / (self.ra + rsCO2)
+        An = -(co2abs - ci) / (self.surface_layer.ra + rsCO2)
 
         # CO2 soil surface flux
         fw = self.Cw * self.wmax / (self.wg + self.wmin)
@@ -1122,22 +934,22 @@ class Model:
         )
 
         # CO2 flux
-        self.wCO2A = An * (self.mair / (self.rho * self.mco2))
-        self.wCO2R = Resp * (self.mair / (self.rho * self.mco2))
+        self.wCO2A = An * (self.const.mair / (self.const.rho * self.const.mco2))
+        self.wCO2R = Resp * (self.const.mair / (self.const.rho * self.const.mco2))
         self.wCO2 = self.wCO2A + self.wCO2R
 
     def run_land_surface(self):
         # compute ra
         ueff = np.sqrt(self.u**2.0 + self.v**2.0 + self.wstar**2.0)
 
-        if self.sw_sl:
-            self.ra = (self.drag_s * ueff) ** -1.0
+        if self.surface_layer.sw_sl:
+            self.surface_layer.ra = (self.surface_layer.drag_s * ueff) ** -1.0
         else:
-            self.ra = ueff / max(1.0e-3, self.ustar) ** 2.0
+            self.surface_layer.ra = ueff / max(1.0e-3, self.surface_layer.ustar) ** 2.0
 
         # first calculate essential thermodynamic variables
-        self.esat = esat(self.theta)
-        self.qsat = qsat(self.theta, self.surf_pressure)
+        self.esat = get_esat(self.theta)
+        self.qsat = get_qsat(self.theta, self.surf_pressure)
         desatdT = self.esat * (
             17.2694 / (self.theta - 35.86)
             - 17.2694 * (self.theta - 273.16) / (self.theta - 35.86) ** 2.0
@@ -1165,82 +977,103 @@ class Model:
         # calculate skin temperature implictly
         self.Ts = (
             self.net_rad
-            + self.rho * self.cp / self.ra * self.theta
+            + self.const.rho * self.const.cp / self.surface_layer.ra * self.theta
             + self.cveg
             * (1.0 - self.cliq)
-            * self.rho
-            * self.lv
-            / (self.ra + self.rs)
+            * self.const.rho
+            * self.const.lv
+            / (self.surface_layer.ra + self.rs)
             * (self.dqsatdT * self.theta - self.qsat + self.q)
             + (1.0 - self.cveg)
-            * self.rho
-            * self.lv
-            / (self.ra + self.rssoil)
+            * self.const.rho
+            * self.const.lv
+            / (self.surface_layer.ra + self.rssoil)
             * (self.dqsatdT * self.theta - self.qsat + self.q)
             + self.cveg
             * self.cliq
-            * self.rho
-            * self.lv
-            / self.ra
+            * self.const.rho
+            * self.const.lv
+            / self.surface_layer.ra
             * (self.dqsatdT * self.theta - self.qsat + self.q)
             + self.Lambda * self.Tsoil
         ) / (
-            self.rho * self.cp / self.ra
+            self.const.rho * self.const.cp / self.surface_layer.ra
             + self.cveg
             * (1.0 - self.cliq)
-            * self.rho
-            * self.lv
-            / (self.ra + self.rs)
+            * self.const.rho
+            * self.const.lv
+            / (self.surface_layer.ra + self.rs)
             * self.dqsatdT
             + (1.0 - self.cveg)
-            * self.rho
-            * self.lv
-            / (self.ra + self.rssoil)
+            * self.const.rho
+            * self.const.lv
+            / (self.surface_layer.ra + self.rssoil)
             * self.dqsatdT
-            + self.cveg * self.cliq * self.rho * self.lv / self.ra * self.dqsatdT
+            + self.cveg
+            * self.cliq
+            * self.const.rho
+            * self.const.lv
+            / self.surface_layer.ra
+            * self.dqsatdT
             + self.Lambda
         )
 
-        esatsurf = esat(self.Ts)
-        self.qsatsurf = qsat(self.Ts, self.surf_pressure)
+        esatsurf = get_esat(self.Ts)
+        self.qsatsurf = get_qsat(self.Ts, self.surf_pressure)
 
         self.LEveg = (
             (1.0 - self.cliq)
             * self.cveg
-            * self.rho
-            * self.lv
-            / (self.ra + self.rs)
+            * self.const.rho
+            * self.const.lv
+            / (self.surface_layer.ra + self.rs)
             * (self.dqsatdT * (self.Ts - self.theta) + self.qsat - self.q)
         )
         self.LEliq = (
             self.cliq
             * self.cveg
-            * self.rho
-            * self.lv
-            / self.ra
+            * self.const.rho
+            * self.const.lv
+            / self.surface_layer.ra
             * (self.dqsatdT * (self.Ts - self.theta) + self.qsat - self.q)
         )
         self.LEsoil = (
             (1.0 - self.cveg)
-            * self.rho
-            * self.lv
-            / (self.ra + self.rssoil)
+            * self.const.rho
+            * self.const.lv
+            / (self.surface_layer.ra + self.rssoil)
             * (self.dqsatdT * (self.Ts - self.theta) + self.qsat - self.q)
         )
 
-        self.Wltend = -self.LEliq / (self.rhow * self.lv)
+        self.Wltend = -self.LEliq / (self.const.rhow * self.const.lv)
 
         self.LE = self.LEsoil + self.LEveg + self.LEliq
-        self.H = self.rho * self.cp / self.ra * (self.Ts - self.theta)
+        self.H = (
+            self.const.rho
+            * self.const.cp
+            / self.surface_layer.ra
+            * (self.Ts - self.theta)
+        )
         self.G = self.Lambda * (self.Ts - self.Tsoil)
         self.LEpot = (
             self.dqsatdT * (self.net_rad - self.G)
-            + self.rho * self.cp / self.ra * (self.qsat - self.q)
-        ) / (self.dqsatdT + self.cp / self.lv)
+            + self.const.rho
+            * self.const.cp
+            / self.surface_layer.ra
+            * (self.qsat - self.q)
+        ) / (self.dqsatdT + self.const.cp / self.const.lv)
         self.LEref = (
             self.dqsatdT * (self.net_rad - self.G)
-            + self.rho * self.cp / self.ra * (self.qsat - self.q)
-        ) / (self.dqsatdT + self.cp / self.lv * (1.0 + self.rsmin / self.LAI / self.ra))
+            + self.const.rho
+            * self.const.cp
+            / self.surface_layer.ra
+            * (self.qsat - self.q)
+        ) / (
+            self.dqsatdT
+            + self.const.cp
+            / self.const.lv
+            * (1.0 + self.rsmin / self.LAI / self.surface_layer.ra)
+        )
 
         CG = self.CGsat * (self.wsat / self.w2) ** (self.b / (2.0 * np.log(10.0)))
 
@@ -1253,13 +1086,13 @@ class Model:
             (self.w2 / self.wsat) ** self.p
             * (1.0 - (self.w2 / self.wsat) ** (8.0 * self.p))
         )
-        self.wgtend = -C1 / (self.rhow * d1) * self.LEsoil / self.lv - C2 / 86400.0 * (
-            self.wg - wgeq
-        )
+        self.wgtend = -C1 / (
+            self.const.rhow * d1
+        ) * self.LEsoil / self.const.lv - C2 / 86400.0 * (self.wg - wgeq)
 
         # calculate kinematic heat fluxes
-        self.wtheta = self.H / (self.rho * self.cp)
-        self.wq = self.LE / (self.rho * self.lv)
+        self.wtheta = self.H / (self.const.rho * self.const.cp)
+        self.wq = self.LE / (self.const.rho * self.const.lv)
 
     def integrate_land_surface(self):
         # integrate soil equations
@@ -1296,7 +1129,7 @@ class Model:
         self.out.e[t] = self.e
         self.out.esat[t] = self.esat
 
-        fac = (self.rho * self.mco2) / self.mair
+        fac = (self.const.rho * self.const.mco2) / self.const.mair
         self.out.CO2[t] = self.co2
         self.out.dCO2[t] = self.dCO2
         self.out.wCO2[t] = self.wCO2 * fac
@@ -1306,11 +1139,11 @@ class Model:
 
         self.out.u[t] = self.u
         self.out.du[t] = self.du
-        self.out.uw[t] = self.uw
+        self.out.uw[t] = self.surface_layer.uw
 
         self.out.v[t] = self.v
         self.out.dv[t] = self.dv
-        self.out.vw[t] = self.vw
+        self.out.vw[t] = self.surface_layer.vw
 
         self.out.T2m[t] = self.temp_2m
         self.out.q2m[t] = self.q2m
@@ -1322,11 +1155,11 @@ class Model:
         self.out.thetasurf[t] = self.thetasurf
         self.out.thetavsurf[t] = self.thetavsurf
         self.out.qsurf[t] = self.qsurf
-        self.out.ustar[t] = self.ustar
-        self.out.Cm[t] = self.drag_m
-        self.out.Cs[t] = self.drag_s
-        self.out.L[t] = self.obukhov_length
-        self.out.Rib[t] = self.rib_number
+        self.out.ustar[t] = self.surface_layer.ustar
+        self.out.Cm[t] = self.surface_layer.drag_m
+        self.out.Cs[t] = self.surface_layer.drag_s
+        self.out.L[t] = self.surface_layer.obukhov_length
+        self.out.Rib[t] = self.surface_layer.rib_number
 
         self.out.Swin[t] = self.in_srad
         self.out.Swout[t] = self.out_srad
@@ -1334,7 +1167,7 @@ class Model:
         self.out.Lwout[t] = self.out_lrad
         self.out.net_rad[t] = self.net_rad
 
-        self.out.ra[t] = self.ra
+        self.out.ra[t] = self.surface_layer.ra
         self.out.rs[t] = self.rs
         self.out.H[t] = self.H
         self.out.LE[t] = self.LE

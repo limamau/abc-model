@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 
 from abcmodel.abcmodel import LandSurfaceInput, Model
+from abcmodel.surface_layer import SurfaceLayerModel
 
 
 def main():
@@ -83,15 +84,17 @@ def main():
     # advection of v-wind [m s-2]
     advv = 0.0
 
-    # 2. surface layer input:
-    # surface layer switch
-    sw_sl = False
-    # surface friction velocity [m s-1]
-    ustar = 0.3
-    # roughness length for momentum [m]
-    z0m = 0.02
-    # roughness length for scalars [m]
-    z0h = 0.002
+    # 2. define surface layer model
+    surface_layer_model = SurfaceLayerModel(
+        # surface layer switch
+        sw_sl=True,
+        # surface friction velocity [m s-1]
+        ustar=0.3,
+        # roughness length for momentum [m]
+        z0m=0.02,
+        # roughness length for scalars [m]
+        z0h=0.002,
+    )
 
     # 3. surface radiation input:
     # radiation switch
@@ -208,10 +211,7 @@ def main():
         dv=dv,
         gammav=gammav,
         advv=advv,
-        sw_sl=sw_sl,
-        ustar=ustar,
-        z0m=z0m,
-        z0h=z0h,
+        surface_layer=surface_layer_model,
         sw_rad=sw_rad,
         lat=lat,
         lon=lon,
