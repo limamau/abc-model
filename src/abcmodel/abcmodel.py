@@ -864,16 +864,16 @@ class Model:
         self.out.dv[t] = self.mixed_layer.dv
         self.out.vw[t] = self.surface_layer.vw
 
-        self.out.T2m[t] = self.mixed_layer.temp_2m
-        self.out.q2m[t] = self.mixed_layer.q2m
-        self.out.u2m[t] = self.mixed_layer.u2m
-        self.out.v2m[t] = self.mixed_layer.v2m
-        self.out.e2m[t] = self.mixed_layer.e2m
-        self.out.esat2m[t] = self.mixed_layer.esat2m
+        self.out.T2m[t] = self.surface_layer.temp_2m
+        self.out.q2m[t] = self.surface_layer.q2m
+        self.out.u2m[t] = self.surface_layer.u2m
+        self.out.v2m[t] = self.surface_layer.v2m
+        self.out.e2m[t] = self.surface_layer.e2m
+        self.out.esat2m[t] = self.surface_layer.esat2m
 
-        self.out.thetasurf[t] = self.mixed_layer.thetasurf
-        self.out.thetavsurf[t] = self.mixed_layer.thetavsurf
-        self.out.qsurf[t] = self.mixed_layer.qsurf
+        self.out.thetasurf[t] = self.surface_layer.thetasurf
+        self.out.thetavsurf[t] = self.surface_layer.thetavsurf
+        self.out.qsurf[t] = self.surface_layer.qsurf
         self.out.ustar[t] = self.surface_layer.ustar
         self.out.Cm[t] = self.surface_layer.drag_m
         self.out.Cs[t] = self.surface_layer.drag_s

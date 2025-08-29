@@ -102,26 +102,6 @@ class MixedLayerModel:
         self.qsatsurf = None
         # slope saturated specific humidity curve [g kg-1 K-1]
         self.dqsatdT = None
-        # 6. 2m diagnostic variables
-        # 2m temperature [K]
-        self.temp_2m = None
-        # 2m specific humidity [kg kg-1]
-        self.q2m = None
-        # 2m vapor pressure [Pa]
-        self.e2m = None
-        # 2m saturated vapor pressure [Pa]
-        self.esat2m = None
-        # 2m u-wind [m s-1]
-        self.u2m = None
-        # 2m v-wind [m s-1]
-        self.v2m = None
-        # 7. surface variables
-        # surface potential temperature [K]
-        self.thetasurf = theta
-        # surface virtual potential temperature [K]
-        self.thetavsurf = None
-        # surface specific humidity [g kg-1]
-        self.qsurf = None
         # 8. mixed-layer top variables
         # mixed-layer top pressure [pa]
         self.top_p = None

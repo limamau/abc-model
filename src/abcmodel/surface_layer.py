@@ -11,6 +11,7 @@ class AbstractSurfaceLayerModel:
         ustar: float,
         z0m: float,
         z0h: float,
+        theta: float,
     ):
         # constants
         self.const = PhysicalConstants()
@@ -34,6 +35,26 @@ class AbstractSurfaceLayerModel:
         self.rib_number = None
         # aerodynamic resistance [s m-1]
         self.ra = None
+        # 2m diagnostic variables:
+        # 2m temperature [K]
+        self.temp_2m = None
+        # 2m specific humidity [kg kg-1]
+        self.q2m = None
+        # 2m vapor pressure [Pa]
+        self.e2m = None
+        # 2m saturated vapor pressure [Pa]
+        self.esat2m = None
+        # 2m u-wind [m s-1]
+        self.u2m = None
+        # 2m v-wind [m s-1]
+        self.v2m = None
+        # surface variables:
+        # surface potential temperature [K]
+        self.thetasurf = theta
+        # surface virtual potential temperature [K]
+        self.thetavsurf = None
+        # surface specific humidity [g kg-1]
+        self.qsurf = None
 
     @abstractmethod
     def run(
@@ -49,11 +70,11 @@ class AbstractSurfaceLayerModel:
         rs: float,
         q: float,
         abl_height: float,
-    ):
+    ) -> None:
         raise NotImplementedError
 
     @abstractmethod
-    def compute_ra(self, u: float, v: float, wstar: float):
+    def compute_ra(self, u: float, v: float, wstar: float) -> None:
         raise NotImplementedError
 
 
@@ -71,7 +92,7 @@ class InertSurfaceLayerModel(AbstractSurfaceLayerModel):
         rs: float,
         q: float,
         abl_height: float,
-    ):
+    ) -> None:
         self.uw = -np.sign(u) * (self.ustar**4.0 / (v**2.0 / u**2.0 + 1.0)) ** (0.5)
         self.vw = -np.sign(v) * (self.ustar**4.0 / (u**2.0 / v**2.0 + 1.0)) ** (0.5)
 

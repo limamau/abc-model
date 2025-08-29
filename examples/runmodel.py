@@ -14,6 +14,9 @@ def main():
     dt = 60.0  # time step [s]
     runtime = 12 * 3600.0  # total run time [s]
 
+    # theta is currently assigned in two classes
+    theta = 288.0
+
     # define mixed layer model
     mixed_layer_model = MixedLayerModel(
         # 1.1. switchs
@@ -34,7 +37,7 @@ def main():
         coriolis_param=1.0e-4,
         # 1.3 temperature parameters
         # initial mixed-layer potential temperature [K]
-        theta=288.0,
+        theta=theta,
         # initial temperature jump at h [K]
         dtheta=1.0,
         # free atmosphere potential temperature lapse rate [K m-1]
@@ -98,6 +101,8 @@ def main():
         z0m=0.02,
         # roughness length for scalars [m]
         z0h=0.002,
+        # initial mixed-layer potential temperature [K]
+        theta=theta,
     )
 
     # 3. surface radiation input:
