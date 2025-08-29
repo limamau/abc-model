@@ -112,6 +112,8 @@ def main():
     # time of the day [h UTC]
     tstart = 6.8
     # cloud cover fraction [-]
+    # lmamau: it's weird that this is static
+    # and not updated by the cloud model
     cc = 0.0
     # net radiation [W m-2]
     net_rad = 400.0
@@ -195,21 +197,27 @@ def main():
     r1.run()
 
     # plot output
-    plt.figure(figsize=(8, 4))
-    plt.subplot(131)
+    plt.figure(figsize=(6, 8))
+
+    plt.subplot(221)
     plt.plot(r1.out.t, r1.out.h)
     plt.xlabel("time [h]")
     plt.ylabel("h [m]")
 
-    plt.subplot(132)
+    plt.subplot(222)
     plt.plot(r1.out.t, r1.out.theta)
     plt.xlabel("time [h]")
     plt.ylabel("theta [K]")
 
-    plt.subplot(133)
+    plt.subplot(223)
     plt.plot(r1.out.t, r1.out.q * 1000.0)
     plt.xlabel("time [h]")
     plt.ylabel("q [g kg-1]")
+
+    plt.subplot(224)
+    plt.plot(r1.out.t, r1.out.ac)
+    plt.xlabel("time [h]")
+    plt.ylabel("cloud core fraction [-]")
 
     plt.tight_layout()
     plt.show()
