@@ -1,8 +1,8 @@
 import matplotlib.pyplot as plt
 
 from abcmodel.abcmodel import LandSurfaceInput, Model
-from abcmodel.clouds import NoCloudModel, StandardCumulusModel
-from abcmodel.mixed_layer import NoMixedLayerModel, StandardMixedLayerModel
+from abcmodel.clouds import StandardCumulusModel
+from abcmodel.mixed_layer import StandardMixedLayerModel
 from abcmodel.radiation import StandardRadiationModel
 from abcmodel.surface_layer import InertSurfaceLayerModel
 

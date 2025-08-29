@@ -3,7 +3,7 @@ import copy as cp
 import numpy as np
 
 from .clouds import AbstractCloudModel, NoCloudModel
-from .mixed_layer import AbstractMixedLayerModel
+from .mixed_layer import AbstractMixedLayerModel, NoMixedLayerModel
 from .radiation import AbstractRadiationModel
 from .surface_layer import AbstractSurfaceLayerModel
 from .utils import PhysicalConstants, get_esat, get_qsat
@@ -93,7 +93,11 @@ class Model:
         self.input = cp.deepcopy(land_surface_input)
 
         # 5. clouds
-        self.clouds = clouds
+        # limamau: if clouds are part of the mixed layer, this could be avoided
+        if not isinstance(clouds, NoCloudModel):
+            if isinstance(mixed_layer, NoMixedLayerModel):
+                raise ValueError("Cloud models requires a mixed layer model.")
+            self.clouds = clouds
 
     def run(self):
         # initialize model variables
