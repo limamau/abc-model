@@ -1,4 +1,4 @@
-from abc import abstractclassmethod
+from abc import abstractmethod
 
 import numpy as np
 
@@ -14,7 +14,7 @@ class AbstractCloudModel:
         # cloud core moisture flux [kg kg-1 m s-1]
         self.cc_qf = 0.0
 
-    @abstractclassmethod
+    @abstractmethod
     def run(
         self,
         wthetav: float,

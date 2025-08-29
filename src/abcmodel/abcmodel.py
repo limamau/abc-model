@@ -4,6 +4,7 @@ import numpy as np
 
 from .clouds import AbstractCloudModel, NoCloudModel
 from .mixed_layer import MixedLayerModel
+from .radiation import AbstractRadiationModel
 from .surface_layer import AbstractSurfaceLayerModel
 from .utils import PhysicalConstants, get_esat, get_qsat
 
@@ -67,19 +68,12 @@ class Model:
         # 2. surface layer
         surface_layer: AbstractSurfaceLayerModel,
         # 3. radiation
-        sw_rad: bool,
-        lat: float,
-        lon: float,
-        doy: float,
-        tstart: float,
-        cc: float,
-        net_rad: float,
-        dFz: float,
+        radiation: AbstractRadiationModel,
         # 4. land surface is left as it is
         # 5. clouds
         clouds: AbstractCloudModel,
         # old input class
-        model_input: LandSurfaceInput,
+        land_surface_input: LandSurfaceInput,
     ):
         # constants
         self.const = PhysicalConstants()
@@ -97,33 +91,10 @@ class Model:
         self.surface_layer = surface_layer
 
         # 3. radiation
-        # radiation switch
-        self.sw_rad = sw_rad
-        # latitude [deg]
-        self.lat = lat
-        # longitude [deg]
-        self.lon = lon
-        # day of the year [-]
-        self.doy = doy
-        # time of the day [-]
-        self.tstart = tstart
-        # cloud cover fraction [-]
-        self.cc = cc
-        # net radiation [W m-2]
-        self.net_rad = net_rad
-        # cloud top radiative divergence [W m-2]
-        self.dFz = dFz
-        # incoming short wave radiation [W m-2]
-        self.in_srad = None
-        # outgoing short wave radiation [W m-2]
-        self.out_srad = None
-        # incoming long wave radiation [W m-2]
-        self.in_lrad = None
-        # outgoing long wave radiation [W m-2]
-        self.out_lrad = None
+        self.radiation = radiation
 
         # 4. land surface is initialized like before
-        self.input = cp.deepcopy(model_input)
+        self.input = cp.deepcopy(land_surface_input)
 
         # 5. clouds
         self.clouds = clouds
@@ -258,8 +229,15 @@ class Model:
         self.statistics()
 
         # calculate initial diagnostic variables
-        if self.sw_rad:
-            self.run_radiation()
+        self.radiation.run(
+            self.t,
+            self.dt,
+            self.mixed_layer.theta,
+            self.mixed_layer.surf_pressure,
+            self.mixed_layer.abl_height,
+            self.alpha,
+            self.Ts,
+        )
 
         for _ in range(10):
             assert isinstance(self.mixed_layer.thetav, float)
@@ -284,7 +262,7 @@ class Model:
         assert isinstance(self.surface_layer.vw, float)
         if not isinstance(self.clouds, NoCloudModel):
             self.mixed_layer.run(
-                self.dFz,
+                self.radiation.dFz,
                 self.clouds.cc_mf,
                 self.clouds.cc_frac,
                 self.clouds.cc_qf,
@@ -311,7 +289,7 @@ class Model:
 
         if self.mixed_layer.sw_ml:
             self.mixed_layer.run(
-                self.dFz,
+                self.radiation.dFz,
                 self.clouds.cc_mf,
                 self.clouds.cc_frac,
                 self.clouds.cc_qf,
@@ -324,8 +302,15 @@ class Model:
         self.statistics()
 
         # run radiation model
-        if self.sw_rad:
-            self.run_radiation()
+        self.radiation.run(
+            self.t,
+            self.dt,
+            self.mixed_layer.theta,
+            self.mixed_layer.surf_pressure,
+            self.mixed_layer.abl_height,
+            self.alpha,
+            self.Ts,
+        )
 
         # run surface layer model
         assert isinstance(self.mixed_layer.thetav, float)
@@ -368,7 +353,7 @@ class Model:
         # run mixed-layer model
         if self.mixed_layer.sw_ml:
             self.mixed_layer.run(
-                self.dFz,
+                self.radiation.dFz,
                 self.clouds.cc_mf,
                 self.clouds.cc_frac,
                 self.clouds.cc_qf,
@@ -442,42 +427,9 @@ class Model:
             print("LCL calculation not converged!!")
             print("RHlcl = %f, zlcl=%f" % (RHlcl, self.mixed_layer.lcl))
 
-    def run_radiation(self):
-        sda = 0.409 * np.cos(2.0 * np.pi * (self.doy - 173.0) / 365.0)
-        sinlea = np.sin(2.0 * np.pi * self.lat / 360.0) * np.sin(sda) - np.cos(
-            2.0 * np.pi * self.lat / 360.0
-        ) * np.cos(sda) * np.cos(
-            2.0 * np.pi * (self.t * self.dt + self.tstart * 3600.0) / 86400.0
-            + 2.0 * np.pi * self.lon / 360.0
-        )
-        sinlea = max(sinlea, 0.0001)
-
-        Ta = self.mixed_layer.theta * (
-            (
-                self.mixed_layer.surf_pressure
-                - 0.1 * self.mixed_layer.abl_height * self.const.rho * self.const.g
-            )
-            / self.mixed_layer.surf_pressure
-        ) ** (self.const.rd / self.const.cp)
-
-        Tr = (0.6 + 0.2 * sinlea) * (1.0 - 0.4 * self.cc)
-
-        self.in_srad = self.const.solar_in * Tr * sinlea
-        self.out_srad = self.alpha * self.const.solar_in * Tr * sinlea
-        self.in_lrad = 0.8 * self.const.bolz * Ta**4.0
-        self.out_lrad = self.const.bolz * self.Ts**4.0
-
-        self.net_rad = self.in_srad - self.out_srad + self.in_lrad - self.out_lrad
-
     def jarvis_stewart(self):
         # calculate surface resistances using Jarvis-Stewart model
-        if self.sw_rad:
-            f1 = 1.0 / min(
-                1.0,
-                ((0.004 * self.in_srad + 0.05) / (0.81 * (0.004 * self.in_srad + 1.0))),
-            )
-        else:
-            f1 = 1.0
+        f1 = self.radiation.get_f1()
 
         if self.w2 > self.wwilt:  # and self.w2 <= self.wfc):
             f2 = (self.wfc - self.wwilt) / (self.w2 - self.wwilt)
@@ -580,7 +532,7 @@ class Model:
         # calculate gross assimilation rate (Am)
         Am = Ammax * (1.0 - np.exp(-(gm * (ci - CO2comp) / Ammax)))
         Rdark = (1.0 / 9.0) * Am
-        PAR = 0.5 * max(1e-1, self.in_srad * self.cveg)
+        PAR = 0.5 * max(1e-1, self.radiation.in_srad * self.cveg)
 
         # calculate  light use efficiency
         alphac = self.alpha0[c] * (co2abs - CO2comp) / (co2abs + 2.0 * CO2comp)
@@ -668,7 +620,7 @@ class Model:
 
         # calculate skin temperature implictly
         self.Ts = (
-            self.net_rad
+            self.radiation.net_rad
             + self.const.rho
             * self.const.cp
             / self.surface_layer.ra
@@ -775,14 +727,14 @@ class Model:
         )
         self.G = self.Lambda * (self.Ts - self.Tsoil)
         self.LEpot = (
-            self.mixed_layer.dqsatdT * (self.net_rad - self.G)
+            self.mixed_layer.dqsatdT * (self.radiation.net_rad - self.G)
             + self.const.rho
             * self.const.cp
             / self.surface_layer.ra
             * (self.mixed_layer.qsat - self.mixed_layer.q)
         ) / (self.mixed_layer.dqsatdT + self.const.cp / self.const.lv)
         self.LEref = (
-            self.mixed_layer.dqsatdT * (self.net_rad - self.G)
+            self.mixed_layer.dqsatdT * (self.radiation.net_rad - self.G)
             + self.const.rho
             * self.const.cp
             / self.surface_layer.ra
@@ -826,7 +778,7 @@ class Model:
     # store model output
     def store(self):
         t = self.t
-        self.out.t[t] = t * self.dt / 3600.0 + self.tstart
+        self.out.t[t] = t * self.dt / 3600.0 + self.radiation.tstart
         self.out.h[t] = self.mixed_layer.abl_height
 
         self.out.theta[t] = self.mixed_layer.theta
@@ -880,11 +832,11 @@ class Model:
         self.out.L[t] = self.surface_layer.obukhov_length
         self.out.Rib[t] = self.surface_layer.rib_number
 
-        self.out.Swin[t] = self.in_srad
-        self.out.Swout[t] = self.out_srad
-        self.out.Lwin[t] = self.in_lrad
-        self.out.Lwout[t] = self.out_lrad
-        self.out.net_rad[t] = self.net_rad
+        self.out.Swin[t] = self.radiation.in_srad
+        self.out.Swout[t] = self.radiation.out_srad
+        self.out.Lwin[t] = self.radiation.in_lrad
+        self.out.Lwout[t] = self.radiation.out_lrad
+        self.out.net_rad[t] = self.radiation.net_rad
 
         self.out.ra[t] = self.surface_layer.ra
         self.out.rs[t] = self.rs

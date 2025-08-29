@@ -1,14 +1,15 @@
 import matplotlib.pyplot as plt
 
 from abcmodel.abcmodel import LandSurfaceInput, Model
-from abcmodel.clouds import NoCloudModel, StandardCumulusModel
+from abcmodel.clouds import StandardCumulusModel
 from abcmodel.mixed_layer import MixedLayerModel
-from abcmodel.surface_layer import InertSurfaceLayerModel, StandardSurfaceLayerModel
+from abcmodel.radiation import StandardRadiationModel
+from abcmodel.surface_layer import InertSurfaceLayerModel
 
 
 def main():
     # create empty model_input and set up case
-    run1input = LandSurfaceInput()
+    land_surface_input = LandSurfaceInput()
 
     # 0. running configurations:
     dt = 60.0  # time step [s]
@@ -105,78 +106,76 @@ def main():
         theta=theta,
     )
 
-    # 3. surface radiation input:
-    # radiation switch
-    sw_rad = True
-    # latitude [deg]
-    lat = 51.97
-    # longitude [deg]
-    lon = -4.93
-    # day of the year [-]
-    doy = 268.0
-    # time of the day [h UTC]
-    tstart = 6.8
-    # cloud cover fraction [-]
-    # lmamau: it's weird that this is static
-    # and not updated by the cloud model
-    cc = 0.0
-    # net radiation [W m-2]
-    net_rad = 400.0
-    # cloud top radiative divergence [W m-2]
-    dFz = 0.0
+    # 3. define radiation model
+    radiation_model = StandardRadiationModel(
+        # latitude [deg]
+        lat=51.97,
+        # longitude [deg]
+        lon=-4.93,
+        # day of the year [-]
+        doy=268.0,
+        # time of the day [h UTC]
+        tstart=6.8,
+        # cloud cover fraction [-]
+        cc=0.0,
+        # net radiation [W m-2]
+        net_rad=400.0,
+        # cloud top radiative divergence [W m-2]
+        dFz=0.0,
+    )
 
     # 4. land surface switch
     # land surface switch
-    run1input.sw_ls = True
+    land_surface_input.sw_ls = True
     # land-surface parameterization ('js' for Jarvis-Stewart or 'ags' for A-Gs)
-    run1input.ls_type = "js"
+    land_surface_input.ls_type = "js"
     # volumetric water content top soil layer [m3 m-3]
-    run1input.wg = 0.21
+    land_surface_input.wg = 0.21
     # volumetric water content deeper soil layer [m3 m-3]
-    run1input.w2 = 0.21
+    land_surface_input.w2 = 0.21
     # vegetation fraction [-]
-    run1input.cveg = 0.85
+    land_surface_input.cveg = 0.85
     # temperature top soil layer [K]
-    run1input.Tsoil = 285.0
+    land_surface_input.Tsoil = 285.0
     # temperature deeper soil layer [K]
-    run1input.T2 = 286.0
+    land_surface_input.T2 = 286.0
     # Clapp and Hornberger retention curve parameter a
-    run1input.a = 0.219
+    land_surface_input.a = 0.219
     # Clapp and Hornberger retention curve parameter b
-    run1input.b = 4.90
+    land_surface_input.b = 4.90
     # Clapp and Hornberger retention curve parameter c
-    run1input.p = 4.0
-    run1input.CGsat = 3.56e-6  # saturated soil conductivity for heat
+    land_surface_input.p = 4.0
+    land_surface_input.CGsat = 3.56e-6  # saturated soil conductivity for heat
     # saturated volumetric water content ECMWF config [-]
-    run1input.wsat = 0.472
+    land_surface_input.wsat = 0.472
     # volumetric water content field capacity [-]
-    run1input.wfc = 0.323
+    land_surface_input.wfc = 0.323
     # volumetric water content wilting point [-]
-    run1input.wwilt = 0.171
+    land_surface_input.wwilt = 0.171
     # C1 sat?
-    run1input.C1sat = 0.132
+    land_surface_input.C1sat = 0.132
     # C2 sat?
-    run1input.C2ref = 1.8
+    land_surface_input.C2ref = 1.8
     # leaf area index [-]
-    run1input.LAI = 2.0
+    land_surface_input.LAI = 2.0
     # correction factor transpiration for VPD [-]
-    run1input.gD = 0.0
+    land_surface_input.gD = 0.0
     # minimum resistance transpiration [s m-1]
-    run1input.rsmin = 110.0
+    land_surface_input.rsmin = 110.0
     # minimun resistance soil evaporation [s m-1]
-    run1input.rssoilmin = 50.0
+    land_surface_input.rssoilmin = 50.0
     # surface albedo [-]
-    run1input.alpha = 0.25
+    land_surface_input.alpha = 0.25
     # initial surface temperature [K]
-    run1input.Ts = 290.0
+    land_surface_input.Ts = 290.0
     # thickness of water layer on wet vegetation [m]
-    run1input.Wmax = 0.0002
+    land_surface_input.Wmax = 0.0002
     # equivalent water layer depth for wet vegetation [m]
-    run1input.Wl = 0.0000
+    land_surface_input.Wl = 0.0000
     # thermal diffusivity skin layer [-]
-    run1input.Lambda = 5.9
+    land_surface_input.Lambda = 5.9
     # Plant type ('c3' or 'c4')
-    run1input.c3c4 = "c3"
+    land_surface_input.c3c4 = "c3"
 
     # 5. clouds
     cloud_model = StandardCumulusModel()
@@ -188,16 +187,9 @@ def main():
         runtime=runtime,
         mixed_layer=mixed_layer_model,
         surface_layer=surface_layer_model,
-        sw_rad=sw_rad,
-        lat=lat,
-        lon=lon,
-        doy=doy,
-        tstart=tstart,
-        cc=cc,
-        net_rad=net_rad,
-        dFz=dFz,
+        radiation=radiation_model,
         clouds=cloud_model,
-        model_input=run1input,
+        land_surface_input=land_surface_input,
     )
     r1.run()
 
