@@ -1,7 +1,8 @@
 import matplotlib.pyplot as plt
 
-from abcmodel.abcmodel import LandSurfaceInput, Model
+from abcmodel.abcmodel import Model
 from abcmodel.clouds import StandardCumulusModel
+from abcmodel.land_surface import StandardLandSurfaceModel
 from abcmodel.mixed_layer import StandardMixedLayerModel
 from abcmodel.radiation import StandardRadiationModel
 from abcmodel.surface_layer import InertSurfaceLayerModel
@@ -121,74 +122,72 @@ def main():
         dFz=0.0,
     )
 
-    # 4. land surface switch
-    # create empty model_input and set up case
-    land_surface_input = LandSurfaceInput()
-    # land surface switch
-    land_surface_input.sw_ls = True
-    # land-surface parameterization ('js' for Jarvis-Stewart or 'ags' for A-Gs)
-    land_surface_input.ls_type = "js"
-    # volumetric water content top soil layer [m3 m-3]
-    land_surface_input.wg = 0.21
-    # volumetric water content deeper soil layer [m3 m-3]
-    land_surface_input.w2 = 0.21
-    # vegetation fraction [-]
-    land_surface_input.cveg = 0.85
-    # temperature top soil layer [K]
-    land_surface_input.temp_soil = 285.0
-    # temperature deeper soil layer [K]
-    land_surface_input.temp2 = 286.0
-    # Clapp and Hornberger retention curve parameter a
-    land_surface_input.a = 0.219
-    # Clapp and Hornberger retention curve parameter b
-    land_surface_input.b = 4.90
-    # Clapp and Hornberger retention curve parameter c
-    land_surface_input.p = 4.0
-    land_surface_input.cgsat = 3.56e-6  # saturated soil conductivity for heat
-    # saturated volumetric water content ECMWF config [-]
-    land_surface_input.wsat = 0.472
-    # volumetric water content field capacity [-]
-    land_surface_input.wfc = 0.323
-    # volumetric water content wilting point [-]
-    land_surface_input.wwilt = 0.171
-    # C1 sat?
-    land_surface_input.c1sat = 0.132
-    # C2 sat?
-    land_surface_input.c2ref = 1.8
-    # leaf area index [-]
-    land_surface_input.lai = 2.0
-    # correction factor transpiration for VPD [-]
-    land_surface_input.gD = 0.0
-    # minimum resistance transpiration [s m-1]
-    land_surface_input.rsmin = 110.0
-    # minimun resistance soil evaporation [s m-1]
-    land_surface_input.rssoilmin = 50.0
-    # surface albedo [-]
-    land_surface_input.alpha = 0.25
-    # initial surface temperature [K]
-    land_surface_input.surf_temp = 290.0
-    # thickness of water layer on wet vegetation [m]
-    land_surface_input.wmax = 0.0002
-    # equivalent water layer depth for wet vegetation [m]
-    land_surface_input.wl = 0.0000
-    # thermal diffusivity skin layer [-]
-    land_surface_input.lam = 5.9
-    # plant type ('c3' or 'c4')
-    land_surface_input.c3c4 = "c3"
+    # 4. define land surface model
+    land_surface_model = StandardLandSurfaceModel(
+        # land-surface parameterization ('js' for Jarvis-Stewart or 'ags' for A-Gs)
+        ls_type="ags",
+        # volumetric water content top soil layer [m3 m-3]
+        wg=0.21,
+        # volumetric water content deeper soil layer [m3 m-3]
+        w2=0.21,
+        # vegetation fraction [-]
+        cveg=0.85,
+        # temperature top soil layer [K]
+        temp_soil=285.0,
+        # temperature deeper soil layer [K]
+        temp2=286.0,
+        # Clapp and Hornberger retention curve parameter a
+        a=0.219,
+        # Clapp and Hornberger retention curve parameter b
+        b=4.90,
+        # Clapp and Hornberger retention curve parameter c
+        p=4.0,
+        # saturated soil conductivity for heat
+        cgsat=3.56e-6,
+        # saturated volumetric water content ECMWF config [-]
+        wsat=0.472,
+        # volumetric water content field capacity [-]
+        wfc=0.323,
+        # volumetric water content wilting point [-]
+        wwilt=0.171,
+        # C1 sat?
+        c1sat=0.132,
+        # C2 sat?
+        c2sat=1.8,
+        # leaf area index [-]
+        lai=2.0,
+        # correction factor transpiration for VPD [-]
+        gD=0.0,
+        # minimum resistance transpiration [s m-1]
+        rsmin=110.0,
+        # minimun resistance soil evaporation [s m-1]
+        rssoilmin=50.0,
+        # surface albedo [-]
+        alpha=0.25,
+        # initial surface temperature [K]
+        surf_temp=290.0,
+        # thickness of water layer on wet vegetation [m]
+        wmax=0.0002,
+        # equivalent water layer depth for wet vegetation [m]
+        wl=0.0000,
+        # thermal diffusivity skin layer [-]
+        lam=5.9,
+        # plant type ('c3' or 'c4')
+        c3c4="c3",
+    )
 
     # 5. clouds
     cloud_model = StandardCumulusModel()
 
     # init and run the model
     r1 = Model(
-        # 0. running configuration
         dt=dt,
         runtime=runtime,
         mixed_layer=mixed_layer_model,
         surface_layer=surface_layer_model,
         radiation=radiation_model,
+        land_surface=land_surface_model,
         clouds=cloud_model,
-        land_surface_input=land_surface_input,
     )
     r1.run()
 
