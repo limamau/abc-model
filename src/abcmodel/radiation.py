@@ -50,7 +50,7 @@ class AbstractRadiationModel:
         surf_pressure: float,
         abl_height: float,
         alpha: float,
-        Ts: float,
+        surf_temp: float,
     ) -> None:
         raise NotImplementedError
 
@@ -90,7 +90,7 @@ class NoRadiationModel(AbstractRadiationModel):
         surf_pressure: float,
         abl_height: float,
         alpha: float,
-        Ts: float,
+        surf_temp: float,
     ):
         pass
 
@@ -127,7 +127,7 @@ class StandardRadiationModel(AbstractRadiationModel):
         surf_pressure: float,
         abl_height: float,
         alpha: float,
-        Ts: float,
+        surf_temp: float,
     ):
         sda = 0.409 * np.cos(2.0 * np.pi * (self.doy - 173.0) / 365.0)
         sinlea = np.sin(2.0 * np.pi * self.lat / 360.0) * np.sin(sda) - np.cos(
@@ -148,7 +148,7 @@ class StandardRadiationModel(AbstractRadiationModel):
         self.in_srad = self.const.solar_in * Tr * sinlea
         self.out_srad = alpha * self.const.solar_in * Tr * sinlea
         self.in_lrad = 0.8 * self.const.bolz * Ta**4.0
-        self.out_lrad = self.const.bolz * Ts**4.0
+        self.out_lrad = self.const.bolz * surf_temp**4.0
 
         self.net_rad = self.in_srad - self.out_srad + self.in_lrad - self.out_lrad
 
