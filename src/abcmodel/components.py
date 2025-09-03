@@ -379,15 +379,14 @@ class AbstractMixedLayerModel:
             print("RHlcl = %f, zlcl=%f" % (rhlcl, self.lcl))
 
 
-# limamau: redefine init outside abstract
 class AbstractCloudModel:
-    def __init__(self):
-        # cloud core fraction [-]
-        self.cc_frac = 0.0
-        # cloud core mass flux [m s-1]
-        self.cc_mf = 0.0
-        # cloud core moisture flux [kg kg-1 m s-1]
-        self.cc_qf = 0.0
+    # required by no-clouds:
+    # cloud core fraction [-]
+    cc_frac: float
+    # cloud core mass flux [m s-1]
+    cc_mf: float
+    # cloud core moisture flux [kg kg-1 m s-1]
+    cc_qf: float
 
     @abstractmethod
     def run(self, mixed_layer: "AbstractMixedLayerModel") -> None:

@@ -4,7 +4,7 @@ from abcmodel.land_surface import MinimalLandSurfaceModel
 
 from .clouds import AbstractCloudModel, NoCloudModel
 from .land_surface import AbstractLandSurfaceModel
-from .mixed_layer import AbstractMixedLayerModel, NoMixedLayerModel
+from .mixed_layer import AbstractMixedLayerModel
 from .radiation import AbstractRadiationModel, MinimalRadiationModel
 from .surface_layer import AbstractSurfaceLayerModel, MinimalSurfaceLayerModel
 from .utils import PhysicalConstants
@@ -43,11 +43,7 @@ class ABCModel:
         self.land_surface = land_surface
 
         # 5. clouds
-        # limamau: if clouds are part of the mixed layer, this could be avoided
-        if not isinstance(clouds, NoCloudModel):
-            if isinstance(mixed_layer, NoMixedLayerModel):
-                raise ValueError("Cloud models requires a mixed layer model.")
-            self.clouds = clouds
+        self.clouds = clouds
 
         # initialize output
         self.out = ABCOutput(self.tsteps)
