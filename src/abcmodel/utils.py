@@ -44,8 +44,6 @@ def get_psih(zeta):
     return psih
 
 
-# limamau: probably cleaner to only use that inside
-# the ABC model instead of on every component
 class PhysicalConstants:
     """Container for physical constants used throughout the model."""
 
