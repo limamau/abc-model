@@ -12,7 +12,6 @@ from abc import abstractmethod
 from .utils import PhysicalConstants, get_qsat
 
 
-# limamau: redefine init outside abstract
 class AbstractRadiationModel:
     # require by minimal:
     # net radiation [W m-2]
@@ -49,17 +48,28 @@ class AbstractRadiationModel:
 
 class AbstractLandSurfaceModel:
     # required by minimal:
+    # surface albedo [-]
     alpha: float
+    # initial surface temperature [K]
     surf_temp: float
     # used to output:
+    # resistance transpiration [s m-1]
     rs: float
+    # sensible heat flux [W m-2]
     hf: float
+    # evapotranspiration [W m-2]
     le: float
+    # open water evaporation [W m-2]
     le_liq: float
+    # transpiration [W m-2]
     le_veg: float
+    # soil evaporation [W m-2]
     le_soil: float
+    # potential evaporation [W m-2]
     le_pot: float
+    # reference evaporation at rs = rsmin / LAI [W m-2]
     le_ref: float
+    # ground heat flux [W m-2]
     gf: float
 
     @abstractmethod
