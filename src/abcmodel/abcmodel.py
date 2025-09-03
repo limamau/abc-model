@@ -75,8 +75,6 @@ class ABCModel:
             self.mixed_layer,
         )
 
-        assert isinstance(self.surface_layer.uw, float)
-        assert isinstance(self.surface_layer.vw, float)
         if not isinstance(self.clouds, NoCloudModel):
             self.mixed_layer.run(
                 self.const,
@@ -141,7 +139,7 @@ class ABCModel:
         t = self.t
 
         if not isinstance(self.radiation, MinimalRadiationModel):
-            # limamau: this should be 100% out of this clause :)
+            # limamau: "t" should be 100% out of this clause :)
             self.out.t[t] = t * self.dt / 3600.0 + self.radiation.tstart
             self.out.in_srad[t] = self.radiation.in_srad
             self.out.out_srad[t] = self.radiation.out_srad

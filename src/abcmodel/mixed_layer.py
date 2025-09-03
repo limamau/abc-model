@@ -80,66 +80,33 @@ class MinimalMixedLayerModel(AbstractStandardStatsModel):
         dz_h: float,
     ):
         pass
-        # mixed layer switches:
-        # # mixed-layer model switch
-        # self.sw_ml = sw_ml
-        # # shear growth mixed-layer switch
-        # self.sw_shearwe = sw_shearwe
-        # # fix the free-troposphere switch
-        # self.sw_fixft = sw_fixft
-        # large scale parameters:
         # initial ABL height [m]
         self.abl_height = abl_height
         # surface pressure [Pa]
         self.surf_pressure = surf_pressure
-        # # horizontal large-scale divergence of wind [s-1]
-        # self.divU = divU
-        # # Coriolis parameter [m s-1]
-        # self.coriolis_param = coriolis_param
-        # temperature parameters:
         # initial mixed-layer potential temperature [K]
         self.theta = theta
         # # initial temperature jump at h [K]
         self.dtheta = dtheta
-        # # free atmosphere potential temperature lapse rate [K m-1]
-        # self.gammatheta = gammatheta
-        # # advection of heat [K s-1]
-        # self.advtheta = advtheta
-        # # entrainment ratio for virtual heat [-]
-        # self.beta = beta
         # surface kinematic heat flux [K m s-1]
         self.wtheta = wtheta
-        # entrainment parameters:
-        # convective velocity scale [m s-1]
-        self.wstar = 0.0
-        # # entrainment velocity [m s-1]
-        # self.we = -1.0
-        # moisture parameters
+        # convective velocity scale [m s-1] (small in minimal)
+        self.wstar = 1e-6
         # initial mixed-layer specific humidity [kg kg-1]
         self.q = q
         # initial specific humidity jump at h [kg kg-1]
         self.dq = dq
-        # # free atmosphere specific humidity lapse rate [kg kg-1 m-1]
-        # self.gammaq = gammaq
-        # # advection of moisture [kg kg-1 s-1]
-        # self.advq = advq
         # surface kinematic moisture flux [kg kg-1 m s-1]
         self.wq = wq
-        # # 8. mixed-layer top variables
         # transition layer thickness [-]
         self.dz_h = dz_h
-        # CO2:
-        # # conversion factor mgC m-2 s-1 to ppm m s-1
+        # conversion factor mgC m-2 s-1 to ppm m s-1
         const = PhysicalConstants()
         fac = const.mair / (const.rho * const.mco2)
         # initial mixed-layer CO2 [ppm]
         self.co2 = co2
         # initial CO2 jump at h [ppm]
         self.dCO2 = dCO2
-        # # free atmosphere CO2 lapse rate [ppm m-1]
-        # self.gammaco2 = gammaCO2
-        # # advection of CO2 [ppm s-1]
-        # self.advCO2 = advCO2
         # surface kinematic CO2 flux [ppm m s-1]
         self.wCO2 = wCO2 * fac
         # surface assimulation CO2 flux [ppm m s-1]
@@ -148,25 +115,14 @@ class MinimalMixedLayerModel(AbstractStandardStatsModel):
         self.wCO2R = 0.0
         # CO2 mass flux [ppm m s-1]
         self.wCO2M = 0.0
-        # wind parameters
-        # # prognostic wind switch
-        # self.sw_wind = sw_wind
         # initial mixed-layer u-wind speed [m s-1]
         self.u = u
-        # # initial u-wind jump at h [m s-1]
-        # self.du = du
-        # # free atmosphere u-wind speed lapse rate [s-1]
-        # self.gammau = gammau
-        # # advection of u-wind [m s-2]
-        # self.advu = advu
         # initial mixed-layer v-wind speed [m s-1]
         self.v = v
-        # # initial v-wind jump at h [m s-1]
-        # self.dv = dv
-        # # free atmosphere v-wind speed lapse rate [s-1]
-        # self.gammav = gammav
-        # # advection of v-wind [m s-2]
-        # self.advv = advv
+        # entrainment moisture flux [kg kg-1 m s-1]
+        self.wqe = 0.0
+        # entrainment CO2 flux [ppm m s-1]
+        self.wCO2e = 0.0
 
     def run(
         self,
