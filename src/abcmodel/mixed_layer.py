@@ -4,89 +4,247 @@ from .components import (
     AbstractRadiationModel,
     AbstractSurfaceLayerModel,
 )
-from .utils import PhysicalConstants
+from .utils import PhysicalConstants, get_qsat
 
 
-class NoMixedLayerModel(AbstractMixedLayerModel):
-    # limamau: this shouldn't need all this arguments
-    # to be cleaned up in the future
+class AbstractComputingStatsMixedLayerModel(AbstractMixedLayerModel):
+    def statistics(self, t: float, const: PhysicalConstants):
+        # calculate virtual temperatures
+        self.thetav = self.theta + 0.61 * self.theta * self.q
+        self.wthetav = self.wtheta + 0.61 * self.theta * self.wq
+        self.dthetav = (self.theta + self.dtheta) * (
+            1.0 + 0.61 * (self.q + self.dq)
+        ) - self.theta * (1.0 + 0.61 * self.q)
+
+        # mixed-layer top properties
+        self.top_p = self.surf_pressure - const.rho * const.g * self.abl_height
+        self.top_T = self.theta - const.g / const.cp * self.abl_height
+        self.top_rh = self.q / get_qsat(self.top_T, self.top_p)
+
+        # find lifting condensation level iteratively
+        if t == 0:
+            self.lcl = self.abl_height
+            rhlcl = 0.5
+        else:
+            rhlcl = 0.9998
+
+        itmax = 30
+        it = 0
+        while ((rhlcl <= 0.9999) or (rhlcl >= 1.0001)) and it < itmax:
+            self.lcl += (1.0 - rhlcl) * 1000.0
+            p_lcl = self.surf_pressure - const.rho * const.g * self.lcl
+            temp_lcl = self.theta - const.g / const.cp * self.lcl
+            rhlcl = self.q / get_qsat(temp_lcl, p_lcl)
+            it += 1
+
+        if it == itmax:
+            print("LCL calculation not converged!!")
+            print("RHlcl = %f, zlcl=%f" % (rhlcl, self.lcl))
+
+
+class NoMixedLayerModel(AbstractComputingStatsMixedLayerModel):
     def __init__(
         self,
-        sw_ml: bool,
-        sw_shearwe: bool,
-        sw_fixft: bool,
-        abl_height: float,
-        surf_pressure: float,
-        divU: float,
-        coriolis_param: float,
-        theta: float,
-        dtheta: float,
-        gammatheta: float,
-        advtheta: float,
-        beta: float,
-        wtheta: float,
-        q: float,
-        dq: float,
-        gammaq: float,
-        advq: float,
-        wq: float,
-        co2: float,
-        dCO2: float,
-        gammaCO2: float,
-        advCO2: float,
-        wCO2: float,
-        sw_wind: bool,
-        u: float,
-        du: float,
-        gammau: float,
-        advu: float,
-        v: float,
-        dv: float,
-        gammav: float,
-        advv: float,
-        dz_h: float,
+        # sw_ml: bool,
+        # sw_shearwe: bool,
+        # sw_fixft: bool,
+        # abl_height: float,
+        # surf_pressure: float,
+        # divU: float,
+        # coriolis_param: float,
+        # theta: float,
+        # dtheta: float,
+        # gammatheta: float,
+        # advtheta: float,
+        # beta: float,
+        # wtheta: float,
+        # q: float,
+        # dq: float,
+        # gammaq: float,
+        # advq: float,
+        # wq: float,
+        # co2: float,
+        # dCO2: float,
+        # gammaCO2: float,
+        # advCO2: float,
+        # wCO2: float,
+        # sw_wind: bool,
+        # u: float,
+        # du: float,
+        # gammau: float,
+        # advu: float,
+        # v: float,
+        # dv: float,
+        # gammav: float,
+        # advv: float,
+        # dz_h: float,
     ):
-        super().__init__(
-            sw_ml,
-            sw_shearwe,
-            sw_fixft,
-            abl_height,
-            surf_pressure,
-            divU,
-            coriolis_param,
-            theta,
-            dtheta,
-            gammatheta,
-            advtheta,
-            beta,
-            wtheta,
-            q,
-            dq,
-            gammaq,
-            advq,
-            wq,
-            co2,
-            dCO2,
-            gammaCO2,
-            advCO2,
-            wCO2,
-            sw_wind,
-            u,
-            du,
-            gammau,
-            advu,
-            v,
-            dv,
-            gammav,
-            advv,
-            dz_h,
-        )
+        pass
+        # # 1. mixed layer switches
+        # # mixed-layer model switch
+        # self.sw_ml = sw_ml
+        # # shear growth mixed-layer switch
+        # self.sw_shearwe = sw_shearwe
+        # # fix the free-troposphere switch
+        # self.sw_fixft = sw_fixft
+        # # 2. large scale parameters
+        # # initial ABL height [m]
+        # self.abl_height = abl_height
+        # # surface pressure [Pa]
+        # self.surf_pressure = surf_pressure
+        # # horizontal large-scale divergence of wind [s-1]
+        # self.divU = divU
+        # # Coriolis parameter [m s-1]
+        # self.coriolis_param = coriolis_param
+        # # 3. temperature parameters
+        # # initial mixed-layer potential temperature [K]
+        # self.theta = theta
+        # # initial temperature jump at h [K]
+        # self.dtheta = dtheta
+        # # free atmosphere potential temperature lapse rate [K m-1]
+        # self.gammatheta = gammatheta
+        # # advection of heat [K s-1]
+        # self.advtheta = advtheta
+        # # entrainment ratio for virtual heat [-]
+        # self.beta = beta
+        # # surface kinematic heat flux [K m s-1]
+        # self.wtheta = wtheta
+        # # 4. entrainment parameters
+        # # convective velocity scale [m s-1]
+        # self.wstar = 0.0
+        # # entrainment velocity [m s-1]
+        # self.we = -1.0
+        # # 5. moisture parameters
+        # # initial mixed-layer specific humidity [kg kg-1]
+        # self.q = q
+        # # initial specific humidity jump at h [kg kg-1]
+        # self.dq = dq
+        # # free atmosphere specific humidity lapse rate [kg kg-1 m-1]
+        # self.gammaq = gammaq
+        # # advection of moisture [kg kg-1 s-1]
+        # self.advq = advq
+        # # surface kinematic moisture flux [kg kg-1 m s-1]
+        # self.wq = wq
+        # # 8. mixed-layer top variables
+        # # transition layer thickness [-]
+        # self.dz_h = dz_h
+        # # 9. virtual temperatures and fluxes
+        # # 10. CO2
+        # # conversion factor mgC m-2 s-1 to ppm m s-1
+        # const = PhysicalConstants()
+        # fac = const.mair / (const.rho * const.mco2)
+        # # initial mixed-layer CO2 [ppm]
+        # self.co2 = co2
+        # # initial CO2 jump at h [ppm]
+        # self.dCO2 = dCO2
+        # # free atmosphere CO2 lapse rate [ppm m-1]
+        # self.gammaco2 = gammaCO2
+        # # advection of CO2 [ppm s-1]
+        # self.advCO2 = advCO2
+        # # surface kinematic CO2 flux [ppm m s-1]
+        # self.wCO2 = wCO2 * fac
+        # # surface assimulation CO2 flux [ppm m s-1]
+        # self.wCO2A = 0.0
+        # # surface respiration CO2 flux [ppm m s-1]
+        # self.wCO2R = 0.0
+        # # CO2 mass flux [ppm m s-1]
+        # self.wCO2M = 0.0
+        # # 11. wind parameters
+        # # prognostic wind switch
+        # self.sw_wind = sw_wind
+        # # initial mixed-layer u-wind speed [m s-1]
+        # self.u = u
+        # # initial u-wind jump at h [m s-1]
+        # self.du = du
+        # # free atmosphere u-wind speed lapse rate [s-1]
+        # self.gammau = gammau
+        # # advection of u-wind [m s-2]
+        # self.advu = advu
+        # # initial mixed-layer v-wind speed [m s-1]
+        # self.v = v
+        # # initial v-wind jump at h [m s-1]
+        # self.dv = dv
+        # # free atmosphere v-wind speed lapse rate [s-1]
+        # self.gammav = gammav
+        # # advection of v-wind [m s-2]
+        # self.advv = advv
 
     def integrate(self, dt: float):
         pass
 
 
-class StandardMixedLayerModel(AbstractMixedLayerModel):
+class StandardMixedLayerModel(AbstractComputingStatsMixedLayerModel):
+    # entrainment parameters:
+    # large-scale vertical velocity [m s-1]
+    ws: float
+    # mixed-layer growth due to radiative divergence [m s-1]
+    wf: float
+    # moisture paramters:
+    # entrainment moisture flux [kg kg-1 m s-1]
+    wqe: float
+    # mixed-layer saturated specific humidity [kg kg-1]
+    qsat: float
+    # mixed-layer saturated vapor pressure [Pa]
+    esat: float
+    # mixed-layer vapor pressure [Pa]
+    e: float
+    # surface saturated specific humidity [g kg-1]
+    qsatsurf: float
+    # slope saturated specific humidity curve [g kg-1 K-1]
+    dqsatdT: float
+    # mixed layer top  variables:
+    # mixed-layer top pressure [pa]
+    top_p: float
+    # mixed-layer top absolute temperature [K]
+    top_T: float
+    # mixed-layer top specific humidity variance [kg2 kg-2]
+    q2_h: float
+    # mixed-layer top CO2 variance [ppm2]
+    top_CO22: float
+    # mixed-layer top relavtive humidity [-]
+    top_rh: float
+    # lifting condensation level [m]
+    lcl: float
+    # virtual temperatures and fluxes:
+    # initial mixed-layer potential temperature [K]
+    thetav: float
+    # initial virtual temperature jump at h [K]
+    dthetav: float
+    # surface kinematic virtual heat flux [K m s-1]
+    wthetav: float
+    # entrainment kinematic heat flux [K m s-1]
+    wthetae: float
+    # entrainment kinematic virtual heat flux [K m s-1]
+    wthetave: float
+    # CO2:
+    # entrainment CO2 flux [ppm m s-1]
+    wCO2e: float
+    # tendencies:
+    # tendency of CBL [m s-1]
+    htend: float
+    # tendency of mixed-layer potential temperature [K s-1]
+    thetatend: float
+    # tendency of potential temperature jump at h [K s-1]
+    dthetatend: float
+    # tendency of mixed-layer specific humidity [kg kg-1 s-1]
+    qtend: float
+    # tendency of specific humidity jump at h [kg kg-1 s-1]
+    dqtend: float
+    # tendency of CO2 humidity [ppm]
+    co2tend: float
+    # tendency of CO2 jump at h [ppm s-1]
+    dCO2tend: float
+    # tendency of u-wind [m s-1 s-1]
+    utend: float
+    # tendency of u-wind jump at h [m s-1 s-1]
+    dutend: float
+    # tendency of v-wind [m s-1 s-1]
+    vtend: float
+    # tendency of v-wind jump at h [m s-1 s-1]
+    dvtend: float
+    # tendency of transition layer thickness [m s-1]
+    dztend: float
+
     def __init__(
         self,
         sw_ml: bool,
@@ -123,41 +281,95 @@ class StandardMixedLayerModel(AbstractMixedLayerModel):
         advv: float,
         dz_h: float,
     ):
-        super().__init__(
-            sw_ml,
-            sw_shearwe,
-            sw_fixft,
-            abl_height,
-            surf_pressure,
-            divU,
-            coriolis_param,
-            theta,
-            dtheta,
-            gammatheta,
-            advtheta,
-            beta,
-            wtheta,
-            q,
-            dq,
-            gammaq,
-            advq,
-            wq,
-            co2,
-            dCO2,
-            gammaCO2,
-            advCO2,
-            wCO2,
-            sw_wind,
-            u,
-            du,
-            gammau,
-            advu,
-            v,
-            dv,
-            gammav,
-            advv,
-            dz_h,
-        )
+        # mixed layer switches:
+        # mixed-layer model switch
+        self.sw_ml = sw_ml
+        # shear growth mixed-layer switch
+        self.sw_shearwe = sw_shearwe
+        # fix the free-troposphere switch
+        self.sw_fixft = sw_fixft
+        # large scale parameters:
+        # initial ABL height [m]
+        self.abl_height = abl_height
+        # surface pressure [Pa]
+        self.surf_pressure = surf_pressure
+        # horizontal large-scale divergence of wind [s-1]
+        self.divU = divU
+        # Coriolis parameter [m s-1]
+        self.coriolis_param = coriolis_param
+        # temperature parameters:
+        # initial mixed-layer potential temperature [K]
+        self.theta = theta
+        # initial temperature jump at h [K]
+        self.dtheta = dtheta
+        # free atmosphere potential temperature lapse rate [K m-1]
+        self.gammatheta = gammatheta
+        # advection of heat [K s-1]
+        self.advtheta = advtheta
+        # entrainment ratio for virtual heat [-]
+        self.beta = beta
+        # surface kinematic heat flux [K m s-1]
+        self.wtheta = wtheta
+        # entrainment parameters:
+        # convective velocity scale [m s-1]
+        self.wstar = 0.0
+        # entrainment velocity [m s-1]
+        self.we = -1.0
+        # 5. moisture parameters:
+        # initial mixed-layer specific humidity [kg kg-1]
+        self.q = q
+        # initial specific humidity jump at h [kg kg-1]
+        self.dq = dq
+        # free atmosphere specific humidity lapse rate [kg kg-1 m-1]
+        self.gammaq = gammaq
+        # advection of moisture [kg kg-1 s-1]
+        self.advq = advq
+        # surface kinematic moisture flux [kg kg-1 m s-1]
+        self.wq = wq
+        # 8. mixed-layer top variables
+        # transition layer thickness [-]
+        self.dz_h = dz_h
+        # CO2:
+        # limamau: I had to initiate another const here
+        # could be replaced by a post_init though...
+        const = PhysicalConstants()
+        # conversion factor mgC m-2 s-1 to ppm m s-1
+        fac = const.mair / (const.rho * const.mco2)
+        # initial mixed-layer CO2 [ppm]
+        self.co2 = co2
+        # initial CO2 jump at h [ppm]
+        self.dCO2 = dCO2
+        # free atmosphere CO2 lapse rate [ppm m-1]
+        self.gammaco2 = gammaCO2
+        # advection of CO2 [ppm s-1]
+        self.advCO2 = advCO2
+        # surface kinematic CO2 flux [ppm m s-1]
+        self.wCO2 = wCO2 * fac
+        # surface assimulation CO2 flux [ppm m s-1]
+        self.wCO2A = 0.0
+        # surface respiration CO2 flux [ppm m s-1]
+        self.wCO2R = 0.0
+        # CO2 mass flux [ppm m s-1]
+        self.wCO2M = 0.0
+        # 11. wind parameters
+        # prognostic wind switch
+        self.sw_wind = sw_wind
+        # initial mixed-layer u-wind speed [m s-1]
+        self.u = u
+        # initial u-wind jump at h [m s-1]
+        self.du = du
+        # free atmosphere u-wind speed lapse rate [s-1]
+        self.gammau = gammau
+        # advection of u-wind [m s-2]
+        self.advu = advu
+        # initial mixed-layer v-wind speed [m s-1]
+        self.v = v
+        # initial v-wind jump at h [m s-1]
+        self.dv = dv
+        # free atmosphere v-wind speed lapse rate [s-1]
+        self.gammav = gammav
+        # advection of v-wind [m s-2]
+        self.advv = advv
 
     def run(
         self,
