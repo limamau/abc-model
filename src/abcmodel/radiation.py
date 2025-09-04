@@ -8,8 +8,8 @@ from .components import (
 from .utils import PhysicalConstants
 
 
-class MinimalRadiationModel(AbstractRadiationModel):
-    """Minimal radiation model with constant net radiation.
+class ConstantRadiationModel(AbstractRadiationModel):
+    """Constant net radiation model.
 
     Simple radiation model that maintains fixed net radiation values without
     any atmospheric or solar calculations.

@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 from abcmodel import ABCModel
 from abcmodel.clouds import StandardCumulusModel
 from abcmodel.land_surface import MinimalLandSurfaceModel
-from abcmodel.mixed_layer import StandardMixedLayerModel
+from abcmodel.mixed_layer import BulkMixedLayerModel
 from abcmodel.radiation import StandardRadiationModel
 from abcmodel.surface_layer import StandardSurfaceLayerModel
 
@@ -17,7 +17,7 @@ def main():
     theta = 288.0
 
     # define mixed layer model
-    mixed_layer_model = StandardMixedLayerModel(
+    mixed_layer_model = BulkMixedLayerModel(
         # 1.1. switchs
         # mixed-layer model switch
         sw_ml=True,

@@ -3,8 +3,8 @@ import matplotlib.pyplot as plt
 from abcmodel import ABCModel
 from abcmodel.clouds import StandardCumulusModel
 from abcmodel.land_surface import JarvisStewartModel
-from abcmodel.mixed_layer import StandardMixedLayerModel
-from abcmodel.radiation import StandardRadiationModel
+from abcmodel.mixed_layer import BulkMixedLayerModel
+from abcmodel.radiation import ConstantRadiationModel
 from abcmodel.surface_layer import StandardSurfaceLayerModel
 
 
@@ -17,7 +17,7 @@ def main():
     theta = 288.0
 
     # define mixed layer model
-    mixed_layer_model = StandardMixedLayerModel(
+    mixed_layer_model = BulkMixedLayerModel(
         # 1.1. switchs
         # mixed-layer model switch
         sw_ml=True,
@@ -105,17 +105,7 @@ def main():
     )
 
     # 3. define radiation model
-    radiation_model = StandardRadiationModel(
-        # latitude [deg]
-        lat=51.97,
-        # longitude [deg]
-        lon=-4.93,
-        # day of the year [-]
-        doy=268.0,
-        # time of the day [h UTC]
-        tstart=6.8,
-        # cloud cover fraction [-]
-        cc=0.0,
+    radiation_model = ConstantRadiationModel(
         # net radiation [W m-2]
         net_rad=400.0,
         # cloud top radiative divergence [W m-2]
@@ -190,35 +180,25 @@ def main():
     # plot output
     plt.figure(figsize=(12, 8))
 
-    plt.subplot(231)
+    plt.subplot(221)
     plt.plot(r1.out.t, r1.out.h)
     plt.xlabel("time [h]")
     plt.ylabel("h [m]")
 
-    plt.subplot(234)
+    plt.subplot(222)
     plt.plot(r1.out.t, r1.out.theta)
     plt.xlabel("time [h]")
     plt.ylabel("theta [K]")
 
-    plt.subplot(232)
-    plt.plot(r1.out.t, r1.out.q * 1000.0)
+    plt.subplot(223)
+    plt.plot(r1.out.t, r1.out.net_rad)
     plt.xlabel("time [h]")
-    plt.ylabel("q [g kg-1]")
+    plt.ylabel("net radiation [W m-2]")
 
-    plt.subplot(235)
+    plt.subplot(224)
     plt.plot(r1.out.t, r1.out.cc_frac)
     plt.xlabel("time [h]")
     plt.ylabel("cloud fraction [-]")
-
-    plt.subplot(233)
-    plt.plot(r1.out.t, r1.out.co2)
-    plt.xlabel("time [h]")
-    plt.ylabel("mixed-layer CO2 [ppm]")
-
-    plt.subplot(236)
-    plt.plot(r1.out.t, r1.out.u)
-    plt.xlabel("time [h]")
-    plt.ylabel("mixed-layer u-wind speed [m s-1]")
 
     plt.tight_layout()
     plt.show()

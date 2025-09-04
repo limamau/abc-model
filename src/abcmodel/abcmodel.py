@@ -5,7 +5,7 @@ from abcmodel.land_surface import MinimalLandSurfaceModel
 from .clouds import AbstractCloudModel, NoCloudModel
 from .land_surface import AbstractLandSurfaceModel
 from .mixed_layer import AbstractMixedLayerModel, MinimalMixedLayerModel
-from .radiation import AbstractRadiationModel, MinimalRadiationModel
+from .radiation import AbstractRadiationModel, ConstantRadiationModel
 from .surface_layer import AbstractSurfaceLayerModel, MinimalSurfaceLayerModel
 from .utils import PhysicalConstants
 
@@ -138,7 +138,7 @@ class ABCModel:
     def store(self):
         t = self.t
 
-        if not isinstance(self.radiation, MinimalRadiationModel):
+        if not isinstance(self.radiation, ConstantRadiationModel):
             # limamau: "t" should be 100% out of this clause :)
             self.out.t[t] = t * self.dt / 3600.0 + self.radiation.tstart
             self.out.in_srad[t] = self.radiation.in_srad

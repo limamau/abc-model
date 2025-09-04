@@ -174,8 +174,8 @@ class MinimalMixedLayerModel(AbstractStandardStatsModel):
         pass
 
 
-class StandardMixedLayerModel(AbstractStandardStatsModel):
-    """Standard mixed layer model with full atmospheric boundary layer dynamics.
+class BulkMixedLayerModel(AbstractStandardStatsModel):
+    """Bulk mixed layer model with full atmospheric boundary layer dynamics.
 
     Complete mixed layer model that simulates atmospheric boundary layer evolution
     including entrainment, subsidence, cloud effects, and wind dynamics.
