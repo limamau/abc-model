@@ -205,14 +205,14 @@ def main():
     plt.ylabel("cloud fraction [-]")
 
     plt.subplot(233)
-    plt.plot(r1.out.t, r1.out.wCO2)
+    plt.plot(r1.out.t, r1.out.q2m)
     plt.xlabel("time [h]")
-    plt.ylabel("surface kinematic CO2 flux [ppm m s-1]")
+    plt.ylabel("2m specific humidity [kg kg-1]")
 
     plt.subplot(236)
-    plt.plot(r1.out.t, r1.out.le_veg)
+    plt.plot(r1.out.t, r1.out.esat2m)
     plt.xlabel("time [h]")
-    plt.ylabel("transpiration [W m-2]")
+    plt.ylabel("2m saturated vapor pressure [Pa]")
 
     plt.tight_layout()
     plt.show()

@@ -9,10 +9,31 @@ from .utils import PhysicalConstants, get_psih, get_psim, get_qsat
 
 
 class MinimalSurfaceLayerModel(AbstractSurfaceLayerModel):
-    def __init__(
-        self,
-        ustar: float,
-    ):
+    """Minimal surface layer model with constant friction velocity.
+
+    A surface layer model that uses a fixed friction velocity to calculate
+    momentum fluxes and aerodynamic resistance without atmospheric stability effects.
+
+    **Running processes:**
+
+    Calculate momentum fluxes based on wind components and friction velocity.
+
+    **Auxiliary processes:**
+
+    Compute aerodynamic resistance using effective wind speed.
+
+    Arguments
+    ----------
+    - ``ustar``: surface friction velocity [m/s].
+
+    Updates
+    --------
+    - ``uw``: u-component momentum flux [m²/s²].
+    - ``vw``: v-component momentum flux [m²/s²].
+    - ``ra``: aerodynamic resistance [s/m] (aux).
+    """
+
+    def __init__(self, ustar: float):
         # surface friction velocity [m s-1]
         self.ustar = ustar
 
@@ -22,6 +43,7 @@ class MinimalSurfaceLayerModel(AbstractSurfaceLayerModel):
         land_surface: AbstractLandSurfaceModel,
         mixed_layer: AbstractMixedLayerModel,
     ):
+        """Calculate momentum fluxes from wind components and friction velocity."""
         self.uw = -np.sign(mixed_layer.u) * (
             self.ustar**4.0 / (mixed_layer.v**2.0 / mixed_layer.u**2.0 + 1.0)
         ) ** (0.5)
@@ -30,11 +52,39 @@ class MinimalSurfaceLayerModel(AbstractSurfaceLayerModel):
         ) ** (0.5)
 
     def compute_ra(self, u: float, v: float, wstar: float):
+        """Calculate aerodynamic resistance from wind speed and friction velocity."""
         ueff = np.sqrt(u**2.0 + v**2.0 + wstar**2.0)
         self.ra = ueff / max(1.0e-3, self.ustar) ** 2.0
 
 
 class StandardSurfaceLayerModel(AbstractSurfaceLayerModel):
+    """Standard surface layer model with atmospheric stability corrections.
+
+    Calculates surface-atmosphere exchange using Monin-Obukhov similarity theory
+    with stability functions and iterative solution for Obukhov length.
+
+    **Processes:**
+    1. Calculate effective wind speed and surface properties.
+    2. Determine bulk Richardson number and solve for Obukhov length.
+    3. Compute drag coefficients with stability corrections.
+    4. Calculate momentum fluxes and 2m diagnostic variables.
+
+    Arguments
+    ----------
+    - ``ustar``: surface friction velocity [m/s].
+    - ``z0m``: roughness length for momentum [m].
+    - ``z0h``: roughness length for scalars [m].
+    - ``theta``: surface potential temperature [K].
+
+    Updates
+    --------
+    - ``uw``, ``vw``: momentum fluxes [m²/s²].
+    - ``temp_2m``, ``q2m``, ``u2m``, ``v2m``: 2m diagnostic variables.
+    - ``thetavsurf``, ``qsurf``: surface properties.
+    - ``obukhov_length``, ``rib_number``: stability parameters.
+    - ``ra``: aerodynamic resistance [s/m].
+    """
+
     # 2m diagnostic variables:
     # 2m temperature [K]
     temp_2m: float
@@ -86,72 +136,159 @@ class StandardSurfaceLayerModel(AbstractSurfaceLayerModel):
         # surface potential temperature [K]
         self.thetasurf = theta
 
-    def get_ribtol(self, zsl: float):
-        if self.rib_number > 0.0:
-            oblen = 1.0
-            oblen0 = 2.0
-        else:
-            oblen = -1.0
-            oblen0 = -2.0
+    def _calculate_effective_wind_speed(
+        self, u: float, v: float, wstar: float
+    ) -> float:
+        """Calculate effective wind speed including convective effects."""
+        return max(0.01, np.sqrt(u**2.0 + v**2.0 + wstar**2.0))
 
-        while abs(oblen - oblen0) > 0.001:
+    def _calculate_surface_properties(
+        self,
+        ueff: float,
+        theta: float,
+        wtheta: float,
+        q: float,
+        surf_pressure: float,
+        rs: float,
+    ):
+        """Calculate surface temperature and humidity."""
+        self.thetasurf = theta + wtheta / (self.drag_s * ueff)
+        qsatsurf = get_qsat(self.thetasurf, surf_pressure)
+        cq = (1.0 + self.drag_s * ueff * rs) ** -1.0
+        self.qsurf = (1.0 - cq) * q + cq * qsatsurf
+        self.thetavsurf = self.thetasurf * (1.0 + 0.61 * self.qsurf)
+
+    def _calculate_richardson_number(
+        self, ueff: float, zsl: float, g: float, thetav: float
+    ):
+        """Calculate bulk Richardson number."""
+        self.rib_number = g / thetav * zsl * (thetav - self.thetavsurf) / ueff**2.0
+        self.rib_number = min(self.rib_number, 0.2)
+
+    def _calculate_scalar_correction_term(self, zsl: float, oblen: float) -> float:
+        """Calculate scalar stability correction term."""
+        log_term = np.log(zsl / self.z0h)
+        upper_stability = get_psih(zsl / oblen)
+        surface_stability = get_psih(self.z0h / oblen)
+
+        return log_term - upper_stability + surface_stability
+
+    def _calculate_momentum_correction_term(self, zsl: float, oblen: float) -> float:
+        """Calculate momentum stability correction term."""
+        log_term = np.log(zsl / self.z0m)
+        upper_stability = get_psim(zsl / oblen)
+        surface_stability = get_psim(self.z0m / oblen)
+
+        return log_term - upper_stability + surface_stability
+
+    def _calculate_rib_function(self, zsl: float, oblen: float) -> float:
+        """Calculate Richardson number function for iteration."""
+        scalar_term = self._calculate_scalar_correction_term(zsl, oblen)
+        momentum_term = self._calculate_momentum_correction_term(zsl, oblen)
+
+        return self.rib_number - zsl / oblen * scalar_term / momentum_term**2.0
+
+    def _calculate_rib_function_term(self, zsl: float, oblen: float) -> float:
+        """Calculate function term for derivative calculation."""
+        scalar_term = self._calculate_scalar_correction_term(zsl, oblen)
+        momentum_term = self._calculate_momentum_correction_term(zsl, oblen)
+
+        return -zsl / oblen * scalar_term / momentum_term**2.0
+
+    def _ribtol(self, zsl: float):
+        """Iterative solution for Obukhov length from Richardson number."""
+        # initial guess based on stability
+        oblen = 1.0 if self.rib_number > 0.0 else -1.0
+        oblen0 = 2.0 if self.rib_number > 0.0 else -2.0
+
+        convergence_threshold = 0.001
+        perturbation = 0.001
+
+        while abs(oblen - oblen0) > convergence_threshold:
             oblen0 = oblen
-            fx = (
-                self.rib_number
-                - zsl
-                / oblen
-                * (
-                    np.log(zsl / self.z0h)
-                    - get_psih(zsl / oblen)
-                    + get_psih(self.z0h / oblen)
-                )
-                / (
-                    np.log(zsl / self.z0m)
-                    - get_psim(zsl / oblen)
-                    + get_psim(self.z0m / oblen)
-                )
-                ** 2.0
-            )
-            oblen_start = oblen - 0.001 * oblen
-            oblen_end = oblen + 0.001 * oblen
-            fxdif = (
-                (
-                    -zsl
-                    / oblen_start
-                    * (
-                        np.log(zsl / self.z0h)
-                        - get_psih(zsl / oblen_start)
-                        + get_psih(self.z0h / oblen_start)
-                    )
-                    / (
-                        np.log(zsl / self.z0m)
-                        - get_psim(zsl / oblen_start)
-                        + get_psim(self.z0m / oblen_start)
-                    )
-                    ** 2.0
-                )
-                - (
-                    -zsl
-                    / oblen_end
-                    * (
-                        np.log(zsl / self.z0h)
-                        - get_psih(zsl / oblen_end)
-                        + get_psih(self.z0h / oblen_end)
-                    )
-                    / (
-                        np.log(zsl / self.z0m)
-                        - get_psim(zsl / oblen_end)
-                        + get_psim(self.z0m / oblen_end)
-                    )
-                    ** 2.0
-                )
-            ) / (oblen_start - oblen_end)
+
+            # calculate function value at current estimate
+            fx = self._calculate_rib_function(zsl, oblen)
+
+            # calculate derivative using finite differences
+            oblen_start = oblen - perturbation * oblen
+            oblen_end = oblen + perturbation * oblen
+
+            fx_start = self._calculate_rib_function_term(zsl, oblen_start)
+            fx_end = self._calculate_rib_function_term(zsl, oblen_end)
+
+            fxdif = (fx_start - fx_end) / (oblen_start - oblen_end)
+
+            # Newton-Raphson update
             oblen = oblen - fx / fxdif
 
+            # prevent runaway solutions
             if abs(oblen) > 1e15:
                 break
 
         return oblen
+
+    def _calculate_drag_coefficients(self, zsl: float, k: float):
+        """Calculate drag coefficients with stability corrections."""
+        # momentum stability correction
+        momentum_correction = self._calculate_momentum_correction_term(
+            zsl, self.obukhov_length
+        )
+
+        # scalar stability correction
+        scalar_correction = self._calculate_scalar_correction_term(
+            zsl, self.obukhov_length
+        )
+
+        # drag coefficients
+        self.drag_m = k**2.0 / momentum_correction**2.0
+        self.drag_s = k**2.0 / (momentum_correction * scalar_correction)
+
+    def _calculate_momentum_fluxes(self, ueff: float, u: float, v: float):
+        """Calculate momentum fluxes and friction velocity."""
+        self.ustar = np.sqrt(self.drag_m) * ueff
+        self.uw = -self.drag_m * ueff * u
+        self.vw = -self.drag_m * ueff * v
+
+    def _calculate_2m_variables(
+        self,
+        wtheta: float,
+        wq: float,
+        q: float,
+        surf_pressure: float,
+        k: float,
+    ):
+        """Calculate 2m diagnostic meteorological variables."""
+        # stability correction terms
+        scalar_correction = (
+            np.log(2.0 / self.z0h)
+            - get_psih(2.0 / self.obukhov_length)
+            + get_psih(self.z0h / self.obukhov_length)
+        )
+        momentum_correction = (
+            np.log(2.0 / self.z0m)
+            - get_psim(2.0 / self.obukhov_length)
+            + get_psim(self.z0m / self.obukhov_length)
+        )
+
+        # scaling factor for scalar fluxes
+        scalar_scale = 1.0 / (self.ustar * k)
+        momentum_scale = 1.0 / (self.ustar * k)
+
+        # temperature and humidity at 2m
+        self.temp_2m = self.thetasurf - wtheta * scalar_scale * scalar_correction
+        self.q2m = self.qsurf - wq * scalar_scale * scalar_correction
+
+        # wind components at 2m
+        self.u2m = -self.uw * momentum_scale * momentum_correction
+        self.v2m = -self.vw * momentum_scale * momentum_correction
+
+        # vapor pressures at 2m
+        # limamau: name these constants
+        self.esat2m = 0.611e3 * np.exp(
+            17.2694 * (self.temp_2m - 273.16) / (self.temp_2m - 35.86)
+        )
+        self.e2m = self.q2m * surf_pressure / 0.622
 
     def run(
         self,
@@ -159,97 +296,54 @@ class StandardSurfaceLayerModel(AbstractSurfaceLayerModel):
         land_surface: AbstractLandSurfaceModel,
         mixed_layer: AbstractMixedLayerModel,
     ):
-        ueff = max(
-            0.01,
-            np.sqrt(mixed_layer.u**2.0 + mixed_layer.v**2.0 + mixed_layer.wstar**2.0),
-        )
-        self.thetasurf = mixed_layer.theta + mixed_layer.wtheta / (self.drag_s * ueff)
-        qsatsurf = get_qsat(self.thetasurf, mixed_layer.surf_pressure)
-        cq = (1.0 + self.drag_s * ueff * land_surface.rs) ** -1.0
-        self.qsurf = (1.0 - cq) * mixed_layer.q + cq * qsatsurf
+        """
+        Calculate surface layer turbulent exchange and diagnostic variables.
 
-        self.thetavsurf = self.thetasurf * (1.0 + 0.61 * self.qsurf)
+        Parameters
+        ----------
+        - ``const``: physical constants. Uses ``g`` and ``k``.
+        - ``land_surface``: land surface model. Uses ``rs``.
+        - ``mixed_layer``: mixed layer model. Uses wind components, fluxes, and thermodynamic variables.
+
+        Updates
+        -------
+        Updates all surface layer variables including momentum fluxes, drag coefficients,
+        Obukhov length, and 2m diagnostic meteorological variables.
+        """
+        ueff = self._calculate_effective_wind_speed(
+            mixed_layer.u, mixed_layer.v, mixed_layer.wstar
+        )
+        self._calculate_surface_properties(
+            ueff,
+            mixed_layer.theta,
+            mixed_layer.wtheta,
+            mixed_layer.q,
+            mixed_layer.surf_pressure,
+            land_surface.rs,
+        )
 
         zsl = 0.1 * mixed_layer.abl_height
-        self.rib_number = (
-            const.g
-            / mixed_layer.thetav
-            * zsl
-            * (mixed_layer.thetav - self.thetavsurf)
-            / ueff**2.0
-        )
-        self.rib_number = min(self.rib_number, 0.2)
+        self._calculate_richardson_number(ueff, zsl, const.g, mixed_layer.thetav)
 
         # limamau: the following is rather slow
         # we can probably use a scan when JAX is on
         # before they had the option:
-        # self.L    = ribtol.ribtol(self.Rib, zsl, self.z0m, self.z0h) # Fast C++ iteration
+        # Fast C++ iteration
+        # self.L    = ribtol.ribtol(self.Rib, zsl, self.z0m, self.z0h)
         # we could make this faster with a scan or something using jax
-        self.obukhov_length = self.get_ribtol(zsl)
+        self.obukhov_length = self._ribtol(zsl)
 
-        self.drag_m = (
-            const.k**2.0
-            / (
-                np.log(zsl / self.z0m)
-                - get_psim(zsl / self.obukhov_length)
-                + get_psim(self.z0m / self.obukhov_length)
-            )
-            ** 2.0
+        self._calculate_drag_coefficients(zsl, const.k)
+        self._calculate_momentum_fluxes(ueff, mixed_layer.u, mixed_layer.v)
+        self._calculate_2m_variables(
+            mixed_layer.wtheta,
+            mixed_layer.wq,
+            mixed_layer.q,
+            mixed_layer.surf_pressure,
+            const.k,
         )
-        self.drag_s = (
-            const.k**2.0
-            / (
-                np.log(zsl / self.z0m)
-                - get_psim(zsl / self.obukhov_length)
-                + get_psim(self.z0m / self.obukhov_length)
-            )
-            / (
-                np.log(zsl / self.z0h)
-                - get_psih(zsl / self.obukhov_length)
-                + get_psih(self.z0h / self.obukhov_length)
-            )
-        )
-
-        self.ustar = np.sqrt(self.drag_m) * ueff
-        self.uw = -self.drag_m * ueff * mixed_layer.u
-        self.vw = -self.drag_m * ueff * mixed_layer.v
-
-        # diagnostic meteorological variables
-        self.temp_2m = self.thetasurf - mixed_layer.wtheta / self.ustar / const.k * (
-            np.log(2.0 / self.z0h)
-            - get_psih(2.0 / self.obukhov_length)
-            + get_psih(self.z0h / self.obukhov_length)
-        )
-        self.q2m = self.qsurf - mixed_layer.wq / self.ustar / const.k * (
-            np.log(2.0 / self.z0h)
-            - get_psih(2.0 / self.obukhov_length)
-            + get_psih(self.z0h / self.obukhov_length)
-        )
-        self.u2m = (
-            -self.uw
-            / self.ustar
-            / const.k
-            * (
-                np.log(2.0 / self.z0m)
-                - get_psim(2.0 / self.obukhov_length)
-                + get_psim(self.z0m / self.obukhov_length)
-            )
-        )
-        self.v2m = (
-            -self.vw
-            / self.ustar
-            / const.k
-            * (
-                np.log(2.0 / self.z0m)
-                - get_psim(2.0 / self.obukhov_length)
-                + get_psim(self.z0m / self.obukhov_length)
-            )
-        )
-        self.esat2m = 0.611e3 * np.exp(
-            17.2694 * (self.temp_2m - 273.16) / (self.temp_2m - 35.86)
-        )
-        self.e2m = self.q2m * mixed_layer.surf_pressure / 0.622
 
     def compute_ra(self, u: float, v: float, wstar: float):
+        """Calculate aerodynamic resistance from wind speed and drag coefficient."""
         ueff = np.sqrt(u**2.0 + v**2.0 + wstar**2.0)
         self.ra = (self.drag_s * ueff) ** -1.0
