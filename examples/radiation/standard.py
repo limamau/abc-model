@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 
+import configs.class_model as cm
 from abcmodel import ABCModel
 from abcmodel.clouds import StandardCumulusModel
 from abcmodel.land_surface import JarvisStewartModel
@@ -106,20 +107,8 @@ def main():
 
     # 3. define radiation model
     radiation_model = StandardRadiationModel(
-        # latitude [deg]
-        lat=51.97,
-        # longitude [deg]
-        lon=-4.93,
-        # day of the year [-]
-        doy=268.0,
-        # time of the day [h UTC]
-        tstart=6.8,
-        # cloud cover fraction [-]
-        cc=0.0,
-        # net radiation [W m-2]
-        net_rad=400.0,
-        # cloud top radiative divergence [W m-2]
-        dFz=0.0,
+        cm.params.radiation,
+        cm.init_conds.radiation,
     )
 
     # 4. define land surface model
@@ -176,7 +165,7 @@ def main():
     cloud_model = StandardCumulusModel()
 
     # init and run the model
-    r1 = ABCModel(
+    abc = ABCModel(
         dt=dt,
         runtime=runtime,
         mixed_layer=mixed_layer_model,
@@ -185,28 +174,28 @@ def main():
         land_surface=land_surface_model,
         clouds=cloud_model,
     )
-    r1.run()
+    abc.run()
 
     # plot output
     plt.figure(figsize=(12, 8))
 
     plt.subplot(221)
-    plt.plot(r1.out.t, r1.out.h)
+    plt.plot(abc.out.t, abc.out.h)
     plt.xlabel("time [h]")
     plt.ylabel("h [m]")
 
     plt.subplot(222)
-    plt.plot(r1.out.t, r1.out.theta)
+    plt.plot(abc.out.t, abc.out.theta)
     plt.xlabel("time [h]")
     plt.ylabel("theta [K]")
 
     plt.subplot(223)
-    plt.plot(r1.out.t, r1.out.net_rad)
+    plt.plot(abc.out.t, abc.radiation.diagnostics.get("net_rad"))
     plt.xlabel("time [h]")
     plt.ylabel("net radiation [W m-2]")
 
     plt.subplot(224)
-    plt.plot(r1.out.t, r1.out.cc_frac)
+    plt.plot(abc.out.t, abc.out.cc_frac)
     plt.xlabel("time [h]")
     plt.ylabel("cloud fraction [-]")
 

@@ -2,7 +2,7 @@ from abc import abstractmethod
 
 import numpy as np
 
-from ..components import (
+from ..models import (
     AbstractLandSurfaceModel,
     AbstractMixedLayerModel,
     AbstractRadiationModel,

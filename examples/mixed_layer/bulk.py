@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 
+import configs.class_model as cm
 from abcmodel import ABCModel
 from abcmodel.clouds import StandardCumulusModel
 from abcmodel.land_surface import JarvisStewartModel
@@ -106,20 +107,8 @@ def main():
 
     # 3. define radiation model
     radiation_model = StandardRadiationModel(
-        # latitude [deg]
-        lat=51.97,
-        # longitude [deg]
-        lon=-4.93,
-        # day of the year [-]
-        doy=268.0,
-        # time of the day [h UTC]
-        tstart=6.8,
-        # cloud cover fraction [-]
-        cc=0.0,
-        # net radiation [W m-2]
-        net_rad=400.0,
-        # cloud top radiative divergence [W m-2]
-        dFz=0.0,
+        cm.params.radiation,
+        cm.init_conds.radiation,
     )
 
     # 4. define land surface model

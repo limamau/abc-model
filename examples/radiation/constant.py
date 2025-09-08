@@ -4,7 +4,11 @@ from abcmodel import ABCModel
 from abcmodel.clouds import StandardCumulusModel
 from abcmodel.land_surface import JarvisStewartModel
 from abcmodel.mixed_layer import BulkMixedLayerModel
-from abcmodel.radiation import ConstantRadiationModel
+from abcmodel.radiation import (
+    ConstantRadiationInitConds,
+    ConstantRadiationModel,
+    ConstantRadiationParams,
+)
 from abcmodel.surface_layer import StandardSurfaceLayerModel
 
 
@@ -105,12 +109,17 @@ def main():
     )
 
     # 3. define radiation model
-    radiation_model = ConstantRadiationModel(
-        # net radiation [W m-2]
-        net_rad=400.0,
+    rad_params = ConstantRadiationParams(
         # cloud top radiative divergence [W m-2]
         dFz=0.0,
+        # time of the day [h UTC]
+        tstart=6.8,
     )
+    rad_init_conds = ConstantRadiationInitConds(
+        # net radiation [W m-2]
+        net_rad=400.0,
+    )
+    radiation_model = ConstantRadiationModel(rad_params, rad_init_conds)
 
     # 4. define land surface model
     land_surface_model = JarvisStewartModel(
@@ -191,7 +200,7 @@ def main():
     plt.ylabel("theta [K]")
 
     plt.subplot(223)
-    plt.plot(r1.out.t, r1.out.net_rad)
+    plt.plot(r1.out.t, r1.radiation.diagnostics.get("net_rad"))
     plt.xlabel("time [h]")
     plt.ylabel("net radiation [W m-2]")
 

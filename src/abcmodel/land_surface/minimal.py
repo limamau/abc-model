@@ -1,4 +1,4 @@
-from ..components import (
+from ..models import (
     AbstractLandSurfaceModel,
     AbstractMixedLayerModel,
     AbstractRadiationModel,

@@ -1,32 +1,73 @@
-# limamau: this module contains the abstract classes for all main components of the ABC
-# model. Another architecture possibility is to define each abstract class in their own
-# files and extract kwargs from each run method - the coupler would manage integration...
-# I'm leaving this idea for the furure in case we need/decide to go for it.
-# limamau: in the future, it will be good to define parameter and initial conditions classes
-# to simplifiy initializations
-
 from abc import abstractmethod
+from dataclasses import dataclass
+from typing import Generic, TypeVar
+
+import numpy as np
 
 from .utils import PhysicalConstants
 
 
-class AbstractRadiationModel:
-    # require by minimal:
-    # net radiation [W m-2]
-    net_rad: float
-    # cloud top radiative divergence [W m-2]
-    dFz: float
-    # used to output:
-    # time of the day [h UTC]
+# limamau: how to enforce that every model should take params, init_conds
+# and diagnostics as input on the initialization method?
+class AbstractModel:
+    """Abstract model class to define the interface for all models."""
+
+    diagnostics: "AbstractDiagnostics"
+
+    @abstractmethod
+    def init_diagnostics(self, tsteps: int) -> None:
+        raise NotImplementedError
+
+    def store(self, t: int):
+        self.diagnostics.store(t, self)
+
+
+MT = TypeVar("MT", bound=AbstractModel)
+
+
+@dataclass
+class AbstractParams(Generic[MT]):
+    """Abstract parameters class to define the interface for all models."""
+
+    pass
+
+
+@dataclass
+class AbstractInitConds(Generic[MT]):
+    """Abstract initial conditions class to define the interface for all models."""
+
+    pass
+
+
+class AbstractDiagnostics(Generic[MT]):
+    """Abstract diagnostics class to define the interface for all models."""
+
+    def __init__(self):
+        pass
+
+    @abstractmethod
+    def post_init(self, tsteps: int) -> None:
+        raise NotImplementedError
+
+    @abstractmethod
+    def store(self, t: int, model: MT) -> None:
+        raise NotImplementedError
+
+    def get(self, name: str) -> np.ndarray:
+        if hasattr(self, name):
+            return getattr(self, name)
+        raise AttributeError(f"Diagnostic variable '{name}' not found")
+
+
+class AbstractRadiationModel(AbstractModel):
+    # limamau: how to enforce that params and init_conds
+    # should implement the following variables inside init?
     tstart: float
-    # incoming short wave radiation [W m-2]
+    dFz: float
+    net_rad: float
+    # limamau: the following is used by AquaCrop, but not
+    # implemeneted by constant radiation...
     in_srad: float
-    # outgoing short wave radiation [W m-2]
-    out_srad: float
-    # incoming long wave radiation [W m-2]
-    in_lrad: float
-    # outgoing long wave radiation [W m-2]
-    out_lrad: float
 
     @abstractmethod
     def run(
@@ -237,13 +278,6 @@ class AbstractMixedLayerModel:
 
 
 class AbstractCloudModel:
-    """
-    Abstract base class for atmospheric cloud models in mixed-layer systems.
-
-    This class defines the interface that all cloud models must implement for
-    integration with mixed-layer boundary layer models.
-    """
-
     # cloud core fraction [-]
     cc_frac: float
     # cloud core mass flux [m s-1]

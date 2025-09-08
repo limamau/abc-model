@@ -1,4 +1,4 @@
-from ..components import (
+from ..models import (
     AbstractMixedLayerModel,
 )
 from ..utils import PhysicalConstants, get_qsat

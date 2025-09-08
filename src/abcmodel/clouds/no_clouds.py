@@ -1,4 +1,4 @@
-from ..components import AbstractCloudModel, AbstractMixedLayerModel
+from ..models import AbstractCloudModel, AbstractMixedLayerModel
 
 
 class NoCloudModel(AbstractCloudModel):

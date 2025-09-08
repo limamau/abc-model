@@ -1,6 +1,6 @@
 import numpy as np
 
-from ..components import AbstractCloudModel, AbstractMixedLayerModel
+from ..models import AbstractCloudModel, AbstractMixedLayerModel
 from ..utils import get_qsat
 
 

@@ -1,6 +1,6 @@
 import numpy as np
 
-from ..components import (
+from ..models import (
     AbstractMixedLayerModel,
     AbstractRadiationModel,
     AbstractSurfaceLayerModel,

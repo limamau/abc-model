@@ -1,16 +1,15 @@
 import numpy as np
 
 from .clouds import NoCloudModel
-from .components import (
+from .land_surface import MinimalLandSurfaceModel
+from .mixed_layer import MinimalMixedLayerModel
+from .models import (
     AbstractCloudModel,
     AbstractLandSurfaceModel,
     AbstractMixedLayerModel,
     AbstractRadiationModel,
     AbstractSurfaceLayerModel,
 )
-from .land_surface import MinimalLandSurfaceModel
-from .mixed_layer import MinimalMixedLayerModel
-from .radiation import ConstantRadiationModel
 from .surface_layer import MinimalSurfaceLayerModel
 from .utils import PhysicalConstants
 
@@ -29,25 +28,19 @@ class ABCModel:
         # constants
         self.const = PhysicalConstants()
 
-        # 0. running configuration
+        # running configuration
         self.dt = dt
         self.runtime = runtime
         self.tsteps = int(np.floor(self.runtime / self.dt))
         self.t = 0
 
-        # 1. define mixed layer model
-        self.mixed_layer = mixed_layer
-
-        # 2. surface layer
-        self.surface_layer = surface_layer
-
-        # 3. radiation
+        # models and diagnostics
         self.radiation = radiation
-
-        # 4. land surface is initialized like before
+        self.radiation.diagnostics.post_init(self.tsteps)
+        assert self.radiation.diagnostics is not None
+        self.mixed_layer = mixed_layer
+        self.surface_layer = surface_layer
         self.land_surface = land_surface
-
-        # 5. clouds
         self.clouds = clouds
 
         # initialize output
@@ -142,15 +135,8 @@ class ABCModel:
     # store model output
     def store(self):
         t = self.t
-
-        if not isinstance(self.radiation, ConstantRadiationModel):
-            # limamau: "t" should be 100% out of this clause :)
-            self.out.t[t] = t * self.dt / 3600.0 + self.radiation.tstart
-            self.out.in_srad[t] = self.radiation.in_srad
-            self.out.out_srad[t] = self.radiation.out_srad
-            self.out.in_lrad[t] = self.radiation.in_lrad
-            self.out.out_lrad[t] = self.radiation.out_lrad
-            self.out.net_rad[t] = self.radiation.net_rad
+        self.out.t[t] = t * self.dt / 3600.0 + self.radiation.tstart
+        self.radiation.store(t)
 
         if not isinstance(self.land_surface, MinimalLandSurfaceModel):
             self.out.rs[t] = self.land_surface.rs
@@ -326,18 +312,6 @@ class ABCOutput:
         self.obukhov_length = np.zeros(tsteps)
         # bulk Richardson number [-]
         self.rib_number = np.zeros(tsteps)
-
-        # radiation variables
-        # incoming short wave radiation [W m-2]
-        self.in_srad = np.zeros(tsteps)
-        # outgoing short wave radiation [W m-2]
-        self.out_srad = np.zeros(tsteps)
-        # incoming long wave radiation [W m-2]
-        self.in_lrad = np.zeros(tsteps)
-        # outgoing long wave radiation [W m-2]
-        self.out_lrad = np.zeros(tsteps)
-        # net radiation [W m-2]
-        self.net_rad = np.zeros(tsteps)
 
         # land surface variables
         # aerodynamic resistance [s m-1]

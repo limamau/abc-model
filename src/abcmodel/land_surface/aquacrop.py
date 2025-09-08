@@ -1,7 +1,7 @@
 import numpy as np
 from scipy.special import exp1
 
-from ..components import (
+from ..models import (
     AbstractMixedLayerModel,
     AbstractRadiationModel,
     AbstractSurfaceLayerModel,
