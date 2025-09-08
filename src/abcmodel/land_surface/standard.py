@@ -80,6 +80,8 @@ class AbstractStandardLandSurfaceModel(AbstractLandSurfaceModel):
     wgtend: float
     # equivalent liquid water tendency [m s-1]
     wltend: float
+    # aerodynamic resistance [s m-1]
+    ra: float
 
     def __init__(
         self,
@@ -232,7 +234,7 @@ class AbstractStandardLandSurfaceModel(AbstractLandSurfaceModel):
         ----------
         - ``const``: physical constants. Uses ``rho``, ``cp``, ``lv``, ``rhow``.
         - ``radiation``: radiation model. Uses ``net_rad``.
-        - ``surface_layer``: surface layer model. Uses ``ra`` and ``compute_ra`` method.
+        - ``surface_layer``: surface layer model. ``compute_ra`` method.
         - ``mixed_layer``: mixed layer model. Uses ``u``, ``v``, ``wstar``, ``theta``,
           ``surf_pressure``, ``q``, and updates ``esat``, ``qsat``, ``dqsatdT``, ``e``,
           ``qsatsurf``, ``wtheta``, ``wq``.
@@ -244,7 +246,9 @@ class AbstractStandardLandSurfaceModel(AbstractLandSurfaceModel):
         equation including vegetation, soil, and liquid water components.
         """
         # compute aerodynamic resistance
-        surface_layer.compute_ra(mixed_layer.u, mixed_layer.v, mixed_layer.wstar)
+        self.ra = surface_layer.compute_ra(
+            mixed_layer.u, mixed_layer.v, mixed_layer.wstar
+        )
 
         # first calculate essential thermodynamic variables
         mixed_layer.esat = get_esat(mixed_layer.theta)
@@ -275,12 +279,12 @@ class AbstractStandardLandSurfaceModel(AbstractLandSurfaceModel):
         # calculate skin temperature implicitly
         self.surf_temp = (
             radiation.net_rad
-            + const.rho * const.cp / surface_layer.ra * mixed_layer.theta
+            + const.rho * const.cp / self.ra * mixed_layer.theta
             + self.cveg
             * (1.0 - self.cliq)
             * const.rho
             * const.lv
-            / (surface_layer.ra + self.rs)
+            / (self.ra + self.rs)
             * (
                 mixed_layer.dqsatdT * mixed_layer.theta
                 - mixed_layer.qsat
@@ -289,7 +293,7 @@ class AbstractStandardLandSurfaceModel(AbstractLandSurfaceModel):
             + (1.0 - self.cveg)
             * const.rho
             * const.lv
-            / (surface_layer.ra + self.rssoil)
+            / (self.ra + self.rssoil)
             * (
                 mixed_layer.dqsatdT * mixed_layer.theta
                 - mixed_layer.qsat
@@ -299,7 +303,7 @@ class AbstractStandardLandSurfaceModel(AbstractLandSurfaceModel):
             * self.cliq
             * const.rho
             * const.lv
-            / surface_layer.ra
+            / self.ra
             * (
                 mixed_layer.dqsatdT * mixed_layer.theta
                 - mixed_layer.qsat
@@ -307,23 +311,23 @@ class AbstractStandardLandSurfaceModel(AbstractLandSurfaceModel):
             )
             + self.lamb * self.temp_soil
         ) / (
-            const.rho * const.cp / surface_layer.ra
+            const.rho * const.cp / self.ra
             + self.cveg
             * (1.0 - self.cliq)
             * const.rho
             * const.lv
-            / (surface_layer.ra + self.rs)
+            / (self.ra + self.rs)
             * mixed_layer.dqsatdT
             + (1.0 - self.cveg)
             * const.rho
             * const.lv
-            / (surface_layer.ra + self.rssoil)
+            / (self.ra + self.rssoil)
             * mixed_layer.dqsatdT
             + self.cveg
             * self.cliq
             * const.rho
             * const.lv
-            / surface_layer.ra
+            / self.ra
             * mixed_layer.dqsatdT
             + self.lamb
         )
@@ -338,7 +342,7 @@ class AbstractStandardLandSurfaceModel(AbstractLandSurfaceModel):
             * self.cveg
             * const.rho
             * const.lv
-            / (surface_layer.ra + self.rs)
+            / (self.ra + self.rs)
             * (
                 mixed_layer.dqsatdT * (self.surf_temp - mixed_layer.theta)
                 + mixed_layer.qsat
@@ -350,7 +354,7 @@ class AbstractStandardLandSurfaceModel(AbstractLandSurfaceModel):
             * self.cveg
             * const.rho
             * const.lv
-            / surface_layer.ra
+            / self.ra
             * (
                 mixed_layer.dqsatdT * (self.surf_temp - mixed_layer.theta)
                 + mixed_layer.qsat
@@ -361,7 +365,7 @@ class AbstractStandardLandSurfaceModel(AbstractLandSurfaceModel):
             (1.0 - self.cveg)
             * const.rho
             * const.lv
-            / (surface_layer.ra + self.rssoil)
+            / (self.ra + self.rssoil)
             * (
                 mixed_layer.dqsatdT * (self.surf_temp - mixed_layer.theta)
                 + mixed_layer.qsat
@@ -372,29 +376,18 @@ class AbstractStandardLandSurfaceModel(AbstractLandSurfaceModel):
         self.wltend = -self.le_liq / (const.rhow * const.lv)
 
         self.le = self.le_soil + self.le_veg + self.le_liq
-        self.hf = (
-            const.rho
-            * const.cp
-            / surface_layer.ra
-            * (self.surf_temp - mixed_layer.theta)
-        )
+        self.hf = const.rho * const.cp / self.ra * (self.surf_temp - mixed_layer.theta)
         self.gf = self.lamb * (self.surf_temp - self.temp_soil)
         self.le_pot = (
             mixed_layer.dqsatdT * (radiation.net_rad - self.gf)
-            + const.rho
-            * const.cp
-            / surface_layer.ra
-            * (mixed_layer.qsat - mixed_layer.q)
+            + const.rho * const.cp / self.ra * (mixed_layer.qsat - mixed_layer.q)
         ) / (mixed_layer.dqsatdT + const.cp / const.lv)
         self.le_ref = (
             mixed_layer.dqsatdT * (radiation.net_rad - self.gf)
-            + const.rho
-            * const.cp
-            / surface_layer.ra
-            * (mixed_layer.qsat - mixed_layer.q)
+            + const.rho * const.cp / self.ra * (mixed_layer.qsat - mixed_layer.q)
         ) / (
             mixed_layer.dqsatdT
-            + const.cp / const.lv * (1.0 + self.rsmin / self.lai / surface_layer.ra)
+            + const.cp / const.lv * (1.0 + self.rsmin / self.lai / self.ra)
         )
 
         cg = self.cgsat * (self.wsat / self.w2) ** (self.b / (2.0 * np.log(10.0)))

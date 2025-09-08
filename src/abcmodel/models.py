@@ -133,7 +133,6 @@ class AbstractLandSurfaceModel:
 class AbstractSurfaceLayerModel(AbstractModel):
     # required by minimal:
     ustar: float
-    ra: float
     # limamau the following is currently not computed by minimal model (!!!)
     thetasurf: float
 
@@ -147,7 +146,7 @@ class AbstractSurfaceLayerModel(AbstractModel):
         raise NotImplementedError
 
     @abstractmethod
-    def compute_ra(self, u: float, v: float, wstar: float) -> None:
+    def compute_ra(self, u: float, v: float, wstar: float) -> float:
         raise NotImplementedError
 
 

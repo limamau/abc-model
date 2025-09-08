@@ -339,7 +339,7 @@ class AquaCropModel(AbstractStandardLandSurfaceModel):
         self.rsCO2 = 1.0 / self.gcco2
 
         # calculate net flux of CO2 into the plant (An)
-        an = -(self.co2abs - self.ci) / (surface_layer.ra + self.rsCO2)
+        an = -(self.co2abs - self.ci) / (self.ra + self.rsCO2)
 
         # CO2 soil surface flux
         fw = self.cw * self.wmax / (self.wg + self.wmin)

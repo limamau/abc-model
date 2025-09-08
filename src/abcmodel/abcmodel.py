@@ -259,6 +259,8 @@ class ABCOutput:
         self.dv = np.zeros(tsteps)
 
         # land surface variables
+        # aerodynamic resistance [s m-1]
+        self.ra = np.zeros(tsteps)
         # surface resistance [s m-1]
         self.rs = np.zeros(tsteps)
         # sensible heat flux [W m-2]

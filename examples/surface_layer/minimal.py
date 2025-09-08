@@ -197,9 +197,9 @@ def main():
     plt.ylabel("cloud fraction [-]")
 
     plt.subplot(233)
-    plt.plot(abc.out.t, abc.surface_layer.diagnostics.get("ra"))
+    plt.plot(abc.out.t, abc.surface_layer.diagnostics.get("uw"))
     plt.xlabel("time [h]")
-    plt.ylabel("aerodynamic resistance [s m-1]")
+    plt.ylabel("surface momentum flux u [m2 s-2]")
 
     plt.subplot(236)
     plt.plot(abc.out.t, abc.surface_layer.diagnostics.get("ustar"))

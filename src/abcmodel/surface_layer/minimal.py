@@ -38,23 +38,20 @@ class MinimalSurfaceLayerDiagnostics(AbstractDiagnostics["MinimalSurfaceLayerMod
 
     Variables
     -------
-    - ``uw``: wind speed [m/s].
-    - ``vw``: wind speed [m/s].
+    - ``uw``: surface momentum flux u [m2 s-2].
+    - ``vw``: surface momentum flux v [m2 s-2].
     - ``ustar``: surface friction velocity [m/s].
-    - ``ra``: aerodynamic resistance [s m-1].
     """
 
     def post_init(self, tsteps: int):
         self.uw = np.zeros(tsteps)
         self.vw = np.zeros(tsteps)
         self.ustar = np.zeros(tsteps)
-        self.ra = np.zeros(tsteps)
 
     def store(self, t: int, model: "MinimalSurfaceLayerModel"):
         self.uw[t] = model.uw
         self.vw[t] = model.vw
         self.ustar[t] = model.ustar
-        self.ra[t] = model.ra
 
 
 class MinimalSurfaceLayerModel(AbstractSurfaceLayerModel):
@@ -66,13 +63,7 @@ class MinimalSurfaceLayerModel(AbstractSurfaceLayerModel):
         init_conds: MinimalSurfaceLayerInitConds,
         diagnostics: AbstractDiagnostics = MinimalSurfaceLayerDiagnostics(),
     ):
-        self.ustar: float = init_conds.ustar
-
-        # other variables exist as floats, but are not assigned here
-        self.uw: float
-        self.vw: float
-        self.ra: float
-
+        self.ustar = init_conds.ustar
         self.diagnostics = diagnostics
 
     def run(
@@ -92,4 +83,4 @@ class MinimalSurfaceLayerModel(AbstractSurfaceLayerModel):
     def compute_ra(self, u: float, v: float, wstar: float):
         """Calculate aerodynamic resistance from wind speed and friction velocity."""
         ueff = np.sqrt(u**2.0 + v**2.0 + wstar**2.0)
-        self.ra = ueff / max(1.0e-3, self.ustar) ** 2.0
+        return ueff / max(1.0e-3, self.ustar) ** 2.0

@@ -82,7 +82,6 @@ class StandardSurfaceLayerDiagnostics(AbstractDiagnostics["StandardSurfaceLayerM
     - ``drag_s``: drag coefficient for scalars [-].
     - ``obukhov_length``: Obukhov length [m].
     - ``rib_number``: bulk Richardson number [-].
-    - ``ra``: aerodynamic resistance [s m-1].
     """
 
     def post_init(self, tsteps: int):
@@ -102,7 +101,6 @@ class StandardSurfaceLayerDiagnostics(AbstractDiagnostics["StandardSurfaceLayerM
         self.drag_s = np.zeros(tsteps)
         self.obukhov_length = np.zeros(tsteps)
         self.rib_number = np.zeros(tsteps)
-        self.ra = np.zeros(tsteps)
 
     def store(self, t: int, model: "StandardSurfaceLayerModel"):
         self.uw[t] = model.uw
@@ -121,7 +119,6 @@ class StandardSurfaceLayerDiagnostics(AbstractDiagnostics["StandardSurfaceLayerM
         self.drag_s[t] = model.drag_s
         self.obukhov_length[t] = model.obukhov_length
         self.rib_number[t] = model.rib_number
-        self.ra[t] = model.ra
 
 
 class StandardSurfaceLayerModel(AbstractSurfaceLayerModel):
@@ -150,20 +147,6 @@ class StandardSurfaceLayerModel(AbstractSurfaceLayerModel):
         self.theta = init_conds.theta
         self.drag_m = init_conds.drag_m
         self.drag_s = init_conds.drag_s
-        self.uw: float
-        self.vw: float
-        self.temp_2m: float
-        self.q2m: float
-        self.u2m: float
-        self.v2m: float
-        self.e2m: float
-        self.esat2m: float
-        self.thetasurf: float
-        self.thetavsurf: float
-        self.qsurf: float
-        self.obukhov_length: float
-        self.rib_number: float
-        self.ra: float
         self.diagnostics = diagnostics
 
     def calculate_effective_wind_speed(
@@ -380,4 +363,4 @@ class StandardSurfaceLayerModel(AbstractSurfaceLayerModel):
         """Calculate aerodynamic resistance from wind speed and drag coefficient."""
         # limamau: we should probably move this variable to land surface model class
         ueff = np.sqrt(u**2.0 + v**2.0 + wstar**2.0)
-        self.ra = (self.drag_s * ueff) ** -1.0
+        return (self.drag_s * ueff) ** -1.0
