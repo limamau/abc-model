@@ -1,12 +1,51 @@
 import numpy as np
 
 from ..models import (
+    AbstractDiagnostics,
     AbstractMixedLayerModel,
     AbstractRadiationModel,
     AbstractSurfaceLayerModel,
 )
 from ..utils import PhysicalConstants
-from .standard import AbstractStandardLandSurfaceModel
+from .standard import (
+    AbstractStandardLandSurfaceModel,
+    StandardLandSurfaceDiagnostics,
+    StandardLandSurfaceInitConds,
+    StandardLandSurfaceParams,
+)
+
+
+class JarvisStewartParams(StandardLandSurfaceParams):
+    """Data class for Jarvis-Stewart model parameters.
+
+    Arguments
+    ---------
+    - all arguments from StandardLandSurfaceParams.
+    """
+
+    pass
+
+
+class JarvisStewartInitConds(StandardLandSurfaceInitConds):
+    """Data class for Jarvis-Stewart model initial conditions.
+
+    Arguments
+    ---------
+    - all arguments from StandardLandSurfaceInitConds.
+    """
+
+    pass
+
+
+class JarvisStewartDiagnostics(StandardLandSurfaceDiagnostics["JarvisStewartModel"]):
+    """Class for Jarvis-Stewart model diagnostics.
+
+    Variables
+    ---------
+    - all variables from StandardLandSurfaceDiagnostics.
+    """
+
+    pass
 
 
 class JarvisStewartModel(AbstractStandardLandSurfaceModel):
@@ -17,95 +56,26 @@ class JarvisStewartModel(AbstractStandardLandSurfaceModel):
     for radiation, soil moisture, vapor pressure deficit, and temperature effects
     on stomatal conductance.
 
-    **Processes:**
+    Processes
+    ---------
     1. Inherit all standard land surface processes from parent class.
     2. Calculate surface resistance using four environmental stress factors.
     3. Apply Jarvis-Stewart multiplicative stress function approach.
     4. No CO2 flux calculations (simple implementation).
 
-    Arguments
-    ----------
-    - ``wg``: volumetric water content top soil layer [m3 m-3].
-    - ``w2``: volumetric water content deeper soil layer [m3 m-3].
-    - ``temp_soil``: temperature top soil layer [K].
-    - ``temp2``: temperature deeper soil layer [K].
-    - ``a``: Clapp-Hornberger retention curve parameter [-].
-    - ``b``: Clapp-Hornberger retention curve parameter [-].
-    - ``p``: Clapp-Hornberger retention curve parameter [-].
-    - ``cgsat``: saturated soil conductivity for heat [W m-1 K-1].
-    - ``wsat``: saturated volumetric water content [-].
-    - ``wfc``: volumetric water content field capacity [-].
-    - ``wwilt``: volumetric water content wilting point [-].
-    - ``c1sat``: saturated soil conductivity parameter [-].
-    - ``c2sat``: reference soil conductivity parameter [-].
-    - ``lai``: leaf area index [-].
-    - ``gD``: correction factor transpiration for VPD [-].
-    - ``rsmin``: minimum resistance transpiration [s m-1].
-    - ``rssoilmin``: minimum resistance soil evaporation [s m-1].
-    - ``alpha``: surface albedo [-], range 0 to 1.
-    - ``surf_temp``: surface temperature [K].
-    - ``cveg``: vegetation fraction [-], range 0 to 1.
-    - ``wmax``: thickness of water layer on wet vegetation [m].
-    - ``wl``: equivalent water layer depth for wet vegetation [m].
-    - ``lam``: thermal diffusivity skin layer [-].
-
     Updates
     --------
     - ``rs``: surface resistance for transpiration [s m-1].
-    - All updates from ``AbstractStandardLandSurfaceModel``.
+    - all updates from ``AbstractStandardLandSurfaceModel``.
     """
 
     def __init__(
         self,
-        wg: float,
-        w2: float,
-        temp_soil: float,
-        temp2: float,
-        a: float,
-        b: float,
-        p: float,
-        cgsat: float,
-        wsat: float,
-        wfc: float,
-        wwilt: float,
-        c1sat: float,
-        c2sat: float,
-        lai: float,
-        gD: float,
-        rsmin: float,
-        rssoilmin: float,
-        alpha: float,
-        surf_temp: float,
-        cveg: float,
-        wmax: float,
-        wl: float,
-        lam: float,
+        params: JarvisStewartParams,
+        init_conds: JarvisStewartInitConds,
+        diagnostics: AbstractDiagnostics = JarvisStewartDiagnostics(),
     ):
-        super().__init__(
-            wg,
-            w2,
-            temp_soil,
-            temp2,
-            a,
-            b,
-            p,
-            cgsat,
-            wsat,
-            wfc,
-            wwilt,
-            c1sat,
-            c2sat,
-            lai,
-            gD,
-            rsmin,
-            rssoilmin,
-            alpha,
-            surf_temp,
-            cveg,
-            wmax,
-            wl,
-            lam,
-        )
+        super().__init__(params, init_conds, diagnostics)
 
     def compute_surface_resistance(
         self,
@@ -132,7 +102,7 @@ class JarvisStewartModel(AbstractStandardLandSurfaceModel):
         # calculate surface resistances using Jarvis-Stewart model
         f1 = radiation.get_f1()
 
-        if self.w2 > self.wwilt:  # and self.w2 <= self.wfc):
+        if self.w2 > self.wwilt:
             f2 = (self.wfc - self.wwilt) / (self.w2 - self.wwilt)
         else:
             f2 = 1.0e8
@@ -151,16 +121,6 @@ class JarvisStewartModel(AbstractStandardLandSurfaceModel):
         mixed_layer: AbstractMixedLayerModel,
     ):
         """
-        Compute CO2 flux (no-op implementation).
-
-        Parameters
-        ----------
-        - ``const``: physical constants (unused).
-        - ``surface_layer``: surface layer model (unused).
-        - ``mixed_layer``: mixed layer model (unused).
-
-        Updates
-        -------
-        No updates performed - this model does not calculate CO2 fluxes.
+        Pass.
         """
         pass

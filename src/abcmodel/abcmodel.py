@@ -1,7 +1,6 @@
 import numpy as np
 
 from .clouds import NoCloudModel
-from .land_surface import MinimalLandSurfaceModel
 from .models import (
     AbstractCloudModel,
     AbstractLandSurfaceModel,
@@ -36,7 +35,7 @@ class ABCModel:
         self.radiation = radiation
         self.radiation.diagnostics.post_init(self.tsteps)
         self.land_surface = land_surface
-        # self.land_surface.diagnostics.post_init(self.tsteps) - TBD
+        self.land_surface.diagnostics.post_init(self.tsteps)
         self.surface_layer = surface_layer
         self.surface_layer.diagnostics.post_init(self.tsteps)
         self.mixed_layer = mixed_layer
@@ -135,50 +134,18 @@ class ABCModel:
 
     # store model output
     def store(self):
+        # limamau: maybe there's no need to store this?
         t = self.t
         # limamau: IMO tstart should be taken out of radiation
         self.out.t[t] = t * self.dt / 3600.0 + self.radiation.tstart
         self.radiation.store(t)
+        self.land_surface.store(t)
         self.surface_layer.store(t)
-        self.clouds.store(t)
-
-        if not isinstance(self.land_surface, MinimalLandSurfaceModel):
-            self.out.rs[t] = self.land_surface.rs
-            self.out.hf[t] = self.land_surface.hf
-            self.out.le[t] = self.land_surface.le
-            self.out.le_liq[t] = self.land_surface.le_liq
-            self.out.le_veg[t] = self.land_surface.le_veg
-            self.out.le_soil[t] = self.land_surface.le_soil
-            self.out.le_pot[t] = self.land_surface.le_pot
-            self.out.le_ref[t] = self.land_surface.le_ref
-            self.out.gf[t] = self.land_surface.gf
-
         self.mixed_layer.store(t)
+        self.clouds.store(t)
 
 
 class ABCOutput:
     def __init__(self, tsteps):
         # time [s]
         self.t = np.zeros(tsteps)
-
-        # land surface variables
-        # aerodynamic resistance [s m-1]
-        self.ra = np.zeros(tsteps)
-        # surface resistance [s m-1]
-        self.rs = np.zeros(tsteps)
-        # sensible heat flux [W m-2]
-        self.hf = np.zeros(tsteps)
-        # evapotranspiration [W m-2]
-        self.le = np.zeros(tsteps)
-        # open water evaporation [W m-2]
-        self.le_liq = np.zeros(tsteps)
-        # transpiration [W m-2]
-        self.le_veg = np.zeros(tsteps)
-        # soil evaporation [W m-2]
-        self.le_soil = np.zeros(tsteps)
-        # potential evaporation [W m-2]
-        self.le_pot = np.zeros(tsteps)
-        # reference evaporation at rs = rsmin / LAI [W m-2]
-        self.le_ref = np.zeros(tsteps)
-        # ground heat flux [W m-2]
-        self.gf = np.zeros(tsteps)

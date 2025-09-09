@@ -8,7 +8,7 @@ from .utils import PhysicalConstants
 
 # limamau: how to enforce that every model should take params, init_conds
 # and diagnostics as input on the initialization method?
-# limamau: it would be also niceto implement something like "check_dependencies"
+# limamau: it would be also nice to implement something like "check_dependencies"
 # in order to verify if the concrete model assigned to one of the 5 components in
 # the abc model has all variables needed from other models (minimal variables)...
 
@@ -89,7 +89,7 @@ class AbstractRadiationModel(AbstractModel):
         raise NotImplementedError
 
 
-class AbstractLandSurfaceModel:
+class AbstractLandSurfaceModel(AbstractModel):
     # required by minimal:
     # surface albedo [-]
     alpha: float

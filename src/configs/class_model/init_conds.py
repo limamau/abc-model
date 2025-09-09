@@ -1,4 +1,5 @@
 from abcmodel.clouds import StandardCumulusInitConds
+from abcmodel.land_surface import AquaCropInitConds, JarvisStewartInitConds
 from abcmodel.mixed_layer import BulkMixedLayerInitConds
 from abcmodel.radiation import StandardRadiationInitConds
 from abcmodel.surface_layer import StandardSurfaceLayerInitConds
@@ -6,18 +7,13 @@ from abcmodel.surface_layer import StandardSurfaceLayerInitConds
 THETA = 288.0
 
 radiation = StandardRadiationInitConds(
-    # net surface radiation [W/m²]
     net_rad=400,
 )
 
 surface_layer = StandardSurfaceLayerInitConds(
-    # surface friction velocity [m s-1]
     ustar=0.3,
-    # roughness length for momentum [m]
     z0m=0.02,
-    # roughness length for scalars [m]
     z0h=0.002,
-    # initial mixed-layer potential temperature [K]
     theta=THETA,
 )
 
@@ -25,7 +21,7 @@ clouds = StandardCumulusInitConds()
 
 mixed_layer = BulkMixedLayerInitConds(
     abl_height=200.0,
-    theta=THETA,  # THETA is 288.0
+    theta=THETA,
     dtheta=1.0,
     wtheta=0.1,
     q=0.008,
@@ -39,4 +35,22 @@ mixed_layer = BulkMixedLayerInitConds(
     v=-4.0,
     dv=4.0,
     dz_h=150.0,
+)
+
+jarvis_stewart = JarvisStewartInitConds(
+    wg=0.21,
+    w2=0.21,
+    temp_soil=285.0,
+    temp2=286.0,
+    surf_temp=290.0,
+    wl=0.0000,
+)
+
+aquacrop = AquaCropInitConds(
+    wg=0.21,
+    w2=0.21,
+    temp_soil=285.0,
+    temp2=286.0,
+    surf_temp=290.0,
+    wl=0.0000,
 )

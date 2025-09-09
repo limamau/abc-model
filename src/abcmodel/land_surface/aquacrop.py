@@ -2,12 +2,115 @@ import numpy as np
 from scipy.special import exp1
 
 from ..models import (
+    AbstractDiagnostics,
     AbstractMixedLayerModel,
     AbstractRadiationModel,
     AbstractSurfaceLayerModel,
 )
 from ..utils import PhysicalConstants, get_esat
-from .standard import AbstractStandardLandSurfaceModel
+from .standard import (
+    AbstractStandardLandSurfaceModel,
+    StandardLandSurfaceDiagnostics,
+    StandardLandSurfaceInitConds,
+    StandardLandSurfaceParams,
+)
+
+
+class AquaCropParams(StandardLandSurfaceParams):
+    """Data class for AquaCrop model parameters.
+
+    Arguments
+    ---------
+    - all arguments from StandardLandSurfaceParams.
+    - ``c3c4``: plant type, either "c3" or "c4".
+
+    Extra
+    -----
+    - ``co2comp298``: CO2 compensation concentration [mg m-3].
+    - ``net_rad10CO2``: function parameter to calculate CO2 compensation concentration [-].
+    - ``gm298``: mesophyill conductance at 298 K [mm s-1].
+    - ``ammax298``: CO2 maximal primary productivity [mg m-2 s-1].
+    - ``net_rad10gm``: function parameter to calculate mesophyll conductance [-].
+    - ``temp1gm``: reference temperature to calculate mesophyll conductance gm [K].
+    - ``temp2gm``: reference temperature to calculate mesophyll conductance gm [K].
+    - ``net_rad10Am``: function parameter to calculate maximal primary profuctivity Ammax.
+    - ``temp1Am``: reference temperature to calculate maximal primary profuctivity Ammax [K].
+    - ``temp2Am``: reference temperature to calculate maximal primary profuctivity Ammax [K].
+    - ``f0``: maximum value Cfrac [-].
+    - ``ad``: regression coefficient to calculate Cfrac [kPa-1].
+    - ``alpha0``: initial low light conditions [mg J-1].
+    - ``kx``: extinction coefficient PAR [-].
+    - ``gmin``: cuticular (minimum) conductance [mm s-1].
+    - ``nuco2q``: ratio molecular viscosity water to carbon dioxide.
+    - ``cw``: constant water stress correction (eq. 13 Jacobs et al. 2007) [-].
+    - ``wmax``: upper reference value soil water [-].
+    - ``wmin``: lower reference value soil water [-].
+    - ``r10``: respiration at 10 C [mg CO2 m-2 s-1].
+    - ``e0``: activation energy [53.3 kJ kmol-1].
+    """
+
+    def __init__(self, c3c4: str, **kwargs):
+        super().__init__(**kwargs)
+        self.c3c4 = c3c4
+        self.co2comp298 = [68.5, 4.3]
+        self.net_rad10CO2 = [1.5, 1.5]
+        self.gm298 = [7.0, 17.5]
+        self.ammax298 = [2.2, 1.7]
+        self.net_rad10gm = [2.0, 2.0]
+        self.temp1gm = [278.0, 286.0]
+        self.temp2gm = [301.0, 309.0]
+        self.net_rad10Am = [2.0, 2.0]
+        self.temp1Am = [281.0, 286.0]
+        self.temp2Am = [311.0, 311.0]
+        self.f0 = [0.89, 0.85]
+        self.ad = [0.07, 0.15]
+        self.alpha0 = [0.017, 0.014]
+        self.kx = [0.7, 0.7]
+        self.gmin = [0.25e-3, 0.25e-3]
+        self.nuco2q = 1.6
+        self.cw = 0.0016
+        self.wmax = 0.55
+        self.wmin = 0.005
+        self.r10 = 0.23
+        self.e0 = 53.3e3
+
+
+class AquaCropInitConds(StandardLandSurfaceInitConds):
+    """Data class for AquaCrop model initial conditions.
+
+    Arguments
+    ---------
+    - all arguments from StandardLandSurfaceInitConds.
+    """
+
+    pass
+
+
+class AquaCropDiagnostics(StandardLandSurfaceDiagnostics["AquaCropModel"]):
+    """Class for AquaCrop model diagnostics.
+
+    Variables
+    ---------
+    - all arguments from StandardLandSurfaceDiagnostics.
+    - ``rsCO2``: stomatal resistance to CO2.
+    - ``gcco2``: conductance to CO2.
+    - ``ci``: intercellular CO2 concentration.
+    - ``co2abs``: CO2 assimilation rate.
+    """
+
+    def post_init(self, tsteps: int):
+        super().post_init(tsteps)
+        self.rsCO2 = np.zeros(tsteps)
+        self.gcco2 = np.zeros(tsteps)
+        self.ci = np.zeros(tsteps)
+        self.co2abs = np.zeros(tsteps)
+
+    def store(self, t: int, model: "AquaCropModel"):
+        super().store(t, model)
+        self.rsCO2[t] = model.rsCO2
+        self.gcco2[t] = model.gcco2
+        self.ci[t] = model.ci
+        self.co2abs[t] = model.co2abs
 
 
 class AquaCropModel(AbstractStandardLandSurfaceModel):
@@ -18,7 +121,8 @@ class AquaCropModel(AbstractStandardLandSurfaceModel):
     processes for both C3 and C4 vegetation types, soil moisture stress effects,
     and explicit CO2 flux calculations.
 
-    **Processes:**
+    Processes
+    ---------
     1. Inherit all standard land surface processes from parent class.
     2. Calculate CO2 compensation concentration based on temperature.
     3. Compute mesophyll conductance with temperature response functions.
@@ -27,33 +131,6 @@ class AquaCropModel(AbstractStandardLandSurfaceModel):
     6. Scale from leaf-level to canopy-level fluxes using extinction functions.
     7. Compute surface resistance from canopy conductance.
     8. Calculate net CO2 fluxes including plant assimilation and soil respiration.
-
-    Arguments
-    ----------
-    - ``wg``: volumetric water content top soil layer [m3 m-3].
-    - ``w2``: volumetric water content deeper soil layer [m3 m-3].
-    - ``temp_soil``: temperature top soil layer [K].
-    - ``temp2``: temperature deeper soil layer [K].
-    - ``a``: Clapp-Hornberger retention curve parameter [-].
-    - ``b``: Clapp-Hornberger retention curve parameter [-].
-    - ``p``: Clapp-Hornberger retention curve parameter [-].
-    - ``cgsat``: saturated soil conductivity for heat [W m-1 K-1].
-    - ``wsat``: saturated volumetric water content [-].
-    - ``wfc``: volumetric water content field capacity [-].
-    - ``wwilt``: volumetric water content wilting point [-].
-    - ``c1sat``: saturated soil conductivity parameter [-].
-    - ``c2sat``: reference soil conductivity parameter [-].
-    - ``lai``: leaf area index [-].
-    - ``gD``: correction factor transpiration for VPD [-].
-    - ``rsmin``: minimum resistance transpiration [s m-1].
-    - ``rssoilmin``: minimum resistance soil evaporation [s m-1].
-    - ``alpha``: surface albedo [-], range 0 to 1.
-    - ``surf_temp``: surface temperature [K].
-    - ``cveg``: vegetation fraction [-], range 0 to 1.
-    - ``wmax``: thickness of water layer on wet vegetation [m].
-    - ``wl``: equivalent water layer depth for wet vegetation [m].
-    - ``lam``: thermal diffusivity skin layer [-].
-    - ``c3c4``: plant type, either "c3" or "c4".
 
     Updates
     --------
@@ -65,7 +142,7 @@ class AquaCropModel(AbstractStandardLandSurfaceModel):
     - ``mixed_layer.wCO2A``: CO2 flux from plant assimilation [kg kg-1 m s-1].
     - ``mixed_layer.wCO2R``: CO2 flux from soil respiration [kg kg-1 m s-1].
     - ``mixed_layer.wCO2``: net CO2 flux [kg kg-1 m s-1].
-    - All updates from ``AbstractStandardLandSurfaceModel``.
+    - all updates from ``AbstractStandardLandSurfaceModel``.
     """
 
     rsCO2: float
@@ -74,108 +151,40 @@ class AquaCropModel(AbstractStandardLandSurfaceModel):
 
     def __init__(
         self,
-        wg: float,
-        w2: float,
-        temp_soil: float,
-        temp2: float,
-        a: float,
-        b: float,
-        p: float,
-        cgsat: float,
-        wsat: float,
-        wfc: float,
-        wwilt: float,
-        c1sat: float,
-        c2sat: float,
-        lai: float,
-        gD: float,
-        rsmin: float,
-        rssoilmin: float,
-        alpha: float,
-        surf_temp: float,
-        cveg: float,
-        wmax: float,
-        wl: float,
-        lam: float,
-        c3c4: str,
+        params: AquaCropParams,
+        init_conds: AquaCropInitConds,
+        diagnostics: AbstractDiagnostics = AquaCropDiagnostics(),
     ):
-        # A-Gs constants and settings
-        # plant type: [C3, C4]
-        if c3c4 == "c3":
+        super().__init__(params, init_conds, diagnostics)
+
+        if params.c3c4 == "c3":
             self.c3c4 = 0
-        elif c3c4 == "c4":
+        elif params.c3c4 == "c4":
             self.c3c4 = 1
         else:
-            raise ValueError(f'Invalid option "{c3c4}" for "c3c4".')
+            raise ValueError(f'Invalid option "{params.c3c4}" for "c3c4".')
 
-        # CO2 compensation concentration [mg m-3]
-        self.co2comp298 = [68.5, 4.3]
-        # function parameter to calculate CO2 compensation concentration [-]
-        self.net_rad10CO2 = [1.5, 1.5]
-        # mesophyill conductance at 298 K [mm s-1]
-        self.gm298 = [7.0, 17.5]
-        # CO2 maximal primary productivity [mg m-2 s-1]
-        self.ammax298 = [2.2, 1.7]
-        # function parameter to calculate mesophyll conductance [-]
-        self.net_rad10gm = [2.0, 2.0]
-        # reference temperature to calculate mesophyll conductance gm [K]
-        self.temp1gm = [278.0, 286.0]
-        # reference temperature to calculate mesophyll conductance gm [K]
-        self.temp2gm = [301.0, 309.0]
-        # function parameter to calculate maximal primary profuctivity Ammax
-        self.net_rad10Am = [2.0, 2.0]
-        # reference temperature to calculate maximal primary profuctivity Ammax [K]
-        self.temp1Am = [281.0, 286.0]
-        # reference temperature to calculate maximal primary profuctivity Ammax [K]
-        self.temp2Am = [311.0, 311.0]
-        # maximum value Cfrac [-]
-        self.f0 = [0.89, 0.85]
-        # regression coefficient to calculate Cfrac [kPa-1]
-        self.ad = [0.07, 0.15]
-        # initial low light conditions [mg J-1]
-        self.alpha0 = [0.017, 0.014]
-        # extinction coefficient PAR [-]
-        self.kx = [0.7, 0.7]
-        # cuticular (minimum) conductance [mm s-1]
-        self.gmin = [0.25e-3, 0.25e-3]
-        # ratio molecular viscosity water to carbon dioxide
-        self.nuco2q = 1.6
-        # constant water stress correction (eq. 13 Jacobs et al. 2007) [-]
-        self.cw = 0.0016
-        # upper reference value soil water [-]
-        self.wmax = 0.55
-        # lower reference value soil water [-]
-        self.wmin = 0.005
-        # respiration at 10 C [mg CO2 m-2 s-1]
-        self.r10 = 0.23
-        # activation energy [53.3 kJ kmol-1]
-        self.e0 = 53.3e3
-
-        super().__init__(
-            wg,
-            w2,
-            temp_soil,
-            temp2,
-            a,
-            b,
-            p,
-            cgsat,
-            wsat,
-            wfc,
-            wwilt,
-            c1sat,
-            c2sat,
-            lai,
-            gD,
-            rsmin,
-            rssoilmin,
-            alpha,
-            surf_temp,
-            cveg,
-            wmax,
-            wl,
-            lam,
-        )
+        self.co2comp298 = params.co2comp298
+        self.net_rad10CO2 = params.net_rad10CO2
+        self.gm298 = params.gm298
+        self.ammax298 = params.ammax298
+        self.net_rad10gm = params.net_rad10gm
+        self.temp1gm = params.temp1gm
+        self.temp2gm = params.temp2gm
+        self.net_rad10Am = params.net_rad10Am
+        self.temp1Am = params.temp1Am
+        self.temp2Am = params.temp2Am
+        self.f0 = params.f0
+        self.ad = params.ad
+        self.alpha0 = params.alpha0
+        self.kx = params.kx
+        self.gmin = params.gmin
+        self.nuco2q = params.nuco2q
+        self.cw = params.cw
+        self.wmax = params.wmax
+        self.wmin = params.wmin
+        self.r10 = params.r10
+        self.e0 = params.e0
 
     def compute_surface_resistance(
         self,
@@ -320,28 +329,8 @@ class AquaCropModel(AbstractStandardLandSurfaceModel):
         surface_layer: AbstractSurfaceLayerModel,
         mixed_layer: AbstractMixedLayerModel,
     ):
-        """
-        Compute CO2 flux including plant assimilation and soil respiration.
-
-        Parameters
-        ----------
-        - ``const``: physical constants. Uses ``mair``, ``rho``, ``mco2``.
-        - ``surface_layer``: surface layer model. Uses ``ra``.
-        - ``mixed_layer``: mixed layer model. Updates ``wCO2A``, ``wCO2R``, ``wCO2``.
-
-        Updates
-        -------
-        Updates ``self.rsCO2`` and mixed layer CO2 flux components including
-        plant assimilation flux (``wCO2A``), soil respiration flux (``wCO2R``),
-        and net CO2 flux (``wCO2``).
-        """
-        # CO2 soil surface flux
         self.rsCO2 = 1.0 / self.gcco2
-
-        # calculate net flux of CO2 into the plant (An)
         an = -(self.co2abs - self.ci) / (self.ra + self.rsCO2)
-
-        # CO2 soil surface flux
         fw = self.cw * self.wmax / (self.wg + self.wmin)
         resp = (
             self.r10

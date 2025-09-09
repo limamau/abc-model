@@ -1,94 +1,49 @@
 from abc import abstractmethod
+from typing import Generic, TypeVar
 
 import numpy as np
 
 from ..models import (
+    AbstractDiagnostics,
+    AbstractInitConds,
     AbstractLandSurfaceModel,
     AbstractMixedLayerModel,
+    AbstractParams,
     AbstractRadiationModel,
     AbstractSurfaceLayerModel,
 )
 from ..utils import PhysicalConstants, get_esat, get_qsat
 
+ST = TypeVar("ST", bound="AbstractStandardLandSurfaceModel")
 
-class AbstractStandardLandSurfaceModel(AbstractLandSurfaceModel):
-    """Abstract standard land surface model with comprehensive soil-vegetation dynamics.
 
-    Abstract class for standard land surface models that include soil moisture, soil
-    temperature, vegetation processes, and surface energy balance calculations.
-    Implements common functionality while requiring subclasses to define surface
-    resistance and CO2 flux calculations.
-
-    **Processes:**
-    1. Compute aerodynamic resistance and thermodynamic variables.
-    2. Calculate surface resistance and CO2 fluxes (abstract methods).
-    3. Determine soil resistance and wet fraction of vegetation.
-    4. Solve for surface temperature implicitly using energy balance.
-    5. Calculate all surface fluxes (sensible, latent, ground heat).
-    6. Update soil temperature and moisture tendencies.
+class StandardLandSurfaceParams(AbstractParams["AbstractStandardLandSurfaceModel"]):
+    """Data class for standard land surface model parameters.
 
     Arguments
-    ----------
-    - ``wg``: volumetric water content top soil layer [m3 m-3].
-    - ``w2``: volumetric water content deeper soil layer [m3 m-3].
-    - ``temp_soil``: temperature top soil layer [K].
-    - ``temp2``: temperature deeper soil layer [K].
-    - ``a``: Clapp-Hornberger retention curve parameter [-].
-    - ``b``: Clapp-Hornberger retention curve parameter [-].
-    - ``p``: Clapp-Hornberger retention curve parameter [-].
-    - ``cgsat``: saturated soil conductivity for heat [W m-1 K-1].
-    - ``wsat``: saturated volumetric water content [-].
-    - ``wfc``: volumetric water content field capacity [-].
-    - ``wwilt``: volumetric water content wilting point [-].
+    ---------
+    - ``a``: Clapp and Hornberger (1978) retention curve parameter.
+    - ``b``: Clapp and Hornberger (1978) retention curve parameter.
+    - ``p``: Clapp and Hornberger (1978) retention curve parameter.
+    - ``cgsat``: Saturated soil heat capacity [J m-3 K-1].
+    - ``wsat``: Saturated soil moisture content [m3 m-3].
+    - ``wfc``: Soil moisture content at field capacity [m3 m-3].
+    - ``wwilt``: Soil moisture content at wilting point [m3 m-3].
     - ``c1sat``: saturated soil conductivity parameter [-].
     - ``c2ref``: reference soil conductivity parameter [-].
-    - ``lai``: leaf area index [-].
-    - ``gD``: correction factor transpiration for VPD [-].
-    - ``rsmin``: minimum resistance transpiration [s m-1].
-    - ``rssoilmin``: minimum resistance soil evaporation [s m-1].
-    - ``alpha``: surface albedo [-], range 0 to 1.
-    - ``surf_temp``: surface temperature [K].
-    - ``cveg``: vegetation fraction [-], range 0 to 1.
-    - ``wmax``: thickness of water layer on wet vegetation [m].
-    - ``wl``: equivalent water layer depth for wet vegetation [m].
-    - ``lam``: thermal diffusivity skin layer [-].
+    - ``lai``: Leaf area index [m2 m-2].
+    - ``gD``: Canopy radiation extinction coefficient [-].
+    - ``rsmin``: Minimum stomatal resistance [s m-1].
+    - ``rssoilmin``: Minimum soil resistance [s m-1].
+    - ``alpha``: Initial slope of the light response curve [mol J-1].
+    - ``cveg``: Vegetation fraction [-].
+    - ``wmax``: Maximum water storage capacity of the canopy [m].
+    - ``lam``: Thermal diffusivity of the soil [W m-1 K-1].
 
-    Updates
-    --------
-    - ``cliq``: wet fraction [-].
-    - ``temp_soil_tend``: soil temperature tendency [K s-1].
-    - ``wgtend``: soil moisture tendency [m3 m-3 s-1].
-    - ``wltend``: equivalent liquid water tendency [m s-1].
-    - ``surf_temp``: surface temperature [K].
-    - ``le_veg``: latent heat flux from vegetation [W m-2].
-    - ``le_liq``: latent heat flux from liquid water [W m-2].
-    - ``le_soil``: latent heat flux from soil [W m-2].
-    - ``le``: total latent heat flux [W m-2].
-    - ``hf``: sensible heat flux [W m-2].
-    - ``gf``: ground heat flux [W m-2].
-    - ``le_pot``: potential latent heat flux [W m-2].
-    - ``le_ref``: reference latent heat flux [W m-2].
-    - ``mixed_layer.wtheta``: kinematic heat flux [K m s-1].
-    - ``mixed_layer.wq``: kinematic moisture flux [kg kg-1 m s-1].
     """
-
-    # wet fraction [-]
-    cliq: float
-    # soil temperature tendency [K s-1]
-    temp_soil_tend: float
-    # soil moisture tendency [m3 m-3 s-1]
-    wgtend: float
-    # equivalent liquid water tendency [m s-1]
-    wltend: float
-    # aerodynamic resistance [s m-1]
-    ra: float
 
     def __init__(
         self,
-        wg: float,
-        w2: float,
-        temp_soil: float,
-        temp2: float,
         a: float,
         b: float,
         p: float,
@@ -103,76 +58,186 @@ class AbstractStandardLandSurfaceModel(AbstractLandSurfaceModel):
         rsmin: float,
         rssoilmin: float,
         alpha: float,
-        surf_temp: float,
         cveg: float,
         wmax: float,
-        wl: float,
         lam: float,
     ):
-        # water content parameters
-        # volumetric water content top soil layer [m3 m-3]
-        self.wg = wg
-        # volumetric water content deeper soil layer [m3 m-3]
-        self.w2 = w2
-        # saturated volumetric water content ECMWF config [-]
-        self.wsat = wsat
-        # volumetric water content field capacity [-]
-        self.wfc = wfc
-        # volumetric water content wilting point [-]
-        self.wwilt = wwilt
-
-        # temperature params
-        # temperature top soil layer [K]
-        self.temp_soil = temp_soil
-        # temperature deeper soil layer [K]
-        self.temp2 = temp2
-        # surface temperature [K]
-        self.surf_temp = surf_temp
-
-        # Clapp and Hornberger retention curve parameters
         self.a = a
         self.b = b
         self.p = p
-        # saturated soil conductivity for heat
         self.cgsat = cgsat
-
-        # C parameters
+        self.wsat = wsat
+        self.wfc = wfc
+        self.wwilt = wwilt
         self.c1sat = c1sat
         self.c2ref = c2ref
-
-        # vegetation parameters
-        # leaf area index [-]
         self.lai = lai
-        # correction factor transpiration for VPD [-]
         self.gD = gD
-        # minimum resistance transpiration [s m-1]
         self.rsmin = rsmin
-        # minimum resistance soil evaporation [s m-1]
         self.rssoilmin = rssoilmin
-        # surface albedo [-]
         self.alpha = alpha
+        self.cveg = cveg
+        self.wmax = wmax
+        self.lam = lam
+        self.c_beta = 0.0
 
-        # resistance parameters (initialized to high values)
-        # resistance transpiration [s m-1]
+
+class StandardLandSurfaceInitConds(
+    AbstractInitConds["AbstractStandardLandSurfaceModel"]
+):
+    """Data class for standard land surface model initial conditions.
+
+    Arguments
+    ---------
+    - ``wg``: Soil moisture content in the root zone [m3 m-3].
+    - ``w2``: Soil moisture content in the deep layer [m3 m-3].
+    - ``temp_soil``: Soil temperature [K].
+    - ``temp2``: Deep soil temperature [K].
+    - ``surf_temp``: Surface temperature [K].
+    - ``wl``: Liquid water storage on the canopy [m].
+
+    """
+
+    def __init__(
+        self,
+        wg: float,
+        w2: float,
+        temp_soil: float,
+        temp2: float,
+        surf_temp: float,
+        wl: float,
+    ):
+        self.wg = wg
+        self.w2 = w2
+        self.temp_soil = temp_soil
+        self.temp2 = temp2
+        self.surf_temp = surf_temp
+        self.wl = wl
         self.rs = 1.0e6
-        # resistance soil [s m-1]
         self.rssoil = 1.0e6
 
+
+class StandardLandSurfaceDiagnostics(AbstractDiagnostics[ST], Generic[ST]):
+    """Class for standard land surface model diagnostics.
+
+    Variables
+    ---------
+    - ``cliq``: Wet fraction of the canopy [-].
+    - ``temp_soil_tend``: Soil temperature tendency [K s-1].
+    - ``wgtend``: Soil moisture tendency [m3 m-3 s-1].
+    - ``wltend``: Canopy water storage tendency [m s-1].
+    - ``surf_temp``: Surface temperature [K].
+    - ``le_veg``: Latent heat flux from vegetation [W m-2].
+    - ``le_liq``: Latent heat flux from liquid water [W m-2].
+    - ``le_soil``: Latent heat flux from soil [W m-2].
+    - ``le``: Total latent heat flux [W m-2].
+    - ``hf``: Sensible heat flux [W m-2].
+    - ``gf``: Ground heat flux [W m-2].
+    - ``le_pot``: Potential latent heat flux [W m-2].
+    - ``le_ref``: Reference latent heat flux [W m-2].
+    - ``ra``: Aerodynamic resistance [s m-1].
+    """
+
+    def post_init(self, tsteps: int):
+        self.cliq = np.zeros(tsteps)
+        self.temp_soil_tend = np.zeros(tsteps)
+        self.wgtend = np.zeros(tsteps)
+        self.wltend = np.zeros(tsteps)
+        self.surf_temp = np.zeros(tsteps)
+        self.le_veg = np.zeros(tsteps)
+        self.le_liq = np.zeros(tsteps)
+        self.le_soil = np.zeros(tsteps)
+        self.le = np.zeros(tsteps)
+        self.hf = np.zeros(tsteps)
+        self.gf = np.zeros(tsteps)
+        self.le_pot = np.zeros(tsteps)
+        self.le_ref = np.zeros(tsteps)
+        self.ra = np.zeros(tsteps)
+
+    def store(self, t: int, model: ST):
+        self.cliq[t] = model.cliq
+        self.temp_soil_tend[t] = model.temp_soil_tend
+        self.wgtend[t] = model.wgtend
+        self.wltend[t] = model.wltend
+        self.surf_temp[t] = model.surf_temp
+        self.le_veg[t] = model.le_veg
+        self.le_liq[t] = model.le_liq
+        self.le_soil[t] = model.le_soil
+        self.le[t] = model.le
+        self.hf[t] = model.hf
+        self.gf[t] = model.gf
+        self.le_pot[t] = model.le_pot
+        self.le_ref[t] = model.le_ref
+        self.ra[t] = model.ra
+
+
+class AbstractStandardLandSurfaceModel(AbstractLandSurfaceModel):
+    """Abstract standard land surface model with comprehensive soil-vegetation dynamics."""
+
+    # wet fraction [-]
+    cliq: float
+    # soil temperature tendency [K s-1]
+    temp_soil_tend: float
+    # soil moisture tendency [m3 m-3 s-1]
+    wgtend: float
+    # equivalent liquid water tendency [m s-1]
+    wltend: float
+    # aerodynamic resistance [s m-1]
+    ra: float
+
+    def __init__(
+        self,
+        params: StandardLandSurfaceParams,
+        init_conds: StandardLandSurfaceInitConds,
+        diagnostics: AbstractDiagnostics = StandardLandSurfaceDiagnostics(),
+    ):
+        # water content parameters
+        self.wg = init_conds.wg
+        self.w2 = init_conds.w2
+        self.wsat = params.wsat
+        self.wfc = params.wfc
+        self.wwilt = params.wwilt
+
+        # temperature params
+        self.temp_soil = init_conds.temp_soil
+        self.temp2 = init_conds.temp2
+        self.surf_temp = init_conds.surf_temp
+
+        # Clapp and Hornberger retention curve parameters
+        self.a = params.a
+        self.b = params.b
+        self.p = params.p
+        self.cgsat = params.cgsat
+
+        # C parameters
+        self.c1sat = params.c1sat
+        self.c2ref = params.c2ref
+
+        # vegetation parameters
+        self.lai = params.lai
+        self.gD = params.gD
+        self.rsmin = params.rsmin
+        self.rssoilmin = params.rssoilmin
+        self.alpha = params.alpha
+
+        # resistance parameters
+        self.rs = init_conds.rs
+        self.rssoil = init_conds.rssoil
+
         # vegetation and water layer parameters
-        # vegetation fraction [-]
-        self.cveg = cveg
-        # thickness of water layer on wet vegetation [m]
-        self.wmax = wmax
-        # equivalent water layer depth for wet vegetation [m]
-        self.wl = wl
+        self.cveg = params.cveg
+        self.wmax = params.wmax
+        self.wl = init_conds.wl
 
         # thermal diffusivity
-        self.lamb = lam  # thermal diffusivity skin layer [-]
+        self.lamb = params.lam
 
         # old: some sanity checks for valid input
         # limamau: I think this is supposed to be a parameter
         self.c_beta = 0.0  # zero curvature; linear response
         assert self.c_beta >= 0.0 or self.c_beta <= 1.0
+
+        self.diagnostics = diagnostics
 
     @abstractmethod
     def compute_surface_resistance(
@@ -182,20 +247,6 @@ class AbstractStandardLandSurfaceModel(AbstractLandSurfaceModel):
         surface_layer: AbstractSurfaceLayerModel,
         mixed_layer: AbstractMixedLayerModel,
     ) -> None:
-        """
-        Compute surface resistance for transpiration.
-
-        Parameters
-        ----------
-        - ``const``: physical constants.
-        - ``radiation``: radiation model.
-        - ``surface_layer``: surface layer model.
-        - ``mixed_layer``: mixed layer model.
-
-        Updates
-        -------
-        Must update ``self.rs`` (surface resistance for transpiration).
-        """
         raise NotImplementedError
 
     @abstractmethod
@@ -205,19 +256,6 @@ class AbstractStandardLandSurfaceModel(AbstractLandSurfaceModel):
         surface_layer: AbstractSurfaceLayerModel,
         mixed_layer: AbstractMixedLayerModel,
     ) -> None:
-        """
-        Compute CO2 flux between surface and atmosphere.
-
-        Parameters
-        ----------
-        - ``const``: physical constants.
-        - ``surface_layer``: surface layer model.
-        - ``mixed_layer``: mixed layer model.
-
-        Updates
-        -------
-        Must update relevant CO2 flux variables (implementation-specific).
-        """
         raise NotImplementedError
 
     def run(
@@ -414,15 +452,6 @@ class AbstractStandardLandSurfaceModel(AbstractLandSurfaceModel):
     def integrate(self, dt: float):
         """
         Integrate model forward in time.
-
-        Parameters
-        ----------
-        - ``dt``: time step size [s].
-
-        Updates
-        -------
-        Updates soil temperature, soil moisture, and liquid water content
-        using computed tendencies and forward Euler integration.
         """
         self.temp_soil += dt * self.temp_soil_tend
         self.wg += dt * self.wgtend

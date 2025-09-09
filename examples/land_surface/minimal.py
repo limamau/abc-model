@@ -3,7 +3,11 @@ import matplotlib.pyplot as plt
 import configs.class_model as cm
 from abcmodel import ABCModel
 from abcmodel.clouds import StandardCumulusModel
-from abcmodel.land_surface import MinimalLandSurfaceModel
+from abcmodel.land_surface import (
+    MinimalLandSurfaceInitConds,
+    MinimalLandSurfaceModel,
+    MinimalLandSurfaceParams,
+)
 from abcmodel.mixed_layer import BulkMixedLayerModel
 from abcmodel.radiation import StandardRadiationModel
 from abcmodel.surface_layer import StandardSurfaceLayerModel
@@ -33,13 +37,15 @@ def main():
     )
 
     # 4. define land surface model
-    land_surface_model = MinimalLandSurfaceModel(
-        # surface albedo [-]
+    land_surface_params = MinimalLandSurfaceParams()
+    land_surface_init_conds = MinimalLandSurfaceInitConds(
         alpha=0.25,
-        # surface temperature [K]
         surf_temp=288.8,
-        # surface resistance [s m-1]
         rs=1.0,
+    )
+    land_surface_model = MinimalLandSurfaceModel(
+        land_surface_params,
+        land_surface_init_conds,
     )
 
     # 5. clouds
@@ -84,14 +90,14 @@ def main():
     plt.ylabel("cloud fraction [-]")
 
     plt.subplot(233)
-    plt.plot(abc.out.t, abc.mixed_layer.diagnostics.get("wCO2"))
+    plt.plot(abc.out.t, abc.mixed_layer.diagnostics.get("co2"))
     plt.xlabel("time [h]")
-    plt.ylabel("surface kinematic CO2 flux [mgC m-2 s-1]")
+    plt.ylabel("mixed-layer CO2 [ppm]")
 
     plt.subplot(236)
-    plt.plot(abc.out.t, abc.out.le_veg)
+    plt.plot(abc.out.t, abc.land_surface.diagnostics.get("rs"))
     plt.xlabel("time [h]")
-    plt.ylabel("transpiration [W m-2]")
+    plt.ylabel("surface resistance [s m-1]")
 
     plt.tight_layout()
     plt.show()

@@ -1,42 +1,79 @@
+import numpy as np
+
 from ..models import (
+    AbstractDiagnostics,
+    AbstractInitConds,
     AbstractLandSurfaceModel,
     AbstractMixedLayerModel,
+    AbstractParams,
     AbstractRadiationModel,
     AbstractSurfaceLayerModel,
 )
 from ..utils import PhysicalConstants, get_esat, get_qsat
 
 
-class MinimalLandSurfaceModel(AbstractLandSurfaceModel):
-    """Minimal land surface model with fixed surface properties.
-
-    Represents basic land surface characteristics for atmospheric modeling
-    applications. Uses constant values for surface albedo, temperature, and
-    resistance without dynamic evolution.
-
-    **Processes:**
-    1. Compute aerodynamic resistance via surface layer model.
-    2. Calculate essential thermodynamic variables for mixed layer.
-    3. Update saturation vapor pressure and humidity derivatives.
+class MinimalLandSurfaceParams(AbstractParams["MinimalLandSurfaceModel"]):
+    """Data class for minimal land surface model parameters.
 
     Arguments
-    ----------
+    ---------
+    None.
+    """
+
+    def __init__(self):
+        pass
+
+
+class MinimalLandSurfaceInitConds(AbstractInitConds["MinimalLandSurfaceModel"]):
+    """Data class for minimal land surface model initial conditions.
+
+    Arguments
+    ---------
     - ``alpha``: surface albedo [-], range 0 to 1.
     - ``surf_temp``: surface temperature [K].
     - ``rs``: surface resistance [s m-1].
-
-    Updates
-    --------
-    - ``mixed_layer.esat``: saturation vapor pressure [Pa].
-    - ``mixed_layer.qsat``: saturation specific humidity [kg/kg].
-    - ``mixed_layer.dqsatdT``: derivative of qsat with respect to temperature [kg/kg/K].
-    - ``mixed_layer.e``: vapor pressure [Pa].
     """
 
     def __init__(self, alpha: float, surf_temp: float, rs: float):
         self.alpha = alpha
         self.surf_temp = surf_temp
         self.rs = rs
+
+
+class MinimalLandSurfaceDiagnostics(AbstractDiagnostics["MinimalLandSurfaceModel"]):
+    """Class for minimal land surface model diagnostics.
+
+    Variables
+    ---------
+    - ``alpha``: surface albedo [-], range 0 to 1.
+    - ``surf_temp``: surface temperature [K].
+    - ``rs``: surface resistance [s m-1].
+    """
+
+    def post_init(self, tsteps: int):
+        self.alpha = np.zeros(tsteps)
+        self.surf_temp = np.zeros(tsteps)
+        self.rs = np.zeros(tsteps)
+
+    def store(self, t: int, model: "MinimalLandSurfaceModel"):
+        self.alpha[t] = model.alpha
+        self.surf_temp[t] = model.surf_temp
+        self.rs[t] = model.rs
+
+
+class MinimalLandSurfaceModel(AbstractLandSurfaceModel):
+    """Minimal land surface model with fixed surface properties."""
+
+    def __init__(
+        self,
+        params: MinimalLandSurfaceParams,
+        init_conds: MinimalLandSurfaceInitConds,
+        diagnostics: AbstractDiagnostics = MinimalLandSurfaceDiagnostics(),
+    ):
+        self.alpha = init_conds.alpha
+        self.surf_temp = init_conds.surf_temp
+        self.rs = init_conds.rs
+        self.diagnostics = diagnostics
 
     def run(
         self,
@@ -82,13 +119,5 @@ class MinimalLandSurfaceModel(AbstractLandSurfaceModel):
     def integrate(self, dt: float):
         """
         Integrate model forward in time.
-
-        Parameters
-        ----------
-        - ``dt``: time step size [s].
-
-        Updates
-        -------
-        No updates performed.
         """
         pass
