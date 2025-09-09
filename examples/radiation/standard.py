@@ -57,25 +57,26 @@ def main():
     abc.run()
 
     # plot output
+    time = abc.get_t()
     plt.figure(figsize=(12, 8))
 
     plt.subplot(221)
-    plt.plot(abc.out.t, abc.mixed_layer.diagnostics.get("abl_height"))
+    plt.plot(time, abc.mixed_layer.diagnostics.get("abl_height"))
     plt.xlabel("time [h]")
     plt.ylabel("h [m]")
 
     plt.subplot(222)
-    plt.plot(abc.out.t, abc.mixed_layer.diagnostics.get("theta"))
+    plt.plot(time, abc.mixed_layer.diagnostics.get("theta"))
     plt.xlabel("time [h]")
     plt.ylabel("theta [K]")
 
     plt.subplot(223)
-    plt.plot(abc.out.t, abc.radiation.diagnostics.get("net_rad"))
+    plt.plot(time, abc.radiation.diagnostics.get("net_rad"))
     plt.xlabel("time [h]")
     plt.ylabel("net radiation [W m-2]")
 
     plt.subplot(224)
-    plt.plot(abc.out.t, abc.clouds.diagnostics.get("cc_frac"))
+    plt.plot(time, abc.clouds.diagnostics.get("cc_frac"))
     plt.xlabel("time [h]")
     plt.ylabel("cloud fraction [-]")
 

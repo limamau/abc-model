@@ -60,35 +60,36 @@ def main():
     abc.run()
 
     # plot output
+    time = abc.get_t()
     plt.figure(figsize=(12, 8))
 
     plt.subplot(231)
-    plt.plot(abc.out.t, abc.mixed_layer.diagnostics.get("abl_height"))
+    plt.plot(time, abc.mixed_layer.diagnostics.get("abl_height"))
     plt.xlabel("time [h]")
     plt.ylabel("h [m]")
 
     plt.subplot(234)
-    plt.plot(abc.out.t, abc.mixed_layer.diagnostics.get("theta"))
+    plt.plot(time, abc.mixed_layer.diagnostics.get("theta"))
     plt.xlabel("time [h]")
     plt.ylabel("theta [K]")
 
     plt.subplot(232)
-    plt.plot(abc.out.t, abc.mixed_layer.diagnostics.get("q") * 1000.0)
+    plt.plot(time, abc.mixed_layer.diagnostics.get("q") * 1000.0)
     plt.xlabel("time [h]")
     plt.ylabel("q [g kg-1]")
 
     plt.subplot(235)
-    plt.plot(abc.out.t, abc.clouds.diagnostics.get("cc_frac"))
+    plt.plot(time, abc.clouds.diagnostics.get("cc_frac"))
     plt.xlabel("time [h]")
     plt.ylabel("cloud fraction [-]")
 
     plt.subplot(233)
-    plt.plot(abc.out.t, abc.surface_layer.diagnostics.get("uw"))
+    plt.plot(time, abc.surface_layer.diagnostics.get("uw"))
     plt.xlabel("time [h]")
     plt.ylabel("surface momentum flux u [m2 s-2]")
 
     plt.subplot(236)
-    plt.plot(abc.out.t, abc.surface_layer.diagnostics.get("ustar"))
+    plt.plot(time, abc.surface_layer.diagnostics.get("ustar"))
     plt.xlabel("time [h]")
     plt.ylabel("surface friction velocity [m/s]")
 

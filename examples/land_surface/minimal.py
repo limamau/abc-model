@@ -67,35 +67,36 @@ def main():
     abc.run()
 
     # plot output
+    time = abc.get_t()
     plt.figure(figsize=(12, 8))
 
     plt.subplot(231)
-    plt.plot(abc.out.t, abc.mixed_layer.diagnostics.get("abl_height"))
+    plt.plot(time, abc.mixed_layer.diagnostics.get("abl_height"))
     plt.xlabel("time [h]")
     plt.ylabel("h [m]")
 
     plt.subplot(234)
-    plt.plot(abc.out.t, abc.mixed_layer.diagnostics.get("theta"))
+    plt.plot(time, abc.mixed_layer.diagnostics.get("theta"))
     plt.xlabel("time [h]")
     plt.ylabel("theta [K]")
 
     plt.subplot(232)
-    plt.plot(abc.out.t, abc.mixed_layer.diagnostics.get("q") * 1000.0)
+    plt.plot(time, abc.mixed_layer.diagnostics.get("q") * 1000.0)
     plt.xlabel("time [h]")
     plt.ylabel("q [g kg-1]")
 
     plt.subplot(235)
-    plt.plot(abc.out.t, abc.clouds.diagnostics.get("cc_frac"))
+    plt.plot(time, abc.clouds.diagnostics.get("cc_frac"))
     plt.xlabel("time [h]")
     plt.ylabel("cloud fraction [-]")
 
     plt.subplot(233)
-    plt.plot(abc.out.t, abc.mixed_layer.diagnostics.get("co2"))
+    plt.plot(time, abc.mixed_layer.diagnostics.get("co2"))
     plt.xlabel("time [h]")
     plt.ylabel("mixed-layer CO2 [ppm]")
 
     plt.subplot(236)
-    plt.plot(abc.out.t, abc.land_surface.diagnostics.get("rs"))
+    plt.plot(time, abc.land_surface.diagnostics.get("rs"))
     plt.xlabel("time [h]")
     plt.ylabel("surface resistance [s m-1]")
 

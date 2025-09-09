@@ -43,8 +43,9 @@ class ABCModel:
         self.clouds = clouds
         self.clouds.diagnostics.post_init(self.tsteps)
 
-        # initialize output
-        self.out = ABCOutput(self.tsteps)
+    def get_t(self):
+        """This function should be used to get time to plot things."""
+        return np.arange(self.tsteps) * self.dt / 3600.0 + self.radiation.tstart
 
     def run(self):
         self.warmup()
@@ -134,18 +135,8 @@ class ABCModel:
 
     # store model output
     def store(self):
-        # limamau: maybe there's no need to store this?
-        t = self.t
-        # limamau: IMO tstart should be taken out of radiation
-        self.out.t[t] = t * self.dt / 3600.0 + self.radiation.tstart
-        self.radiation.store(t)
-        self.land_surface.store(t)
-        self.surface_layer.store(t)
-        self.mixed_layer.store(t)
-        self.clouds.store(t)
-
-
-class ABCOutput:
-    def __init__(self, tsteps):
-        # time [s]
-        self.t = np.zeros(tsteps)
+        self.radiation.store(self.t)
+        self.land_surface.store(self.t)
+        self.surface_layer.store(self.t)
+        self.mixed_layer.store(self.t)
+        self.clouds.store(self.t)
