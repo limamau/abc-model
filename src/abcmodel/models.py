@@ -11,6 +11,8 @@ from .utils import PhysicalConstants
 # limamau: it would be also nice to implement something like "check_dependencies"
 # in order to verify if the concrete model assigned to one of the 5 components in
 # the abc model has all variables needed from other models (minimal variables)...
+# limamau: how to enforce that the minimal variables stated here are to be
+# implemented by all stantiations of the abstract models described here?
 
 
 class AbstractModel:
@@ -64,8 +66,6 @@ class AbstractDiagnostics(Generic[MT]):
 
 
 class AbstractRadiationModel(AbstractModel):
-    # limamau: how to enforce that params and init_conds
-    # should implement the following variables inside init?
     tstart: float
     dFz: float
     net_rad: float
@@ -90,30 +90,9 @@ class AbstractRadiationModel(AbstractModel):
 
 
 class AbstractLandSurfaceModel(AbstractModel):
-    # required by minimal:
-    # surface albedo [-]
     alpha: float
-    # initial surface temperature [K]
     surf_temp: float
-    # used to output:
-    # resistance transpiration [s m-1]
     rs: float
-    # sensible heat flux [W m-2]
-    hf: float
-    # evapotranspiration [W m-2]
-    le: float
-    # open water evaporation [W m-2]
-    le_liq: float
-    # transpiration [W m-2]
-    le_veg: float
-    # soil evaporation [W m-2]
-    le_soil: float
-    # potential evaporation [W m-2]
-    le_pot: float
-    # reference evaporation at rs = rsmin / LAI [W m-2]
-    le_ref: float
-    # ground heat flux [W m-2]
-    gf: float
 
     @abstractmethod
     def run(
@@ -131,7 +110,6 @@ class AbstractLandSurfaceModel(AbstractModel):
 
 
 class AbstractSurfaceLayerModel(AbstractModel):
-    # required by minimal:
     ustar: float
     uw: float
     vw: float
@@ -154,84 +132,37 @@ class AbstractSurfaceLayerModel(AbstractModel):
 
 
 class AbstractMixedLayerModel(AbstractModel):
-    # required by minimal:
-    # initial mixed-layer specific humidity [kg kg-1]
     q: float
-    # initial specific humidity jump at h [kg kg-1]
     dq: float
-    # mixed-layer saturated vapor pressure [Pa]
     esat: float
-    # mixed-layer vapor pressure [Pa]
     e: float
-    # mixed-layer saturated specific humidity [kg kg-1]
     qsat: float
-    # surface saturated specific humidity [g kg-1]
     qsatsurf: float
-    # slope saturated specific humidity curve [g kg-1 K-1]
     dqsatdT: float
-    # initial mixed-layer potential temperature [K]
     theta: float
-    # surface kinematic heat flux [K m s-1]
     wtheta: float
-    # surface kinematic moisture flux [kg kg-1 m s-1]
     wq: float
-    # entrainment moisture flux [kg kg-1 m s-1]
     wqe: float
-    # initial temperature jump at h [K]
     dtheta: float
-    # initial ABL height [m]
     abl_height: float
-    # surface pressure [Pa]
     surf_pressure: float
-    # initial mixed-layer u-wind speed [m s-1]
     u: float
-    # initial mixed-layer v-wind speed [m s-1]
     v: float
-    # convective velocity scale [m s-1]
     wstar: float
-    # initial mixed-layer potential temperature [K]
     thetav: float
-    # surface kinematic virtual heat flux [K m s-1]
     wthetav: float
-    # mixed-layer top specific humidity variance [kg2 kg-2]
     q2_h: float
-    # transition layer thickness [-]
     dz_h: float
-    # mixed-layer top pressure [pa]
     top_p: float
-    # mixed-layer top absolute temperature [K]
     top_T: float
-    # initial mixed-layer CO2 [ppm]
     co2: float
-    # mixed-layer top CO2 variance [ppm2]
     top_CO22: float
-    # entrainment CO2 flux [ppm m s-1]
     wCO2e: float
-    # CO2 mass flux [ppm m s-1]
     wCO2M: float
-    # initial CO2 jump at h [ppm]
     dCO2: float
-    # surface kinematic CO2 flux [ppm m s-1]
     wCO2: float
-    # surface assimulation CO2 flux [ppm m s-1]
     wCO2A: float
-    # surface respiration CO2 flux [ppm m s-1]
     wCO2R: float
-    # used to output:
-    # entrainment kinematic heat flux [K m s-1]
-    wthetae: float
-    # initial virtual temperature jump at h [K]
-    dthetav: float
-    # entrainment kinematic virtual heat flux [K m s-1]
-    wthetave: float
-    # initial u-wind jump at h [m s-1]
-    du: float
-    # initial v-wind jump at h [m s-1]
-    dv: float
-    # lifting condensation level [m]
-    lcl: float
-    # mixed-layer top relavtive humidity [-]
-    top_rh: float
 
     @abstractmethod
     def run(
@@ -253,11 +184,8 @@ class AbstractMixedLayerModel(AbstractModel):
 
 
 class AbstractCloudModel(AbstractModel):
-    # cloud core fraction [-]
     cc_frac: float
-    # cloud core mass flux [m s-1]
     cc_mf: float
-    # cloud core moisture flux [kg kg-1 m s-1]
     cc_qf: float
 
     @abstractmethod
