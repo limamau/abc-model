@@ -38,8 +38,8 @@ Next on the list, the land surface. Let's use the simple Jarvis Stewart model:
 from abcmodel.land_surface import JarvisStewartModel
 
 land_surface_model = JarvisStewartModel(
-    cm.land_surface.jarvis_stewart_params,
-    cm.land_surface.jarvis_stewart_init_conds,
+    cm.land_surface.jarvis_stewart.params,
+    cm.land_surface.jarvis_stewart.init_conds,
 )
 ```
 
@@ -141,6 +141,31 @@ plt.show()
 
 Which should give us something like the figure below.
 ![readme_example](figs/readme-example.png "readme example")
+
+## Changing models, parameters and initial conditions
+Now let's say you want to use a different model for the land surface.
+Instead of the Jarvis Stewart model, you may choose AquaCrop.
+We also provide a configuration for that, which you can as before using the `abcconfigs` module.
+You can take a look at the config [here](https://git.bgc-jena.mpg.de/abc3/abc-model/-/blob/main/src/abcconfigs/class_model/aquacrop.py?ref_type=heads).
+
+Now you may change from C3 to C4 with something like
+```python
+my_config = cm.land_surface.jarvis_stewart.params
+my_config.c3c4 = "c4"
+```
+
+and define you new land surface model as
+```python
+from abcmodel.land_surface import AquaCropModel
+
+land_surface_model = AquaCropModel(
+    my_config,
+    cm.aquacrop.init_conds,
+)
+```
+
+then you can redefine the `ABCoupler` using this new config and run it to see results outcomes.
+
 
 ## See also
 The model was constructed from the [CLASS model](https://github.com/classmodel/modelpy).
