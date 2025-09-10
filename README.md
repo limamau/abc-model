@@ -13,16 +13,22 @@ pip install -e .
 ```
 
 ## Quick example
-To setup the coupler we will always use 5 components. Every model needs two main arguments:
-`params`, `init_conds`, which can sometimes take a lot of arguments... But worry not!
-We provide a config example (which we take from the [CLASS model](https://github.com/classmodel/modelpy)).
+To setup the coupler we will always use 5 models:
+1. Radiation model
+2. Land surface model
+3. Atmosphere surface layer model
+4. Atmosphere mixed layer model
+5. Atmosphere cloud model
+
+Every model needs two main arguments: `params`, `init_conds`, which can sometimes take a lot of arguments...
+But worry not! We provide a config example (which we take from the [CLASS model](https://github.com/classmodel/modelpy)).
 This can be loaded through the `abcconfigs` module:
 ```python
 import abcconfigs.class_model as cm
 ```
 
 Now we are ready to set up our models with ease...
-We will do this using the `abcmodel` module, which is the _de facto_ in this repository.
+We will do this using the `abcmodel` module, which is the _de facto_ module in this repository.
 The first one is the radiation model, and we can use the standard model:
 ```python
 from abcmodel.radiation import StandardRadiationModel
@@ -38,8 +44,8 @@ Next on the list, the land surface. Let's use the simple Jarvis Stewart model:
 from abcmodel.land_surface import JarvisStewartModel
 
 land_surface_model = JarvisStewartModel(
-    cm.land_surface.jarvis_stewart.params,
-    cm.land_surface.jarvis_stewart.init_conds,
+    cm.jarvis_stewart.params,
+    cm.jarvis_stewart.init_conds,
 )
 ```
 
@@ -53,20 +59,20 @@ from abcmodel.clouds import StandardCumulusModel
 
 # define surface layer model
 surface_layer_model = StandardSurfaceLayerModel(
-    cm.surface_layer.params,
-    cm.surface_layer.init_conds,
+    cm.standard_surface_layer.params,
+    cm.standard_surface_layer.init_conds,
 )
 
 # define mixed layer model
 mixed_layer_model = BulkMixedLayerModel(
-    cm.mixed_layer.params,
-    cm.mixed_layer.init_conds,
+    cm.bulk_mixed_layer.params,
+    cm.bulk_mixed_layer.init_conds,
 )
 
 # define cloud model
 cloud_model = StandardCumulusModel(
-    cm.clouds.params,
-    cm.clouds.init_conds,
+    cm.standard_cumulus.params,
+    cm.standard_cumulus.init_conds,
 )
 ```
 
@@ -84,10 +90,10 @@ runtime = 96 * 3600.0
 abc = ABCoupler(
     dt=dt,
     runtime=runtime,
-    mixed_layer=mixed_layer_model,
-    surface_layer=surface_layer_model,
     radiation=radiation_model,
     land_surface=land_surface_model,
+    surface_layer=surface_layer_model,
+    mixed_layer=mixed_layer_model,
     clouds=cloud_model,
 )
 ```
@@ -145,7 +151,7 @@ Which should give us something like the figure below.
 ## Changing models, parameters and initial conditions
 Now let's say you want to use a different model for the land surface.
 Instead of the Jarvis Stewart model, you may choose AquaCrop.
-We also provide a configuration for that, which you can as before using the `abcconfigs` module.
+We also provide a configuration for that, which you can load using the `abcconfigs` module, as previously done.
 You can take a look at the config [here](https://git.bgc-jena.mpg.de/abc3/abc-model/-/blob/main/src/abcconfigs/class_model/aquacrop.py?ref_type=heads).
 
 Now you may change from C3 to C4 with something like
@@ -154,7 +160,7 @@ my_config = cm.land_surface.jarvis_stewart.params
 my_config.c3c4 = "c4"
 ```
 
-and define you new land surface model as
+and define your new land surface model as
 ```python
 from abcmodel.land_surface import AquaCropModel
 
@@ -164,7 +170,7 @@ land_surface_model = AquaCropModel(
 )
 ```
 
-then you can redefine the `ABCoupler` using this new config and run it to see results outcomes.
+then you can redefine the `ABCoupler` using this new model and run it to see different outcomes.
 
 
 ## See also
