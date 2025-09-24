@@ -49,11 +49,6 @@ with these components together with the running time configuration.
 ```python
 from abcmodel import ABCoupler
 
-# time step [s]
-dt = 60.0
-# total run time [s]
-runtime = 12 * 3600.0
-
 abcoupler = ABCoupler(
     radiation=radiation_model,
     land_surface=land_surface_model,
