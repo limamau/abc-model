@@ -3,6 +3,7 @@ from . import (
     bulk_mixed_layer,
     jarvis_stewart,
     standard_radiation,
+    standard_radiation_w_clouds,
     standard_surface_layer,
 )
 
@@ -11,5 +12,6 @@ __all__ = [
     "bulk_mixed_layer",
     "jarvis_stewart",
     "standard_radiation",
+    "standard_radiation_w_clouds",
     "standard_surface_layer",
 ]

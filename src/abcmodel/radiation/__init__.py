@@ -3,7 +3,14 @@ from .standard import (
     StandardRadiationModel,
 )
 
+from .standard_w_clouds import (
+    StandardRadiationwCloudsInitConds,
+    StandardRadiationwCloudsModel,
+)
+
 __all__ = [
-    StandardRadiationInitConds,
-    StandardRadiationModel,
+    "StandardRadiationInitConds",
+    "StandardRadiationModel",
+    "StandardRadiationwCloudsInitConds",
+    "StandardRadiationwCloudsModel",
 ]
