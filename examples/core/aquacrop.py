@@ -6,16 +6,16 @@ import abcmodel
 
 def main():
     # time step [s]
-    dt = 60.0
+    dt = 15.0
     # total run time [s]
     runtime = 12 * 3600.0
 
-    # radiation
-    radiation_init_conds = abcmodel.radiation.StandardRadiationInitConds(
-        **cm.standard_radiation.init_conds_kwargs
+    # radiation with clouds
+    radiation_init_conds = abcmodel.radiation.StandardRadiationwCloudsInitConds(
+        **cm.standard_radiation_w_clouds.init_conds_kwargs
     )
-    radiation_model = abcmodel.radiation.StandardRadiationModel(
-        **cm.standard_radiation.model_kwargs,
+    radiation_model = abcmodel.radiation.StandardRadiationwCloudsModel(
+        **cm.standard_radiation_w_clouds.model_kwargs,
     )
 
     # land surface

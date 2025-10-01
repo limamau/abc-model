@@ -16,11 +16,13 @@ class StandardCumulusInitConds:
     - ``cc_frac``: cloud core fraction [-], range 0 to 1.
     - ``cc_mf``: cloud core mass flux [m/s].
     - ``cc_qf``: cloud core moisture flux [kg/kg/s].
+    - ``cl_trans``: cloud layer transmittance [-], range 0 to 1.
     """
 
     cc_frac: float = 0.0
     cc_mf: float = 0.0
     cc_qf: float = 0.0
+    cl_trans: float = 1.0
 
 
 class StandardCumulusModel(AbstractCloudModel):
@@ -35,7 +37,8 @@ class StandardCumulusModel(AbstractCloudModel):
 
     Parameters
     ----------
-    None.
+    - ``tcc_cc``: ratio of total cloud cove to core cloud fraction [-], greater or equal to 1.
+    - ``tcc_trans``: mean transmittance of cloud cover [-], range 0 to 1.
 
     Processes
     ---------
@@ -47,8 +50,9 @@ class StandardCumulusModel(AbstractCloudModel):
     4. Computes CO2 transport only when CO2 decreases with height.
     """
 
-    def __init__(self):
-        pass
+    def __init__(self, tcc_cc: float = 2.0, tcc_trans: float = 0.6):
+        self.tcc_cc = tcc_cc
+        self.tcc_trans = tcc_trans
 
     @staticmethod
     def calculate_mixed_layer_variance(
@@ -118,6 +122,13 @@ class StandardCumulusModel(AbstractCloudModel):
 
         return jnp.where(condition, flux_value, 0.0)
 
+    def calculate_cloud_layer_transmittance(self, cc_frac: Array) -> Array:
+        """Calculate cloud layer transmittance, with maximum total cloud cover equal to 1"""
+        # get total cloud cover
+        tcc = jnp.minimum(cc_frac * self.tcc_cc, 1.0)
+        # return cloud layer transmittance
+        return 1.0 - tcc * (1.0 - self.tcc_trans)
+
     def run(self, state: PyTree, const: PhysicalConstants):
         """
         State requirements
@@ -149,6 +160,8 @@ class StandardCumulusModel(AbstractCloudModel):
             CO2 variance at mixed-layer top
         - ``wCO2M`` : float
             CO2 mass flux [ppm m/s]
+        - ``cl_trans``: float
+            cloud layer transmissivity [-]
         """
         state.q2_h, state.top_CO22 = self.calculate_mixed_layer_variance(
             state.cc_qf,
@@ -180,6 +193,9 @@ class StandardCumulusModel(AbstractCloudModel):
             state.cc_mf,
             state.top_CO22,
             state.dCO2,
+        )
+        state.cl_trans = self.calculate_cloud_layer_transmittance(
+            state.cc_frac,
         )
 
         return state
