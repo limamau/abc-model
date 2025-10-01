@@ -50,10 +50,7 @@ class StandardCumulusModel(AbstractCloudModel):
     4. Computes CO2 transport only when CO2 decreases with height.
     """
 
-    def __init__(self, 
-                 tcc_cc: float = 2.0,
-                 tcc_trans: float = 0.6,
-                 ):
+    def __init__(self, tcc_cc: float = 2.0, tcc_trans: float = 0.6):
         self.tcc_cc = tcc_cc
         self.tcc_trans = tcc_trans
 
@@ -128,11 +125,9 @@ class StandardCumulusModel(AbstractCloudModel):
     def calculate_cloud_layer_transmittance(self, cc_frac: Array) -> Array:
         """Calculate cloud layer transmittance, with maximum total cloud cover equal to 1"""
         # get total cloud cover
-        tcc = jnp.minimum(cc_frac*self.tcc_cc, 1.0)
+        tcc = jnp.minimum(cc_frac * self.tcc_cc, 1.0)
         # return cloud layer transmittance
         return 1.0 - tcc * (1.0 - self.tcc_trans)
-
-
 
     def run(self, state: PyTree, const: PhysicalConstants):
         """

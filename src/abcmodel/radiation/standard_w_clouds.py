@@ -1,10 +1,10 @@
 from dataclasses import dataclass
 
-import jax.numpy as jnp
 from jaxtyping import Array, PyTree
 
 from ..utils import PhysicalConstants
 from .standard import StandardRadiationInitConds, StandardRadiationModel
+
 
 @dataclass
 class StandardRadiationwCloudsInitConds(StandardRadiationInitConds):
@@ -21,12 +21,6 @@ class StandardRadiationwCloudsInitConds(StandardRadiationInitConds):
     - ``in_lrad``: incoming longwave radiation [W/m²].
     - ``out_lrad``: outgoing longwave radiation [W/m²].
     """
-
-    #net_rad: float
-    #in_srad: float = jnp.nan
-    #out_srad: float = jnp.nan
-    #in_lrad: float = jnp.nan
-    #out_lrad: float = jnp.nan
 
 
 class StandardRadiationwCloudsModel(StandardRadiationModel):
@@ -49,6 +43,7 @@ class StandardRadiationwCloudsModel(StandardRadiationModel):
     2. Determine air temperature and atmospheric transmission.
     3. Compute all radiation components and net surface radiation.
     """
+
     def __init__(
         self,
         lat: float,
@@ -62,7 +57,9 @@ class StandardRadiationwCloudsModel(StandardRadiationModel):
         self.tstart = tstart
 
     @staticmethod
-    def calculate_atmospheric_transmission_w_clouds(solar_elevation: Array, cl_trans: Array) -> Array:
+    def calculate_atmospheric_transmission_w_clouds(
+        solar_elevation: Array, cl_trans: Array
+    ) -> Array:
         """
         Calculate atmospheric transmission coefficient for solar radiation based on elevation and cloud layer transmittance.
         """
