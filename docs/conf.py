@@ -38,3 +38,4 @@ html_theme_options = {
 }
 autosummary_generate = True
 autodoc_member_order = 'bysource'
+typehints_document_rtype = False

@@ -138,4 +138,5 @@ For a detailed description of each model and its functions, see the API section.
 .. toctree::
    :hidden:
 
-   API <source/api/modules>
+   ABC Model <source/api/abcmodel>
+   ABC Configs <source/api/abcconfigs>

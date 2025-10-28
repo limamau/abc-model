@@ -7,6 +7,7 @@ init_conds_kwargs = {
     "surf_temp": 290.0,
     "wl": 0.0000,
 }
+""""""
 model_kwargs = {
     "a": 0.219,
     "b": 4.90,
@@ -25,3 +26,4 @@ model_kwargs = {
     "wmax": 0.0002,
     "lam": 5.9,
 }
+""""""

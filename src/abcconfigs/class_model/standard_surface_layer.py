@@ -4,4 +4,4 @@ init_conds_kwargs = {
     "z0h": 0.002,
     "theta": 288.0,
 }
-# the model takes no parameters!
+"""The model takes no parameters!"""
