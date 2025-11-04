@@ -7,8 +7,8 @@
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 project = "abc-model"
-copyright = "ABC3 Group"
-author = "ABC3 Group"
+copyright = "ABC³ Group"
+author = "ABC³ Group"
 release = "0.1.0"
 
 # -- General configuration ---------------------------------------------------
@@ -37,5 +37,5 @@ html_theme_options = {
     "repository_provider": "gitlab",
 }
 autosummary_generate = True
-autodoc_member_order = 'bysource'
+autodoc_member_order = "bysource"
 typehints_document_rtype = False

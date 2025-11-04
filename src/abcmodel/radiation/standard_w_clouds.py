@@ -18,10 +18,6 @@ class StandardRadiationwCloudsModel(StandardRadiationModel):
     atmospheric conditions. Includes both shortwave (solar) and longwave (thermal)
     radiation components.
 
-    1. Calculate solar declination and elevation angles.
-    2. Determine air temperature and atmospheric transmission.
-    3. Compute all radiation components and net surface radiation.
-
     Args:
         lat: latitude [degrees], range -90 to +90.
         lon: longitude [degrees], range -180 to +180.
@@ -41,16 +37,6 @@ class StandardRadiationwCloudsModel(StandardRadiationModel):
         self.doy = doy
         self.tstart = tstart
 
-    @staticmethod
-    def calculate_atmospheric_transmission_w_clouds(
-        solar_elevation: Array, cl_trans: Array
-    ) -> Array:
-        """Calculate atmospheric transmission coefficient for solar radiation based on elevation and cloud layer transmittance."""
-        # clear-sky transmission increases with solar elevation
-        clear_sky_trans = 0.6 + 0.2 * solar_elevation
-        # apply cloud layer transmissivity and return
-        return clear_sky_trans * cl_trans
-
     def run(
         self,
         state: PyTree,
@@ -58,7 +44,28 @@ class StandardRadiationwCloudsModel(StandardRadiationModel):
         dt: float,
         const: PhysicalConstants,
     ):
-        """Calculate radiation components and net surface radiation."""
+        """Calculate radiation components and net surface radiation.
+
+        Args:
+            state: The current PyTree state of the model.
+            t: Current time step index [-].
+            dt: Time step duration [s].
+            const: PhysicalConstants object.
+
+        Returns:
+            The updated state object with new radiation values.
+
+        Notes:
+            1.  Calculates solar position with
+                :meth:`~abcmodel.radiation.standard.StandardRadiationModel.calculate_solar_declination` and
+                :meth:`~abcmodel.radiation.standard.StandardRadiationModel.calculate_solar_elevation`.
+            2.  Determines atmospheric properties with
+                :meth:`~abcmodel.radiation.standard.StandardRadiationModel.calculate_air_temperature` and
+                :meth:`~calculate_atmospheric_transmission_w_clouds`.
+            3.  Computes all radiation components and the final
+                net radiation with :meth:`~abcmodel.radiation.standard.StandardRadiationModel.calculate_radiation_components`,
+                then updates the state object with the results.
+        """
         # solar position
         solar_declination = self.calculate_solar_declination(self.doy)
         solar_elevation = self.calculate_solar_elevation(t, dt, solar_declination)
@@ -92,3 +99,39 @@ class StandardRadiationwCloudsModel(StandardRadiationModel):
         )
 
         return state
+
+    @staticmethod
+    def calculate_atmospheric_transmission_w_clouds(
+        solar_elevation: Array, cl_trans: Array
+    ) -> Array:
+        """Calculate atmospheric transmission coefficient for solar radiation.
+
+        Args:
+            solar_elevation: sine of the solar elevation angle [-].
+            cl_trans: prognostic cloud layer transmittance [-].
+
+        Returns:
+            Atmospheric transmission coefficient [-].
+
+        Notes:
+            This is a simplified empirical parameterization (linear model) for
+            atmospheric transmission :math:`\\tau`.
+
+            1.  A clear-sky transmission :math:`\\tau_{\\text{clear}}` is
+                calculated based on the solar elevation :math:`\\sin(\\alpha)` as
+
+                .. math::
+                    \\tau_{\\text{clear}} = 0.6 + 0.2 \\cdot \\sin(\\alpha).
+
+            2.  The prognostic cloud transmittance :math:`\\tau_{\\text{cloud}}`
+                is provided directly by the model state (``cl_trans``).
+
+            3.  The final transmission is then the product of these two factors, giving
+
+                .. math::
+                    \\tau = \\tau_{\\text{clear}} \\cdot \\tau_{\\text{cloud}}.
+        """
+        # clear-sky transmission increases with solar elevation
+        clear_sky_trans = 0.6 + 0.2 * solar_elevation
+        # apply cloud layer transmissivity and return
+        return clear_sky_trans * cl_trans

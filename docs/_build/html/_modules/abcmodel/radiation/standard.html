@@ -334,10 +334,6 @@ document.write(`
 <span class="sd">    atmospheric conditions. Includes both shortwave (solar) and longwave (thermal)</span>
 <span class="sd">    radiation components.</span>
 
-<span class="sd">    1. Calculate solar declination and elevation angles.</span>
-<span class="sd">    2. Determine air temperature and atmospheric transmission.</span>
-<span class="sd">    3. Compute all radiation components and net surface radiation.</span>
-
 <span class="sd">    Args:</span>
 <span class="sd">        lat: latitude [degrees], range -90 to +90.</span>
 <span class="sd">        lon: longitude [degrees], range -180 to +180.</span>
@@ -360,92 +356,6 @@ document.write(`
         <span class="bp">self</span><span class="o">.</span><span class="n">tstart</span> <span class="o">=</span> <span class="n">tstart</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cc</span> <span class="o">=</span> <span class="n">cc</span>
 
-<div class="viewcode-block" id="StandardRadiationModel.calculate_solar_declination">
-<a class="viewcode-back" href="../../../source/api/abcmodel.radiation.standard.html#abcmodel.radiation.standard.StandardRadiationModel.calculate_solar_declination">[docs]</a>
-    <span class="nd">@staticmethod</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">calculate_solar_declination</span><span class="p">(</span><span class="n">doy</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Array</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculate solar declination angle based on day of year.&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="mf">0.409</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="p">(</span><span class="n">doy</span> <span class="o">-</span> <span class="mf">173.0</span><span class="p">)</span> <span class="o">/</span> <span class="mf">365.0</span><span class="p">)</span></div>
-
-
-<div class="viewcode-block" id="StandardRadiationModel.calculate_solar_elevation">
-<a class="viewcode-back" href="../../../source/api/abcmodel.radiation.standard.html#abcmodel.radiation.standard.StandardRadiationModel.calculate_solar_elevation">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">calculate_solar_elevation</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">t</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">dt</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">solar_declination</span><span class="p">:</span> <span class="n">Array</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Array</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculate solar elevation angle (sine of elevation).&quot;&quot;&quot;</span>
-        <span class="n">lat_rad</span> <span class="o">=</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">lat</span> <span class="o">/</span> <span class="mf">360.0</span>
-        <span class="n">lon_rad</span> <span class="o">=</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">lon</span> <span class="o">/</span> <span class="mf">360.0</span>
-        <span class="n">time_rad</span> <span class="o">=</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="p">(</span><span class="n">t</span> <span class="o">*</span> <span class="n">dt</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">tstart</span> <span class="o">*</span> <span class="mf">3600.0</span><span class="p">)</span> <span class="o">/</span> <span class="mf">86400.0</span>
-
-        <span class="n">sinlea</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">lat_rad</span><span class="p">)</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">solar_declination</span><span class="p">)</span> <span class="o">-</span> <span class="n">jnp</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span>
-            <span class="n">lat_rad</span>
-        <span class="p">)</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">solar_declination</span><span class="p">)</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">time_rad</span> <span class="o">+</span> <span class="n">lon_rad</span><span class="p">)</span>
-
-        <span class="k">return</span> <span class="n">jnp</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">sinlea</span><span class="p">,</span> <span class="mf">0.0001</span><span class="p">)</span></div>
-
-
-<div class="viewcode-block" id="StandardRadiationModel.calculate_air_temperature">
-<a class="viewcode-back" href="../../../source/api/abcmodel.radiation.standard.html#abcmodel.radiation.standard.StandardRadiationModel.calculate_air_temperature">[docs]</a>
-    <span class="nd">@staticmethod</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">calculate_air_temperature</span><span class="p">(</span>
-        <span class="n">surf_pressure</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
-        <span class="n">abl_height</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
-        <span class="n">theta</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
-        <span class="n">const</span><span class="p">:</span> <span class="n">PhysicalConstants</span><span class="p">,</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculate air temperature at reference level using potential temperature.&quot;&quot;&quot;</span>
-        <span class="c1"># calculate pressure at reference level (10% reduction from surface)</span>
-        <span class="n">ref_pressure</span> <span class="o">=</span> <span class="n">surf_pressure</span> <span class="o">-</span> <span class="mf">0.1</span> <span class="o">*</span> <span class="n">abl_height</span> <span class="o">*</span> <span class="n">const</span><span class="o">.</span><span class="n">rho</span> <span class="o">*</span> <span class="n">const</span><span class="o">.</span><span class="n">g</span>
-
-        <span class="c1"># convert potential temperature to actual temperature</span>
-        <span class="n">pressure_ratio</span> <span class="o">=</span> <span class="n">ref_pressure</span> <span class="o">/</span> <span class="n">surf_pressure</span>
-        <span class="n">air_temp</span> <span class="o">=</span> <span class="n">theta</span> <span class="o">*</span> <span class="p">(</span><span class="n">pressure_ratio</span> <span class="o">**</span> <span class="p">(</span><span class="n">const</span><span class="o">.</span><span class="n">rd</span> <span class="o">/</span> <span class="n">const</span><span class="o">.</span><span class="n">cp</span><span class="p">))</span>
-
-        <span class="k">return</span> <span class="n">air_temp</span></div>
-
-
-<div class="viewcode-block" id="StandardRadiationModel.calculate_atmospheric_transmission">
-<a class="viewcode-back" href="../../../source/api/abcmodel.radiation.standard.html#abcmodel.radiation.standard.StandardRadiationModel.calculate_atmospheric_transmission">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">calculate_atmospheric_transmission</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">solar_elevation</span><span class="p">:</span> <span class="n">Array</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Array</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Calculate atmospheric transmission coefficient for solar radiation.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c1"># clear-sky transmission increases with solar elevation</span>
-        <span class="n">clear_sky_trans</span> <span class="o">=</span> <span class="mf">0.6</span> <span class="o">+</span> <span class="mf">0.2</span> <span class="o">*</span> <span class="n">solar_elevation</span>
-
-        <span class="c1"># cloud cover reduces transmission (40% reduction per unit cloud cover)</span>
-        <span class="n">cloud_reduction</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="mf">0.4</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">cc</span>
-
-        <span class="k">return</span> <span class="n">clear_sky_trans</span> <span class="o">*</span> <span class="n">cloud_reduction</span></div>
-
-
-<div class="viewcode-block" id="StandardRadiationModel.calculate_radiation_components">
-<a class="viewcode-back" href="../../../source/api/abcmodel.radiation.standard.html#abcmodel.radiation.standard.StandardRadiationModel.calculate_radiation_components">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">calculate_radiation_components</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span>
-        <span class="n">solar_elevation</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span>
-        <span class="n">atmospheric_transmission</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span>
-        <span class="n">air_temp</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
-        <span class="n">alpha</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span>
-        <span class="n">surf_temp</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span>
-        <span class="n">const</span><span class="p">:</span> <span class="n">PhysicalConstants</span><span class="p">,</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Array</span><span class="p">,</span> <span class="n">Array</span><span class="p">,</span> <span class="n">Array</span><span class="p">,</span> <span class="n">Array</span><span class="p">,</span> <span class="n">Array</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculate all radiation components and update attributes.&quot;&quot;&quot;</span>
-        <span class="c1"># shortwave radiation components</span>
-        <span class="n">in_srad</span> <span class="o">=</span> <span class="n">const</span><span class="o">.</span><span class="n">solar_in</span> <span class="o">*</span> <span class="n">atmospheric_transmission</span> <span class="o">*</span> <span class="n">solar_elevation</span>
-        <span class="n">out_srad</span> <span class="o">=</span> <span class="n">alpha</span> <span class="o">*</span> <span class="n">const</span><span class="o">.</span><span class="n">solar_in</span> <span class="o">*</span> <span class="n">atmospheric_transmission</span> <span class="o">*</span> <span class="n">solar_elevation</span>
-
-        <span class="c1"># longwave radiation components</span>
-        <span class="n">in_lrad</span> <span class="o">=</span> <span class="mf">0.8</span> <span class="o">*</span> <span class="n">const</span><span class="o">.</span><span class="n">bolz</span> <span class="o">*</span> <span class="n">air_temp</span><span class="o">**</span><span class="mf">4.0</span>
-        <span class="n">out_lrad</span> <span class="o">=</span> <span class="n">const</span><span class="o">.</span><span class="n">bolz</span> <span class="o">*</span> <span class="n">surf_temp</span><span class="o">**</span><span class="mf">4.0</span>
-
-        <span class="c1"># net radiation</span>
-        <span class="n">net_rad</span> <span class="o">=</span> <span class="n">in_srad</span> <span class="o">-</span> <span class="n">out_srad</span> <span class="o">+</span> <span class="n">in_lrad</span> <span class="o">-</span> <span class="n">out_lrad</span>
-
-        <span class="k">return</span> <span class="n">net_rad</span><span class="p">,</span> <span class="n">in_srad</span><span class="p">,</span> <span class="n">out_srad</span><span class="p">,</span> <span class="n">in_lrad</span><span class="p">,</span> <span class="n">out_lrad</span></div>
-
-
 <div class="viewcode-block" id="StandardRadiationModel.run">
 <a class="viewcode-back" href="../../../source/api/abcmodel.radiation.standard.html#abcmodel.radiation.standard.StandardRadiationModel.run">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span>
@@ -455,7 +365,28 @@ document.write(`
         <span class="n">dt</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
         <span class="n">const</span><span class="p">:</span> <span class="n">PhysicalConstants</span><span class="p">,</span>
     <span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculate radiation components and net surface radiation.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculate radiation components and net surface radiation.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            state: The current PyTree state of the model.</span>
+<span class="sd">            t: Current time step index [-].</span>
+<span class="sd">            dt: Time step duration [s].</span>
+<span class="sd">            const: PhysicalConstants object.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            The updated state object with new radiation values.</span>
+
+<span class="sd">        Notes:</span>
+<span class="sd">            1.  Calculates solar position with</span>
+<span class="sd">                :meth:`~calculate_solar_declination` and</span>
+<span class="sd">                :meth:`~calculate_solar_elevation`.</span>
+<span class="sd">            2.  Determines atmospheric properties with</span>
+<span class="sd">                :meth:`~calculate_air_temperature` and</span>
+<span class="sd">                :meth:`~calculate_atmospheric_transmission`.</span>
+<span class="sd">            3.  Computes all radiation components and the final</span>
+<span class="sd">                net radiation with :meth:`~calculate_radiation_components`,</span>
+<span class="sd">                then updates the state object with the results.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># solar position</span>
         <span class="n">solar_declination</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calculate_solar_declination</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">doy</span><span class="p">)</span>
         <span class="n">solar_elevation</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calculate_solar_elevation</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">solar_declination</span><span class="p">)</span>
@@ -488,6 +419,267 @@ document.write(`
         <span class="p">)</span>
 
         <span class="k">return</span> <span class="n">state</span></div>
+
+
+<div class="viewcode-block" id="StandardRadiationModel.calculate_solar_declination">
+<a class="viewcode-back" href="../../../source/api/abcmodel.radiation.standard.html#abcmodel.radiation.standard.StandardRadiationModel.calculate_solar_declination">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">calculate_solar_declination</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">doy</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Array</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculate solar declination angle based on day of year.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            doy: Day of year [-], range 1 to 365.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Solar declination angle [radians].</span>
+
+<span class="sd">        Notes:</span>
+<span class="sd">            Calculates the solar declination angle :math:`\\delta` using</span>
+
+<span class="sd">            .. math::</span>
+<span class="sd">                \\delta = 0.409 \\cdot \\cos\\left(</span>
+<span class="sd">                    \\frac{2\\pi \\cdot (\\text{D} - 173)}{365}</span>
+<span class="sd">                \\right)</span>
+
+<span class="sd">            where :math:`\\text{D}` is the day of the year, :math:`0.409` is the</span>
+<span class="sd">            approximate Earth&#39;s axial tilt in radians (23.45°), and :math:`173`</span>
+<span class="sd">            is the approximate day of the summer solstice, which acts as the</span>
+<span class="sd">            phase shift for the cosine wave.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="mf">0.409</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="p">(</span><span class="n">doy</span> <span class="o">-</span> <span class="mf">173.0</span><span class="p">)</span> <span class="o">/</span> <span class="mf">365.0</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="StandardRadiationModel.calculate_solar_elevation">
+<a class="viewcode-back" href="../../../source/api/abcmodel.radiation.standard.html#abcmodel.radiation.standard.StandardRadiationModel.calculate_solar_elevation">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">calculate_solar_elevation</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">t</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">dt</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">solar_declination</span><span class="p">:</span> <span class="n">Array</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Array</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculate solar elevation angle (sine of elevation).</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            t: current time step index [-].</span>
+<span class="sd">            dt: time step duration [s].</span>
+<span class="sd">            solar_declination: solar declination angle [radians] from :meth:`~calculate_solar_declination`.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Sine of the solar elevation angle [-].</span>
+
+<span class="sd">        Notes:</span>
+<span class="sd">            First, the latitude :math:`\\phi`, longitude :math:`\\lambda`, and</span>
+<span class="sd">            time of day :math:`t` are converted to radians with</span>
+
+<span class="sd">            .. math::</span>
+<span class="sd">                \\phi_{\\text{rad}} = \\frac{2\\pi \\cdot \\text{lat}}{360},</span>
+<span class="sd">            .. math::</span>
+<span class="sd">                \\lambda_{\\text{rad}} = \\frac{2\\pi \\cdot \\text{lon}}{360},</span>
+<span class="sd">            .. math::</span>
+<span class="sd">                t_{\\text{rad}} = \\frac{2\\pi \\cdot (t \\cdot dt + t_{\\text{start}} \\cdot 3600)}{86400}.</span>
+
+<span class="sd">            The sine of the solar elevation is then calculated as</span>
+
+<span class="sd">            .. math::</span>
+<span class="sd">                \\sin(\\alpha) = \\sin(\\phi_{\\text{rad}})\\sin(\\delta) -</span>
+<span class="sd">                                \\cos(\\phi_{\\text{rad}})\\cos(\\delta)</span>
+<span class="sd">                                \\cos(t_{\\text{rad}} + \\lambda_{\\text{rad}}),</span>
+
+<span class="sd">            where :math:`\\delta` is the solar declination. The result is clipped</span>
+<span class="sd">            at a minimum value of 0.0001 to represent night-time and avoid</span>
+<span class="sd">            mathematical instability in subsequent calculations.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">lat_rad</span> <span class="o">=</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">lat</span> <span class="o">/</span> <span class="mf">360.0</span>
+        <span class="n">lon_rad</span> <span class="o">=</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">lon</span> <span class="o">/</span> <span class="mf">360.0</span>
+        <span class="n">time_rad</span> <span class="o">=</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="p">(</span><span class="n">t</span> <span class="o">*</span> <span class="n">dt</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">tstart</span> <span class="o">*</span> <span class="mf">3600.0</span><span class="p">)</span> <span class="o">/</span> <span class="mf">86400.0</span>
+
+        <span class="n">sinlea</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">lat_rad</span><span class="p">)</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">solar_declination</span><span class="p">)</span> <span class="o">-</span> <span class="n">jnp</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span>
+            <span class="n">lat_rad</span>
+        <span class="p">)</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">solar_declination</span><span class="p">)</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">time_rad</span> <span class="o">+</span> <span class="n">lon_rad</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">jnp</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">sinlea</span><span class="p">,</span> <span class="mf">0.0001</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="StandardRadiationModel.calculate_air_temperature">
+<a class="viewcode-back" href="../../../source/api/abcmodel.radiation.standard.html#abcmodel.radiation.standard.StandardRadiationModel.calculate_air_temperature">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">calculate_air_temperature</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">surf_pressure</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">abl_height</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">theta</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">const</span><span class="p">:</span> <span class="n">PhysicalConstants</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculate air temperature at reference level using potential temperature.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            surf_pressure: surface pressure [Pa].</span>
+<span class="sd">            abl_height: atmospheric boundary layer height [m].</span>
+<span class="sd">            theta: potential temperature [K].</span>
+<span class="sd">            const:</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Air temperature at the reference level [K].</span>
+
+<span class="sd">        Notes:</span>
+<span class="sd">            The calculation is a two-step process:</span>
+
+<span class="sd">            1.  First, the pressure at a reference level :math:`P_{\\text{ref}}` is</span>
+<span class="sd">                estimated from the surface pressure :math:`P_{\\text{surf}}` using</span>
+<span class="sd">                the simplified hydrostatic approximation</span>
+
+<span class="sd">                .. math::</span>
+<span class="sd">                    P_{\\text{ref}} = P_{\\text{surf}} - 0.1 \\cdot h_{\\text{ABL}} \\cdot \\rho \\cdot g,</span>
+
+<span class="sd">                where :math:`h_{\\text{ABL}}` is the atmospheric boundary layer (ABL) height,</span>
+<span class="sd">                :math:`\\rho` is air density, and :math:`g` is gravity.</span>
+
+<span class="sd">            2.  Second, the potential temperature :math:`\\theta` is converted to</span>
+<span class="sd">                the actual air temperature :math:`T_{\\text{air}}` at the</span>
+<span class="sd">                reference level using Poisson&#39;s equation (for an adiabatic process)</span>
+
+<span class="sd">                .. math::</span>
+<span class="sd">                    T_{\\text{air}} = \\theta\\left(</span>
+<span class="sd">                        \\frac{P_{\\text{ref}}}{P_{\\text{surf}}}</span>
+<span class="sd">                    \\right) ^{\\kappa},</span>
+
+<span class="sd">                where the exponent :math:`\\kappa = R_d / c_p` is the ratio of the</span>
+<span class="sd">                gas constant for dry air :math:`R_d` to the specific heat</span>
+<span class="sd">                capacity of air :math:`c_p`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># calculate pressure at reference level (10% reduction from surface)</span>
+        <span class="n">ref_pressure</span> <span class="o">=</span> <span class="n">surf_pressure</span> <span class="o">-</span> <span class="mf">0.1</span> <span class="o">*</span> <span class="n">abl_height</span> <span class="o">*</span> <span class="n">const</span><span class="o">.</span><span class="n">rho</span> <span class="o">*</span> <span class="n">const</span><span class="o">.</span><span class="n">g</span>
+
+        <span class="c1"># convert potential temperature to actual temperature</span>
+        <span class="n">pressure_ratio</span> <span class="o">=</span> <span class="n">ref_pressure</span> <span class="o">/</span> <span class="n">surf_pressure</span>
+        <span class="n">air_temp</span> <span class="o">=</span> <span class="n">theta</span> <span class="o">*</span> <span class="p">(</span><span class="n">pressure_ratio</span> <span class="o">**</span> <span class="p">(</span><span class="n">const</span><span class="o">.</span><span class="n">rd</span> <span class="o">/</span> <span class="n">const</span><span class="o">.</span><span class="n">cp</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">air_temp</span></div>
+
+
+<div class="viewcode-block" id="StandardRadiationModel.calculate_atmospheric_transmission">
+<a class="viewcode-back" href="../../../source/api/abcmodel.radiation.standard.html#abcmodel.radiation.standard.StandardRadiationModel.calculate_atmospheric_transmission">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">calculate_atmospheric_transmission</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">solar_elevation</span><span class="p">:</span> <span class="n">Array</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Array</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculate atmospheric transmission coefficient for solar radiation.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            solar_elevation: sine of the solar elevation angle [-].</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Atmospheric transmission coefficient [-].</span>
+
+<span class="sd">        Notes:</span>
+<span class="sd">            This is a simplified empirical parameterization (linear model) for</span>
+<span class="sd">            atmospheric transmission (:math:`\\tau`).</span>
+
+<span class="sd">            1.  A clear-sky transmission :math:`\\tau_{\\text{clear}}` is</span>
+<span class="sd">                calculated based on the solar elevation :math:`\\sin(\\alpha)` as</span>
+
+<span class="sd">                .. math::</span>
+<span class="sd">                    \\tau_{\\text{clear}} = 0.6 + 0.2 \\cdot \\sin(\\alpha).</span>
+
+<span class="sd">            2.  A cloud reduction factor :math:`f_{\\text{cloud}}` is</span>
+<span class="sd">                calculated based on the cloud cover :math:`\\text{cc}` as</span>
+
+<span class="sd">                .. math::</span>
+<span class="sd">                    f_{\\text{cloud}} = 1.0 - 0.4 \\cdot \\text{cc}.</span>
+
+<span class="sd">            3.  The final transmission is then the product of these two factors, giving</span>
+
+<span class="sd">                .. math::</span>
+<span class="sd">                    \\tau = \\tau_{\\text{clear}} \\cdot f_{\\text{cloud}}.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># clear-sky transmission increases with solar elevation</span>
+        <span class="n">clear_sky_trans</span> <span class="o">=</span> <span class="mf">0.6</span> <span class="o">+</span> <span class="mf">0.2</span> <span class="o">*</span> <span class="n">solar_elevation</span>
+
+        <span class="c1"># cloud cover reduces transmission (40% reduction per unit cloud cover)</span>
+        <span class="n">cloud_reduction</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="mf">0.4</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">cc</span>
+
+        <span class="k">return</span> <span class="n">clear_sky_trans</span> <span class="o">*</span> <span class="n">cloud_reduction</span></div>
+
+
+<div class="viewcode-block" id="StandardRadiationModel.calculate_radiation_components">
+<a class="viewcode-back" href="../../../source/api/abcmodel.radiation.standard.html#abcmodel.radiation.standard.StandardRadiationModel.calculate_radiation_components">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">calculate_radiation_components</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">solar_elevation</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span>
+        <span class="n">atmospheric_transmission</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span>
+        <span class="n">air_temp</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">alpha</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span>
+        <span class="n">surf_temp</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span>
+        <span class="n">const</span><span class="p">:</span> <span class="n">PhysicalConstants</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Array</span><span class="p">,</span> <span class="n">Array</span><span class="p">,</span> <span class="n">Array</span><span class="p">,</span> <span class="n">Array</span><span class="p">,</span> <span class="n">Array</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculate all radiation components and update attributes.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            solar_elevation: sine of the solar elevation angle [-].</span>
+<span class="sd">            atmospheric_transmission: atmospheric transmission coefficient [-].</span>
+<span class="sd">            air_temp: air temperature [K].</span>
+<span class="sd">            alpha: surface albedo [-].</span>
+<span class="sd">            surf_temp: surface temperature [K].</span>
+<span class="sd">            const:</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A tuple containing net radiation, incoming shortwave radiation, outgoing shortwave</span>
+<span class="sd">            radiation, incoming longwave radiation and outgoing longwave radiation [W/m^2].</span>
+
+<span class="sd">        Notes:</span>
+<span class="sd">            This function calculates the four components of the surface radiation</span>
+<span class="sd">            budget and the resulting net radiation.</span>
+
+<span class="sd">            **Shortwave radiation:**</span>
+
+<span class="sd">            1.  Incoming shortwave :math:`SW_{\\text{in}}` is the solar constant</span>
+<span class="sd">                :math:`S` attenuated by the atmosphere and projected onto the</span>
+<span class="sd">                surface, given by</span>
+
+<span class="sd">                .. math::</span>
+<span class="sd">                    SW_{\\text{in}} = S \\cdot \\tau \\cdot \\sin(\\alpha),</span>
+
+<span class="sd">                where :math:`\\tau` is the atmospheric transmission and</span>
+<span class="sd">                :math:`\\sin(\\alpha)` is the sine of the solar elevation.</span>
+
+<span class="sd">            2.  Outgoing shortwave :math:`SW_{\\text{out}}` is the fraction of</span>
+<span class="sd">                incoming radiation reflected by the surface (albedo, :math:`\\alpha`), given by</span>
+
+<span class="sd">                .. math::</span>
+<span class="sd">                    SW_{\\text{out}} = \\alpha \\cdot SW_{\\text{in}}.</span>
+
+<span class="sd">            **Longwave radiation:**</span>
+
+<span class="sd">            Both longwave components are calculated using the Stefan-Boltzmann</span>
+<span class="sd">            law :math:`E = \\epsilon \\sigma T^4`.</span>
+
+<span class="sd">            3.  Incoming longwave :math:`LW_{\\text{in}}` is the radiation from the</span>
+<span class="sd">                atmosphere, which is treated as a grey body with an emissivity</span>
+<span class="sd">                :math:`\\epsilon_{\\text{atm}} = 0.8`, given by</span>
+
+<span class="sd">                .. math::</span>
+<span class="sd">                    LW_{\\text{in}} = 0.8 \\cdot \\sigma \\cdot T_{\\text{air}}^4,</span>
+
+<span class="sd">                where :math:`\\sigma` is the Stefan-Boltzmann constant `const.bolz`.</span>
+
+<span class="sd">            4.  Outgoing longwave :math:`LW_{\\text{out}}` is the radiation from the</span>
+<span class="sd">                surface, assuming an emissivity of 1.0, given by</span>
+
+<span class="sd">                .. math::</span>
+<span class="sd">                    LW_{\\text{out}} = \\sigma \\cdot T_{\\text{surf}}^4.</span>
+
+<span class="sd">            **Net radiation:**</span>
+
+<span class="sd">            Finally, the net radiation :math:`R_{\\text{net}}` is given by the balance</span>
+
+<span class="sd">            .. math::</span>
+<span class="sd">                R_{\\text{net}} = (SW_{\\text{in}} - SW_{\\text{out}}) +</span>
+<span class="sd">                                 (LW_{\\text{in}} - LW_{\\text{out}}).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># shortwave radiation components</span>
+        <span class="n">in_srad</span> <span class="o">=</span> <span class="n">const</span><span class="o">.</span><span class="n">solar_in</span> <span class="o">*</span> <span class="n">atmospheric_transmission</span> <span class="o">*</span> <span class="n">solar_elevation</span>
+        <span class="n">out_srad</span> <span class="o">=</span> <span class="n">alpha</span> <span class="o">*</span> <span class="n">const</span><span class="o">.</span><span class="n">solar_in</span> <span class="o">*</span> <span class="n">atmospheric_transmission</span> <span class="o">*</span> <span class="n">solar_elevation</span>
+
+        <span class="c1"># longwave radiation components</span>
+        <span class="n">in_lrad</span> <span class="o">=</span> <span class="mf">0.8</span> <span class="o">*</span> <span class="n">const</span><span class="o">.</span><span class="n">bolz</span> <span class="o">*</span> <span class="n">air_temp</span><span class="o">**</span><span class="mf">4.0</span>
+        <span class="n">out_lrad</span> <span class="o">=</span> <span class="n">const</span><span class="o">.</span><span class="n">bolz</span> <span class="o">*</span> <span class="n">surf_temp</span><span class="o">**</span><span class="mf">4.0</span>
+
+        <span class="c1"># net radiation</span>
+        <span class="n">net_rad</span> <span class="o">=</span> <span class="n">in_srad</span> <span class="o">-</span> <span class="n">out_srad</span> <span class="o">+</span> <span class="n">in_lrad</span> <span class="o">-</span> <span class="n">out_lrad</span>
+
+        <span class="k">return</span> <span class="n">net_rad</span><span class="p">,</span> <span class="n">in_srad</span><span class="p">,</span> <span class="n">out_srad</span><span class="p">,</span> <span class="n">in_lrad</span><span class="p">,</span> <span class="n">out_lrad</span></div>
 </div>
 
 </pre></div>
@@ -518,7 +710,7 @@ document.write(`
   <div class="footer-item">
     
 <p class="component-author">
-By ABC3 Group
+By ABC³ Group
 </p>
 
   </div>
@@ -528,7 +720,7 @@ By ABC3 Group
 
   <p class="copyright">
     
-      © Copyright ABC3 Group.
+      © Copyright ABC³ Group.
       <br/>
     
   </p>

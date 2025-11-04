@@ -1,6 +1,6 @@
 
-Standard W Clouds
-=================
+Standard With Clouds
+====================
 
 .. automodule:: abcmodel.radiation.standard_w_clouds
    :members:

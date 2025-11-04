@@ -151,7 +151,7 @@
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../source/api/abcmodel.html">ABC Model</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../../source/api/abcmodel.radiation.html">Radiation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../source/api/abcmodel.radiation.standard.html">Standard</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../source/api/abcmodel.radiation.standard_w_clouds.html">Standard W Clouds</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/api/abcmodel.radiation.standard_w_clouds.html">Standard With Clouds</a></li>
 </ul>
 </details></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../../source/api/abcmodel.land_surface.html">Land Surface</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -322,10 +322,6 @@ document.write(`
 <span class="sd">    atmospheric conditions. Includes both shortwave (solar) and longwave (thermal)</span>
 <span class="sd">    radiation components.</span>
 
-<span class="sd">    1. Calculate solar declination and elevation angles.</span>
-<span class="sd">    2. Determine air temperature and atmospheric transmission.</span>
-<span class="sd">    3. Compute all radiation components and net surface radiation.</span>
-
 <span class="sd">    Args:</span>
 <span class="sd">        lat: latitude [degrees], range -90 to +90.</span>
 <span class="sd">        lon: longitude [degrees], range -180 to +180.</span>
@@ -345,19 +341,6 @@ document.write(`
         <span class="bp">self</span><span class="o">.</span><span class="n">doy</span> <span class="o">=</span> <span class="n">doy</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">tstart</span> <span class="o">=</span> <span class="n">tstart</span>
 
-<div class="viewcode-block" id="StandardRadiationwCloudsModel.calculate_atmospheric_transmission_w_clouds">
-<a class="viewcode-back" href="../../../source/api/abcmodel.radiation.standard_w_clouds.html#abcmodel.radiation.standard_w_clouds.StandardRadiationwCloudsModel.calculate_atmospheric_transmission_w_clouds">[docs]</a>
-    <span class="nd">@staticmethod</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">calculate_atmospheric_transmission_w_clouds</span><span class="p">(</span>
-        <span class="n">solar_elevation</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span> <span class="n">cl_trans</span><span class="p">:</span> <span class="n">Array</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Array</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculate atmospheric transmission coefficient for solar radiation based on elevation and cloud layer transmittance.&quot;&quot;&quot;</span>
-        <span class="c1"># clear-sky transmission increases with solar elevation</span>
-        <span class="n">clear_sky_trans</span> <span class="o">=</span> <span class="mf">0.6</span> <span class="o">+</span> <span class="mf">0.2</span> <span class="o">*</span> <span class="n">solar_elevation</span>
-        <span class="c1"># apply cloud layer transmissivity and return</span>
-        <span class="k">return</span> <span class="n">clear_sky_trans</span> <span class="o">*</span> <span class="n">cl_trans</span></div>
-
-
 <div class="viewcode-block" id="StandardRadiationwCloudsModel.run">
 <a class="viewcode-back" href="../../../source/api/abcmodel.radiation.standard_w_clouds.html#abcmodel.radiation.standard_w_clouds.StandardRadiationwCloudsModel.run">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span>
@@ -367,7 +350,28 @@ document.write(`
         <span class="n">dt</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
         <span class="n">const</span><span class="p">:</span> <span class="n">PhysicalConstants</span><span class="p">,</span>
     <span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculate radiation components and net surface radiation.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculate radiation components and net surface radiation.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            state: The current PyTree state of the model.</span>
+<span class="sd">            t: Current time step index [-].</span>
+<span class="sd">            dt: Time step duration [s].</span>
+<span class="sd">            const: PhysicalConstants object.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            The updated state object with new radiation values.</span>
+
+<span class="sd">        Notes:</span>
+<span class="sd">            1.  Calculates solar position with</span>
+<span class="sd">                :meth:`~abcmodel.radiation.standard.StandardRadiationModel.calculate_solar_declination` and</span>
+<span class="sd">                :meth:`~abcmodel.radiation.standard.StandardRadiationModel.calculate_solar_elevation`.</span>
+<span class="sd">            2.  Determines atmospheric properties with</span>
+<span class="sd">                :meth:`~abcmodel.radiation.standard.StandardRadiationModel.calculate_air_temperature` and</span>
+<span class="sd">                :meth:`~calculate_atmospheric_transmission_w_clouds`.</span>
+<span class="sd">            3.  Computes all radiation components and the final</span>
+<span class="sd">                net radiation with :meth:`~abcmodel.radiation.standard.StandardRadiationModel.calculate_radiation_components`,</span>
+<span class="sd">                then updates the state object with the results.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># solar position</span>
         <span class="n">solar_declination</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calculate_solar_declination</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">doy</span><span class="p">)</span>
         <span class="n">solar_elevation</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calculate_solar_elevation</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">solar_declination</span><span class="p">)</span>
@@ -401,6 +405,45 @@ document.write(`
         <span class="p">)</span>
 
         <span class="k">return</span> <span class="n">state</span></div>
+
+
+<div class="viewcode-block" id="StandardRadiationwCloudsModel.calculate_atmospheric_transmission_w_clouds">
+<a class="viewcode-back" href="../../../source/api/abcmodel.radiation.standard_w_clouds.html#abcmodel.radiation.standard_w_clouds.StandardRadiationwCloudsModel.calculate_atmospheric_transmission_w_clouds">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">calculate_atmospheric_transmission_w_clouds</span><span class="p">(</span>
+        <span class="n">solar_elevation</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span> <span class="n">cl_trans</span><span class="p">:</span> <span class="n">Array</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Array</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculate atmospheric transmission coefficient for solar radiation.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            solar_elevation: sine of the solar elevation angle [-].</span>
+<span class="sd">            cl_trans: prognostic cloud layer transmittance [-].</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Atmospheric transmission coefficient [-].</span>
+
+<span class="sd">        Notes:</span>
+<span class="sd">            This is a simplified empirical parameterization (linear model) for</span>
+<span class="sd">            atmospheric transmission :math:`\\tau`.</span>
+
+<span class="sd">            1.  A clear-sky transmission :math:`\\tau_{\\text{clear}}` is</span>
+<span class="sd">                calculated based on the solar elevation :math:`\\sin(\\alpha)` as</span>
+
+<span class="sd">                .. math::</span>
+<span class="sd">                    \\tau_{\\text{clear}} = 0.6 + 0.2 \\cdot \\sin(\\alpha).</span>
+
+<span class="sd">            2.  The prognostic cloud transmittance :math:`\\tau_{\\text{cloud}}`</span>
+<span class="sd">                is provided directly by the model state (``cl_trans``).</span>
+
+<span class="sd">            3.  The final transmission is then the product of these two factors, giving</span>
+
+<span class="sd">                .. math::</span>
+<span class="sd">                    \\tau = \\tau_{\\text{clear}} \\cdot \\tau_{\\text{cloud}}.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># clear-sky transmission increases with solar elevation</span>
+        <span class="n">clear_sky_trans</span> <span class="o">=</span> <span class="mf">0.6</span> <span class="o">+</span> <span class="mf">0.2</span> <span class="o">*</span> <span class="n">solar_elevation</span>
+        <span class="c1"># apply cloud layer transmissivity and return</span>
+        <span class="k">return</span> <span class="n">clear_sky_trans</span> <span class="o">*</span> <span class="n">cl_trans</span></div>
 </div>
 
 </pre></div>
@@ -431,7 +474,7 @@ document.write(`
   <div class="footer-item">
     
 <p class="component-author">
-By ABC3 Group
+By ABC³ Group
 </p>
 
   </div>
@@ -441,7 +484,7 @@ By ABC3 Group
 
   <p class="copyright">
     
-      © Copyright ABC3 Group.
+      © Copyright ABC³ Group.
       <br/>
     
   </p>

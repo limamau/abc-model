@@ -394,7 +394,7 @@ document.write(`
 (<span class="math notranslate nohighlight">\(T_K\)</span>) to Celsius (<span class="math notranslate nohighlight">\(T_C\)</span>) with</p>
 <div class="math notranslate nohighlight">
 \[T_C = T_K - 273.16,\]</div>
-<p>then, the saturated vapor pressure (<span class="math notranslate nohighlight">\(e_{sat}\)</span>) is calculated as</p>
+<p>then, the saturated vapor pressure <span class="math notranslate nohighlight">\(e_{sat}\)</span> is calculated as</p>
 <div class="math notranslate nohighlight">
 \[e_{\text{sat}}(T_C) = 611 \cdot \exp\left( \frac{17.2694 \cdot T_C}{T_C + 237.3} \right),\]</div>
 <p>where <span class="math notranslate nohighlight">\(611\)</span> [Pa] is a reference pressure. For more on this, see
@@ -417,7 +417,7 @@ document.write(`
 </dd>
 </dl>
 <p class="rubric">Notes</p>
-<p>Saturated specific humidity (<span class="math notranslate nohighlight">\(q_{sat}\)</span>) is the maximum amount of
+<p>Saturated specific humidity <span class="math notranslate nohighlight">\(q_{sat}\)</span> is the maximum amount of
 water vapor (as a mass fraction) that a parcel of air can hold at
 a given temperature and pressure.</p>
 <p>The full formula for <span class="math notranslate nohighlight">\(q_{sat}\)</span> is</p>
@@ -449,11 +449,11 @@ negligible compared to <span class="math notranslate nohighlight">\(p\)</span>, 
 </dl>
 <p class="rubric">Notes</p>
 <p>This function calculates the integrated stability correction function for
-momentum (<span class="math notranslate nohighlight">\(\Psi_m\)</span>), which is used to adjust wind profiles based
+momentum <span class="math notranslate nohighlight">\(\Psi_m\)</span>, which is used to adjust wind profiles based
 on atmospheric stability.</p>
 <p>The function is piecewise, depending on the stability parameter
 <span class="math notranslate nohighlight">\(\zeta = z/L\)</span>.</p>
-<p><strong>1. For Unstable Conditions (ζ ≤ 0):</strong></p>
+<p><strong>1. Unstable conditions (ζ ≤ 0):</strong></p>
 <p>Based on Businger-Dyer relations, an intermediate variable</p>
 <div class="math notranslate nohighlight">
 \[x = (1 - 16\zeta)^{1/4}\]</div>
@@ -461,7 +461,7 @@ on atmospheric stability.</p>
 <div class="math notranslate nohighlight">
 \[\Psi_m(\zeta) = \ln\left( \frac{(1+x)^2 (1+x^2)}{8} \right)
                  - 2 \arctan(x) + \frac{\pi}{2}.\]</div>
-<p><strong>2. For Stable Conditions (ζ &gt; 0):</strong></p>
+<p><strong>2. Stable conditions (ζ &gt; 0):</strong></p>
 <p>This uses an empirical formula (e.g., Holtslag and De Bruin, 1988)
 with constants:</p>
 <ul class="simple">
@@ -489,18 +489,18 @@ with constants:</p>
 </dl>
 <p class="rubric">Notes</p>
 <p>This function calculates the integrated stability correction function for
-scalars (<span class="math notranslate nohighlight">\(\Psi_h\)</span>), like heat and humidity, which is used to
+scalars <span class="math notranslate nohighlight">\(\Psi_h\)</span>, like heat and humidity, which is used to
 adjust temperature and humidity profiles based on atmospheric stability.</p>
 <p>The function is piecewise, depending on the stability parameter
 <span class="math notranslate nohighlight">\(\zeta = z/L\)</span>.</p>
-<p><strong>1. For Unstable Conditions (ζ ≤ 0):</strong></p>
+<p><strong>1. Unstable conditions (ζ ≤ 0):</strong></p>
 <p>Based on Businger-Dyer relations, an intermediate variable (same as above)</p>
 <div class="math notranslate nohighlight">
 \[x = (1 - 16\zeta)^{1/4}\]</div>
 <p>is used to write the integrated stability function</p>
 <div class="math notranslate nohighlight">
 \[\Psi_h(\zeta) = 2 \ln\left( \frac{1+x^2}{2} \right).\]</div>
-<p><strong>2. For Stable Conditions (ζ &gt; 0):</strong></p>
+<p><strong>2. Stable conditions (ζ &gt; 0):</strong></p>
 <p>This uses a corresponding empirical formula with the same constants
 (<span class="math notranslate nohighlight">\(\alpha\)</span>, <span class="math notranslate nohighlight">\(\beta\)</span>, <span class="math notranslate nohighlight">\(\gamma\)</span>) as above to write</p>
 <div class="math notranslate nohighlight">
@@ -675,7 +675,7 @@ adjust temperature and humidity profiles based on atmospheric stability.</p>
   <div class="footer-item">
     
 <p class="component-author">
-By ABC3 Group
+By ABC³ Group
 </p>
 
   </div>
@@ -685,7 +685,7 @@ By ABC3 Group
 
   <p class="copyright">
     
-      © Copyright ABC3 Group.
+      © Copyright ABC³ Group.
       <br/>
     
   </p>
