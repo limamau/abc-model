@@ -1,23 +1,28 @@
 {%- macro automodule(modname, options) -%}
 .. automodule:: {{ modname }}
 {%- for option in options %}
-   :{{ option }}:
+    :{{ option }}:
 {%- endfor %}
 {%- endmacro %}
 
 {%- macro toctree(docnames) -%}
+{# This is the *default* toctree for sub-sub-packages #}
 .. toctree::
-   :maxdepth: {{ maxdepth }}
+    :maxdepth: {{ maxdepth }}
 {% for docname in docnames %}
-   {{ docname }}
+    {{ docname }}
 {%- endfor %}
 {%- endmacro %}
 
+{# Check if this is a first-level subpackage #}
+{%- set is_first_level_subpackage = (pkgname.count('.') == 1) -%}
+
+{# --- Title --- #}
 {%- if '.' in pkgname %}
-{# This is a SUB-package, like "abcmodel.clouds" #}
+{# This is a SUB-package, e.g. "abcmodel.radiation" #}
 {{- pkgname.split('.')[-1].replace('_', ' ') | title | e | heading }}
 {%- else %}
-{# This is the ROOT package, "abcmodel" #}
+{# This is a ROOT package#}
 {%- if is_namespace %}
 {{- [pkgname, "namespace"] | join(" ") | e | heading }}
 {%- else %}
@@ -29,18 +34,34 @@
 .. py:module:: {{ pkgname }}
 {% endif %}
 
-{%- if modulefirst and not is_namespace %}
+{# --- 'modulefirst' automodule call (for __init__.py) --- #}
+{# We skip this for first-level subpackages #}
+{%- if modulefirst and not is_namespace and not is_first_level_subpackage %}
 {{ automodule(pkgname, automodule_options) }}
 {% endif %}
 
-{%- if subpackages %}
+{# Subpackages Section #}
+{# We skip this for first-level subpackages and use something manual instead #}
+{%- if subpackages and not is_first_level_subpackage %}
 Subpackages
 -----------
-
 {{ toctree(subpackages) }}
 {% endif %}
 
+
+{# Submodules Section #}
 {%- if submodules %}
+{%- if is_first_level_subpackage %}
+{# CUSTOM TEMPLATE for e.g. abcmodel.radiation #}
+
+.. toctree::
+    :maxdepth: 1
+{% for docname in submodules %}
+    {{ docname }}
+{%- endfor %}
+
+{%- else %}
+{# CUSTOM TEMPLATE for e.g. abcmodel.radiation.standard #}
 Submodules
 ----------
 {% if separatemodules %}
@@ -54,10 +75,13 @@ Submodules
 {% endfor %}
 {%- endif %}
 {%- endif %}
+{%- endif %}
 
-{%- if not modulefirst and not is_namespace %}
+
+{# --- 'Module contents' automodule call (for __init__.py) --- #}
+{# We skip this for first-level subpackages as requested #}
+{%- if not modulefirst and not is_namespace and not is_first_level_subpackage %}
 Module contents
 ---------------
-
 {{ automodule(pkgname, automodule_options) }}
 {% endif %}

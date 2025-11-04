@@ -149,9 +149,9 @@
     <div class="bd-toc-item navbar-nav active">
         <ul class="nav bd-sidenav">
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../source/api/abcmodel.html">ABC Model</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../../../source/api/abcmodel.clouds.html">Clouds</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../../source/api/abcmodel.clouds.cumulus.html">Cumulus</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../source/api/abcmodel.clouds.no_clouds.html">No Clouds</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../source/api/abcmodel.radiation.html">Radiation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/api/abcmodel.radiation.standard.html">Standard</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/api/abcmodel.radiation.standard_w_clouds.html">Standard W Clouds</a></li>
 </ul>
 </details></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../../source/api/abcmodel.land_surface.html">Land Surface</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -161,20 +161,20 @@
 <li class="toctree-l3"><a class="reference internal" href="../../../source/api/abcmodel.land_surface.standard.html">Standard</a></li>
 </ul>
 </details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../source/api/abcmodel.surface_layer.html">Surface Layer</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/api/abcmodel.surface_layer.minimal.html">Minimal</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/api/abcmodel.surface_layer.standard.html">Standard</a></li>
+</ul>
+</details></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../../source/api/abcmodel.mixed_layer.html">Mixed Layer</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../source/api/abcmodel.mixed_layer.bulk.html">Bulk</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../source/api/abcmodel.mixed_layer.minimal.html">Minimal</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../source/api/abcmodel.mixed_layer.stats.html">Stats</a></li>
 </ul>
 </details></li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../../../source/api/abcmodel.radiation.html">Radiation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../../source/api/abcmodel.radiation.standard.html">Standard</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../source/api/abcmodel.radiation.standard_w_clouds.html">Standard W Clouds</a></li>
-</ul>
-</details></li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../../../source/api/abcmodel.surface_layer.html">Surface Layer</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../../source/api/abcmodel.surface_layer.minimal.html">Minimal</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../source/api/abcmodel.surface_layer.standard.html">Standard</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../source/api/abcmodel.clouds.html">Clouds</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/api/abcmodel.clouds.cumulus.html">Cumulus</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/api/abcmodel.clouds.no_clouds.html">No Clouds</a></li>
 </ul>
 </details></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../source/api/abcmodel.coupling.html">Coupling</a></li>
@@ -307,7 +307,7 @@ document.write(`
 
 
 <div class="viewcode-block" id="StandardRadiationInitConds">
-<a class="viewcode-back" href="../../../source/api/abcmodel.radiation.standard.html#abcmodel.radiation.StandardRadiationInitConds">[docs]</a>
+<a class="viewcode-back" href="../../../source/api/abcmodel.radiation.standard.html#abcmodel.radiation.standard.StandardRadiationInitConds">[docs]</a>
 <span class="nd">@dataclass</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">StandardRadiationInitConds</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Standard radiation model initial state.&quot;&quot;&quot;</span>
@@ -326,7 +326,7 @@ document.write(`
 
 
 <div class="viewcode-block" id="StandardRadiationModel">
-<a class="viewcode-back" href="../../../source/api/abcmodel.radiation.standard.html#abcmodel.radiation.StandardRadiationModel">[docs]</a>
+<a class="viewcode-back" href="../../../source/api/abcmodel.radiation.standard.html#abcmodel.radiation.standard.StandardRadiationModel">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">StandardRadiationModel</span><span class="p">(</span><span class="n">AbstractRadiationModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Standard radiation model with solar position and atmospheric effects.</span>
 
@@ -361,7 +361,7 @@ document.write(`
         <span class="bp">self</span><span class="o">.</span><span class="n">cc</span> <span class="o">=</span> <span class="n">cc</span>
 
 <div class="viewcode-block" id="StandardRadiationModel.calculate_solar_declination">
-<a class="viewcode-back" href="../../../source/api/abcmodel.radiation.standard.html#abcmodel.radiation.StandardRadiationModel.calculate_solar_declination">[docs]</a>
+<a class="viewcode-back" href="../../../source/api/abcmodel.radiation.standard.html#abcmodel.radiation.standard.StandardRadiationModel.calculate_solar_declination">[docs]</a>
     <span class="nd">@staticmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">calculate_solar_declination</span><span class="p">(</span><span class="n">doy</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Array</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculate solar declination angle based on day of year.&quot;&quot;&quot;</span>
@@ -369,7 +369,7 @@ document.write(`
 
 
 <div class="viewcode-block" id="StandardRadiationModel.calculate_solar_elevation">
-<a class="viewcode-back" href="../../../source/api/abcmodel.radiation.standard.html#abcmodel.radiation.StandardRadiationModel.calculate_solar_elevation">[docs]</a>
+<a class="viewcode-back" href="../../../source/api/abcmodel.radiation.standard.html#abcmodel.radiation.standard.StandardRadiationModel.calculate_solar_elevation">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">calculate_solar_elevation</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">t</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">dt</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">solar_declination</span><span class="p">:</span> <span class="n">Array</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Array</span><span class="p">:</span>
@@ -386,7 +386,7 @@ document.write(`
 
 
 <div class="viewcode-block" id="StandardRadiationModel.calculate_air_temperature">
-<a class="viewcode-back" href="../../../source/api/abcmodel.radiation.standard.html#abcmodel.radiation.StandardRadiationModel.calculate_air_temperature">[docs]</a>
+<a class="viewcode-back" href="../../../source/api/abcmodel.radiation.standard.html#abcmodel.radiation.standard.StandardRadiationModel.calculate_air_temperature">[docs]</a>
     <span class="nd">@staticmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">calculate_air_temperature</span><span class="p">(</span>
         <span class="n">surf_pressure</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
@@ -406,7 +406,7 @@ document.write(`
 
 
 <div class="viewcode-block" id="StandardRadiationModel.calculate_atmospheric_transmission">
-<a class="viewcode-back" href="../../../source/api/abcmodel.radiation.standard.html#abcmodel.radiation.StandardRadiationModel.calculate_atmospheric_transmission">[docs]</a>
+<a class="viewcode-back" href="../../../source/api/abcmodel.radiation.standard.html#abcmodel.radiation.standard.StandardRadiationModel.calculate_atmospheric_transmission">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">calculate_atmospheric_transmission</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">solar_elevation</span><span class="p">:</span> <span class="n">Array</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Array</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Calculate atmospheric transmission coefficient for solar radiation.</span>
@@ -421,7 +421,7 @@ document.write(`
 
 
 <div class="viewcode-block" id="StandardRadiationModel.calculate_radiation_components">
-<a class="viewcode-back" href="../../../source/api/abcmodel.radiation.standard.html#abcmodel.radiation.StandardRadiationModel.calculate_radiation_components">[docs]</a>
+<a class="viewcode-back" href="../../../source/api/abcmodel.radiation.standard.html#abcmodel.radiation.standard.StandardRadiationModel.calculate_radiation_components">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">calculate_radiation_components</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">solar_elevation</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span>
@@ -447,7 +447,7 @@ document.write(`
 
 
 <div class="viewcode-block" id="StandardRadiationModel.run">
-<a class="viewcode-back" href="../../../source/api/abcmodel.radiation.standard.html#abcmodel.radiation.StandardRadiationModel.run">[docs]</a>
+<a class="viewcode-back" href="../../../source/api/abcmodel.radiation.standard.html#abcmodel.radiation.standard.StandardRadiationModel.run">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">state</span><span class="p">:</span> <span class="n">PyTree</span><span class="p">,</span>

@@ -149,9 +149,9 @@
     <div class="bd-toc-item navbar-nav active">
         <ul class="nav bd-sidenav">
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../source/api/abcmodel.html">ABC Model</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../../../source/api/abcmodel.clouds.html">Clouds</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../../source/api/abcmodel.clouds.cumulus.html">Cumulus</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../source/api/abcmodel.clouds.no_clouds.html">No Clouds</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../source/api/abcmodel.radiation.html">Radiation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/api/abcmodel.radiation.standard.html">Standard</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/api/abcmodel.radiation.standard_w_clouds.html">Standard W Clouds</a></li>
 </ul>
 </details></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../../source/api/abcmodel.land_surface.html">Land Surface</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -161,20 +161,20 @@
 <li class="toctree-l3"><a class="reference internal" href="../../../source/api/abcmodel.land_surface.standard.html">Standard</a></li>
 </ul>
 </details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../source/api/abcmodel.surface_layer.html">Surface Layer</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/api/abcmodel.surface_layer.minimal.html">Minimal</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/api/abcmodel.surface_layer.standard.html">Standard</a></li>
+</ul>
+</details></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../../source/api/abcmodel.mixed_layer.html">Mixed Layer</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../source/api/abcmodel.mixed_layer.bulk.html">Bulk</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../source/api/abcmodel.mixed_layer.minimal.html">Minimal</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../source/api/abcmodel.mixed_layer.stats.html">Stats</a></li>
 </ul>
 </details></li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../../../source/api/abcmodel.radiation.html">Radiation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../../source/api/abcmodel.radiation.standard.html">Standard</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../source/api/abcmodel.radiation.standard_w_clouds.html">Standard W Clouds</a></li>
-</ul>
-</details></li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../../../source/api/abcmodel.surface_layer.html">Surface Layer</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../../source/api/abcmodel.surface_layer.minimal.html">Minimal</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../source/api/abcmodel.surface_layer.standard.html">Standard</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../source/api/abcmodel.clouds.html">Clouds</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/api/abcmodel.clouds.cumulus.html">Cumulus</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/api/abcmodel.clouds.no_clouds.html">No Clouds</a></li>
 </ul>
 </details></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../source/api/abcmodel.coupling.html">Coupling</a></li>
@@ -308,7 +308,7 @@ document.write(`
 
 
 <div class="viewcode-block" id="JarvisStewartInitConds">
-<a class="viewcode-back" href="../../../source/api/abcmodel.land_surface.jarvis_stewart.html#abcmodel.land_surface.JarvisStewartInitConds">[docs]</a>
+<a class="viewcode-back" href="../../../source/api/abcmodel.land_surface.jarvis_stewart.html#abcmodel.land_surface.jarvis_stewart.JarvisStewartInitConds">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">JarvisStewartInitConds</span><span class="p">(</span><span class="n">StandardLandSurfaceInitConds</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Jarvis-Stewart model initial state.&quot;&quot;&quot;</span>
 
@@ -317,7 +317,7 @@ document.write(`
 
 
 <div class="viewcode-block" id="JarvisStewartModel">
-<a class="viewcode-back" href="../../../source/api/abcmodel.land_surface.jarvis_stewart.html#abcmodel.land_surface.JarvisStewartModel">[docs]</a>
+<a class="viewcode-back" href="../../../source/api/abcmodel.land_surface.jarvis_stewart.html#abcmodel.land_surface.jarvis_stewart.JarvisStewartModel">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">JarvisStewartModel</span><span class="p">(</span><span class="n">AbstractStandardLandSurfaceModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Jarvis-Stewart land surface model with empirical surface resistance.</span>
 
@@ -336,7 +336,7 @@ document.write(`
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
 <div class="viewcode-block" id="JarvisStewartModel.get_f1">
-<a class="viewcode-back" href="../../../source/api/abcmodel.land_surface.jarvis_stewart.html#abcmodel.land_surface.JarvisStewartModel.get_f1">[docs]</a>
+<a class="viewcode-back" href="../../../source/api/abcmodel.land_surface.jarvis_stewart.html#abcmodel.land_surface.jarvis_stewart.JarvisStewartModel.get_f1">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">get_f1</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="n">PyTree</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Array</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculate radiation-dependent scaling factor for surface processes.</span>
 
@@ -349,7 +349,7 @@ document.write(`
 
 
 <div class="viewcode-block" id="JarvisStewartModel.compute_surface_resistance">
-<a class="viewcode-back" href="../../../source/api/abcmodel.land_surface.jarvis_stewart.html#abcmodel.land_surface.JarvisStewartModel.compute_surface_resistance">[docs]</a>
+<a class="viewcode-back" href="../../../source/api/abcmodel.land_surface.jarvis_stewart.html#abcmodel.land_surface.jarvis_stewart.JarvisStewartModel.compute_surface_resistance">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">compute_surface_resistance</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">state</span><span class="p">:</span> <span class="n">PyTree</span><span class="p">,</span>
@@ -375,7 +375,7 @@ document.write(`
 
 
 <div class="viewcode-block" id="JarvisStewartModel.compute_co2_flux">
-<a class="viewcode-back" href="../../../source/api/abcmodel.land_surface.jarvis_stewart.html#abcmodel.land_surface.JarvisStewartModel.compute_co2_flux">[docs]</a>
+<a class="viewcode-back" href="../../../source/api/abcmodel.land_surface.jarvis_stewart.html#abcmodel.land_surface.jarvis_stewart.JarvisStewartModel.compute_co2_flux">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">compute_co2_flux</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">state</span><span class="p">:</span> <span class="n">PyTree</span><span class="p">,</span>

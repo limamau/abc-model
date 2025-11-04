@@ -44,7 +44,7 @@
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Standard" href="abcmodel.radiation.standard.html" />
-    <link rel="prev" title="Stats" href="abcmodel.mixed_layer.stats.html" />
+    <link rel="prev" title="ABC Model" href="abcmodel.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -150,9 +150,9 @@
     <div class="bd-toc-item navbar-nav active">
         <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="abcmodel.html">ABC Model</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
-<li class="toctree-l2 has-children"><a class="reference internal" href="abcmodel.clouds.html">Clouds</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l3"><a class="reference internal" href="abcmodel.clouds.cumulus.html">Cumulus</a></li>
-<li class="toctree-l3"><a class="reference internal" href="abcmodel.clouds.no_clouds.html">No Clouds</a></li>
+<li class="toctree-l2 current active has-children"><a class="current reference internal" href="#">Radiation</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="abcmodel.radiation.standard.html">Standard</a></li>
+<li class="toctree-l3"><a class="reference internal" href="abcmodel.radiation.standard_w_clouds.html">Standard W Clouds</a></li>
 </ul>
 </details></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="abcmodel.land_surface.html">Land Surface</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -162,20 +162,20 @@
 <li class="toctree-l3"><a class="reference internal" href="abcmodel.land_surface.standard.html">Standard</a></li>
 </ul>
 </details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="abcmodel.surface_layer.html">Surface Layer</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="abcmodel.surface_layer.minimal.html">Minimal</a></li>
+<li class="toctree-l3"><a class="reference internal" href="abcmodel.surface_layer.standard.html">Standard</a></li>
+</ul>
+</details></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="abcmodel.mixed_layer.html">Mixed Layer</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3"><a class="reference internal" href="abcmodel.mixed_layer.bulk.html">Bulk</a></li>
 <li class="toctree-l3"><a class="reference internal" href="abcmodel.mixed_layer.minimal.html">Minimal</a></li>
 <li class="toctree-l3"><a class="reference internal" href="abcmodel.mixed_layer.stats.html">Stats</a></li>
 </ul>
 </details></li>
-<li class="toctree-l2 current active has-children"><a class="current reference internal" href="#">Radiation</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l3"><a class="reference internal" href="abcmodel.radiation.standard.html">Standard</a></li>
-<li class="toctree-l3"><a class="reference internal" href="abcmodel.radiation.standard_w_clouds.html">Standard W Clouds</a></li>
-</ul>
-</details></li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="abcmodel.surface_layer.html">Surface Layer</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l3"><a class="reference internal" href="abcmodel.surface_layer.minimal.html">Minimal</a></li>
-<li class="toctree-l3"><a class="reference internal" href="abcmodel.surface_layer.standard.html">Standard</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="abcmodel.clouds.html">Clouds</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="abcmodel.clouds.cumulus.html">Cumulus</a></li>
+<li class="toctree-l3"><a class="reference internal" href="abcmodel.clouds.no_clouds.html">No Clouds</a></li>
 </ul>
 </details></li>
 <li class="toctree-l2"><a class="reference internal" href="abcmodel.coupling.html">Coupling</a></li>
@@ -320,9 +320,7 @@ document.write(`
   </button>
 `);
 </script>
-<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="fa-solid fa-list"></span>
-</button>
+
 </div></div>
       
     </div>
@@ -338,40 +336,6 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
-            <div>
-                <h2> Contents </h2>
-            </div>
-            <nav aria-label="Page">
-                <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submodules">Submodules</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-abcmodel.radiation">Module contents</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.radiation.StandardRadiationInitConds"><code class="docutils literal notranslate"><span class="pre">StandardRadiationInitConds</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.radiation.StandardRadiationInitConds.in_lrad"><code class="docutils literal notranslate"><span class="pre">StandardRadiationInitConds.in_lrad</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.radiation.StandardRadiationInitConds.in_srad"><code class="docutils literal notranslate"><span class="pre">StandardRadiationInitConds.in_srad</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.radiation.StandardRadiationInitConds.out_lrad"><code class="docutils literal notranslate"><span class="pre">StandardRadiationInitConds.out_lrad</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.radiation.StandardRadiationInitConds.out_srad"><code class="docutils literal notranslate"><span class="pre">StandardRadiationInitConds.out_srad</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.radiation.StandardRadiationInitConds.net_rad"><code class="docutils literal notranslate"><span class="pre">StandardRadiationInitConds.net_rad</span></code></a></li>
-</ul>
-</li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.radiation.StandardRadiationModel"><code class="docutils literal notranslate"><span class="pre">StandardRadiationModel</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.radiation.StandardRadiationModel.calculate_air_temperature"><code class="docutils literal notranslate"><span class="pre">StandardRadiationModel.calculate_air_temperature()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.radiation.StandardRadiationModel.calculate_atmospheric_transmission"><code class="docutils literal notranslate"><span class="pre">StandardRadiationModel.calculate_atmospheric_transmission()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.radiation.StandardRadiationModel.calculate_radiation_components"><code class="docutils literal notranslate"><span class="pre">StandardRadiationModel.calculate_radiation_components()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.radiation.StandardRadiationModel.calculate_solar_declination"><code class="docutils literal notranslate"><span class="pre">StandardRadiationModel.calculate_solar_declination()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.radiation.StandardRadiationModel.calculate_solar_elevation"><code class="docutils literal notranslate"><span class="pre">StandardRadiationModel.calculate_solar_elevation()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.radiation.StandardRadiationModel.run"><code class="docutils literal notranslate"><span class="pre">StandardRadiationModel.run()</span></code></a></li>
-</ul>
-</li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.radiation.StandardRadiationwCloudsInitConds"><code class="docutils literal notranslate"><span class="pre">StandardRadiationwCloudsInitConds</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.radiation.StandardRadiationwCloudsModel"><code class="docutils literal notranslate"><span class="pre">StandardRadiationwCloudsModel</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.radiation.StandardRadiationwCloudsModel.calculate_atmospheric_transmission_w_clouds"><code class="docutils literal notranslate"><span class="pre">StandardRadiationwCloudsModel.calculate_atmospheric_transmission_w_clouds()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.radiation.StandardRadiationwCloudsModel.run"><code class="docutils literal notranslate"><span class="pre">StandardRadiationwCloudsModel.run()</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-            </nav>
         </div>
     </div>
 </div>
@@ -383,188 +347,12 @@ document.write(`
                   
   <section id="radiation">
 <h1>Radiation<a class="headerlink" href="#radiation" title="Link to this heading">#</a></h1>
-<section id="submodules">
-<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">#</a></h2>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="abcmodel.radiation.standard.html">Standard</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="abcmodel.radiation.standard.html#abcmodel.radiation.standard.StandardRadiationInitConds"><code class="docutils literal notranslate"><span class="pre">StandardRadiationInitConds</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="abcmodel.radiation.standard.html#abcmodel.radiation.standard.StandardRadiationInitConds.net_rad"><code class="docutils literal notranslate"><span class="pre">StandardRadiationInitConds.net_rad</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="abcmodel.radiation.standard.html#abcmodel.radiation.standard.StandardRadiationInitConds.in_srad"><code class="docutils literal notranslate"><span class="pre">StandardRadiationInitConds.in_srad</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="abcmodel.radiation.standard.html#abcmodel.radiation.standard.StandardRadiationInitConds.out_srad"><code class="docutils literal notranslate"><span class="pre">StandardRadiationInitConds.out_srad</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="abcmodel.radiation.standard.html#abcmodel.radiation.standard.StandardRadiationInitConds.in_lrad"><code class="docutils literal notranslate"><span class="pre">StandardRadiationInitConds.in_lrad</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="abcmodel.radiation.standard.html#abcmodel.radiation.standard.StandardRadiationInitConds.out_lrad"><code class="docutils literal notranslate"><span class="pre">StandardRadiationInitConds.out_lrad</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="abcmodel.radiation.standard.html#abcmodel.radiation.standard.StandardRadiationModel"><code class="docutils literal notranslate"><span class="pre">StandardRadiationModel</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="abcmodel.radiation.standard.html#abcmodel.radiation.standard.StandardRadiationModel.calculate_solar_declination"><code class="docutils literal notranslate"><span class="pre">StandardRadiationModel.calculate_solar_declination()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="abcmodel.radiation.standard.html#abcmodel.radiation.standard.StandardRadiationModel.calculate_solar_elevation"><code class="docutils literal notranslate"><span class="pre">StandardRadiationModel.calculate_solar_elevation()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="abcmodel.radiation.standard.html#abcmodel.radiation.standard.StandardRadiationModel.calculate_air_temperature"><code class="docutils literal notranslate"><span class="pre">StandardRadiationModel.calculate_air_temperature()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="abcmodel.radiation.standard.html#abcmodel.radiation.standard.StandardRadiationModel.calculate_atmospheric_transmission"><code class="docutils literal notranslate"><span class="pre">StandardRadiationModel.calculate_atmospheric_transmission()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="abcmodel.radiation.standard.html#abcmodel.radiation.standard.StandardRadiationModel.calculate_radiation_components"><code class="docutils literal notranslate"><span class="pre">StandardRadiationModel.calculate_radiation_components()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="abcmodel.radiation.standard.html#abcmodel.radiation.standard.StandardRadiationModel.run"><code class="docutils literal notranslate"><span class="pre">StandardRadiationModel.run()</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="abcmodel.radiation.standard_w_clouds.html">Standard W Clouds</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="abcmodel.radiation.standard_w_clouds.html#abcmodel.radiation.standard_w_clouds.StandardRadiationwCloudsInitConds"><code class="docutils literal notranslate"><span class="pre">StandardRadiationwCloudsInitConds</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="abcmodel.radiation.standard_w_clouds.html#abcmodel.radiation.standard_w_clouds.StandardRadiationwCloudsModel"><code class="docutils literal notranslate"><span class="pre">StandardRadiationwCloudsModel</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="abcmodel.radiation.standard_w_clouds.html#abcmodel.radiation.standard_w_clouds.StandardRadiationwCloudsModel.calculate_atmospheric_transmission_w_clouds"><code class="docutils literal notranslate"><span class="pre">StandardRadiationwCloudsModel.calculate_atmospheric_transmission_w_clouds()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="abcmodel.radiation.standard_w_clouds.html#abcmodel.radiation.standard_w_clouds.StandardRadiationwCloudsModel.run"><code class="docutils literal notranslate"><span class="pre">StandardRadiationwCloudsModel.run()</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="abcmodel.radiation.standard.html">Standard</a></li>
+<li class="toctree-l1"><a class="reference internal" href="abcmodel.radiation.standard_w_clouds.html">Standard W Clouds</a></li>
 </ul>
 </div>
-</section>
-<section id="module-abcmodel.radiation">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-abcmodel.radiation" title="Link to this heading">#</a></h2>
-<dl class="py class">
-<dt class="sig sig-object py" id="abcmodel.radiation.StandardRadiationInitConds">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abcmodel.radiation.</span></span><span class="sig-name descname"><span class="pre">StandardRadiationInitConds</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">net_rad</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">in_srad</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">nan</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_srad</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">nan</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">in_lrad</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">nan</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_lrad</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">nan</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/abcmodel/radiation/standard.html#StandardRadiationInitConds"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#abcmodel.radiation.StandardRadiationInitConds" title="Link to this definition">#</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Standard radiation model initial state.</p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="abcmodel.radiation.StandardRadiationInitConds.in_lrad">
-<span class="sig-name descname"><span class="pre">in_lrad</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">nan</span></em><a class="headerlink" href="#abcmodel.radiation.StandardRadiationInitConds.in_lrad" title="Link to this definition">#</a></dt>
-<dd><p>Incoming longwave radiation [W m-2].</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="abcmodel.radiation.StandardRadiationInitConds.in_srad">
-<span class="sig-name descname"><span class="pre">in_srad</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">nan</span></em><a class="headerlink" href="#abcmodel.radiation.StandardRadiationInitConds.in_srad" title="Link to this definition">#</a></dt>
-<dd><p>Incoming solar radiation [W m-2].</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="abcmodel.radiation.StandardRadiationInitConds.out_lrad">
-<span class="sig-name descname"><span class="pre">out_lrad</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">nan</span></em><a class="headerlink" href="#abcmodel.radiation.StandardRadiationInitConds.out_lrad" title="Link to this definition">#</a></dt>
-<dd><p>Outgoing longwave radiation [W m-2].</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="abcmodel.radiation.StandardRadiationInitConds.out_srad">
-<span class="sig-name descname"><span class="pre">out_srad</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">nan</span></em><a class="headerlink" href="#abcmodel.radiation.StandardRadiationInitConds.out_srad" title="Link to this definition">#</a></dt>
-<dd><p>Outgoing solar radiation [W m-2].</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="abcmodel.radiation.StandardRadiationInitConds.net_rad">
-<span class="sig-name descname"><span class="pre">net_rad</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><a class="headerlink" href="#abcmodel.radiation.StandardRadiationInitConds.net_rad" title="Link to this definition">#</a></dt>
-<dd><p>Net surface radiation [W m-2].</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="abcmodel.radiation.StandardRadiationModel">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abcmodel.radiation.</span></span><span class="sig-name descname"><span class="pre">StandardRadiationModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lat</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lon</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">doy</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tstart</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cc</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/abcmodel/radiation/standard.html#StandardRadiationModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#abcmodel.radiation.StandardRadiationModel" title="Link to this definition">#</a></dt>
-<dd><p>Bases: <a class="reference internal" href="abcmodel.models.html#abcmodel.models.AbstractRadiationModel" title="abcmodel.models.AbstractRadiationModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractRadiationModel</span></code></a></p>
-<p>Standard radiation model with solar position and atmospheric effects.</p>
-<p>Calculates time-varying solar radiation based on geographic location and
-atmospheric conditions. Includes both shortwave (solar) and longwave (thermal)
-radiation components.</p>
-<ol class="arabic simple">
-<li><p>Calculate solar declination and elevation angles.</p></li>
-<li><p>Determine air temperature and atmospheric transmission.</p></li>
-<li><p>Compute all radiation components and net surface radiation.</p></li>
-</ol>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>lat</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></span>) – latitude [degrees], range -90 to +90.</p></li>
-<li><p><strong>lon</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></span>) – longitude [degrees], range -180 to +180.</p></li>
-<li><p><strong>doy</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></span>) – day of year [-], range 1 to 365.</p></li>
-<li><p><strong>tstart</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></span>) – start time of day [hours UTC], range 0 to 24.</p></li>
-<li><p><strong>cc</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></span>) – cloud cover fraction [-], range 0 to 1.</p></li>
-</ul>
-</dd>
-</dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="abcmodel.radiation.StandardRadiationModel.calculate_air_temperature">
-<em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">calculate_air_temperature</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">surf_pressure</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">abl_height</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theta</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">const</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/abcmodel/radiation/standard.html#StandardRadiationModel.calculate_air_temperature"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#abcmodel.radiation.StandardRadiationModel.calculate_air_temperature" title="Link to this definition">#</a></dt>
-<dd><p>Calculate air temperature at reference level using potential temperature.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="abcmodel.radiation.StandardRadiationModel.calculate_atmospheric_transmission">
-<span class="sig-name descname"><span class="pre">calculate_atmospheric_transmission</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">solar_elevation</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/abcmodel/radiation/standard.html#StandardRadiationModel.calculate_atmospheric_transmission"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#abcmodel.radiation.StandardRadiationModel.calculate_atmospheric_transmission" title="Link to this definition">#</a></dt>
-<dd><p>Calculate atmospheric transmission coefficient for solar radiation.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="abcmodel.radiation.StandardRadiationModel.calculate_radiation_components">
-<span class="sig-name descname"><span class="pre">calculate_radiation_components</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">solar_elevation</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">atmospheric_transmission</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">air_temp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">surf_temp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">const</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/abcmodel/radiation/standard.html#StandardRadiationModel.calculate_radiation_components"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#abcmodel.radiation.StandardRadiationModel.calculate_radiation_components" title="Link to this definition">#</a></dt>
-<dd><p>Calculate all radiation components and update attributes.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="abcmodel.radiation.StandardRadiationModel.calculate_solar_declination">
-<em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">calculate_solar_declination</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">doy</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/abcmodel/radiation/standard.html#StandardRadiationModel.calculate_solar_declination"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#abcmodel.radiation.StandardRadiationModel.calculate_solar_declination" title="Link to this definition">#</a></dt>
-<dd><p>Calculate solar declination angle based on day of year.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="abcmodel.radiation.StandardRadiationModel.calculate_solar_elevation">
-<span class="sig-name descname"><span class="pre">calculate_solar_elevation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">t</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">solar_declination</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/abcmodel/radiation/standard.html#StandardRadiationModel.calculate_solar_elevation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#abcmodel.radiation.StandardRadiationModel.calculate_solar_elevation" title="Link to this definition">#</a></dt>
-<dd><p>Calculate solar elevation angle (sine of elevation).</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="abcmodel.radiation.StandardRadiationModel.run">
-<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">const</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/abcmodel/radiation/standard.html#StandardRadiationModel.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#abcmodel.radiation.StandardRadiationModel.run" title="Link to this definition">#</a></dt>
-<dd><p>Calculate radiation components and net surface radiation.</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="abcmodel.radiation.StandardRadiationwCloudsInitConds">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abcmodel.radiation.</span></span><span class="sig-name descname"><span class="pre">StandardRadiationwCloudsInitConds</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">net_rad</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">in_srad</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">nan</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_srad</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">nan</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">in_lrad</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">nan</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_lrad</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">nan</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/abcmodel/radiation/standard_w_clouds.html#StandardRadiationwCloudsInitConds"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#abcmodel.radiation.StandardRadiationwCloudsInitConds" title="Link to this definition">#</a></dt>
-<dd><p>Bases: <a class="reference internal" href="abcmodel.radiation.standard.html#abcmodel.radiation.standard.StandardRadiationInitConds" title="abcmodel.radiation.standard.StandardRadiationInitConds"><code class="xref py py-class docutils literal notranslate"><span class="pre">StandardRadiationInitConds</span></code></a></p>
-<p>Standard radiation model with clouds initial state.</p>
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="abcmodel.radiation.StandardRadiationwCloudsModel">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abcmodel.radiation.</span></span><span class="sig-name descname"><span class="pre">StandardRadiationwCloudsModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lat</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lon</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">doy</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tstart</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/abcmodel/radiation/standard_w_clouds.html#StandardRadiationwCloudsModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#abcmodel.radiation.StandardRadiationwCloudsModel" title="Link to this definition">#</a></dt>
-<dd><p>Bases: <a class="reference internal" href="abcmodel.radiation.standard.html#abcmodel.radiation.standard.StandardRadiationModel" title="abcmodel.radiation.standard.StandardRadiationModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">StandardRadiationModel</span></code></a></p>
-<p>Standard radiation model with solar position and atmospheric effects including prognostic cloud transmittance.</p>
-<p>Calculates time-varying solar radiation based on geographic location and
-atmospheric conditions. Includes both shortwave (solar) and longwave (thermal)
-radiation components.</p>
-<ol class="arabic simple">
-<li><p>Calculate solar declination and elevation angles.</p></li>
-<li><p>Determine air temperature and atmospheric transmission.</p></li>
-<li><p>Compute all radiation components and net surface radiation.</p></li>
-</ol>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>lat</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></span>) – latitude [degrees], range -90 to +90.</p></li>
-<li><p><strong>lon</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></span>) – longitude [degrees], range -180 to +180.</p></li>
-<li><p><strong>doy</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></span>) – day of year [-], range 1 to 365.</p></li>
-<li><p><strong>tstart</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></span>) – start time of day [hours UTC], range 0 to 24.</p></li>
-</ul>
-</dd>
-</dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="abcmodel.radiation.StandardRadiationwCloudsModel.calculate_atmospheric_transmission_w_clouds">
-<em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">calculate_atmospheric_transmission_w_clouds</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">solar_elevation</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cl_trans</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/abcmodel/radiation/standard_w_clouds.html#StandardRadiationwCloudsModel.calculate_atmospheric_transmission_w_clouds"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#abcmodel.radiation.StandardRadiationwCloudsModel.calculate_atmospheric_transmission_w_clouds" title="Link to this definition">#</a></dt>
-<dd><p>Calculate atmospheric transmission coefficient for solar radiation based on elevation and cloud layer transmittance.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="abcmodel.radiation.StandardRadiationwCloudsModel.run">
-<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">const</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/abcmodel/radiation/standard_w_clouds.html#StandardRadiationwCloudsModel.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#abcmodel.radiation.StandardRadiationwCloudsModel.run" title="Link to this definition">#</a></dt>
-<dd><p>Calculate radiation components and net surface radiation.</p>
-</dd></dl>
-
-</dd></dl>
-
-</section>
 </section>
 
 
@@ -579,12 +367,12 @@ radiation components.</p>
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="abcmodel.mixed_layer.stats.html"
+       href="abcmodel.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Stats</p>
+        <p class="prev-next-title">ABC Model</p>
       </div>
     </a>
     <a class="right-next"
@@ -602,47 +390,6 @@ radiation components.</p>
             </div>
             
             
-              
-                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
-
-
-  <div class="sidebar-secondary-item">
-  <div class="page-toc tocsection onthispage">
-    <i class="fa-solid fa-list"></i> Contents
-  </div>
-  <nav class="bd-toc-nav page-toc">
-    <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submodules">Submodules</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-abcmodel.radiation">Module contents</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.radiation.StandardRadiationInitConds"><code class="docutils literal notranslate"><span class="pre">StandardRadiationInitConds</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.radiation.StandardRadiationInitConds.in_lrad"><code class="docutils literal notranslate"><span class="pre">StandardRadiationInitConds.in_lrad</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.radiation.StandardRadiationInitConds.in_srad"><code class="docutils literal notranslate"><span class="pre">StandardRadiationInitConds.in_srad</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.radiation.StandardRadiationInitConds.out_lrad"><code class="docutils literal notranslate"><span class="pre">StandardRadiationInitConds.out_lrad</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.radiation.StandardRadiationInitConds.out_srad"><code class="docutils literal notranslate"><span class="pre">StandardRadiationInitConds.out_srad</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.radiation.StandardRadiationInitConds.net_rad"><code class="docutils literal notranslate"><span class="pre">StandardRadiationInitConds.net_rad</span></code></a></li>
-</ul>
-</li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.radiation.StandardRadiationModel"><code class="docutils literal notranslate"><span class="pre">StandardRadiationModel</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.radiation.StandardRadiationModel.calculate_air_temperature"><code class="docutils literal notranslate"><span class="pre">StandardRadiationModel.calculate_air_temperature()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.radiation.StandardRadiationModel.calculate_atmospheric_transmission"><code class="docutils literal notranslate"><span class="pre">StandardRadiationModel.calculate_atmospheric_transmission()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.radiation.StandardRadiationModel.calculate_radiation_components"><code class="docutils literal notranslate"><span class="pre">StandardRadiationModel.calculate_radiation_components()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.radiation.StandardRadiationModel.calculate_solar_declination"><code class="docutils literal notranslate"><span class="pre">StandardRadiationModel.calculate_solar_declination()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.radiation.StandardRadiationModel.calculate_solar_elevation"><code class="docutils literal notranslate"><span class="pre">StandardRadiationModel.calculate_solar_elevation()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.radiation.StandardRadiationModel.run"><code class="docutils literal notranslate"><span class="pre">StandardRadiationModel.run()</span></code></a></li>
-</ul>
-</li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.radiation.StandardRadiationwCloudsInitConds"><code class="docutils literal notranslate"><span class="pre">StandardRadiationwCloudsInitConds</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.radiation.StandardRadiationwCloudsModel"><code class="docutils literal notranslate"><span class="pre">StandardRadiationwCloudsModel</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.radiation.StandardRadiationwCloudsModel.calculate_atmospheric_transmission_w_clouds"><code class="docutils literal notranslate"><span class="pre">StandardRadiationwCloudsModel.calculate_atmospheric_transmission_w_clouds()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.radiation.StandardRadiationwCloudsModel.run"><code class="docutils literal notranslate"><span class="pre">StandardRadiationwCloudsModel.run()</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-  </nav></div>
-
-</div></div>
               
             
           </div>

@@ -1,33 +1,25 @@
 
-abcmodel package
-================
-Subpackages
+ABC Model
+=========
+Components
 -----------
 
 .. toctree::
-   :maxdepth: 4
+   :maxdepth: 1
 
-   abcmodel.clouds
-   abcmodel.land_surface
-   abcmodel.mixed_layer
    abcmodel.radiation
+   abcmodel.land_surface
    abcmodel.surface_layer
+   abcmodel.mixed_layer
+   abcmodel.clouds
 
-Submodules
-----------
+Functionalities
+---------------
 
 .. toctree::
-   :maxdepth: 4
+   :maxdepth: 1
 
    abcmodel.coupling
    abcmodel.integration
    abcmodel.models
    abcmodel.utils
-
-Module contents
----------------
-
-.. automodule:: abcmodel
-   :members:
-   :show-inheritance:
-   :undoc-members:

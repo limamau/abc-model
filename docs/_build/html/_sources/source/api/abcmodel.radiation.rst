@@ -1,19 +1,9 @@
 
 Radiation
 =========
-Submodules
-----------
 
 .. toctree::
-   :maxdepth: 4
+    :maxdepth: 1
 
-   abcmodel.radiation.standard
-   abcmodel.radiation.standard_w_clouds
-
-Module contents
----------------
-
-.. automodule:: abcmodel.radiation
-   :members:
-   :show-inheritance:
-   :undoc-members:
+    abcmodel.radiation.standard
+    abcmodel.radiation.standard_w_clouds

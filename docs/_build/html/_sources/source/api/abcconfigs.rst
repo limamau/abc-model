@@ -1,18 +1,8 @@
 
-abcconfigs package
-==================
-Subpackages
------------
+ABC Configs
+===========
 
 .. toctree::
-   :maxdepth: 4
+   :maxdepth: 1
 
    abcconfigs.class_model
-
-Module contents
----------------
-
-.. automodule:: abcconfigs
-   :members:
-   :show-inheritance:
-   :undoc-members:

@@ -149,9 +149,9 @@
     <div class="bd-toc-item navbar-nav active">
         <ul class="nav bd-sidenav">
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../source/api/abcmodel.html">ABC Model</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../../../source/api/abcmodel.clouds.html">Clouds</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../../source/api/abcmodel.clouds.cumulus.html">Cumulus</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../source/api/abcmodel.clouds.no_clouds.html">No Clouds</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../source/api/abcmodel.radiation.html">Radiation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/api/abcmodel.radiation.standard.html">Standard</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/api/abcmodel.radiation.standard_w_clouds.html">Standard W Clouds</a></li>
 </ul>
 </details></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../../source/api/abcmodel.land_surface.html">Land Surface</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -161,20 +161,20 @@
 <li class="toctree-l3"><a class="reference internal" href="../../../source/api/abcmodel.land_surface.standard.html">Standard</a></li>
 </ul>
 </details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../source/api/abcmodel.surface_layer.html">Surface Layer</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/api/abcmodel.surface_layer.minimal.html">Minimal</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/api/abcmodel.surface_layer.standard.html">Standard</a></li>
+</ul>
+</details></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../../source/api/abcmodel.mixed_layer.html">Mixed Layer</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../source/api/abcmodel.mixed_layer.bulk.html">Bulk</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../source/api/abcmodel.mixed_layer.minimal.html">Minimal</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../source/api/abcmodel.mixed_layer.stats.html">Stats</a></li>
 </ul>
 </details></li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../../../source/api/abcmodel.radiation.html">Radiation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../../source/api/abcmodel.radiation.standard.html">Standard</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../source/api/abcmodel.radiation.standard_w_clouds.html">Standard W Clouds</a></li>
-</ul>
-</details></li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../../../source/api/abcmodel.surface_layer.html">Surface Layer</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../../source/api/abcmodel.surface_layer.minimal.html">Minimal</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../source/api/abcmodel.surface_layer.standard.html">Standard</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../source/api/abcmodel.clouds.html">Clouds</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/api/abcmodel.clouds.cumulus.html">Cumulus</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/api/abcmodel.clouds.no_clouds.html">No Clouds</a></li>
 </ul>
 </details></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../source/api/abcmodel.coupling.html">Coupling</a></li>
@@ -307,7 +307,7 @@ document.write(`
 
 
 <div class="viewcode-block" id="StandardCumulusInitConds">
-<a class="viewcode-back" href="../../../source/api/abcmodel.clouds.cumulus.html#abcmodel.clouds.StandardCumulusInitConds">[docs]</a>
+<a class="viewcode-back" href="../../../source/api/abcmodel.clouds.cumulus.html#abcmodel.clouds.cumulus.StandardCumulusInitConds">[docs]</a>
 <span class="nd">@dataclass</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">StandardCumulusInitConds</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Standard cumulus initial state.&quot;&quot;&quot;</span>
@@ -324,7 +324,7 @@ document.write(`
 
 
 <div class="viewcode-block" id="StandardCumulusModel">
-<a class="viewcode-back" href="../../../source/api/abcmodel.clouds.cumulus.html#abcmodel.clouds.StandardCumulusModel">[docs]</a>
+<a class="viewcode-back" href="../../../source/api/abcmodel.clouds.cumulus.html#abcmodel.clouds.cumulus.StandardCumulusModel">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">StandardCumulusModel</span><span class="p">(</span><span class="n">AbstractCloudModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Standard cumulus cloud model based on Neggers et al. (2006/7).</span>
 
@@ -344,7 +344,7 @@ document.write(`
         <span class="bp">self</span><span class="o">.</span><span class="n">tcc_trans</span> <span class="o">=</span> <span class="n">tcc_trans</span>
 
 <div class="viewcode-block" id="StandardCumulusModel.calculate_mixed_layer_variance">
-<a class="viewcode-back" href="../../../source/api/abcmodel.clouds.cumulus.html#abcmodel.clouds.StandardCumulusModel.calculate_mixed_layer_variance">[docs]</a>
+<a class="viewcode-back" href="../../../source/api/abcmodel.clouds.cumulus.html#abcmodel.clouds.cumulus.StandardCumulusModel.calculate_mixed_layer_variance">[docs]</a>
     <span class="nd">@staticmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">calculate_mixed_layer_variance</span><span class="p">(</span>
         <span class="n">cc_qf</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span>
@@ -372,7 +372,7 @@ document.write(`
 
 
 <div class="viewcode-block" id="StandardCumulusModel.calculate_cloud_core_fraction">
-<a class="viewcode-back" href="../../../source/api/abcmodel.clouds.cumulus.html#abcmodel.clouds.StandardCumulusModel.calculate_cloud_core_fraction">[docs]</a>
+<a class="viewcode-back" href="../../../source/api/abcmodel.clouds.cumulus.html#abcmodel.clouds.cumulus.StandardCumulusModel.calculate_cloud_core_fraction">[docs]</a>
     <span class="nd">@staticmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">calculate_cloud_core_fraction</span><span class="p">(</span>
         <span class="n">q</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span> <span class="n">top_T</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span> <span class="n">top_p</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span> <span class="n">q2_h</span><span class="p">:</span> <span class="n">Array</span>
@@ -393,7 +393,7 @@ document.write(`
 
 
 <div class="viewcode-block" id="StandardCumulusModel.calculate_cloud_core_properties">
-<a class="viewcode-back" href="../../../source/api/abcmodel.clouds.cumulus.html#abcmodel.clouds.StandardCumulusModel.calculate_cloud_core_properties">[docs]</a>
+<a class="viewcode-back" href="../../../source/api/abcmodel.clouds.cumulus.html#abcmodel.clouds.cumulus.StandardCumulusModel.calculate_cloud_core_properties">[docs]</a>
     <span class="nd">@staticmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">calculate_cloud_core_properties</span><span class="p">(</span>
         <span class="n">cc_frac</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span> <span class="n">wstar</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span> <span class="n">q2_h</span><span class="p">:</span> <span class="n">Array</span>
@@ -408,7 +408,7 @@ document.write(`
 
 
 <div class="viewcode-block" id="StandardCumulusModel.calculate_co2_mass_flux">
-<a class="viewcode-back" href="../../../source/api/abcmodel.clouds.cumulus.html#abcmodel.clouds.StandardCumulusModel.calculate_co2_mass_flux">[docs]</a>
+<a class="viewcode-back" href="../../../source/api/abcmodel.clouds.cumulus.html#abcmodel.clouds.cumulus.StandardCumulusModel.calculate_co2_mass_flux">[docs]</a>
     <span class="nd">@staticmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">calculate_co2_mass_flux</span><span class="p">(</span><span class="n">cc_mf</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span> <span class="n">top_CO22</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span> <span class="n">dCO2</span><span class="p">:</span> <span class="n">Array</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Array</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -424,7 +424,7 @@ document.write(`
 
 
 <div class="viewcode-block" id="StandardCumulusModel.calculate_cloud_layer_transmittance">
-<a class="viewcode-back" href="../../../source/api/abcmodel.clouds.cumulus.html#abcmodel.clouds.StandardCumulusModel.calculate_cloud_layer_transmittance">[docs]</a>
+<a class="viewcode-back" href="../../../source/api/abcmodel.clouds.cumulus.html#abcmodel.clouds.cumulus.StandardCumulusModel.calculate_cloud_layer_transmittance">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">calculate_cloud_layer_transmittance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cc_frac</span><span class="p">:</span> <span class="n">Array</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Array</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculate cloud layer transmittance, with maximum total cloud cover equal to 1&quot;&quot;&quot;</span>
         <span class="c1"># get total cloud cover</span>
@@ -434,7 +434,7 @@ document.write(`
 
 
 <div class="viewcode-block" id="StandardCumulusModel.run">
-<a class="viewcode-back" href="../../../source/api/abcmodel.clouds.cumulus.html#abcmodel.clouds.StandardCumulusModel.run">[docs]</a>
+<a class="viewcode-back" href="../../../source/api/abcmodel.clouds.cumulus.html#abcmodel.clouds.cumulus.StandardCumulusModel.run">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="n">PyTree</span><span class="p">,</span> <span class="n">const</span><span class="p">:</span> <span class="n">PhysicalConstants</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Run the model.&quot;&quot;&quot;</span>
         <span class="n">state</span><span class="o">.</span><span class="n">q2_h</span><span class="p">,</span> <span class="n">state</span><span class="o">.</span><span class="n">top_CO22</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calculate_mixed_layer_variance</span><span class="p">(</span>
