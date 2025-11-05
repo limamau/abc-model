@@ -29,7 +29,6 @@
 
     <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=54e235e8" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
@@ -152,7 +151,7 @@
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../source/api/abcmodel.html">ABC Model</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../../source/api/abcmodel.radiation.html">Radiation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../source/api/abcmodel.radiation.standard.html">Standard</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../source/api/abcmodel.radiation.standard_w_clouds.html">Standard W Clouds</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/api/abcmodel.radiation.standard_w_clouds.html">Standard With Clouds</a></li>
 </ul>
 </details></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../../source/api/abcmodel.land_surface.html">Land Surface</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -375,23 +374,13 @@ document.write(`
 <span class="k">class</span><span class="w"> </span><span class="nc">AbstractStandardLandSurfaceModel</span><span class="p">(</span><span class="n">AbstractLandSurfaceModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Abstract standard land surface model with comprehensive soil-vegetation dynamics.</span>
 
-<span class="sd">    Args:</span>
-<span class="sd">        a: Clapp and Hornberger (1978) retention curve parameter.</span>
-<span class="sd">        b: Clapp and Hornberger (1978) retention curve parameter.</span>
-<span class="sd">        p: Clapp and Hornberger (1978) retention curve parameter.</span>
-<span class="sd">        cgsat: Saturated soil heat capacity [J m-3 K-1].</span>
-<span class="sd">        wsat: Saturated soil moisture content [m3 m-3].</span>
-<span class="sd">        wfc: Soil moisture content at field capacity [m3 m-3].</span>
-<span class="sd">        wwilt: Soil moisture content at wilting point [m3 m-3].</span>
-<span class="sd">        c1sat: saturated soil conductivity parameter [-].</span>
-<span class="sd">        c2ref: reference soil conductivity parameter [-].</span>
-<span class="sd">        lai: Leaf area index [m2 m-2].</span>
-<span class="sd">        gD: Canopy radiation extinction coefficient [-].</span>
-<span class="sd">        rsmin: Minimum stomatal resistance [s m-1].</span>
-<span class="sd">        rssoilmin: Minimum soil resistance [s m-1].</span>
-<span class="sd">        cveg: Vegetation fraction [-].</span>
-<span class="sd">        wmax: Maximum water storage capacity of the canopy [m].</span>
-<span class="sd">        lam: Thermal diffusivity of the soil [W m-1 K-1].</span>
+<span class="sd">    This class serves as a base, defining the parameters, core logic, and</span>
+<span class="sd">    integration steps for a standard land surface model. It handles the</span>
+<span class="sd">    surface energy balance, soil physics, and prognostic updates.</span>
+
+<span class="sd">    It requires concrete implementations for the `compute_surface_resistance`</span>
+<span class="sd">    and `compute_co2_flux` methods, which are specific to the chosen</span>
+<span class="sd">    vegetation/carbon model.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
@@ -413,6 +402,25 @@ document.write(`
         <span class="n">wmax</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
         <span class="n">lam</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
     <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Args:</span>
+<span class="sd">            a: Clapp and Hornberger (1978) retention curve parameter.</span>
+<span class="sd">            b: Clapp and Hornberger (1978) retention curve parameter.</span>
+<span class="sd">            p: Clapp and Hornberger (1978) retention curve parameter.</span>
+<span class="sd">            cgsat: Saturated soil heat capacity [J m-3 K-1].</span>
+<span class="sd">            wsat: Saturated soil moisture content [m3 m-3].</span>
+<span class="sd">            wfc: Soil moisture content at field capacity [m3 m-3].</span>
+<span class="sd">            wwilt: Soil moisture content at wilting point [m3 m-3].</span>
+<span class="sd">            c1sat: saturated soil conductivity parameter [-].</span>
+<span class="sd">            c2ref: reference soil conductivity parameter [-].</span>
+<span class="sd">            lai: Leaf area index [m2 m-2].</span>
+<span class="sd">            gD: Canopy radiation extinction coefficient [-].</span>
+<span class="sd">            rsmin: Minimum stomatal resistance [s m-1].</span>
+<span class="sd">            rssoilmin: Minimum soil resistance [s m-1].</span>
+<span class="sd">            cveg: Vegetation fraction [-].</span>
+<span class="sd">            wmax: Maximum water storage capacity of the canopy [m].</span>
+<span class="sd">            lam: Thermal diffusivity of the soil [W m-1 K-1].</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">a</span> <span class="o">=</span> <span class="n">a</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">b</span> <span class="o">=</span> <span class="n">b</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">p</span> <span class="o">=</span> <span class="n">p</span>
@@ -431,6 +439,78 @@ document.write(`
         <span class="bp">self</span><span class="o">.</span><span class="n">lam</span> <span class="o">=</span> <span class="n">lam</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">c_beta</span> <span class="o">=</span> <span class="mf">0.0</span>
 
+    <span class="c1"># limamau: this looks cleaner (state as argument rather than explicit state variables)</span>
+    <span class="c1"># and should be implemented for the other models in the future.</span>
+<div class="viewcode-block" id="AbstractStandardLandSurfaceModel.run">
+<a class="viewcode-back" href="../../../source/api/abcmodel.land_surface.standard.html#abcmodel.land_surface.standard.AbstractStandardLandSurfaceModel.run">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">state</span><span class="p">:</span> <span class="n">PyTree</span><span class="p">,</span>
+        <span class="n">const</span><span class="p">:</span> <span class="n">PhysicalConstants</span><span class="p">,</span>
+        <span class="n">surface_layer</span><span class="p">:</span> <span class="n">AbstractSurfaceLayerModel</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Run the full land surface model for one time step.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            state:</span>
+<span class="sd">            const:</span>
+<span class="sd">            surface_layer:</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            The updated state object.</span>
+
+<span class="sd">        Notes:</span>
+<span class="sd">            The order of execution is:</span>
+
+<span class="sd">            1. :meth:`~~abcmodel.models.AbstractSurfaceLayerModel.compute_ra`</span>
+<span class="sd">            2. :meth:`~compute_thermodynamics`</span>
+<span class="sd">            3. :meth:`~compute_surface_resistance`</span>
+<span class="sd">            4. :meth:`~compute_co2_flux`</span>
+<span class="sd">            5. :meth:`~compute_soil_resistance`</span>
+<span class="sd">            6. :meth:`~compute_wet_canopy_fraction`</span>
+<span class="sd">            7. :meth:`~compute_skin_temperature`</span>
+<span class="sd">            8. :meth:`~compute_surface_fluxes`</span>
+<span class="sd">            9. :meth:`~compute_reference_fluxes`</span>
+<span class="sd">            10. :meth:`~compute_prognostic_tendencies`</span>
+<span class="sd">            11. :meth:`~compute_kinematic_fluxes`</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">state</span><span class="o">.</span><span class="n">ra</span> <span class="o">=</span> <span class="n">surface_layer</span><span class="o">.</span><span class="n">compute_ra</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_thermodynamics</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_surface_resistance</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">const</span><span class="p">)</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_co2_flux</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">const</span><span class="p">)</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_soil_resistance</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_wet_canopy_fraction</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_skin_temperature</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">const</span><span class="p">)</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_surface_fluxes</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">const</span><span class="p">)</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_reference_fluxes</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">const</span><span class="p">)</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_prognostic_tendencies</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">const</span><span class="p">)</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_kinematic_fluxes</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">const</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">state</span></div>
+
+
+<div class="viewcode-block" id="AbstractStandardLandSurfaceModel.integrate">
+<a class="viewcode-back" href="../../../source/api/abcmodel.land_surface.standard.html#abcmodel.land_surface.standard.AbstractStandardLandSurfaceModel.integrate">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">integrate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="n">PyTree</span><span class="p">,</span> <span class="n">dt</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Integrate the model forward one time step (Euler forward).</span>
+
+<span class="sd">        Updates the prognostic variables (soil temperature, soil moisture,</span>
+<span class="sd">        canopy water) using the tendencies calculated in the `run` step.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            state:</span>
+<span class="sd">            dt: time step [s].</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            The state with updated prognostic variables.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">state</span><span class="o">.</span><span class="n">temp_soil</span> <span class="o">+=</span> <span class="n">dt</span> <span class="o">*</span> <span class="n">state</span><span class="o">.</span><span class="n">temp_soil_tend</span>
+        <span class="n">state</span><span class="o">.</span><span class="n">wg</span> <span class="o">+=</span> <span class="n">dt</span> <span class="o">*</span> <span class="n">state</span><span class="o">.</span><span class="n">wgtend</span>
+        <span class="n">state</span><span class="o">.</span><span class="n">wl</span> <span class="o">+=</span> <span class="n">dt</span> <span class="o">*</span> <span class="n">state</span><span class="o">.</span><span class="n">wltend</span>
+
+        <span class="k">return</span> <span class="n">state</span></div>
+
+
 <div class="viewcode-block" id="AbstractStandardLandSurfaceModel.compute_surface_resistance">
 <a class="viewcode-back" href="../../../source/api/abcmodel.land_surface.standard.html#abcmodel.land_surface.standard.AbstractStandardLandSurfaceModel.compute_surface_resistance">[docs]</a>
     <span class="nd">@abstractmethod</span>
@@ -439,6 +519,15 @@ document.write(`
         <span class="n">state</span><span class="p">:</span> <span class="n">PyTree</span><span class="p">,</span>
         <span class="n">const</span><span class="p">:</span> <span class="n">PhysicalConstants</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PyTree</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculate the surface resistance (stomatal) for vegetation.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            state:</span>
+<span class="sd">            const:</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            The state with updated surface resistance.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
 
 
@@ -450,165 +539,369 @@ document.write(`
         <span class="n">state</span><span class="p">:</span> <span class="n">PyTree</span><span class="p">,</span>
         <span class="n">const</span><span class="p">:</span> <span class="n">PhysicalConstants</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PyTree</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculate the CO2 flux (e.g., GPP, NEE) for the surface.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            state:</span>
+<span class="sd">            const:</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            The state with updated CO2 flux values.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
 
 
-    <span class="c1"># limamau: this function needs some refactoring</span>
-<div class="viewcode-block" id="AbstractStandardLandSurfaceModel.run">
-<a class="viewcode-back" href="../../../source/api/abcmodel.land_surface.standard.html#abcmodel.land_surface.standard.AbstractStandardLandSurfaceModel.run">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span>
-        <span class="n">state</span><span class="p">:</span> <span class="n">PyTree</span><span class="p">,</span>
-        <span class="n">const</span><span class="p">:</span> <span class="n">PhysicalConstants</span><span class="p">,</span>
-        <span class="n">surface_layer</span><span class="p">:</span> <span class="n">AbstractSurfaceLayerModel</span><span class="p">,</span>
-    <span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Run the model.&quot;&quot;&quot;</span>
-        <span class="c1"># compute aerodynamic resistance</span>
-        <span class="n">state</span><span class="o">.</span><span class="n">ra</span> <span class="o">=</span> <span class="n">surface_layer</span><span class="o">.</span><span class="n">compute_ra</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+<div class="viewcode-block" id="AbstractStandardLandSurfaceModel.compute_thermodynamics">
+<a class="viewcode-back" href="../../../source/api/abcmodel.land_surface.standard.html#abcmodel.land_surface.standard.AbstractStandardLandSurfaceModel.compute_thermodynamics">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">compute_thermodynamics</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="n">PyTree</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PyTree</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculate saturated vapor pressure ``esat``, saturated</span>
+<span class="sd">        specific humidity ``qsat``, the derivative ``dqsatdT``, and</span>
+<span class="sd">        vapor pressure ``e``.</span>
 
-        <span class="c1"># first calculate essential thermodynamic variables</span>
+<span class="sd">        Args:</span>
+<span class="sd">            state:</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            The state with updated thermodynamic properties.</span>
+
+<span class="sd">        Notes:</span>
+<span class="sd">            The derivative of saturated vapor pressure, :math:`e_{\\text{sat}}`,</span>
+<span class="sd">            with respect to temperature :math:`T` (in Kelvin) is derived from the</span>
+<span class="sd">            August-Roche-Magnus formula</span>
+
+<span class="sd">            .. math::</span>
+<span class="sd">                e_{\\text{sat}} = 611 \\cdot \\exp(f(T_C)),</span>
+
+<span class="sd">            where :math:`T_C = T - 273.16`:</span>
+
+<span class="sd">            .. math::</span>
+<span class="sd">                f(T_C) = \\frac{17.2694 \\cdot T_C}{T_C + 237.3}</span>
+<span class="sd">                     = \\frac{17.2694 \\cdot (T - 273.16)}{T - 35.86}</span>
+
+<span class="sd">            Using the quotient rule, the derivative :math:`f&#39;(T)` is:</span>
+
+<span class="sd">            .. math::</span>
+<span class="sd">                f&#39;(T) = \\frac</span>
+<span class="sd">                { 17.2694 \\cdot (T - 35.86) - 17.2694 \\cdot (T - 273.16) }</span>
+<span class="sd">                { (T - 35.86)^2 }</span>
+
+<span class="sd">            This implementation simplifies the numerator, giving:</span>
+
+<span class="sd">            .. math::</span>
+<span class="sd">                \\frac{de_{\\text{sat}}}{dT} = e_{\\text{sat}} \\cdot f&#39;(T)</span>
+
+<span class="sd">            The derivative of specific humidity, :math:`q_{\\text{sat}}`, is then</span>
+<span class="sd">            found using :math:`q_{\\text{sat}} \\approx 0.622 \\cdot e_{\\text{sat}} / P`:</span>
+
+<span class="sd">            .. math::</span>
+<span class="sd">                \\frac{dq_{\\text{sat}}}{dT} \\approx \\frac{0.622}{P} \\frac{de_{\\text{sat}}}{dT}</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">state</span><span class="o">.</span><span class="n">esat</span> <span class="o">=</span> <span class="n">get_esat</span><span class="p">(</span><span class="n">state</span><span class="o">.</span><span class="n">theta</span><span class="p">)</span>
         <span class="n">state</span><span class="o">.</span><span class="n">qsat</span> <span class="o">=</span> <span class="n">get_qsat</span><span class="p">(</span><span class="n">state</span><span class="o">.</span><span class="n">theta</span><span class="p">,</span> <span class="n">state</span><span class="o">.</span><span class="n">surf_pressure</span><span class="p">)</span>
-        <span class="n">desatdT</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">esat</span> <span class="o">*</span> <span class="p">(</span>
-            <span class="mf">17.2694</span> <span class="o">/</span> <span class="p">(</span><span class="n">state</span><span class="o">.</span><span class="n">theta</span> <span class="o">-</span> <span class="mf">35.86</span><span class="p">)</span>
-            <span class="o">-</span> <span class="mf">17.2694</span> <span class="o">*</span> <span class="p">(</span><span class="n">state</span><span class="o">.</span><span class="n">theta</span> <span class="o">-</span> <span class="mf">273.16</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">state</span><span class="o">.</span><span class="n">theta</span> <span class="o">-</span> <span class="mf">35.86</span><span class="p">)</span> <span class="o">**</span> <span class="mf">2.0</span>
-        <span class="p">)</span>
+
+        <span class="n">temp_celsius</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">theta</span> <span class="o">-</span> <span class="mf">273.16</span>
+        <span class="n">temp_denom</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">theta</span> <span class="o">-</span> <span class="mf">35.86</span>
+
+        <span class="c1"># This is f&#39;(T) from the notes above</span>
+        <span class="n">f_prime</span> <span class="o">=</span> <span class="p">(</span><span class="mf">17.2694</span> <span class="o">/</span> <span class="n">temp_denom</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="mf">17.2694</span> <span class="o">*</span> <span class="n">temp_celsius</span> <span class="o">/</span> <span class="n">temp_denom</span><span class="o">**</span><span class="mf">2.0</span><span class="p">)</span>
+
+        <span class="n">desatdT</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">esat</span> <span class="o">*</span> <span class="n">f_prime</span>
         <span class="n">state</span><span class="o">.</span><span class="n">dqsatdT</span> <span class="o">=</span> <span class="mf">0.622</span> <span class="o">*</span> <span class="n">desatdT</span> <span class="o">/</span> <span class="n">state</span><span class="o">.</span><span class="n">surf_pressure</span>
         <span class="n">state</span><span class="o">.</span><span class="n">e</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">q</span> <span class="o">*</span> <span class="n">state</span><span class="o">.</span><span class="n">surf_pressure</span> <span class="o">/</span> <span class="mf">0.622</span>
+        <span class="k">return</span> <span class="n">state</span></div>
 
-        <span class="c1"># sub-model part</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">compute_surface_resistance</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">const</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">compute_co2_flux</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">const</span><span class="p">)</span>
 
-        <span class="c1"># recompute f2 using wg instead of w2</span>
+<div class="viewcode-block" id="AbstractStandardLandSurfaceModel.compute_soil_resistance">
+<a class="viewcode-back" href="../../../source/api/abcmodel.land_surface.standard.html#abcmodel.land_surface.standard.AbstractStandardLandSurfaceModel.compute_soil_resistance">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">compute_soil_resistance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="n">PyTree</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PyTree</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculates the soil resistance for evaporation.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            state:</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            The state with updated soil resistance.</span>
+
+<span class="sd">        Notes:</span>
+<span class="sd">            A soil moisture stress factor, :math:`f_2`, is calculated based on</span>
+<span class="sd">            the root-zone soil moisture :math:`w_g` relative to the wilting</span>
+<span class="sd">            point :math:`w_{wilt}` and field capacity :math:`w_{fc}`:</span>
+
+<span class="sd">            .. math::</span>
+<span class="sd">                f_2 = \\frac{w_{fc} - w_{wilt}}{w_g - w_{wilt}}</span>
+
+<span class="sd">            The soil resistance :math:`r_{s,soil}` is then the minimum</span>
+<span class="sd">            resistance scaled by this factor:</span>
+
+<span class="sd">            .. math::</span>
+<span class="sd">                r_{s,soil} = r_{s,soil,min} \\cdot f_2</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">f2</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
             <span class="n">state</span><span class="o">.</span><span class="n">wg</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">wwilt</span><span class="p">,</span>
             <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">wfc</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">wwilt</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">state</span><span class="o">.</span><span class="n">wg</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">wwilt</span><span class="p">),</span>
-            <span class="mf">1.0e8</span><span class="p">,</span>
+            <span class="mf">1.0e8</span><span class="p">,</span>  <span class="c1"># Use a very high resistance if below wilting point</span>
         <span class="p">)</span>
         <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">f2</span><span class="p">,</span> <span class="n">Array</span><span class="p">)</span>
         <span class="n">state</span><span class="o">.</span><span class="n">rssoil</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rssoilmin</span> <span class="o">*</span> <span class="n">f2</span>
+        <span class="k">return</span> <span class="n">state</span></div>
 
+
+<div class="viewcode-block" id="AbstractStandardLandSurfaceModel.compute_wet_canopy_fraction">
+<a class="viewcode-back" href="../../../source/api/abcmodel.land_surface.standard.html#abcmodel.land_surface.standard.AbstractStandardLandSurfaceModel.compute_wet_canopy_fraction">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">compute_wet_canopy_fraction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="n">PyTree</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PyTree</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculates the fraction of the canopy that is wet.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            state:</span>
+
+<span class="sd">        Return:</span>
+<span class="sd">            The state updated with the wet canopy fraction.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">wlmx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lai</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">wmax</span>
         <span class="n">state</span><span class="o">.</span><span class="n">cliq</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">state</span><span class="o">.</span><span class="n">wl</span> <span class="o">/</span> <span class="n">wlmx</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">state</span></div>
 
-        <span class="c1"># calculate skin temperature implicitly</span>
-        <span class="n">state</span><span class="o">.</span><span class="n">surf_temp</span> <span class="o">=</span> <span class="p">(</span>
+
+<div class="viewcode-block" id="AbstractStandardLandSurfaceModel.compute_skin_temperature">
+<a class="viewcode-back" href="../../../source/api/abcmodel.land_surface.standard.html#abcmodel.land_surface.standard.AbstractStandardLandSurfaceModel.compute_skin_temperature">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">compute_skin_temperature</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="n">PyTree</span><span class="p">,</span> <span class="n">const</span><span class="p">:</span> <span class="n">PhysicalConstants</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PyTree</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculates the surface &quot;skin&quot; temperature implicitly.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            state:</span>
+<span class="sd">            const:</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">            The state updated with the skin temperature.</span>
+
+<span class="sd">        Notes:</span>
+<span class="sd">            This function solves the surface energy balance for the</span>
+<span class="sd">            surface temperature :math:`T_{\\text{surf}}`. The energy balance is:</span>
+
+<span class="sd">            .. math::</span>
+<span class="sd">                R_{\\text{net}} - G = H + LE</span>
+
+<span class="sd">            where :math:`G`, :math:`H`, and :math:`LE` are all functions of</span>
+<span class="sd">            :math:`T_{\\text{surf}}`. The latent heat :math:`LE` is partitioned</span>
+<span class="sd">            into vegetation, soil, and wet canopy fractions.</span>
+
+<span class="sd">            By linearizing the equations for :math:`H` and :math:`LE` with</span>
+<span class="sd">            respect to :math:`T_{\\text{surf}}`, we can rearrange the balance</span>
+<span class="sd">            into the form :math:`T_{\\text{surf}} = \\text{Numerator} / \\text{Denominator}`.</span>
+<span class="sd">            This is an implicit solution that avoids iterative solving.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># --- Pre-calculate common terms for readability ---</span>
+        <span class="n">rho_cp_ra</span> <span class="o">=</span> <span class="n">const</span><span class="o">.</span><span class="n">rho</span> <span class="o">*</span> <span class="n">const</span><span class="o">.</span><span class="n">cp</span> <span class="o">/</span> <span class="n">state</span><span class="o">.</span><span class="n">ra</span>
+        <span class="n">rho_lv_ra</span> <span class="o">=</span> <span class="n">const</span><span class="o">.</span><span class="n">rho</span> <span class="o">*</span> <span class="n">const</span><span class="o">.</span><span class="n">lv</span> <span class="o">/</span> <span class="n">state</span><span class="o">.</span><span class="n">ra</span>
+
+        <span class="c1"># Latent heat term for dry vegetation</span>
+        <span class="n">le_veg_coeff</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cveg</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">state</span><span class="o">.</span><span class="n">cliq</span><span class="p">)</span> <span class="o">*</span> <span class="n">const</span><span class="o">.</span><span class="n">rho</span> <span class="o">*</span> <span class="n">const</span><span class="o">.</span><span class="n">lv</span>
+        <span class="n">le_veg_denom</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">ra</span> <span class="o">+</span> <span class="n">state</span><span class="o">.</span><span class="n">rs</span>
+        <span class="n">le_veg_term</span> <span class="o">=</span> <span class="n">le_veg_coeff</span> <span class="o">/</span> <span class="n">le_veg_denom</span>
+
+        <span class="c1"># Latent heat term for bare soil</span>
+        <span class="n">le_soil_coeff</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">cveg</span><span class="p">)</span> <span class="o">*</span> <span class="n">const</span><span class="o">.</span><span class="n">rho</span> <span class="o">*</span> <span class="n">const</span><span class="o">.</span><span class="n">lv</span>
+        <span class="n">le_soil_denom</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">ra</span> <span class="o">+</span> <span class="n">state</span><span class="o">.</span><span class="n">rssoil</span>
+        <span class="n">le_soil_term</span> <span class="o">=</span> <span class="n">le_soil_coeff</span> <span class="o">/</span> <span class="n">le_soil_denom</span>
+
+        <span class="c1"># Latent heat term for wet canopy (interception)</span>
+        <span class="n">le_liq_term</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cveg</span> <span class="o">*</span> <span class="n">state</span><span class="o">.</span><span class="n">cliq</span> <span class="o">*</span> <span class="n">rho_lv_ra</span>
+
+        <span class="c1"># --- Build the Numerator ---</span>
+        <span class="c1"># (Terms not dependent on surf_temp)</span>
+        <span class="n">numerator</span> <span class="o">=</span> <span class="p">(</span>
             <span class="n">state</span><span class="o">.</span><span class="n">net_rad</span>
-            <span class="o">+</span> <span class="n">const</span><span class="o">.</span><span class="n">rho</span> <span class="o">*</span> <span class="n">const</span><span class="o">.</span><span class="n">cp</span> <span class="o">/</span> <span class="n">state</span><span class="o">.</span><span class="n">ra</span> <span class="o">*</span> <span class="n">state</span><span class="o">.</span><span class="n">theta</span>
-            <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">cveg</span>
-            <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">state</span><span class="o">.</span><span class="n">cliq</span><span class="p">)</span>
-            <span class="o">*</span> <span class="n">const</span><span class="o">.</span><span class="n">rho</span>
-            <span class="o">*</span> <span class="n">const</span><span class="o">.</span><span class="n">lv</span>
-            <span class="o">/</span> <span class="p">(</span><span class="n">state</span><span class="o">.</span><span class="n">ra</span> <span class="o">+</span> <span class="n">state</span><span class="o">.</span><span class="n">rs</span><span class="p">)</span>
-            <span class="o">*</span> <span class="p">(</span><span class="n">state</span><span class="o">.</span><span class="n">dqsatdT</span> <span class="o">*</span> <span class="n">state</span><span class="o">.</span><span class="n">theta</span> <span class="o">-</span> <span class="n">state</span><span class="o">.</span><span class="n">qsat</span> <span class="o">+</span> <span class="n">state</span><span class="o">.</span><span class="n">q</span><span class="p">)</span>
-            <span class="o">+</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">cveg</span><span class="p">)</span>
-            <span class="o">*</span> <span class="n">const</span><span class="o">.</span><span class="n">rho</span>
-            <span class="o">*</span> <span class="n">const</span><span class="o">.</span><span class="n">lv</span>
-            <span class="o">/</span> <span class="p">(</span><span class="n">state</span><span class="o">.</span><span class="n">ra</span> <span class="o">+</span> <span class="n">state</span><span class="o">.</span><span class="n">rssoil</span><span class="p">)</span>
-            <span class="o">*</span> <span class="p">(</span><span class="n">state</span><span class="o">.</span><span class="n">dqsatdT</span> <span class="o">*</span> <span class="n">state</span><span class="o">.</span><span class="n">theta</span> <span class="o">-</span> <span class="n">state</span><span class="o">.</span><span class="n">qsat</span> <span class="o">+</span> <span class="n">state</span><span class="o">.</span><span class="n">q</span><span class="p">)</span>
-            <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">cveg</span>
-            <span class="o">*</span> <span class="n">state</span><span class="o">.</span><span class="n">cliq</span>
-            <span class="o">*</span> <span class="n">const</span><span class="o">.</span><span class="n">rho</span>
-            <span class="o">*</span> <span class="n">const</span><span class="o">.</span><span class="n">lv</span>
-            <span class="o">/</span> <span class="n">state</span><span class="o">.</span><span class="n">ra</span>
-            <span class="o">*</span> <span class="p">(</span><span class="n">state</span><span class="o">.</span><span class="n">dqsatdT</span> <span class="o">*</span> <span class="n">state</span><span class="o">.</span><span class="n">theta</span> <span class="o">-</span> <span class="n">state</span><span class="o">.</span><span class="n">qsat</span> <span class="o">+</span> <span class="n">state</span><span class="o">.</span><span class="n">q</span><span class="p">)</span>
+            <span class="o">+</span> <span class="n">rho_cp_ra</span> <span class="o">*</span> <span class="n">state</span><span class="o">.</span><span class="n">theta</span>
             <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">lam</span> <span class="o">*</span> <span class="n">state</span><span class="o">.</span><span class="n">temp_soil</span>
-        <span class="p">)</span> <span class="o">/</span> <span class="p">(</span>
-            <span class="n">const</span><span class="o">.</span><span class="n">rho</span> <span class="o">*</span> <span class="n">const</span><span class="o">.</span><span class="n">cp</span> <span class="o">/</span> <span class="n">state</span><span class="o">.</span><span class="n">ra</span>
-            <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">cveg</span>
-            <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">state</span><span class="o">.</span><span class="n">cliq</span><span class="p">)</span>
-            <span class="o">*</span> <span class="n">const</span><span class="o">.</span><span class="n">rho</span>
-            <span class="o">*</span> <span class="n">const</span><span class="o">.</span><span class="n">lv</span>
-            <span class="o">/</span> <span class="p">(</span><span class="n">state</span><span class="o">.</span><span class="n">ra</span> <span class="o">+</span> <span class="n">state</span><span class="o">.</span><span class="n">rs</span><span class="p">)</span>
-            <span class="o">*</span> <span class="n">state</span><span class="o">.</span><span class="n">dqsatdT</span>
-            <span class="o">+</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">cveg</span><span class="p">)</span>
-            <span class="o">*</span> <span class="n">const</span><span class="o">.</span><span class="n">rho</span>
-            <span class="o">*</span> <span class="n">const</span><span class="o">.</span><span class="n">lv</span>
-            <span class="o">/</span> <span class="p">(</span><span class="n">state</span><span class="o">.</span><span class="n">ra</span> <span class="o">+</span> <span class="n">state</span><span class="o">.</span><span class="n">rssoil</span><span class="p">)</span>
-            <span class="o">*</span> <span class="n">state</span><span class="o">.</span><span class="n">dqsatdT</span>
-            <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">cveg</span> <span class="o">*</span> <span class="n">state</span><span class="o">.</span><span class="n">cliq</span> <span class="o">*</span> <span class="n">const</span><span class="o">.</span><span class="n">rho</span> <span class="o">*</span> <span class="n">const</span><span class="o">.</span><span class="n">lv</span> <span class="o">/</span> <span class="n">state</span><span class="o">.</span><span class="n">ra</span> <span class="o">*</span> <span class="n">state</span><span class="o">.</span><span class="n">dqsatdT</span>
-            <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">lam</span>
+            <span class="o">+</span> <span class="p">(</span><span class="n">le_veg_term</span> <span class="o">+</span> <span class="n">le_soil_term</span> <span class="o">+</span> <span class="n">le_liq_term</span><span class="p">)</span>
+            <span class="o">*</span> <span class="p">(</span><span class="n">state</span><span class="o">.</span><span class="n">dqsatdT</span> <span class="o">*</span> <span class="n">state</span><span class="o">.</span><span class="n">theta</span> <span class="o">-</span> <span class="n">state</span><span class="o">.</span><span class="n">qsat</span> <span class="o">+</span> <span class="n">state</span><span class="o">.</span><span class="n">q</span><span class="p">)</span>
         <span class="p">)</span>
 
-        <span class="c1"># limamau: should eastsurf just be deleted here?</span>
-        <span class="c1"># or should it rather be updated on mixed layer?</span>
-        <span class="c1"># esatsurf = get_esat(self.surf_temp)</span>
+        <span class="c1"># --- Build the Denominator ---</span>
+        <span class="c1"># (Terms that multiply surf_temp)</span>
+        <span class="n">denominator</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">rho_cp_ra</span>
+            <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">lam</span>
+            <span class="o">+</span> <span class="p">(</span><span class="n">le_veg_term</span> <span class="o">+</span> <span class="n">le_soil_term</span> <span class="o">+</span> <span class="n">le_liq_term</span><span class="p">)</span> <span class="o">*</span> <span class="n">state</span><span class="o">.</span><span class="n">dqsatdT</span>
+        <span class="p">)</span>
+
+        <span class="n">state</span><span class="o">.</span><span class="n">surf_temp</span> <span class="o">=</span> <span class="n">numerator</span> <span class="o">/</span> <span class="n">denominator</span>
+        <span class="k">return</span> <span class="n">state</span></div>
+
+
+<div class="viewcode-block" id="AbstractStandardLandSurfaceModel.compute_surface_fluxes">
+<a class="viewcode-back" href="../../../source/api/abcmodel.land_surface.standard.html#abcmodel.land_surface.standard.AbstractStandardLandSurfaceModel.compute_surface_fluxes">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">compute_surface_fluxes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="n">PyTree</span><span class="p">,</span> <span class="n">const</span><span class="p">:</span> <span class="n">PhysicalConstants</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PyTree</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculates all surface energy fluxes using the new skin temperature.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            state:</span>
+<span class="sd">            const:</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">            The state updated with surface fluxes.</span>
+
+<span class="sd">        Notes:</span>
+<span class="sd">            The latent heat fluxes (:math:`LE`) and sensible heat flux</span>
+<span class="sd">            (:math:`H`) are calculated using bulk-aerodynamic formulas based</span>
+<span class="sd">            on the difference between the surface and the air, linearized</span>
+<span class="sd">            using :math:`dq_{\\text{sat}}/dT`:</span>
+
+<span class="sd">            .. math::</span>
+<span class="sd">                LE = \\frac{\\rho \\cdot L_v}{r_a + r_s}</span>
+<span class="sd">                     \\left[</span>
+<span class="sd">                         \\frac{dq_{\\text{sat}}}{dT}(T_{\\text{surf}} - \\theta) +</span>
+<span class="sd">                         (q_{\\text{sat}}(\\theta) - q)</span>
+<span class="sd">                     \\right]</span>
+
+<span class="sd">            Similar forms are used for :math:`LE_{\\text{veg}}`,</span>
+<span class="sd">            :math:`LE_{\\text{liq}}`, and :math:`LE_{\\text{soil}}`</span>
+<span class="sd">            using their respective resistances.</span>
+
+<span class="sd">            Sensible heat flux :math:`H`:</span>
+<span class="sd">            .. math::</span>
+<span class="sd">                H = \\frac{\\rho \\cdot c_p}{r_a} (T_{\\text{surf}} - \\theta)</span>
+
+<span class="sd">            Ground heat flux :math:`G`:</span>
+<span class="sd">            .. math::</span>
+<span class="sd">                G = \\lambda (T_{\\text{surf}} - T_{\\text{soil}})</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Saturated specific humidity at the new surface temperature</span>
         <span class="n">state</span><span class="o">.</span><span class="n">qsatsurf</span> <span class="o">=</span> <span class="n">get_qsat</span><span class="p">(</span><span class="n">state</span><span class="o">.</span><span class="n">surf_temp</span><span class="p">,</span> <span class="n">state</span><span class="o">.</span><span class="n">surf_pressure</span><span class="p">)</span>
 
+        <span class="c1"># Common term: (dq/dT * (T_surf - T_air) + (q_sat_air - q_air))</span>
+        <span class="n">le_base_term</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">state</span><span class="o">.</span><span class="n">dqsatdT</span> <span class="o">*</span> <span class="p">(</span><span class="n">state</span><span class="o">.</span><span class="n">surf_temp</span> <span class="o">-</span> <span class="n">state</span><span class="o">.</span><span class="n">theta</span><span class="p">)</span> <span class="o">+</span> <span class="n">state</span><span class="o">.</span><span class="n">qsat</span> <span class="o">-</span> <span class="n">state</span><span class="o">.</span><span class="n">q</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Latent heat from vegetation (transpiration)</span>
         <span class="n">state</span><span class="o">.</span><span class="n">le_veg</span> <span class="o">=</span> <span class="p">(</span>
             <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">state</span><span class="o">.</span><span class="n">cliq</span><span class="p">)</span>
             <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">cveg</span>
             <span class="o">*</span> <span class="n">const</span><span class="o">.</span><span class="n">rho</span>
             <span class="o">*</span> <span class="n">const</span><span class="o">.</span><span class="n">lv</span>
             <span class="o">/</span> <span class="p">(</span><span class="n">state</span><span class="o">.</span><span class="n">ra</span> <span class="o">+</span> <span class="n">state</span><span class="o">.</span><span class="n">rs</span><span class="p">)</span>
-            <span class="o">*</span> <span class="p">(</span><span class="n">state</span><span class="o">.</span><span class="n">dqsatdT</span> <span class="o">*</span> <span class="p">(</span><span class="n">state</span><span class="o">.</span><span class="n">surf_temp</span> <span class="o">-</span> <span class="n">state</span><span class="o">.</span><span class="n">theta</span><span class="p">)</span> <span class="o">+</span> <span class="n">state</span><span class="o">.</span><span class="n">qsat</span> <span class="o">-</span> <span class="n">state</span><span class="o">.</span><span class="n">q</span><span class="p">)</span>
+            <span class="o">*</span> <span class="n">le_base_term</span>
         <span class="p">)</span>
+        <span class="c1"># Latent heat from canopy water (evaporation)</span>
         <span class="n">state</span><span class="o">.</span><span class="n">le_liq</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="n">state</span><span class="o">.</span><span class="n">cliq</span>
-            <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">cveg</span>
-            <span class="o">*</span> <span class="n">const</span><span class="o">.</span><span class="n">rho</span>
-            <span class="o">*</span> <span class="n">const</span><span class="o">.</span><span class="n">lv</span>
-            <span class="o">/</span> <span class="n">state</span><span class="o">.</span><span class="n">ra</span>
-            <span class="o">*</span> <span class="p">(</span><span class="n">state</span><span class="o">.</span><span class="n">dqsatdT</span> <span class="o">*</span> <span class="p">(</span><span class="n">state</span><span class="o">.</span><span class="n">surf_temp</span> <span class="o">-</span> <span class="n">state</span><span class="o">.</span><span class="n">theta</span><span class="p">)</span> <span class="o">+</span> <span class="n">state</span><span class="o">.</span><span class="n">qsat</span> <span class="o">-</span> <span class="n">state</span><span class="o">.</span><span class="n">q</span><span class="p">)</span>
+            <span class="n">state</span><span class="o">.</span><span class="n">cliq</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">cveg</span> <span class="o">*</span> <span class="n">const</span><span class="o">.</span><span class="n">rho</span> <span class="o">*</span> <span class="n">const</span><span class="o">.</span><span class="n">lv</span> <span class="o">/</span> <span class="n">state</span><span class="o">.</span><span class="n">ra</span> <span class="o">*</span> <span class="n">le_base_term</span>
         <span class="p">)</span>
+        <span class="c1"># Latent heat from soil (evaporation)</span>
         <span class="n">state</span><span class="o">.</span><span class="n">le_soil</span> <span class="o">=</span> <span class="p">(</span>
             <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">cveg</span><span class="p">)</span>
             <span class="o">*</span> <span class="n">const</span><span class="o">.</span><span class="n">rho</span>
             <span class="o">*</span> <span class="n">const</span><span class="o">.</span><span class="n">lv</span>
             <span class="o">/</span> <span class="p">(</span><span class="n">state</span><span class="o">.</span><span class="n">ra</span> <span class="o">+</span> <span class="n">state</span><span class="o">.</span><span class="n">rssoil</span><span class="p">)</span>
-            <span class="o">*</span> <span class="p">(</span><span class="n">state</span><span class="o">.</span><span class="n">dqsatdT</span> <span class="o">*</span> <span class="p">(</span><span class="n">state</span><span class="o">.</span><span class="n">surf_temp</span> <span class="o">-</span> <span class="n">state</span><span class="o">.</span><span class="n">theta</span><span class="p">)</span> <span class="o">+</span> <span class="n">state</span><span class="o">.</span><span class="n">qsat</span> <span class="o">-</span> <span class="n">state</span><span class="o">.</span><span class="n">q</span><span class="p">)</span>
+            <span class="o">*</span> <span class="n">le_base_term</span>
         <span class="p">)</span>
 
+        <span class="c1"># Total Latent Heat</span>
+        <span class="n">state</span><span class="o">.</span><span class="n">le</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">le_soil</span> <span class="o">+</span> <span class="n">state</span><span class="o">.</span><span class="n">le_veg</span> <span class="o">+</span> <span class="n">state</span><span class="o">.</span><span class="n">le_liq</span>
+
+        <span class="c1"># Canopy water tendency</span>
         <span class="n">state</span><span class="o">.</span><span class="n">wltend</span> <span class="o">=</span> <span class="o">-</span><span class="n">state</span><span class="o">.</span><span class="n">le_liq</span> <span class="o">/</span> <span class="p">(</span><span class="n">const</span><span class="o">.</span><span class="n">rhow</span> <span class="o">*</span> <span class="n">const</span><span class="o">.</span><span class="n">lv</span><span class="p">)</span>
 
-        <span class="n">state</span><span class="o">.</span><span class="n">le</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">le_soil</span> <span class="o">+</span> <span class="n">state</span><span class="o">.</span><span class="n">le_veg</span> <span class="o">+</span> <span class="n">state</span><span class="o">.</span><span class="n">le_liq</span>
+        <span class="c1"># Sensible Heat Flux</span>
         <span class="n">state</span><span class="o">.</span><span class="n">hf</span> <span class="o">=</span> <span class="n">const</span><span class="o">.</span><span class="n">rho</span> <span class="o">*</span> <span class="n">const</span><span class="o">.</span><span class="n">cp</span> <span class="o">/</span> <span class="n">state</span><span class="o">.</span><span class="n">ra</span> <span class="o">*</span> <span class="p">(</span><span class="n">state</span><span class="o">.</span><span class="n">surf_temp</span> <span class="o">-</span> <span class="n">state</span><span class="o">.</span><span class="n">theta</span><span class="p">)</span>
-        <span class="n">state</span><span class="o">.</span><span class="n">gf</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lam</span> <span class="o">*</span> <span class="p">(</span><span class="n">state</span><span class="o">.</span><span class="n">surf_temp</span> <span class="o">-</span> <span class="n">state</span><span class="o">.</span><span class="n">temp_soil</span><span class="p">)</span>
-        <span class="n">state</span><span class="o">.</span><span class="n">le_pot</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="n">state</span><span class="o">.</span><span class="n">dqsatdT</span> <span class="o">*</span> <span class="p">(</span><span class="n">state</span><span class="o">.</span><span class="n">net_rad</span> <span class="o">-</span> <span class="n">state</span><span class="o">.</span><span class="n">gf</span><span class="p">)</span>
-            <span class="o">+</span> <span class="n">const</span><span class="o">.</span><span class="n">rho</span> <span class="o">*</span> <span class="n">const</span><span class="o">.</span><span class="n">cp</span> <span class="o">/</span> <span class="n">state</span><span class="o">.</span><span class="n">ra</span> <span class="o">*</span> <span class="p">(</span><span class="n">state</span><span class="o">.</span><span class="n">qsat</span> <span class="o">-</span> <span class="n">state</span><span class="o">.</span><span class="n">q</span><span class="p">)</span>
-        <span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">state</span><span class="o">.</span><span class="n">dqsatdT</span> <span class="o">+</span> <span class="n">const</span><span class="o">.</span><span class="n">cp</span> <span class="o">/</span> <span class="n">const</span><span class="o">.</span><span class="n">lv</span><span class="p">)</span>
-        <span class="n">state</span><span class="o">.</span><span class="n">le_ref</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="n">state</span><span class="o">.</span><span class="n">dqsatdT</span> <span class="o">*</span> <span class="p">(</span><span class="n">state</span><span class="o">.</span><span class="n">net_rad</span> <span class="o">-</span> <span class="n">state</span><span class="o">.</span><span class="n">gf</span><span class="p">)</span>
-            <span class="o">+</span> <span class="n">const</span><span class="o">.</span><span class="n">rho</span> <span class="o">*</span> <span class="n">const</span><span class="o">.</span><span class="n">cp</span> <span class="o">/</span> <span class="n">state</span><span class="o">.</span><span class="n">ra</span> <span class="o">*</span> <span class="p">(</span><span class="n">state</span><span class="o">.</span><span class="n">qsat</span> <span class="o">-</span> <span class="n">state</span><span class="o">.</span><span class="n">q</span><span class="p">)</span>
-        <span class="p">)</span> <span class="o">/</span> <span class="p">(</span>
-            <span class="n">state</span><span class="o">.</span><span class="n">dqsatdT</span>
-            <span class="o">+</span> <span class="n">const</span><span class="o">.</span><span class="n">cp</span> <span class="o">/</span> <span class="n">const</span><span class="o">.</span><span class="n">lv</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">rsmin</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">lai</span> <span class="o">/</span> <span class="n">state</span><span class="o">.</span><span class="n">ra</span><span class="p">)</span>
-        <span class="p">)</span>
 
+        <span class="c1"># Ground Heat Flux</span>
+        <span class="n">state</span><span class="o">.</span><span class="n">gf</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lam</span> <span class="o">*</span> <span class="p">(</span><span class="n">state</span><span class="o">.</span><span class="n">surf_temp</span> <span class="o">-</span> <span class="n">state</span><span class="o">.</span><span class="n">temp_soil</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">state</span></div>
+
+
+<div class="viewcode-block" id="AbstractStandardLandSurfaceModel.compute_reference_fluxes">
+<a class="viewcode-back" href="../../../source/api/abcmodel.land_surface.standard.html#abcmodel.land_surface.standard.AbstractStandardLandSurfaceModel.compute_reference_fluxes">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">compute_reference_fluxes</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="n">PyTree</span><span class="p">,</span> <span class="n">const</span><span class="p">:</span> <span class="n">PhysicalConstants</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PyTree</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculates potential and reference evaporation (Penman-Monteith).</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            state: Current state of the model.</span>
+<span class="sd">            const: Physical constants.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Updated state with reference fluxes.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># common numerator for Penman-Monteith equations</span>
+        <span class="n">numerator</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">dqsatdT</span> <span class="o">*</span> <span class="p">(</span>
+            <span class="n">state</span><span class="o">.</span><span class="n">net_rad</span> <span class="o">-</span> <span class="n">state</span><span class="o">.</span><span class="n">gf</span>
+        <span class="p">)</span> <span class="o">+</span> <span class="n">const</span><span class="o">.</span><span class="n">rho</span> <span class="o">*</span> <span class="n">const</span><span class="o">.</span><span class="n">cp</span> <span class="o">/</span> <span class="n">state</span><span class="o">.</span><span class="n">ra</span> <span class="o">*</span> <span class="p">(</span><span class="n">state</span><span class="o">.</span><span class="n">qsat</span> <span class="o">-</span> <span class="n">state</span><span class="o">.</span><span class="n">q</span><span class="p">)</span>
+
+        <span class="c1"># potential evaporation (Priestley-Taylor)</span>
+        <span class="n">state</span><span class="o">.</span><span class="n">le_pot</span> <span class="o">=</span> <span class="n">numerator</span> <span class="o">/</span> <span class="p">(</span><span class="n">state</span><span class="o">.</span><span class="n">dqsatdT</span> <span class="o">+</span> <span class="n">const</span><span class="o">.</span><span class="n">cp</span> <span class="o">/</span> <span class="n">const</span><span class="o">.</span><span class="n">lv</span><span class="p">)</span>
+
+        <span class="c1"># reference evaporation (Penman-Monteith)</span>
+        <span class="n">denominator_ref</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">dqsatdT</span> <span class="o">+</span> <span class="n">const</span><span class="o">.</span><span class="n">cp</span> <span class="o">/</span> <span class="n">const</span><span class="o">.</span><span class="n">lv</span> <span class="o">*</span> <span class="p">(</span>
+            <span class="mf">1.0</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">rsmin</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">lai</span> <span class="o">/</span> <span class="n">state</span><span class="o">.</span><span class="n">ra</span>
+        <span class="p">)</span>
+        <span class="n">state</span><span class="o">.</span><span class="n">le_ref</span> <span class="o">=</span> <span class="n">numerator</span> <span class="o">/</span> <span class="n">denominator_ref</span>
+        <span class="k">return</span> <span class="n">state</span></div>
+
+
+<div class="viewcode-block" id="AbstractStandardLandSurfaceModel.compute_prognostic_tendencies">
+<a class="viewcode-back" href="../../../source/api/abcmodel.land_surface.standard.html#abcmodel.land_surface.standard.AbstractStandardLandSurfaceModel.compute_prognostic_tendencies">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">compute_prognostic_tendencies</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="n">PyTree</span><span class="p">,</span> <span class="n">const</span><span class="p">:</span> <span class="n">PhysicalConstants</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PyTree</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculates the time-tendencies for soil moisture and temperature.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            state:</span>
+<span class="sd">            const:</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Updated state with prognostic tendencies.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># soil temperature tendency</span>
         <span class="n">cg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cgsat</span> <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">wsat</span> <span class="o">/</span> <span class="n">state</span><span class="o">.</span><span class="n">w2</span><span class="p">)</span> <span class="o">**</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">b</span> <span class="o">/</span> <span class="p">(</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mf">10.0</span><span class="p">)))</span>
 
         <span class="n">state</span><span class="o">.</span><span class="n">temp_soil_tend</span> <span class="o">=</span> <span class="n">cg</span> <span class="o">*</span> <span class="n">state</span><span class="o">.</span><span class="n">gf</span> <span class="o">-</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mf">86400.0</span> <span class="o">*</span> <span class="p">(</span>
             <span class="n">state</span><span class="o">.</span><span class="n">temp_soil</span> <span class="o">-</span> <span class="n">state</span><span class="o">.</span><span class="n">temp2</span>
         <span class="p">)</span>
 
-        <span class="n">d1</span> <span class="o">=</span> <span class="mf">0.1</span>
+        <span class="c1"># soil moisture tendency</span>
+        <span class="n">d1</span> <span class="o">=</span> <span class="mf">0.1</span>  <span class="c1"># Depth of the top soil layer (assumed 10cm)</span>
         <span class="n">c1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">c1sat</span> <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">wsat</span> <span class="o">/</span> <span class="n">state</span><span class="o">.</span><span class="n">wg</span><span class="p">)</span> <span class="o">**</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">b</span> <span class="o">/</span> <span class="mf">2.0</span> <span class="o">+</span> <span class="mf">1.0</span><span class="p">)</span>
         <span class="n">c2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">c2ref</span> <span class="o">*</span> <span class="p">(</span><span class="n">state</span><span class="o">.</span><span class="n">w2</span> <span class="o">/</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">wsat</span> <span class="o">-</span> <span class="n">state</span><span class="o">.</span><span class="n">w2</span><span class="p">))</span>
+
+        <span class="c1"># equilibrium soil moisture</span>
         <span class="n">wgeq</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">w2</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">wsat</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">a</span> <span class="o">*</span> <span class="p">(</span>
             <span class="p">(</span><span class="n">state</span><span class="o">.</span><span class="n">w2</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">wsat</span><span class="p">)</span> <span class="o">**</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span>
             <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="p">(</span><span class="n">state</span><span class="o">.</span><span class="n">w2</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">wsat</span><span class="p">)</span> <span class="o">**</span> <span class="p">(</span><span class="mf">8.0</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="p">))</span>
         <span class="p">)</span>
+
+        <span class="c1"># evaporation flux from soil + hydraulic redistribution</span>
         <span class="n">state</span><span class="o">.</span><span class="n">wgtend</span> <span class="o">=</span> <span class="o">-</span><span class="n">c1</span> <span class="o">/</span> <span class="p">(</span>
             <span class="n">const</span><span class="o">.</span><span class="n">rhow</span> <span class="o">*</span> <span class="n">d1</span>
         <span class="p">)</span> <span class="o">*</span> <span class="n">state</span><span class="o">.</span><span class="n">le_soil</span> <span class="o">/</span> <span class="n">const</span><span class="o">.</span><span class="n">lv</span> <span class="o">-</span> <span class="n">c2</span> <span class="o">/</span> <span class="mf">86400.0</span> <span class="o">*</span> <span class="p">(</span><span class="n">state</span><span class="o">.</span><span class="n">wg</span> <span class="o">-</span> <span class="n">wgeq</span><span class="p">)</span>
 
-        <span class="c1"># calculate kinematic heat fluxes</span>
-        <span class="n">state</span><span class="o">.</span><span class="n">wtheta</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">hf</span> <span class="o">/</span> <span class="p">(</span><span class="n">const</span><span class="o">.</span><span class="n">rho</span> <span class="o">*</span> <span class="n">const</span><span class="o">.</span><span class="n">cp</span><span class="p">)</span>
-        <span class="n">state</span><span class="o">.</span><span class="n">wq</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">le</span> <span class="o">/</span> <span class="p">(</span><span class="n">const</span><span class="o">.</span><span class="n">rho</span> <span class="o">*</span> <span class="n">const</span><span class="o">.</span><span class="n">lv</span><span class="p">)</span>
-
         <span class="k">return</span> <span class="n">state</span></div>
 
 
-<div class="viewcode-block" id="AbstractStandardLandSurfaceModel.integrate">
-<a class="viewcode-back" href="../../../source/api/abcmodel.land_surface.standard.html#abcmodel.land_surface.standard.AbstractStandardLandSurfaceModel.integrate">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">integrate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="n">PyTree</span><span class="p">,</span> <span class="n">dt</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Integrate the model.&quot;&quot;&quot;</span>
-        <span class="n">state</span><span class="o">.</span><span class="n">temp_soil</span> <span class="o">+=</span> <span class="n">dt</span> <span class="o">*</span> <span class="n">state</span><span class="o">.</span><span class="n">temp_soil_tend</span>
-        <span class="n">state</span><span class="o">.</span><span class="n">wg</span> <span class="o">+=</span> <span class="n">dt</span> <span class="o">*</span> <span class="n">state</span><span class="o">.</span><span class="n">wgtend</span>
-        <span class="n">state</span><span class="o">.</span><span class="n">wl</span> <span class="o">+=</span> <span class="n">dt</span> <span class="o">*</span> <span class="n">state</span><span class="o">.</span><span class="n">wltend</span>
+<div class="viewcode-block" id="AbstractStandardLandSurfaceModel.compute_kinematic_fluxes">
+<a class="viewcode-back" href="../../../source/api/abcmodel.land_surface.standard.html#abcmodel.land_surface.standard.AbstractStandardLandSurfaceModel.compute_kinematic_fluxes">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">compute_kinematic_fluxes</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="n">PyTree</span><span class="p">,</span> <span class="n">const</span><span class="p">:</span> <span class="n">PhysicalConstants</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PyTree</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Converts energy fluxes (W/m^2) to kinematic fluxes (K m/s, kg/kg m/s).</span>
 
+<span class="sd">        Args:</span>
+<span class="sd">            state:</span>
+<span class="sd">            const:</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Updated state with kinematic fluxes.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">state</span><span class="o">.</span><span class="n">wtheta</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">hf</span> <span class="o">/</span> <span class="p">(</span><span class="n">const</span><span class="o">.</span><span class="n">rho</span> <span class="o">*</span> <span class="n">const</span><span class="o">.</span><span class="n">cp</span><span class="p">)</span>
+        <span class="n">state</span><span class="o">.</span><span class="n">wq</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">le</span> <span class="o">/</span> <span class="p">(</span><span class="n">const</span><span class="o">.</span><span class="n">rho</span> <span class="o">*</span> <span class="n">const</span><span class="o">.</span><span class="n">lv</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">state</span></div>
 </div>
 

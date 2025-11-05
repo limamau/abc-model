@@ -29,7 +29,6 @@
 
     <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=54e235e8" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
@@ -152,7 +151,7 @@
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../source/api/abcmodel.html">ABC Model</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../../source/api/abcmodel.radiation.html">Radiation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../source/api/abcmodel.radiation.standard.html">Standard</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../source/api/abcmodel.radiation.standard_w_clouds.html">Standard W Clouds</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/api/abcmodel.radiation.standard_w_clouds.html">Standard With Clouds</a></li>
 </ul>
 </details></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../../source/api/abcmodel.land_surface.html">Land Surface</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -298,9 +297,7 @@ document.write(`
                 <article class="bd-article">
                   
   <h1>Source code for abcmodel.land_surface.aquacrop</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;I like pizza.&quot;&quot;&quot;</span>
-
-<span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">jax</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">jax.numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">jnp</span>
@@ -349,27 +346,6 @@ document.write(`
 
 <span class="sd">    Args:</span>
 <span class="sd">        c3c4: plant type, either &quot;c3&quot; or &quot;c4&quot;.</span>
-<span class="sd">        co2comp298: CO2 compensation concentration [mg m-3].</span>
-<span class="sd">        net_rad10CO2: function parameter to calculate CO2 compensation concentration [-].</span>
-<span class="sd">        gm298: mesophyill conductance at 298 K [mm s-1].</span>
-<span class="sd">        ammax298: CO2 maximal primary productivity [mg m-2 s-1].</span>
-<span class="sd">        net_rad10gm: function parameter to calculate mesophyll conductance [-].</span>
-<span class="sd">        temp1gm: reference temperature to calculate mesophyll conductance gm [K].</span>
-<span class="sd">        temp2gm: reference temperature to calculate mesophyll conductance gm [K].</span>
-<span class="sd">        net_rad10Am: function parameter to calculate maximal primary productivity Ammax.</span>
-<span class="sd">        temp1Am: reference temperature to calculate maximal primary productivity Ammax [K].</span>
-<span class="sd">        temp2Am: reference temperature to calculate maximal primary productivity Ammax [K].</span>
-<span class="sd">        f0: maximum value Cfrac [-].</span>
-<span class="sd">        ad: regression coefficient to calculate Cfrac [kPa-1].</span>
-<span class="sd">        alpha0: initial low light conditions [mg J-1].</span>
-<span class="sd">        kx: extinction coefficient PAR [-].</span>
-<span class="sd">        gmin: cuticular (minimum) conductance [mm s-1].</span>
-<span class="sd">        nuco2q: ratio molecular viscosity water to carbon dioxide.</span>
-<span class="sd">        cw: constant water stress correction (eq. 13 Jacobs et al. 2007) [-].</span>
-<span class="sd">        wmax: upper reference value soil water [-].</span>
-<span class="sd">        wmin: lower reference value soil water [-].</span>
-<span class="sd">        r10: respiration at 10 C [mg CO2 m-2 s-1].</span>
-<span class="sd">        e0: activation energy [53.3 kJ kmol-1].</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c3c4</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -593,7 +569,9 @@ document.write(`
             <span class="n">alphac</span><span class="p">,</span> <span class="n">par</span><span class="p">,</span> <span class="n">am</span><span class="p">,</span> <span class="n">rdark</span><span class="p">,</span> <span class="n">fstr</span><span class="p">,</span> <span class="n">state</span><span class="o">.</span><span class="n">co2abs</span><span class="p">,</span> <span class="n">co2comp</span><span class="p">,</span> <span class="n">ds</span><span class="p">,</span> <span class="n">d0</span><span class="p">,</span> <span class="n">fmin</span>
         <span class="p">)</span>
 
-        <span class="n">state</span><span class="o">.</span><span class="n">rs</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="p">(</span><span class="mf">1.6</span> <span class="o">*</span> <span class="n">state</span><span class="o">.</span><span class="n">gcco2</span><span class="p">)</span></div>
+        <span class="n">state</span><span class="o">.</span><span class="n">rs</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="p">(</span><span class="mf">1.6</span> <span class="o">*</span> <span class="n">state</span><span class="o">.</span><span class="n">gcco2</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">state</span></div>
 
 
 <div class="viewcode-block" id="AquaCropModel.compute_co2_flux">
@@ -608,7 +586,9 @@ document.write(`
         <span class="n">resp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">r10</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">fw</span><span class="p">)</span> <span class="o">*</span> <span class="n">resp_factor</span>
         <span class="n">state</span><span class="o">.</span><span class="n">wCO2A</span> <span class="o">=</span> <span class="n">an</span> <span class="o">*</span> <span class="p">(</span><span class="n">const</span><span class="o">.</span><span class="n">mair</span> <span class="o">/</span> <span class="p">(</span><span class="n">const</span><span class="o">.</span><span class="n">rho</span> <span class="o">*</span> <span class="n">const</span><span class="o">.</span><span class="n">mco2</span><span class="p">))</span>
         <span class="n">state</span><span class="o">.</span><span class="n">wCO2R</span> <span class="o">=</span> <span class="n">resp</span> <span class="o">*</span> <span class="p">(</span><span class="n">const</span><span class="o">.</span><span class="n">mair</span> <span class="o">/</span> <span class="p">(</span><span class="n">const</span><span class="o">.</span><span class="n">rho</span> <span class="o">*</span> <span class="n">const</span><span class="o">.</span><span class="n">mco2</span><span class="p">))</span>
-        <span class="n">state</span><span class="o">.</span><span class="n">wCO2</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">wCO2A</span> <span class="o">+</span> <span class="n">state</span><span class="o">.</span><span class="n">wCO2R</span></div>
+        <span class="n">state</span><span class="o">.</span><span class="n">wCO2</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">wCO2A</span> <span class="o">+</span> <span class="n">state</span><span class="o">.</span><span class="n">wCO2R</span>
+
+        <span class="k">return</span> <span class="n">state</span></div>
 </div>
 
 </pre></div>
