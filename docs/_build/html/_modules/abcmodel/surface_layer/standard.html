@@ -601,27 +601,6 @@ document.write(`
 
 
 
-<div class="viewcode-block" id="calculate_rib_function_term">
-<a class="viewcode-back" href="../../../source/api/abcmodel.surface_layer.standard.html#abcmodel.surface_layer.standard.calculate_rib_function_term">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">calculate_rib_function_term</span><span class="p">(</span>
-    <span class="n">zsl</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span>
-    <span class="n">oblen</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span>
-    <span class="n">z0h</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span>
-    <span class="n">z0m</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Array</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculate the derivative term for the Richardson number function.</span>
-
-<span class="sd">    Notes:</span>
-<span class="sd">        This function computes the derivative of the Richardson number function with respect to the Obukhov length,</span>
-<span class="sd">        required for the Newton-Raphson iteration in the solution for Obukhov length.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">scalar_term</span> <span class="o">=</span> <span class="n">calculate_scalar_correction_term</span><span class="p">(</span><span class="n">zsl</span><span class="p">,</span> <span class="n">oblen</span><span class="p">,</span> <span class="n">z0h</span><span class="p">)</span>
-    <span class="n">momentum_term</span> <span class="o">=</span> <span class="n">calculate_momentum_correction_term</span><span class="p">(</span><span class="n">zsl</span><span class="p">,</span> <span class="n">oblen</span><span class="p">,</span> <span class="n">z0m</span><span class="p">)</span>
-
-    <span class="k">return</span> <span class="o">-</span><span class="n">zsl</span> <span class="o">/</span> <span class="n">oblen</span> <span class="o">*</span> <span class="n">scalar_term</span> <span class="o">/</span> <span class="n">momentum_term</span><span class="o">**</span><span class="mf">2.0</span></div>
-
-
-
 <div class="viewcode-block" id="ribtol">
 <a class="viewcode-back" href="../../../source/api/abcmodel.surface_layer.standard.html#abcmodel.surface_layer.standard.ribtol">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">ribtol</span><span class="p">(</span><span class="n">zsl</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span> <span class="n">rib_number</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span> <span class="n">z0h</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span> <span class="n">z0m</span><span class="p">:</span> <span class="n">Array</span><span class="p">):</span>
@@ -650,6 +629,8 @@ document.write(`
         <span class="p">)</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">res</span>
 
+    <span class="c1"># limamau: the Rib is really used three times here?</span>
+    <span class="c1"># or is there a reason for a rib_function_term to be created?</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">body_fun</span><span class="p">(</span><span class="n">carry</span><span class="p">):</span>
         <span class="n">oblen</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">carry</span>
         <span class="n">oblen0</span> <span class="o">=</span> <span class="n">oblen</span>

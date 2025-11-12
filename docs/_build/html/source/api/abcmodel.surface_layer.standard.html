@@ -375,7 +375,6 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.surface_layer.standard.calculate_surface_properties"><code class="docutils literal notranslate"><span class="pre">calculate_surface_properties()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.surface_layer.standard.calculate_richardson_number"><code class="docutils literal notranslate"><span class="pre">calculate_richardson_number()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.surface_layer.standard.calculate_rib_function"><code class="docutils literal notranslate"><span class="pre">calculate_rib_function()</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.surface_layer.standard.calculate_rib_function_term"><code class="docutils literal notranslate"><span class="pre">calculate_rib_function_term()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.surface_layer.standard.ribtol"><code class="docutils literal notranslate"><span class="pre">ribtol()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.surface_layer.standard.calculate_drag_coefficients"><code class="docutils literal notranslate"><span class="pre">calculate_drag_coefficients()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.surface_layer.standard.calculate_momentum_fluxes"><code class="docutils literal notranslate"><span class="pre">calculate_momentum_fluxes()</span></code></a></li>
@@ -649,15 +648,6 @@ for finding the Obukhov length.</p>
 <p>where <span class="math notranslate nohighlight">\(Ri_b\)</span> is the bulk Richardson number, <span class="math notranslate nohighlight">\(z_{sl}\)</span> is the surface layer height,
 <span class="math notranslate nohighlight">\(L\)</span> is the Obukhov length, <span class="math notranslate nohighlight">\(z_{0h}\)</span> and <span class="math notranslate nohighlight">\(z_{0m}\)</span> are roughness lengths for scalars and momentum,
 and <span class="math notranslate nohighlight">\(\psi_h\)</span>, <span class="math notranslate nohighlight">\(\psi_m\)</span> are stability correction functions.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="abcmodel.surface_layer.standard.calculate_rib_function_term">
-<span class="sig-prename descclassname"><span class="pre">abcmodel.surface_layer.standard.</span></span><span class="sig-name descname"><span class="pre">calculate_rib_function_term</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">zsl</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">oblen</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z0h</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z0m</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/abcmodel/surface_layer/standard.html#calculate_rib_function_term"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#abcmodel.surface_layer.standard.calculate_rib_function_term" title="Link to this definition">#</a></dt>
-<dd><p>Calculate the derivative term for the Richardson number function.</p>
-<p class="rubric">Notes</p>
-<p>This function computes the derivative of the Richardson number function with respect to the Obukhov length,
-required for the Newton-Raphson iteration in the solution for Obukhov length.</p>
 </dd></dl>
 
 <dl class="py function">
@@ -941,7 +931,6 @@ adjust temperature and humidity profiles based on atmospheric stability.</p>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.surface_layer.standard.calculate_surface_properties"><code class="docutils literal notranslate"><span class="pre">calculate_surface_properties()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.surface_layer.standard.calculate_richardson_number"><code class="docutils literal notranslate"><span class="pre">calculate_richardson_number()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.surface_layer.standard.calculate_rib_function"><code class="docutils literal notranslate"><span class="pre">calculate_rib_function()</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.surface_layer.standard.calculate_rib_function_term"><code class="docutils literal notranslate"><span class="pre">calculate_rib_function_term()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.surface_layer.standard.ribtol"><code class="docutils literal notranslate"><span class="pre">ribtol()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.surface_layer.standard.calculate_drag_coefficients"><code class="docutils literal notranslate"><span class="pre">calculate_drag_coefficients()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.surface_layer.standard.calculate_momentum_fluxes"><code class="docutils literal notranslate"><span class="pre">calculate_momentum_fluxes()</span></code></a></li>

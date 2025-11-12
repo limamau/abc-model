@@ -358,6 +358,17 @@ document.write(`
                   
   <section id="abc-model">
 <h1>ABC Model<a class="headerlink" href="#abc-model" title="Link to this heading">#</a></h1>
+<p>The model’s components are supposed to be documented in a structured way.
+In each model page, we can see two main classes: <code class="docutils literal notranslate"><span class="pre">InitConds</span></code> and <code class="docutils literal notranslate"><span class="pre">Model</span></code>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">InitConds</span></code> is a data class containing all the variables that make part of the <code class="docutils literal notranslate"><span class="pre">state</span></code> of the model
+(and thereby of the <code class="docutils literal notranslate"><span class="pre">CoupledState</span></code>) and will be updated by the model during <code class="docutils literal notranslate"><span class="pre">run</span></code> (diagnostics)
+or <code class="docutils literal notranslate"><span class="pre">integrate</span></code> (prognostics, if any).</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">Model</span></code> class contains parameters, the <code class="docutils literal notranslate"><span class="pre">run</span></code> method and sometimes an <code class="docutils literal notranslate"><span class="pre">integrate</span></code> method.
+Inside <code class="docutils literal notranslate"><span class="pre">run</span></code>, variables <code class="docutils literal notranslate"><span class="pre">x</span></code>, <code class="docutils literal notranslate"><span class="pre">y</span></code>, etc, are updated using methods <code class="docutils literal notranslate"><span class="pre">compute_x</span></code>, <code class="docutils literal notranslate"><span class="pre">compute_y</span></code>, etc; and these
+methods are documented in the order that they are called. The goal is that a reader can essentially read the
+equations of each variable computation as they are done by our models and learn how things work from that.</p>
+<p>Somemtimes, the <code class="docutils literal notranslate"><span class="pre">state</span></code> is updated inside a more complicated method like <code class="docutils literal notranslate"><span class="pre">update_something</span></code>. This is sometimes
+used for the modularity of our models (models within abstract models).</p>
 <section id="components">
 <h2>Components<a class="headerlink" href="#components" title="Link to this heading">#</a></h2>
 <div class="toctree-wrapper compound">
