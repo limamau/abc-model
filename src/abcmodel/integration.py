@@ -113,6 +113,6 @@ def integrate(
     timesteps = jnp.arange(tsteps)
     state, trajectory = jax.lax.scan(iter_fn, state, timesteps, length=tsteps)
 
-    times = np.arange(tsteps) * dt / 3600.0 + coupler.radiation.tstart
+    times = jnp.arange(tsteps) * dt / 3600.0 + coupler.radiation.tstart
 
     return times, trajectory

@@ -1,21 +1,12 @@
-import jax
 import jax.numpy as jnp
-import jax.random as jr
 import matplotlib.pyplot as plt
 
 import abcconfigs.class_model as cm
 import abcmodel
 from abcmodel.utils import compute_esat
 
-N_PERTURB = 10
-SEED = 42
-WG = 0.1
-Q = 0.008
-SURF_TEMP = 290.0
-MULT_STD = 10.0
 
-
-def run_wrapper(wg, surf_temp):
+def run_wrapper(wg: float, q: float):
     # time step [s]
     dt = 60.0
     # total run time [s]
@@ -32,7 +23,6 @@ def run_wrapper(wg, surf_temp):
     # land surface
     ls_kwargs = cm.aquacrop.init_conds_kwargs
     ls_kwargs["wg"] = wg
-    ls_kwargs["surf_temp"] = surf_temp
     land_surface_init_conds = abcmodel.land_surface.AquaCropInitConds(
         **ls_kwargs,
     )
@@ -48,6 +38,7 @@ def run_wrapper(wg, surf_temp):
 
     # mixed layer
     ml_kwargs = cm.bulk_mixed_layer.init_conds_kwargs
+    ml_kwargs["q"] = q
     mixed_layer_init_conds = abcmodel.mixed_layer.BulkMixedLayerInitConds(
         **ml_kwargs,
     )
@@ -78,172 +69,217 @@ def run_wrapper(wg, surf_temp):
     return abcmodel.integrate(state, abcoupler, dt=dt, runtime=runtime)
 
 
+def make_fancy_plot(
+    axes,
+    time: jnp.ndarray,
+    traj,
+    color: str,
+    marker,
+    label: str,
+    factor: int = 60,
+):
+    # mixed layer
+    axes[0, 0].plot(
+        time[::factor],
+        traj.abl_height[::factor],
+        color=color,
+        marker=marker,
+        linestyle="None",
+    )
+    axes[0, 0].set_title("h [m]")
+    axes[0, 1].plot(
+        time[::factor],
+        traj.wCO2A[::factor],
+        color=color,
+        marker=marker,
+        linestyle="None",
+    )
+    axes[0, 1].set_title("wCO2A [mgC/m²/s]")
+    axes[0, 2].plot(
+        time[::factor],
+        traj.wCO2R[::factor],
+        color=color,
+        marker=marker,
+        linestyle="None",
+    )
+    axes[0, 2].set_title("wCO2R [mgC/m²/s]")
+    axes[0, 3].plot(
+        time[::factor],
+        traj.wCO2[::factor],
+        label=label,
+        color=color,
+        marker=marker,
+        linestyle="None",
+    )
+    axes[0, 3].set_title("wCO2 [mgC/m²/s]")
+    axes[0, 3].legend()
+
+    # temperature
+    axes[1, 0].plot(
+        time[::factor],
+        traj.temp_soil[::factor],
+        color=color,
+        marker=marker,
+        linestyle="None",
+    )
+    axes[1, 0].set_title("temp soil [K]")
+    axes[1, 1].plot(
+        time[::factor],
+        traj.surf_temp[::factor],
+        color=color,
+        marker=marker,
+        linestyle="None",
+    )
+    axes[1, 1].set_title("surf temp [K]")
+    axes[1, 2].plot(
+        time[::factor],
+        traj.theta[::factor],
+        color=color,
+        marker=marker,
+        linestyle="None",
+    )
+    axes[1, 2].set_title("theta [K]")
+    axes[1, 3].plot(
+        time[::factor],
+        traj.temp_2m[::factor],
+        color=color,
+        marker=marker,
+        linestyle="None",
+    )
+    axes[1, 3].set_title("temp 2m [K]")
+
+    # water
+    # this is the core of this example! #
+    vpd = (compute_esat(traj.surf_temp) - traj.e) / 1000.0  # kPa
+    axes[2, 0].plot(
+        time[::factor], vpd[::factor], color=color, marker=marker, linestyle="None"
+    )
+    axes[2, 0].set_title("VPD [kPa]")
+    axes[2, 1].plot(
+        time[::factor], traj.wg[::factor], color=color, marker=marker, linestyle="None"
+    )
+    axes[2, 1].set_title("wg [kg/kg]")
+    # - - - - - - - - - - - - - - - - - #
+    axes[2, 2].plot(
+        time[::factor], traj.q[::factor], color=color, marker=marker, linestyle="None"
+    )
+    axes[2, 2].set_title("q [kg/kg]")
+    axes[2, 3].plot(
+        time[::factor], traj.w2[::factor], color=color, marker=marker, linestyle="None"
+    )
+    axes[2, 3].set_title("w2 [kg/kg]")
+
+    # energy fluxes
+    axes[3, 0].plot(
+        time[::factor], traj.hf[::factor], color=color, marker=marker, linestyle="None"
+    )
+    axes[3, 0].set_title("H [W/m²]")
+    axes[3, 1].plot(
+        time[::factor], traj.le[::factor], color=color, marker=marker, linestyle="None"
+    )
+    axes[3, 1].set_title("LE [W/m²]")
+    axes[3, 2].plot(
+        time[::factor],
+        traj.le_veg[::factor],
+        color=color,
+        marker=marker,
+        linestyle="None",
+    )
+    axes[3, 2].set_title("LEveg [W/m²]")
+    axes[3, 3].plot(
+        time[::factor],
+        traj.le_liq[::factor],
+        color=color,
+        marker=marker,
+        linestyle="None",
+    )
+    axes[3, 3].set_title("LEliq [W/m²]")
+
+    # radiation
+    axes[4, 0].plot(
+        time[::factor],
+        traj.in_srad[::factor],
+        color=color,
+        marker=marker,
+        linestyle="None",
+    )
+    axes[4, 0].set_title("SWin [W/m²]")
+    axes[4, 1].plot(
+        time[::factor],
+        traj.out_srad[::factor],
+        color=color,
+        marker=marker,
+        linestyle="None",
+    )
+    axes[4, 1].set_title("SWout [W/m²]")
+    axes[4, 2].plot(
+        time[::factor],
+        traj.in_lrad[::factor],
+        color=color,
+        marker=marker,
+        linestyle="None",
+    )
+    axes[4, 2].set_title("LWin [W/m²]")
+    axes[4, 3].plot(
+        time[::factor],
+        traj.out_lrad[::factor],
+        color=color,
+        marker=marker,
+        linestyle="None",
+    )
+    axes[4, 3].set_title("LWout [W/m²]")
+
+
 def main():
-    # control run
-    time, control_traj = run_wrapper(WG, SURF_TEMP)
+    wg_control = 0.21
+    delta_wg = 0.1
+    q_control = 0.008
+    delta_q = 0.004
 
-    # plot output
-    plt.figure(figsize=(12, 8))
+    # plot
+    _, axes = plt.subplots(5, 4, figsize=(18, 9))
 
-    plt.subplot(231)
-    plt.plot(time, control_traj.wg, color="black")
-    plt.xlabel("time [h]")
-    plt.ylabel("wg [m3 m-3]")
+    # add experiments:
+    # control
+    time, control_traj = run_wrapper(wg_control, q_control)
+    make_fancy_plot(axes, time, control_traj, "gray", "o", "control")
+    # positive soil moisture anomaly
+    time, pos_soil_moist_traj = run_wrapper(wg_control + delta_wg, q_control)
+    make_fancy_plot(axes, time, pos_soil_moist_traj, "dodgerblue", "+", "+|ΔSM|")
+    # negative soil moisture anomaly
+    time, neg_soil_moist_traj = run_wrapper(wg_control - delta_wg, q_control)
+    make_fancy_plot(axes, time, neg_soil_moist_traj, "dodgerblue", "_", "-|ΔSM|")
+    # positive specific humidity anomaly
+    time, pos_surf_temp_traj = run_wrapper(wg_control, q_control + delta_q)
+    make_fancy_plot(axes, time, pos_surf_temp_traj, "orangered", "+", "+|Δq|")
+    # negative specific humidity anomaly
+    time, neg_surf_temp_traj = run_wrapper(wg_control, q_control - delta_q)
+    make_fancy_plot(axes, time, neg_surf_temp_traj, "orangered", "_", "-|Δq|")
 
-    plt.subplot(234)
-    plt.plot(time, control_traj.w2, color="black")
-    plt.xlabel("time [h]")
-    plt.ylabel("w2 [m3 m-3]")
+    # names on each row
+    row_names = [
+        "Mixed Layer",
+        "Temperature",
+        "Water",
+        "Energy Fluxes",
+        "Radiation",
+    ]
+    for i, name in enumerate(row_names):
+        ax = axes[i, 0]
+        ax.set_ylabel(
+            name,
+            fontweight="bold",
+        )
 
-    plt.subplot(232)
-    plt.plot(time, control_traj.surf_temp, color="black")
-    plt.xlabel("time [h]")
-    plt.ylabel("surf_temp [K]")
+    # only put x-axis labels and ticks on bottom row
+    for ax in axes[-1, :]:
+        ax.set_xlabel("Time [h]")
+    for ax in axes[:-1, :].flatten():
+        ax.set_xticks([])
 
-    plt.subplot(235)
-    plt.plot(time, control_traj.thetasurf, color="black")
-    plt.xlabel("time [h]")
-    plt.ylabel("thetasurf [K]")
-
-    plt.subplot(233)
-    plt.plot(time, compute_esat(control_traj.surf_temp) - control_traj.e, color="black")
-    plt.xlabel("time [h]")
-    plt.ylabel("VPD [Pa]")
-
-    plt.subplot(236)
-    plt.plot(time, control_traj.wCO2, color="black")
-    plt.xlabel("time [h]")
-    plt.ylabel("wCO2 [mgC m-2 s-1]")
-
+    # leave space for row labels
     plt.tight_layout()
     plt.show()
-    plt.close()
-
-    # wg perturbed run
-    key = jr.PRNGKey(SEED)
-    key, wg_perturb = jr.split(key)
-    wg_std = control_traj.wg.std()
-    print("wg std:", wg_std)
-    wg_perturb = jr.normal(shape=(N_PERTURB,), key=key) * wg_std * MULT_STD
-    _, wg_traj = jax.block_until_ready(
-        jax.vmap(run_wrapper)(WG + wg_perturb, jnp.repeat(Q, N_PERTURB))
-    )
-
-    # surf_temp perturbed run
-    key = jr.PRNGKey(SEED)
-    key, surf_temp_perturb = jr.split(key)
-    surf_temp_std = control_traj.surf_temp.std()
-    print("surf_temp std:", surf_temp_std)
-    surf_temp_perturb = (
-        jr.normal(shape=(N_PERTURB,), key=key) * surf_temp_std * MULT_STD
-    )
-    _, surf_temp_traj = jax.block_until_ready(
-        jax.vmap(run_wrapper)(jnp.repeat(WG, N_PERTURB), SURF_TEMP + surf_temp_perturb)
-    )
-
-    # # q perturbed run
-    # key = jr.PRNGKey(SEED)
-    # key, q_perturb = jr.split(key)
-    # q_std = control_traj.q.std()
-    # print("q std:", q_std)
-    # q_perturb = jr.normal(shape=(N_PERTURB,), key=key) * q_std * 10
-    # _, q_traj = jax.vmap(run_wrapper)(jnp.repeat(WG, N_PERTURB), Q + q_perturb)
-
-    # plot output
-    print("plotting...")
-    plt.figure(figsize=(12, 8))
-
-    plt.subplot(231)
-    plt.plot(time, control_traj.wg, color="black")
-    for i in range(N_PERTURB):
-        plt.plot(time, wg_traj.wg[i], color="blue", alpha=0.1)
-        plt.plot(time, surf_temp_traj.wg[i], color="red", alpha=0.1)
-    plt.xlabel("time [h]")
-    plt.ylabel("wg [m3 m-3]")
-
-    plt.subplot(234)
-    plt.plot(time, control_traj.w2, color="black")
-    for i in range(N_PERTURB):
-        plt.plot(time, wg_traj.w2[i], color="blue", alpha=0.1)
-        plt.plot(time, surf_temp_traj.w2[i], color="red", alpha=0.1)
-    plt.xlabel("time [h]")
-    plt.ylabel("w2 [m3 m-3]")
-
-    plt.subplot(232)
-    plt.plot(time, control_traj.surf_temp, color="black")
-    for i in range(N_PERTURB):
-        plt.plot(time, wg_traj.surf_temp[i], color="blue", alpha=0.1)
-        plt.plot(time, surf_temp_traj.surf_temp[i], color="red", alpha=0.1)
-    plt.xlabel("time [h]")
-    plt.ylabel("surf_temp [K]")
-
-    plt.subplot(235)
-    plt.plot(time, control_traj.thetasurf, color="black", label="control run")
-    for i in range(N_PERTURB):
-        plt.plot(
-            time, wg_traj.thetasurf[i], color="blue", alpha=0.1, label="wg perturb. run"
-        )
-        plt.plot(
-            time,
-            surf_temp_traj.thetasurf[i],
-            color="red",
-            alpha=0.1,
-            label="surf_temp perturb. run",
-        )
-    plt.xlabel("time [h]")
-    plt.ylabel("thetasurf [K]")
-
-    plt.subplot(233)
-    plt.plot(time, compute_esat(control_traj.surf_temp) - control_traj.e, color="black")
-    for i in range(N_PERTURB):
-        plt.plot(
-            time,
-            compute_esat(wg_traj.surf_temp[i]) - wg_traj.e[i],
-            color="blue",
-            alpha=0.1,
-        )
-        plt.plot(
-            time,
-            compute_esat(surf_temp_traj.surf_temp[i]) - surf_temp_traj.e[i],
-            color="red",
-            alpha=0.1,
-        )
-    plt.xlabel("time [h]")
-    plt.ylabel("VPD [Pa]")
-
-    plt.subplot(236)
-    plt.plot(time, control_traj.wCO2, color="black")
-    for i in range(N_PERTURB):
-        plt.plot(time, wg_traj.wCO2[i], color="blue", alpha=0.1)
-        plt.plot(time, surf_temp_traj.wCO2[i], color="red", alpha=0.1)
-    plt.xlabel("time [h]")
-    plt.ylabel("wCO2 [mgC m-2 s-1]")
-
-    plt.tight_layout()
-    plt.show()
-
-    # effect timeseires
-    effect_wg = wg_traj.wCO2 - control_traj.wCO2
-    rmsd_wg = jnp.sqrt(jnp.mean(effect_wg**2))
-    effect_surf_temp = surf_temp_traj.wCO2 - control_traj.wCO2
-    rmsd_surf_temp = jnp.sqrt(jnp.mean(effect_surf_temp**2))
-
-    print(f"RMSD of wg effect: {rmsd_wg:.4f}")
-    print(f"RMSD of surf_temp effect: {rmsd_surf_temp:.4f}")
-
-    # relative importances
-    total_effect_rmsd = rmsd_wg + rmsd_surf_temp
-    if total_effect_rmsd == 0:
-        print("\nRelative Importances:")
-        print("wg: 0% (no effect detected)")
-        print("surf_temp: 0% (no effect detected)")
-    else:
-        rel_importance_wg = rmsd_wg / total_effect_rmsd
-        rel_importance_surf_temp = rmsd_surf_temp / total_effect_rmsd
-
-        print("\nRelative Importances (based on RMSD):")
-        print(f"wg: {rel_importance_wg:.2%}")
-        print(f"surf_temp: {rel_importance_surf_temp:.2%}")
 
 
 if __name__ == "__main__":
