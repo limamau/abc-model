@@ -25,6 +25,9 @@ class AbstractRadiationModel(AbstractModel):
 class AbstractLandSurfaceModel(AbstractModel):
     """Abstract land surface model class to define the interface for all land surface models."""
 
+    # limamau: this could be better coded...
+    d1: float
+
     @abstractmethod
     def run(
         self,

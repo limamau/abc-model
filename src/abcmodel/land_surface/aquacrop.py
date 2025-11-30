@@ -252,7 +252,7 @@ class AquaCropModel(AbstractStandardLandSurfaceModel):
         ammax = self.ammax298[self.c3c4] * exp_term / (temp_factor1 * temp_factor2)
         return ammax
 
-    def compute_soil_moisture_stress_factor(self, w2: Array) -> Array:
+    def compute_soil_moisture_stress_factor(self, w2: float) -> Array:
         """Compute effect of soil moisture stress on gross assimilation rate ``fstr``.
 
         Notes:
