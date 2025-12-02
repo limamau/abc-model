@@ -156,27 +156,32 @@
 <li class="toctree-l3"><a class="reference internal" href="abcmodel.radiation.standard_w_clouds.html">Standard With Clouds</a></li>
 </ul>
 </details></li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="abcmodel.land_surface.html">Land Surface</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l3"><a class="reference internal" href="abcmodel.land_surface.aquacrop.html">Aquacrop</a></li>
-<li class="toctree-l3"><a class="reference internal" href="abcmodel.land_surface.jarvis_stewart.html">Jarvis Stewart</a></li>
-<li class="toctree-l3"><a class="reference internal" href="abcmodel.land_surface.minimal.html">Minimal</a></li>
-<li class="toctree-l3"><a class="reference internal" href="abcmodel.land_surface.standard.html">Standard</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="abcmodel.land.html">Land</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="abcmodel.land.aquacrop.html">Aquacrop</a></li>
+<li class="toctree-l3"><a class="reference internal" href="abcmodel.land.jarvis_stewart.html">Jarvis Stewart</a></li>
+<li class="toctree-l3"><a class="reference internal" href="abcmodel.land.minimal.html">Minimal</a></li>
+<li class="toctree-l3"><a class="reference internal" href="abcmodel.land.standard.html">Standard</a></li>
 </ul>
 </details></li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="abcmodel.surface_layer.html">Surface Layer</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l3"><a class="reference internal" href="abcmodel.surface_layer.minimal.html">Minimal</a></li>
-<li class="toctree-l3"><a class="reference internal" href="abcmodel.surface_layer.standard.html">Standard</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="abcmodel.atmosphere.html">Atmosphere</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="abcmodel.atmosphere.dayonly.html">Dayonly</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="abcmodel.atmosphere.surface_layer.html">Surface Layer</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="abcmodel.atmosphere.surface_layer.minimal.html">Minimal</a></li>
+<li class="toctree-l4"><a class="reference internal" href="abcmodel.atmosphere.surface_layer.standard.html">Standard</a></li>
 </ul>
 </details></li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="abcmodel.mixed_layer.html">Mixed Layer</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l3"><a class="reference internal" href="abcmodel.mixed_layer.bulk.html">Bulk</a></li>
-<li class="toctree-l3"><a class="reference internal" href="abcmodel.mixed_layer.minimal.html">Minimal</a></li>
-<li class="toctree-l3"><a class="reference internal" href="abcmodel.mixed_layer.stats.html">Stats</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="abcmodel.atmosphere.mixed_layer.html">Mixed Layer</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="abcmodel.atmosphere.mixed_layer.bulk.html">Bulk</a></li>
+<li class="toctree-l4"><a class="reference internal" href="abcmodel.atmosphere.mixed_layer.minimal.html">Minimal</a></li>
+<li class="toctree-l4"><a class="reference internal" href="abcmodel.atmosphere.mixed_layer.stats.html">Stats</a></li>
 </ul>
 </details></li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="abcmodel.clouds.html">Clouds</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l3"><a class="reference internal" href="abcmodel.clouds.cumulus.html">Cumulus</a></li>
-<li class="toctree-l3"><a class="reference internal" href="abcmodel.clouds.no_clouds.html">No Clouds</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="abcmodel.atmosphere.clouds.html">Clouds</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="abcmodel.atmosphere.clouds.cumulus.html">Cumulus</a></li>
+<li class="toctree-l4"><a class="reference internal" href="abcmodel.atmosphere.clouds.no_clouds.html">No Clouds</a></li>
+</ul>
+</details></li>
+<li class="toctree-l3"><a class="reference internal" href="abcmodel.atmosphere.abstracts.html">Abstracts</a></li>
 </ul>
 </details></li>
 <li class="toctree-l2"><a class="reference internal" href="abcmodel.abstracts.html">Abstracts</a></li>
@@ -378,12 +383,12 @@ document.write(`
 
 <dl class="py class">
 <dt class="sig sig-object py" id="abcmodel.coupling.ABCoupler">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abcmodel.coupling.</span></span><span class="sig-name descname"><span class="pre">ABCoupler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">radiation</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">land_surface</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">surface_layer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mixed_layer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clouds</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/abcmodel/coupling.html#ABCoupler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#abcmodel.coupling.ABCoupler" title="Link to this definition">#</a></dt>
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abcmodel.coupling.</span></span><span class="sig-name descname"><span class="pre">ABCoupler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">radiation</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">land</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">atmosphere</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/abcmodel/coupling.html#ABCoupler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#abcmodel.coupling.ABCoupler" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Coupling class to bound all the components.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="abcmodel.coupling.ABCoupler.init_state">
-<em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">init_state</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">radiation_init_conds</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">land_surface_init_conds</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">surface_layer_init_conds</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mixed_layer_init_conds</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clouds_init_conds</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/abcmodel/coupling.html#ABCoupler.init_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#abcmodel.coupling.ABCoupler.init_state" title="Link to this definition">#</a></dt>
+<em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">init_state</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/abcmodel/coupling.html#ABCoupler.init_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#abcmodel.coupling.ABCoupler.init_state" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">

@@ -25,10 +25,8 @@ Components
    :maxdepth: 1
 
    abcmodel.radiation
-   abcmodel.land_surface
-   abcmodel.surface_layer
-   abcmodel.mixed_layer
-   abcmodel.clouds
+   abcmodel.land
+   abcmodel.atmosphere
 
 Functionalities
 ---------------

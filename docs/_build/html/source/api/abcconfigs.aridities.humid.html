@@ -155,27 +155,32 @@
 <li class="toctree-l3"><a class="reference internal" href="abcmodel.radiation.standard_w_clouds.html">Standard With Clouds</a></li>
 </ul>
 </details></li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="abcmodel.land_surface.html">Land Surface</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l3"><a class="reference internal" href="abcmodel.land_surface.aquacrop.html">Aquacrop</a></li>
-<li class="toctree-l3"><a class="reference internal" href="abcmodel.land_surface.jarvis_stewart.html">Jarvis Stewart</a></li>
-<li class="toctree-l3"><a class="reference internal" href="abcmodel.land_surface.minimal.html">Minimal</a></li>
-<li class="toctree-l3"><a class="reference internal" href="abcmodel.land_surface.standard.html">Standard</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="abcmodel.land.html">Land</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="abcmodel.land.aquacrop.html">Aquacrop</a></li>
+<li class="toctree-l3"><a class="reference internal" href="abcmodel.land.jarvis_stewart.html">Jarvis Stewart</a></li>
+<li class="toctree-l3"><a class="reference internal" href="abcmodel.land.minimal.html">Minimal</a></li>
+<li class="toctree-l3"><a class="reference internal" href="abcmodel.land.standard.html">Standard</a></li>
 </ul>
 </details></li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="abcmodel.surface_layer.html">Surface Layer</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l3"><a class="reference internal" href="abcmodel.surface_layer.minimal.html">Minimal</a></li>
-<li class="toctree-l3"><a class="reference internal" href="abcmodel.surface_layer.standard.html">Standard</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="abcmodel.atmosphere.html">Atmosphere</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="abcmodel.atmosphere.dayonly.html">Dayonly</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="abcmodel.atmosphere.surface_layer.html">Surface Layer</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="abcmodel.atmosphere.surface_layer.minimal.html">Minimal</a></li>
+<li class="toctree-l4"><a class="reference internal" href="abcmodel.atmosphere.surface_layer.standard.html">Standard</a></li>
 </ul>
 </details></li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="abcmodel.mixed_layer.html">Mixed Layer</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l3"><a class="reference internal" href="abcmodel.mixed_layer.bulk.html">Bulk</a></li>
-<li class="toctree-l3"><a class="reference internal" href="abcmodel.mixed_layer.minimal.html">Minimal</a></li>
-<li class="toctree-l3"><a class="reference internal" href="abcmodel.mixed_layer.stats.html">Stats</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="abcmodel.atmosphere.mixed_layer.html">Mixed Layer</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="abcmodel.atmosphere.mixed_layer.bulk.html">Bulk</a></li>
+<li class="toctree-l4"><a class="reference internal" href="abcmodel.atmosphere.mixed_layer.minimal.html">Minimal</a></li>
+<li class="toctree-l4"><a class="reference internal" href="abcmodel.atmosphere.mixed_layer.stats.html">Stats</a></li>
 </ul>
 </details></li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="abcmodel.clouds.html">Clouds</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l3"><a class="reference internal" href="abcmodel.clouds.cumulus.html">Cumulus</a></li>
-<li class="toctree-l3"><a class="reference internal" href="abcmodel.clouds.no_clouds.html">No Clouds</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="abcmodel.atmosphere.clouds.html">Clouds</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="abcmodel.atmosphere.clouds.cumulus.html">Cumulus</a></li>
+<li class="toctree-l4"><a class="reference internal" href="abcmodel.atmosphere.clouds.no_clouds.html">No Clouds</a></li>
+</ul>
+</details></li>
+<li class="toctree-l3"><a class="reference internal" href="abcmodel.atmosphere.abstracts.html">Abstracts</a></li>
 </ul>
 </details></li>
 <li class="toctree-l2"><a class="reference internal" href="abcmodel.abstracts.html">Abstracts</a></li>
@@ -390,7 +395,7 @@ document.write(`
 
 <dl class="py data">
 <dt class="sig sig-object py" id="abcconfigs.aridities.humid.bulk_ml_init_conds_kwargs">
-<span class="sig-prename descclassname"><span class="pre">abcconfigs.aridities.humid.</span></span><span class="sig-name descname"><span class="pre">bulk_ml_init_conds_kwargs</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'abl_height':</span> <span class="pre">180.0,</span> <span class="pre">'co2':</span> <span class="pre">420.0,</span> <span class="pre">'dCO2':</span> <span class="pre">-60.0,</span> <span class="pre">'dq':</span> <span class="pre">-0.0005,</span> <span class="pre">'dtheta':</span> <span class="pre">0.5,</span> <span class="pre">'du':</span> <span class="pre">2.0,</span> <span class="pre">'dv':</span> <span class="pre">2.0,</span> <span class="pre">'dz_h':</span> <span class="pre">120.0,</span> <span class="pre">'q':</span> <span class="pre">0.01,</span> <span class="pre">'surf_pressure':</span> <span class="pre">101300.0,</span> <span class="pre">'theta':</span> <span class="pre">287.0,</span> <span class="pre">'u':</span> <span class="pre">4.0,</span> <span class="pre">'v':</span> <span class="pre">-3.0,</span> <span class="pre">'wCO2':</span> <span class="pre">0.0,</span> <span class="pre">'wq':</span> <span class="pre">0.0002,</span> <span class="pre">'wtheta':</span> <span class="pre">0.05}</span></em><a class="headerlink" href="#abcconfigs.aridities.humid.bulk_ml_init_conds_kwargs" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">abcconfigs.aridities.humid.</span></span><span class="sig-name descname"><span class="pre">bulk_ml_init_conds_kwargs</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'co2':</span> <span class="pre">420.0,</span> <span class="pre">'dCO2':</span> <span class="pre">-60.0,</span> <span class="pre">'dq':</span> <span class="pre">-0.0005,</span> <span class="pre">'dtheta':</span> <span class="pre">0.5,</span> <span class="pre">'du':</span> <span class="pre">2.0,</span> <span class="pre">'dv':</span> <span class="pre">2.0,</span> <span class="pre">'dz_h':</span> <span class="pre">120.0,</span> <span class="pre">'h_abl':</span> <span class="pre">180.0,</span> <span class="pre">'q':</span> <span class="pre">0.01,</span> <span class="pre">'surf_pressure':</span> <span class="pre">101300.0,</span> <span class="pre">'theta':</span> <span class="pre">287.0,</span> <span class="pre">'u':</span> <span class="pre">4.0,</span> <span class="pre">'v':</span> <span class="pre">-3.0,</span> <span class="pre">'wCO2':</span> <span class="pre">0.0,</span> <span class="pre">'wq':</span> <span class="pre">0.0002,</span> <span class="pre">'wtheta':</span> <span class="pre">0.05}</span></em><a class="headerlink" href="#abcconfigs.aridities.humid.bulk_ml_init_conds_kwargs" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py data">
