@@ -22,7 +22,7 @@ class AbstractStandardStatsModel(AbstractMixedLayerModel):
         """Compute standard meteorological statistics and diagnostics."""
         state = self.compute_virtual_temperatures(state)
         state = self.compute_mixed_layer_top_properties(state, const)
-        state.lcl = self.compute_lifting_condensation_level(state, t, const)
+        state.lcl = self.compute_lcl(state, t, const)
         return state
 
     def compute_virtual_temperatures(self, state: PyTree) -> PyTree:
@@ -74,13 +74,10 @@ class AbstractStandardStatsModel(AbstractMixedLayerModel):
         state.top_rh = state.q / compute_qsat(state.top_T, state.top_p)
         return state
 
-    def compute_lifting_condensation_level(
-        self, state: PyTree, t: int, const: PhysicalConstants
-    ) -> Array:
+    def compute_lcl(self, state: PyTree, t: int, const: PhysicalConstants) -> Array:
         """Compute the lifting condensation level (LCL).
 
-        Notes:
-            The LCL is found iteratively by finding the height where the relative humidity is 100%.
+        The LCL is found iteratively by finding the height where the relative humidity is 100%.
         """
         # find lifting condensation level iteratively using JAX
         # initialize lcl and rhlcl based on timestep

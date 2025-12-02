@@ -336,7 +336,7 @@ document.write(`
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute standard meteorological statistics and diagnostics.&quot;&quot;&quot;</span>
         <span class="n">state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_virtual_temperatures</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
         <span class="n">state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_mixed_layer_top_properties</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">const</span><span class="p">)</span>
-        <span class="n">state</span><span class="o">.</span><span class="n">lcl</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_lifting_condensation_level</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">const</span><span class="p">)</span>
+        <span class="n">state</span><span class="o">.</span><span class="n">lcl</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_lcl</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">const</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">state</span></div>
 
 
@@ -395,15 +395,12 @@ document.write(`
         <span class="k">return</span> <span class="n">state</span></div>
 
 
-<div class="viewcode-block" id="AbstractStandardStatsModel.compute_lifting_condensation_level">
-<a class="viewcode-back" href="../../../../source/api/abcmodel.atmosphere.mixed_layer.stats.html#abcmodel.atmosphere.mixed_layer.stats.AbstractStandardStatsModel.compute_lifting_condensation_level">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">compute_lifting_condensation_level</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="n">PyTree</span><span class="p">,</span> <span class="n">t</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">const</span><span class="p">:</span> <span class="n">PhysicalConstants</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Array</span><span class="p">:</span>
+<div class="viewcode-block" id="AbstractStandardStatsModel.compute_lcl">
+<a class="viewcode-back" href="../../../../source/api/abcmodel.atmosphere.mixed_layer.stats.html#abcmodel.atmosphere.mixed_layer.stats.AbstractStandardStatsModel.compute_lcl">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">compute_lcl</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="n">PyTree</span><span class="p">,</span> <span class="n">t</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">const</span><span class="p">:</span> <span class="n">PhysicalConstants</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Array</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute the lifting condensation level (LCL).</span>
 
-<span class="sd">        Notes:</span>
-<span class="sd">            The LCL is found iteratively by finding the height where the relative humidity is 100%.</span>
+<span class="sd">        The LCL is found iteratively by finding the height where the relative humidity is 100%.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># find lifting condensation level iteratively using JAX</span>
         <span class="c1"># initialize lcl and rhlcl based on timestep</span>

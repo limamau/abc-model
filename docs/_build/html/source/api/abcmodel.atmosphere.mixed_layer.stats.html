@@ -360,7 +360,7 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.atmosphere.mixed_layer.stats.AbstractStandardStatsModel.statistics"><code class="docutils literal notranslate"><span class="pre">AbstractStandardStatsModel.statistics()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.atmosphere.mixed_layer.stats.AbstractStandardStatsModel.compute_virtual_temperatures"><code class="docutils literal notranslate"><span class="pre">AbstractStandardStatsModel.compute_virtual_temperatures()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.atmosphere.mixed_layer.stats.AbstractStandardStatsModel.compute_mixed_layer_top_properties"><code class="docutils literal notranslate"><span class="pre">AbstractStandardStatsModel.compute_mixed_layer_top_properties()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.atmosphere.mixed_layer.stats.AbstractStandardStatsModel.compute_lifting_condensation_level"><code class="docutils literal notranslate"><span class="pre">AbstractStandardStatsModel.compute_lifting_condensation_level()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.atmosphere.mixed_layer.stats.AbstractStandardStatsModel.compute_lcl"><code class="docutils literal notranslate"><span class="pre">AbstractStandardStatsModel.compute_lcl()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -424,10 +424,9 @@ properties, and lifting condensation level determination.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="abcmodel.atmosphere.mixed_layer.stats.AbstractStandardStatsModel.compute_lifting_condensation_level">
-<span class="sig-name descname"><span class="pre">compute_lifting_condensation_level</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">const</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/abcmodel/atmosphere/mixed_layer/stats.html#AbstractStandardStatsModel.compute_lifting_condensation_level"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#abcmodel.atmosphere.mixed_layer.stats.AbstractStandardStatsModel.compute_lifting_condensation_level" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="abcmodel.atmosphere.mixed_layer.stats.AbstractStandardStatsModel.compute_lcl">
+<span class="sig-name descname"><span class="pre">compute_lcl</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">const</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/abcmodel/atmosphere/mixed_layer/stats.html#AbstractStandardStatsModel.compute_lcl"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#abcmodel.atmosphere.mixed_layer.stats.AbstractStandardStatsModel.compute_lcl" title="Link to this definition">#</a></dt>
 <dd><p>Compute the lifting condensation level (LCL).</p>
-<p class="rubric">Notes</p>
 <p>The LCL is found iteratively by finding the height where the relative humidity is 100%.</p>
 </dd></dl>
 
@@ -485,7 +484,7 @@ properties, and lifting condensation level determination.</p>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.atmosphere.mixed_layer.stats.AbstractStandardStatsModel.statistics"><code class="docutils literal notranslate"><span class="pre">AbstractStandardStatsModel.statistics()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.atmosphere.mixed_layer.stats.AbstractStandardStatsModel.compute_virtual_temperatures"><code class="docutils literal notranslate"><span class="pre">AbstractStandardStatsModel.compute_virtual_temperatures()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.atmosphere.mixed_layer.stats.AbstractStandardStatsModel.compute_mixed_layer_top_properties"><code class="docutils literal notranslate"><span class="pre">AbstractStandardStatsModel.compute_mixed_layer_top_properties()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.atmosphere.mixed_layer.stats.AbstractStandardStatsModel.compute_lifting_condensation_level"><code class="docutils literal notranslate"><span class="pre">AbstractStandardStatsModel.compute_lifting_condensation_level()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.atmosphere.mixed_layer.stats.AbstractStandardStatsModel.compute_lcl"><code class="docutils literal notranslate"><span class="pre">AbstractStandardStatsModel.compute_lcl()</span></code></a></li>
 </ul>
 </li>
 </ul>
