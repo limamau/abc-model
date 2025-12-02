@@ -446,24 +446,24 @@ and explicit CO2 flux calculations.</p>
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="abcmodel.land.aquacrop.AquaCropModel.compute_co2comp">
-<span class="sig-name descname"><span class="pre">compute_co2comp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">thetasurf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rho</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/abcmodel/land/aquacrop.html#AquaCropModel.compute_co2comp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#abcmodel.land.aquacrop.AquaCropModel.compute_co2comp" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">compute_co2comp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">θsurf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rho</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/abcmodel/land/aquacrop.html#AquaCropModel.compute_co2comp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#abcmodel.land.aquacrop.AquaCropModel.compute_co2comp" title="Link to this definition">#</a></dt>
 <dd><p>Compute the CO₂ compensation concentration.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>thetasurf</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code></span>) – surface potential temperature <span class="math notranslate nohighlight">\(\theta_s\)</span> [K].</p></li>
+<li><p><strong>θsurf</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code></span>) – surface potential temperature <span class="math notranslate nohighlight">\(\theta_s\)</span> [K].</p></li>
 <li><p><strong>rho</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></span>) – air density [kg m⁻³].</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The CO₂ compensation concentration <span class="math notranslate nohighlight">\(\Gamma\)</span> [ppmv].</p>
+<dd class="field-even"><p>The CO₂ compensation concentration <span class="math notranslate nohighlight">\(\gamma\)</span> [ppmv].</p>
 </dd>
 </dl>
 <p class="rubric">Notes</p>
 <p>The CO₂ compensation point is computed as</p>
 <div class="math notranslate nohighlight">
-\[\Gamma = \rho \Gamma_{298} Q_{10} e^{(T_s-298)/10}\]</div>
-<p>where <span class="math notranslate nohighlight">\(\Gamma_{298}\)</span> and <span class="math notranslate nohighlight">\(Q_{10}\)</span> are parameters depending on the plant type (C3 or C4).
+\[\gamma = \rho \gamma_{298} Q_{10} e^{(T_s-298)/10}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\gamma_{298}\)</span> and <span class="math notranslate nohighlight">\(Q_{10}\)</span> are parameters depending on the plant type (C3 or C4).
 Here, <span class="math notranslate nohighlight">\(\theta_s\)</span> is used instead of the skin temperature <span class="math notranslate nohighlight">\(T_s\)</span> to compute the exponential term,
 probably because this comes before in the order of updates for stability?</p>
 <p class="rubric">References</p>
@@ -472,11 +472,11 @@ probably because this comes before in the order of updates for stability?</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abcmodel.land.aquacrop.AquaCropModel.compute_gm">
-<span class="sig-name descname"><span class="pre">compute_gm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">thetasurf</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/abcmodel/land/aquacrop.html#AquaCropModel.compute_gm"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#abcmodel.land.aquacrop.AquaCropModel.compute_gm" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">compute_gm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">θsurf</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/abcmodel/land/aquacrop.html#AquaCropModel.compute_gm"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#abcmodel.land.aquacrop.AquaCropModel.compute_gm" title="Link to this definition">#</a></dt>
 <dd><p>Compute the mesophyll conductance.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>thetasurf</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code></span>) – surface potential temperature <span class="math notranslate nohighlight">\(\theta_s\)</span> [K].</p>
+<dd class="field-odd"><p><strong>θsurf</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code></span>) – surface potential temperature <span class="math notranslate nohighlight">\(\theta_s\)</span> [K].</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>Mesophyll conductance <span class="math notranslate nohighlight">\(g_m\)</span> [mm s⁻¹].</p>
@@ -544,13 +544,13 @@ and <span class="math notranslate nohighlight">\(e\)</span> is the actual vapor 
 \[C_a = [CO_2] \frac{M_{CO2}}{M_{air}} \rho\]</div>
 <p>The internal CO2 concentration <span class="math notranslate nohighlight">\(C_i\)</span> is then</p>
 <div class="math notranslate nohighlight">
-\[C_i = c_{frac} (C_a - \Gamma) + \Gamma\]</div>
-<p>where <span class="math notranslate nohighlight">\(\Gamma\)</span> is the CO2 compensation point.</p>
+\[C_i = c_{frac} (C_a - \gamma) + \gamma\]</div>
+<p>where <span class="math notranslate nohighlight">\(\gamma\)</span> is the CO2 compensation point.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abcmodel.land.aquacrop.AquaCropModel.compute_max_gross_primary_production">
-<span class="sig-name descname"><span class="pre">compute_max_gross_primary_production</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">thetasurf</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/abcmodel/land/aquacrop.html#AquaCropModel.compute_max_gross_primary_production"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#abcmodel.land.aquacrop.AquaCropModel.compute_max_gross_primary_production" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">compute_max_gross_primary_production</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">θsurf</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/abcmodel/land/aquacrop.html#AquaCropModel.compute_max_gross_primary_production"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#abcmodel.land.aquacrop.AquaCropModel.compute_max_gross_primary_production" title="Link to this definition">#</a></dt>
 <dd><p>Compute maximal gross primary production in high light conditions <code class="docutils literal notranslate"><span class="pre">ammax</span></code>.</p>
 <p class="rubric">Notes</p>
 <p>The maximal gross primary production is given by</p>
@@ -585,7 +585,7 @@ and the parameter <span class="math notranslate nohighlight">\(c_{\beta}\)</span
 <p class="rubric">Notes</p>
 <p>The gross assimilation rate is given by</p>
 <div class="math notranslate nohighlight">
-\[A_m = A_{m,max} \left[ 1 - \exp\left( -\frac{g_m(C_i - \Gamma)}{A_{m,max}} \right) \right]\]</div>
+\[A_m = A_{m,max} \left[ 1 - \exp\left( -\frac{g_m(C_i - \gamma)}{A_{m,max}} \right) \right]\]</div>
 </dd></dl>
 
 <dl class="py method">
@@ -615,7 +615,7 @@ and the parameter <span class="math notranslate nohighlight">\(c_{\beta}\)</span
 <p class="rubric">Notes</p>
 <p>The light use efficiency is given by</p>
 <div class="math notranslate nohighlight">
-\[\alpha_c = \alpha_0 \frac{C_a - \Gamma}{C_a + 2\Gamma}\]</div>
+\[\alpha_c = \alpha_0 \frac{C_a - \gamma}{C_a + 2\gamma}\]</div>
 </dd></dl>
 
 <dl class="py method">

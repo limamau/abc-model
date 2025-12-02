@@ -41,11 +41,11 @@ def main():
         # surface pressure [Pa]
         surf_pressure=101300.0,
         # initial mixed-layer potential temperature [K]
-        theta=288.0,
+        θ=288.0,
         # initial temperature jump at h [K]
-        dtheta=1.0,
+        Δθ=1.0,
         # surface kinematic heat flux [K m s-1]
-        wtheta=0.1,
+        wθ=0.1,
         # initial mixed-layer specific humidity [kg kg-1]
         q=0.008,
         # initial specific humidity jump at h [kg kg-1]
@@ -105,9 +105,9 @@ def main():
     plt.ylabel("h [m]")
 
     plt.subplot(234)
-    plt.plot(time, trajectory.theta)
+    plt.plot(time, trajectory.θ)
     plt.xlabel("time [h]")
-    plt.ylabel("theta [K]")
+    plt.ylabel("θ [K]")
 
     plt.subplot(232)
     plt.plot(time, trajectory.q * 1000.0)

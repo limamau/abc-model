@@ -16,11 +16,11 @@ class MinimalMixedLayerInitConds:
     """Initial ABL height [m]."""
     surf_pressure: float
     """Surface pressure [Pa]."""
-    theta: float
+    θ: float
     """Initial mixed-layer potential temperature [K]."""
-    dtheta: float
+    Δθ: float
     """Initial temperature jump at h [K]."""
-    wtheta: float
+    wθ: float
     """Surface kinematic heat flux [K m/s]."""
     q: float
     """Initial mixed-layer specific humidity [kg/kg]."""
@@ -56,9 +56,9 @@ class MinimalMixedLayerInitConds:
     """Entrainment CO2 flux [mgC m-2 s]."""
 
     # the following variables are expected to be assigned during warmup
-    thetav: float = jnp.nan
+    θv: float = jnp.nan
     """Mixed-layer potential temperature [K]."""
-    wthetav: float = jnp.nan
+    wθv: float = jnp.nan
     """Surface kinematic virtual heat flux [K m s-1]."""
     qsat: float = jnp.nan
     """Saturation specific humidity [kg/kg]."""
@@ -68,7 +68,7 @@ class MinimalMixedLayerInitConds:
     """Saturation vapor pressure [Pa]."""
     lcl: float = jnp.nan
     """Lifting condensation level [m]."""
-    dthetav: float = jnp.nan
+    Δθv: float = jnp.nan
     """Virtual temperature jump at h [K]."""
     top_p: float = jnp.nan
     """Pressure at top of mixed layer [Pa]."""

@@ -145,12 +145,12 @@ def make_fancy_plot(
 
     axes[1, 2].plot(
         time[::factor],
-        traj.theta[::factor],
+        traj.θ[::factor],
         color=color,
         marker=marker,
         linestyle="None",
     )
-    axes[1, 2].set_title("theta [K]")
+    axes[1, 2].set_title("θ [K]")
 
     axes[1, 3].plot(
         time[::factor],

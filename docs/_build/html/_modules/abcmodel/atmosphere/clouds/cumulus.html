@@ -366,7 +366,7 @@ document.write(`
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Run the model.&quot;&quot;&quot;</span>
         <span class="n">state</span><span class="o">.</span><span class="n">q2_h</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_q2_h</span><span class="p">(</span>
             <span class="n">state</span><span class="o">.</span><span class="n">cc_qf</span><span class="p">,</span>
-            <span class="n">state</span><span class="o">.</span><span class="n">wthetav</span><span class="p">,</span>
+            <span class="n">state</span><span class="o">.</span><span class="n">wθv</span><span class="p">,</span>
             <span class="n">state</span><span class="o">.</span><span class="n">wqe</span><span class="p">,</span>
             <span class="n">state</span><span class="o">.</span><span class="n">dq</span><span class="p">,</span>
             <span class="n">state</span><span class="o">.</span><span class="n">h_abl</span><span class="p">,</span>
@@ -374,7 +374,7 @@ document.write(`
             <span class="n">state</span><span class="o">.</span><span class="n">wstar</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="n">state</span><span class="o">.</span><span class="n">top_CO22</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_top_CO22</span><span class="p">(</span>
-            <span class="n">state</span><span class="o">.</span><span class="n">wthetav</span><span class="p">,</span>
+            <span class="n">state</span><span class="o">.</span><span class="n">wθv</span><span class="p">,</span>
             <span class="n">state</span><span class="o">.</span><span class="n">h_abl</span><span class="p">,</span>
             <span class="n">state</span><span class="o">.</span><span class="n">dz_h</span><span class="p">,</span>
             <span class="n">state</span><span class="o">.</span><span class="n">wstar</span><span class="p">,</span>
@@ -398,7 +398,7 @@ document.write(`
     <span class="nd">@staticmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">compute_q2_h</span><span class="p">(</span>
         <span class="n">cc_qf</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span>
-        <span class="n">wthetav</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span>
+        <span class="n">wθv</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span>
         <span class="n">wqe</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span>
         <span class="n">dq</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span>
         <span class="n">h_abl</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span>
@@ -413,16 +413,14 @@ document.write(`
 <span class="sd">            .. math::</span>
 <span class="sd">                \\sigma_{q,h}^2 = -\\frac{(\\overline{w&#39;q&#39;}_e + \\overline{w&#39;q&#39;}_{cc}) \\Delta q h}{\\delta z_h w_*}</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">jnp</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
-            <span class="n">wthetav</span> <span class="o">&gt;</span> <span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="p">(</span><span class="n">wqe</span> <span class="o">+</span> <span class="n">cc_qf</span><span class="p">)</span> <span class="o">*</span> <span class="n">dq</span> <span class="o">*</span> <span class="n">h_abl</span> <span class="o">/</span> <span class="p">(</span><span class="n">dz_h</span> <span class="o">*</span> <span class="n">wstar</span><span class="p">),</span> <span class="mf">0.0</span>
-        <span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">jnp</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">wθv</span> <span class="o">&gt;</span> <span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="p">(</span><span class="n">wqe</span> <span class="o">+</span> <span class="n">cc_qf</span><span class="p">)</span> <span class="o">*</span> <span class="n">dq</span> <span class="o">*</span> <span class="n">h_abl</span> <span class="o">/</span> <span class="p">(</span><span class="n">dz_h</span> <span class="o">*</span> <span class="n">wstar</span><span class="p">),</span> <span class="mf">0.0</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="StandardCumulusModel.compute_top_CO22">
 <a class="viewcode-back" href="../../../../source/api/abcmodel.atmosphere.clouds.cumulus.html#abcmodel.atmosphere.clouds.cumulus.StandardCumulusModel.compute_top_CO22">[docs]</a>
     <span class="nd">@staticmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">compute_top_CO22</span><span class="p">(</span>
-        <span class="n">wthetav</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span>
+        <span class="n">wθv</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span>
         <span class="n">h_abl</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span>
         <span class="n">dz_h</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span>
         <span class="n">wstar</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span>
@@ -439,7 +437,7 @@ document.write(`
 <span class="sd">                \\sigma_{CO2,h}^2 = -\\frac{(\\overline{w&#39;CO_2&#39;}_e + \\overline{w&#39;CO_2&#39;}_{M}) \\Delta CO_2 h}{\\delta z_h w_*}</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">jnp</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
-            <span class="n">wthetav</span> <span class="o">&gt;</span> <span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="p">(</span><span class="n">wCO2e</span> <span class="o">+</span> <span class="n">wCO2M</span><span class="p">)</span> <span class="o">*</span> <span class="n">dCO2</span> <span class="o">*</span> <span class="n">h_abl</span> <span class="o">/</span> <span class="p">(</span><span class="n">dz_h</span> <span class="o">*</span> <span class="n">wstar</span><span class="p">),</span> <span class="mf">0.0</span>
+            <span class="n">wθv</span> <span class="o">&gt;</span> <span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="p">(</span><span class="n">wCO2e</span> <span class="o">+</span> <span class="n">wCO2M</span><span class="p">)</span> <span class="o">*</span> <span class="n">dCO2</span> <span class="o">*</span> <span class="n">h_abl</span> <span class="o">/</span> <span class="p">(</span><span class="n">dz_h</span> <span class="o">*</span> <span class="n">wstar</span><span class="p">),</span> <span class="mf">0.0</span>
         <span class="p">)</span></div>
 
 

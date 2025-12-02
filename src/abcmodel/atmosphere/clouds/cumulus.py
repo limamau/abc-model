@@ -49,7 +49,7 @@ class StandardCumulusModel(AbstractCloudModel):
         """Run the model."""
         state.q2_h = self.compute_q2_h(
             state.cc_qf,
-            state.wthetav,
+            state.wθv,
             state.wqe,
             state.dq,
             state.h_abl,
@@ -57,7 +57,7 @@ class StandardCumulusModel(AbstractCloudModel):
             state.wstar,
         )
         state.top_CO22 = self.compute_top_CO22(
-            state.wthetav,
+            state.wθv,
             state.h_abl,
             state.dz_h,
             state.wstar,
@@ -78,7 +78,7 @@ class StandardCumulusModel(AbstractCloudModel):
     @staticmethod
     def compute_q2_h(
         cc_qf: Array,
-        wthetav: Array,
+        wθv: Array,
         wqe: Array,
         dq: Array,
         h_abl: Array,
@@ -93,13 +93,11 @@ class StandardCumulusModel(AbstractCloudModel):
             .. math::
                 \\sigma_{q,h}^2 = -\\frac{(\\overline{w'q'}_e + \\overline{w'q'}_{cc}) \\Delta q h}{\\delta z_h w_*}
         """
-        return jnp.where(
-            wthetav > 0.0, -(wqe + cc_qf) * dq * h_abl / (dz_h * wstar), 0.0
-        )
+        return jnp.where(wθv > 0.0, -(wqe + cc_qf) * dq * h_abl / (dz_h * wstar), 0.0)
 
     @staticmethod
     def compute_top_CO22(
-        wthetav: Array,
+        wθv: Array,
         h_abl: Array,
         dz_h: Array,
         wstar: Array,
@@ -116,7 +114,7 @@ class StandardCumulusModel(AbstractCloudModel):
                 \\sigma_{CO2,h}^2 = -\\frac{(\\overline{w'CO_2'}_e + \\overline{w'CO_2'}_{M}) \\Delta CO_2 h}{\\delta z_h w_*}
         """
         return jnp.where(
-            wthetav > 0.0, -(wCO2e + wCO2M) * dCO2 * h_abl / (dz_h * wstar), 0.0
+            wθv > 0.0, -(wCO2e + wCO2M) * dCO2 * h_abl / (dz_h * wstar), 0.0
         )
 
     @staticmethod

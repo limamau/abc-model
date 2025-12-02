@@ -68,42 +68,42 @@ class AquaCropModel(AbstractStandardLandSurfaceModel):
 
     def compute_co2comp(
         self,
-        thetasurf: Array,
+        θsurf: Array,
         rho: float,
     ) -> Array:
         """Compute the CO₂ compensation concentration.
 
         Args:
-            thetasurf: surface potential temperature :math:`\\theta_s` [K].
+            θsurf: surface potential temperature :math:`\\theta_s` [K].
             rho: air density [kg m⁻³].
 
         Returns:
-            The CO₂ compensation concentration :math:`\\Gamma` [ppmv].
+            The CO₂ compensation concentration :math:`\\gamma` [ppmv].
 
         Notes:
             The CO₂ compensation point is computed as
 
             .. math::
-                \\Gamma = \\rho \\Gamma_{298} Q_{10} e^{(T_s-298)/10}
+                \\gamma = \\rho \\gamma_{298} Q_{10} e^{(T_s-298)/10}
 
-            where :math:`\\Gamma_{298}` and :math:`Q_{10}` are parameters depending on the plant type (C3 or C4).
+            where :math:`\\gamma_{298}` and :math:`Q_{10}` are parameters depending on the plant type (C3 or C4).
             Here, :math:`\\theta_s` is used instead of the skin temperature :math:`T_s` to compute the exponential term,
             probably because this comes before in the order of updates for stability?
 
         References:
             Equation E.2 of the CLASS book.
         """
-        # limamau: why are we using thetasurf here instead of surf_temp?
+        # limamau: why are we using θsurf here instead of surf_temp?
         # where is this rho coming from?
-        temp_diff = 0.1 * (thetasurf - 298.0)
+        temp_diff = 0.1 * (θsurf - 298.0)
         exp_term = jnp.pow(self.net_rad10CO2[self.c3c4], temp_diff)
         return self.co2comp298[self.c3c4] * rho * exp_term
 
-    def compute_gm(self, thetasurf: Array) -> Array:
+    def compute_gm(self, θsurf: Array) -> Array:
         """Compute the mesophyll conductance.
 
         Args:
-            thetasurf: surface potential temperature :math:`\\theta_s` [K].
+            θsurf: surface potential temperature :math:`\\theta_s` [K].
 
         Returns:
             Mesophyll conductance :math:`g_m` [mm s⁻¹].
@@ -123,10 +123,10 @@ class AquaCropModel(AbstractStandardLandSurfaceModel):
             Equation E.7 from the CLASS book.
 
         """
-        temp_diff = 0.1 * (thetasurf - 298.0)
+        temp_diff = 0.1 * (θsurf - 298.0)
         exp_term = jnp.pow(self.net_rad10gm[self.c3c4], temp_diff)
-        temp_factor1 = 1.0 + jnp.exp(0.3 * (self.temp1gm[self.c3c4] - thetasurf))
-        temp_factor2 = 1.0 + jnp.exp(0.3 * (thetasurf - self.temp2gm[self.c3c4]))
+        temp_factor1 = 1.0 + jnp.exp(0.3 * (self.temp1gm[self.c3c4] - θsurf))
+        temp_factor2 = 1.0 + jnp.exp(0.3 * (θsurf - self.temp2gm[self.c3c4]))
         gm = self.gm298[self.c3c4] * exp_term / (temp_factor1 * temp_factor2)
         return gm / 1000.0
 
@@ -218,16 +218,16 @@ class AquaCropModel(AbstractStandardLandSurfaceModel):
             The internal CO2 concentration :math:`C_i` is then
 
             .. math::
-                C_i = c_{frac} (C_a - \\Gamma) + \\Gamma
+                C_i = c_{frac} (C_a - \\gamma) + \\gamma
 
-            where :math:`\\Gamma` is the CO2 compensation point.
+            where :math:`\\gamma` is the CO2 compensation point.
         """
         cfrac = self.f0[self.c3c4] * (1.0 - (ds / d0)) + fmin * (ds / d0)
         co2abs = co2 * (const.mco2 / const.mair) * const.rho
         ci = cfrac * (co2abs - co2comp) + co2comp
         return ci, co2abs
 
-    def compute_max_gross_primary_production(self, thetasurf: Array) -> Array:
+    def compute_max_gross_primary_production(self, θsurf: Array) -> Array:
         """Compute maximal gross primary production in high light conditions ``ammax``.
 
         Notes:
@@ -245,10 +245,10 @@ class AquaCropModel(AbstractStandardLandSurfaceModel):
         References:
             Equation E.3 from the CLASS book.
         """
-        temp_diff = 0.1 * (thetasurf - 298.0)
+        temp_diff = 0.1 * (θsurf - 298.0)
         exp_term = jnp.power(self.net_rad10Am[self.c3c4], temp_diff)
-        temp_factor1 = 1.0 + jnp.exp(0.3 * (self.temp1Am[self.c3c4] - thetasurf))
-        temp_factor2 = 1.0 + jnp.exp(0.3 * (thetasurf - self.temp2Am[self.c3c4]))
+        temp_factor1 = 1.0 + jnp.exp(0.3 * (self.temp1Am[self.c3c4] - θsurf))
+        temp_factor2 = 1.0 + jnp.exp(0.3 * (θsurf - self.temp2Am[self.c3c4]))
         ammax = self.ammax298[self.c3c4] * exp_term / (temp_factor1 * temp_factor2)
         return ammax
 
@@ -324,7 +324,7 @@ class AquaCropModel(AbstractStandardLandSurfaceModel):
             The gross assimilation rate is given by
 
             .. math::
-                A_m = A_{m,max} \\left[ 1 - \\exp\\left( -\\frac{g_m(C_i - \\Gamma)}{A_{m,max}} \\right) \\right]
+                A_m = A_{m,max} \\left[ 1 - \\exp\\left( -\\frac{g_m(C_i - \\gamma)}{A_{m,max}} \\right) \\right]
         """
         assimilation_factor = -(gm * (ci - co2comp) / ammax)
         am = ammax * (1.0 - jnp.exp(assimilation_factor))
@@ -368,7 +368,7 @@ class AquaCropModel(AbstractStandardLandSurfaceModel):
             The light use efficiency is given by
 
             .. math::
-                \\alpha_c = \\alpha_0 \\frac{C_a - \\Gamma}{C_a + 2\\Gamma}
+                \\alpha_c = \\alpha_0 \\frac{C_a - \\gamma}{C_a + 2\\gamma}
         """
         co2_ratio = (co2abs - co2comp) / (co2abs + 2.0 * co2comp)
         alphac = self.alpha0[self.c3c4] * co2_ratio
@@ -422,10 +422,10 @@ class AquaCropModel(AbstractStandardLandSurfaceModel):
 
     def update_surface_resistance(self, state: PyTree, const: PhysicalConstants):
         """Compute surface resistance using AquaCrop photosynthesis-conductance model."""
-        co2comp = self.compute_co2comp(state.thetasurf, const.rho)
-        gm = self.compute_gm(state.thetasurf)
+        co2comp = self.compute_co2comp(state.θsurf, const.rho)
+        gm = self.compute_gm(state.θsurf)
         fmin = self.compute_fmin(gm)
-        ds = self.compute_ds(state.thetasurf, state.e)
+        ds = self.compute_ds(state.θsurf, state.e)
         d0 = self.compute_d0(fmin)
         state.ci, state.co2abs = self.compute_internal_co2(
             ds,
@@ -436,7 +436,7 @@ class AquaCropModel(AbstractStandardLandSurfaceModel):
             gm,
             const,
         )
-        ammax = self.compute_max_gross_primary_production(state.thetasurf)
+        ammax = self.compute_max_gross_primary_production(state.θsurf)
         fstr = self.compute_soil_moisture_stress_factor(self.w2)
         am = self.compute_gross_assimilation(ammax, gm, state.ci, co2comp)
         rdark = self.compute_dark_respiration(am)
