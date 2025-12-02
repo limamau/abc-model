@@ -1,16 +1,19 @@
 from abc import abstractmethod
 from dataclasses import dataclass
 
+import jax
 import jax.numpy as jnp
 from jaxtyping import Array, PyTree
 
-from ..abstracts import AbstractLandModel
+from ..abstracts import AbstractCoupledState, AbstractLandModel, AbstractLandState, AbstractRadiationState
+from ..atmosphere.abstracts import AbstractMixedLayerState, AbstractSurfaceLayerState
 from ..utils import PhysicalConstants, compute_esat, compute_qsat
 
 
+@jax.tree_util.register_pytree_node_class
 @dataclass
-class StandardLandSurfaceInitConds:
-    """Standard land surface model initial state."""
+class StandardLandSurfaceState(AbstractLandState):
+    """Standard land surface model state."""
 
     alpha: float
     """Slope of the light response curve [mol J-1]."""
@@ -66,6 +69,26 @@ class StandardLandSurfaceInitConds:
     """Vapor pressure [Pa]."""
     qsatsurf: float = jnp.nan
     """Saturation specific humidity at surface temperature [kg/kg]."""
+    wtheta: float = jnp.nan
+    """Kinematic heat flux [K m/s]."""
+    wq: float = jnp.nan
+    """Kinematic moisture flux [kg/kg m/s]."""
+
+    def tree_flatten(self):
+        return (
+            self.alpha, self.wg, self.temp_soil, self.temp2, self.surf_temp, self.wl,
+            self.rs, self.rssoil, self.cliq, self.temp_soil_tend, self.wgtend, self.wltend,
+            self.le_veg, self.le_liq, self.le_soil, self.le, self.hf, self.gf,
+            self.le_pot, self.le_ref, self.ra, self.esat, self.qsat, self.dqsatdT,
+            self.e, self.qsatsurf, self.wtheta, self.wq
+        ), None
+
+    @classmethod
+    def tree_unflatten(cls, aux, children):
+        return cls(*children)
+
+# Alias for backward compatibility
+StandardLandSurfaceInitConds = StandardLandSurfaceState
 
 
 class AbstractStandardLandSurfaceModel(AbstractLandModel):
@@ -133,7 +156,7 @@ class AbstractStandardLandSurfaceModel(AbstractLandModel):
         self.lam = lam
         self.c_beta = 0.0
 
-    def integrate(self, state: PyTree, dt: float):
+    def integrate(self, state: StandardLandSurfaceState, dt: float) -> StandardLandSurfaceState:
         """Integrate model forward in time.
 
         Args:
@@ -151,48 +174,139 @@ class AbstractStandardLandSurfaceModel(AbstractLandModel):
 
     def run(
         self,
-        state: PyTree,
+        state: AbstractCoupledState,
         const: PhysicalConstants,
-    ):
+    ) -> StandardLandSurfaceState:
         """Run the full land surface model for one time step.
 
         Args:
-            state: the state object carrying all variables.
+            state: CoupledState.
             const: the physical constants object.
 
         Returns:
-            The updated state object.
+            The updated land state object.
         """
-        # compute aerodynamic resistance from state
-        ueff = jnp.sqrt(state.u**2.0 + state.v**2.0 + state.wstar**2.0)
-        state.ra = ueff / jnp.maximum(1.0e-3, state.ustar) ** 2.0
+        # Access components
+        land_state = state.land
+        ml_state = state.atmosphere.mixed_layer
+        sl_state = state.atmosphere.surface_layer
+        rad_state = state.radiation
 
-        state.esat = compute_esat(state.theta)
-        state.qsat = compute_qsat(state.theta, state.surf_pressure)
-        state.dqsatdT = self.compute_dqsatdT(state)
-        state.e = self.compute_e(state)
+        # compute aerodynamic resistance from state
+        ueff = jnp.sqrt(ml_state.u**2.0 + ml_state.v**2.0 + ml_state.wstar**2.0)
+        land_state.ra = ueff / jnp.maximum(1.0e-3, sl_state.ustar) ** 2.0
+
+        land_state.esat = compute_esat(ml_state.theta)
+        land_state.qsat = compute_qsat(ml_state.theta, ml_state.surf_pressure)
+        land_state.dqsatdT = self.compute_dqsatdT(land_state, ml_state.theta, ml_state.surf_pressure)
+        land_state.e = self.compute_e(ml_state.q, ml_state.surf_pressure)
+        
+        # update_surface_resistance and update_co2_flux need full state or specific components
+        # They are abstract methods, implemented in subclasses.
+        # We should pass `state` (CoupledState) to them so they can access what they need.
+        # But `update_surface_resistance` in `jarvis_stewart.py` uses `state.in_srad` (radiation), `state.theta` (mixed layer), etc.
+        # So passing `state` is correct.
+        # However, they should return `land_state` or update it in place (if mutable).
+        # Since we are returning `land_state`, we need to make sure they update `land_state`.
+        # But `state` passed to them is `CoupledState`.
+        # If they modify `state.land`, it's fine.
+        # But `run` returns `land_state`.
+        
+        # Let's check `jarvis_stewart.py`:
+        # state.rs = ...
+        # return state
+        
+        # If I pass `state` (CoupledState), `state.rs` refers to `state.land.rs`?
+        # NO. `CoupledState` has `land` attribute. `state.rs` would fail.
+        # So `jarvis_stewart.py` needs update to access `state.land.rs`.
+        
+        # So I will pass `state` (CoupledState) to these methods.
         state = self.update_surface_resistance(state, const)
         state = self.update_co2_flux(state, const)
-        state.rssoil = self.compute_soil_resistance(state)
-        state.cliq = self.compute_cliq(state)
-        state.surf_temp = self.compute_skin_temperature(state, const)
-        state.qsatsurf = compute_qsat(state.surf_temp, state.surf_pressure)
-        state.le_veg = self.compute_le_veg(state, const)
-        state.le_liq = self.compute_le_liq(state, const)
-        state.le_soil = self.compute_le_soil(state, const)
-        state.wltend = self.compute_wltend(state, const)
-        state.le = self.compute_le(state)
-        state.hf = self.compute_hf(state, const)
-        state.gf = self.compute_gf(state)
-        state.le_pot = self.compute_le_pot(state, const)
-        state.le_ref = self.compute_le_ref(state, const)
-        state.temp_soil_tend = self.compute_temp_soil_tend(state)
-        state.wgtend = self.compute_wgtend(state, const)
-        state.wtheta = self.compute_wtheta(state, const)
-        state.wq = self.compute_wq(state, const)
-        return state
+        
+        # Now `state.land` is updated.
+        # We need to continue using `state.land` (which is `land_state` reference if mutable, or we re-fetch).
+        land_state = state.land
 
-    def compute_dqsatdT(self, state: PyTree) -> Array:
+        land_state.rssoil = self.compute_soil_resistance(land_state)
+        land_state.cliq = self.compute_cliq(land_state)
+        land_state.surf_temp = self.compute_skin_temperature(land_state, ml_state, sl_state, rad_state, const)
+        land_state.qsatsurf = compute_qsat(land_state.surf_temp, ml_state.surf_pressure)
+        land_state.le_veg = self.compute_le_veg(land_state, ml_state, const)
+        land_state.le_liq = self.compute_le_liq(land_state, ml_state, const)
+        land_state.le_soil = self.compute_le_soil(land_state, ml_state, const)
+        land_state.wltend = self.compute_wltend(land_state, const)
+        land_state.le = self.compute_le(land_state)
+        land_state.hf = self.compute_hf(land_state, ml_state, const)
+        land_state.gf = self.compute_gf(land_state)
+        land_state.le_pot = self.compute_le_pot(land_state, ml_state, rad_state, const)
+        land_state.le_ref = self.compute_le_ref(land_state, ml_state, rad_state, const)
+        land_state.temp_soil_tend = self.compute_temp_soil_tend(land_state)
+        land_state.wgtend = self.compute_wgtend(land_state, const)
+        
+        # These update mixed layer fluxes?
+        # wtheta and wq are in MixedLayerState.
+        # But `compute_wtheta` returns a value.
+        # Who uses it?
+        # `BulkMixedLayerModel` uses `wtheta` from `MixedLayerState`.
+        # `StandardLandSurfaceModel` computes it here.
+        # Does it update `MixedLayerState`?
+        # In the original code: `state.wtheta = ...`
+        # `state` was flat.
+        # So `wtheta` was shared.
+        # Now `wtheta` is in `MixedLayerState`.
+        # `StandardLandSurfaceModel` calculates it.
+        # Should it update `MixedLayerState`?
+        # `run` returns `LandState`.
+        # So it cannot update `MixedLayerState` (unless we return CoupledState).
+        # But `integration.py` does:
+        # `state.land = coupler.land.run(state, ...)`
+        # `state.atmosphere = coupler.atmosphere.run(state, ...)`
+        
+        # If `LandModel` calculates `wtheta`, `AtmosphereModel` needs to read it.
+        # But `AtmosphereModel` runs AFTER `LandModel` in `timestep`.
+        # So `AtmosphereModel` will read `state.land.wtheta`?
+        # But `wtheta` is defined in `MixedLayerState`.
+        # So `LandModel` needs to write to `state.atmosphere.mixed_layer.wtheta`?
+        # Or `MixedLayerModel` should read it from `LandState`?
+        # `BulkMixedLayerState` has `wtheta`.
+        # `StandardLandSurfaceState` does NOT have `wtheta`.
+        # So `LandModel` computes it but where does it put it?
+        # It puts it in `state.wtheta` (in original code).
+        # Now it must put it in `state.atmosphere.mixed_layer.wtheta`.
+        # BUT `run` returns `LandState`.
+        # So the update to `MixedLayerState` is LOST if we only return `LandState`.
+        
+        # This is a problem with the "return component state" approach when components modify other components' state.
+        # Options:
+        # 1. `LandModel.run` returns `CoupledState` (or updates it in place).
+        # 2. `LandModel` puts fluxes in `LandState`, and `MixedLayerModel` reads them from `LandState`.
+        #    - This requires adding `wtheta`, `wq` to `LandState`.
+        #    - And updating `MixedLayerModel` to read from `LandState`.
+        #    - `BulkMixedLayerModel` uses `state.wtheta`. I mapped it to `ml_state.wtheta`.
+        #    - If I change `BulkMixedLayerModel` to read `state.land.wtheta` (if available), that works.
+        #    - But `BulkMixedLayerState` has `wtheta`.
+        #    - We should probably sync them or move ownership.
+        #    - Fluxes `wtheta`, `wq` are surface fluxes. They originate from Land.
+        #    - So they belong to Land.
+        #    - `MixedLayer` uses them as boundary conditions.
+        #    - So `MixedLayer` should read them from `Land`.
+        #    - So I should ADD `wtheta`, `wq` (and `wCO2`?) to `StandardLandSurfaceState`.
+        #    - And REMOVE them from `BulkMixedLayerState`? Or keep them as "current BCs"?
+        #    - If I keep them in `MixedLayerState`, `LandModel` needs to update them.
+        
+        # Given the constraint of `run` returning `LandState`, option 2 is better:
+        # Add `wtheta`, `wq` to `LandState`.
+        # Update `MixedLayerModel` to read from `LandState`.
+        
+        # Let's add `wtheta`, `wq` to `StandardLandSurfaceState`.
+        
+        land_state.wtheta = self.compute_wtheta(land_state, const)
+        land_state.wq = self.compute_wq(land_state, const)
+        
+        return land_state
+
+    def compute_dqsatdT(self, state: StandardLandSurfaceState, theta: float, surf_pressure: float) -> Array:
         """Compute the derivative of saturation vapor pressure with respect to temperature ``dqsatdT``.
 
         Notes:
@@ -208,13 +322,13 @@ class AbstractStandardLandSurfaceModel(AbstractLandModel):
             .. math::
                 \\frac{\\text{d}q_{\\text{sat}}}{\\text{d} T} \\approx \\epsilon \\frac{\\frac{\\text{d}e_\\text{sat}}{\\text{d} T}}{p}.
         """
-        num = 17.2694 * (state.theta - 273.16)
-        den = (state.theta - 35.86) ** 2.0
+        num = 17.2694 * (theta - 273.16)
+        den = (theta - 35.86) ** 2.0
         mult = num / den
         desatdT = state.esat * mult
-        return 0.622 * desatdT / state.surf_pressure
+        return 0.622 * desatdT / surf_pressure
 
-    def compute_e(self, state: PyTree) -> Array:
+    def compute_e(self, q: float, surf_pressure: float) -> Array:
         """Compute the vapor pressure ``e``.
 
         Notes:
@@ -225,7 +339,7 @@ class AbstractStandardLandSurfaceModel(AbstractLandModel):
             .. math::
                 e = q \\cdot p / 0.622.
         """
-        return state.q * state.surf_pressure / 0.622
+        return q * surf_pressure / 0.622
 
     @abstractmethod
     def update_surface_resistance(
@@ -300,7 +414,12 @@ class AbstractStandardLandSurfaceModel(AbstractLandModel):
         return jnp.minimum(1.0, state.wl / wlmx)
 
     def compute_skin_temperature(
-        self, state: PyTree, const: PhysicalConstants
+        self,
+        state: StandardLandSurfaceState,
+        ml_state: AbstractMixedLayerState,
+        sl_state: AbstractSurfaceLayerState,
+        rad_state: AbstractRadiationState,
+        const: PhysicalConstants
     ) -> Array:
         """Compute the skin temperature ``surf_temp``.
 
@@ -340,25 +459,25 @@ class AbstractStandardLandSurfaceModel(AbstractLandModel):
             energy fluxes as calculated by the other methods in this class.
         """
         return (
-            state.net_rad
-            + const.rho * const.cp / state.ra * state.theta
+            rad_state.net_rad
+            + const.rho * const.cp / state.ra * ml_state.theta
             + self.cveg
             * (1.0 - state.cliq)
             * const.rho
             * const.lv
             / (state.ra + state.rs)
-            * (state.dqsatdT * state.theta - state.qsat + state.q)
+            * (state.dqsatdT * ml_state.theta - state.qsat + ml_state.q)
             + (1.0 - self.cveg)
             * const.rho
             * const.lv
             / (state.ra + state.rssoil)
-            * (state.dqsatdT * state.theta - state.qsat + state.q)
+            * (state.dqsatdT * ml_state.theta - state.qsat + ml_state.q)
             + self.cveg
             * state.cliq
             * const.rho
             * const.lv
             / state.ra
-            * (state.dqsatdT * state.theta - state.qsat + state.q)
+            * (state.dqsatdT * ml_state.theta - state.qsat + ml_state.q)
             + self.lam * state.temp_soil
         ) / (
             const.rho * const.cp / state.ra
@@ -377,7 +496,12 @@ class AbstractStandardLandSurfaceModel(AbstractLandModel):
             + self.lam
         )
 
-    def compute_le_veg(self, state: PyTree, const: PhysicalConstants) -> Array:
+    def compute_le_veg(
+        self,
+        state: StandardLandSurfaceState,
+        ml_state: AbstractMixedLayerState,
+        const: PhysicalConstants
+    ) -> Array:
         """Compute the latent heat flux (transpiration) from vegetation ``le_veg``.
 
         Notes:
@@ -409,12 +533,17 @@ class AbstractStandardLandSurfaceModel(AbstractLandModel):
         References:
             Equation 9.15 from the CLASS book.
         """
-        term = state.dqsatdT * (state.surf_temp - state.theta) + state.qsat - state.q
+        term = state.dqsatdT * (state.surf_temp - ml_state.theta) + state.qsat - ml_state.q
         le_veg = const.rho * const.lv / (state.ra + state.rs) * term
         frac = (1.0 - state.cliq) * self.cveg
         return frac * le_veg
 
-    def compute_le_liq(self, state: PyTree, const: PhysicalConstants) -> Array:
+    def compute_le_liq(
+        self,
+        state: StandardLandSurfaceState,
+        ml_state: AbstractMixedLayerState,
+        const: PhysicalConstants
+    ) -> Array:
         """Compute the latent heat flux on the leaf (dew) ``le_liq``.
 
         Notes:
@@ -430,12 +559,17 @@ class AbstractStandardLandSurfaceModel(AbstractLandModel):
         References:
             Equation 9.18 from the CLASS book.
         """
-        term = state.dqsatdT * (state.surf_temp - state.theta) + state.qsat - state.q
+        term = state.dqsatdT * (state.surf_temp - ml_state.theta) + state.qsat - ml_state.q
         le_liq = const.rho * const.lv / state.ra * term
         frac = state.cliq * self.cveg
         return frac * le_liq
 
-    def compute_le_soil(self, state: PyTree, const: PhysicalConstants) -> Array:
+    def compute_le_soil(
+        self,
+        state: StandardLandSurfaceState,
+        ml_state: AbstractMixedLayerState,
+        const: PhysicalConstants
+    ) -> Array:
         """Compute the latent heat flux on the soil (evaporation) ``le_soil``.
 
         Notes:
@@ -450,7 +584,7 @@ class AbstractStandardLandSurfaceModel(AbstractLandModel):
         References:
             Equation 9.21 from the CLASS book.
         """
-        term = state.dqsatdT * (state.surf_temp - state.theta) + state.qsat - state.q
+        term = state.dqsatdT * (state.surf_temp - ml_state.theta) + state.qsat - ml_state.q
         le_soil = const.rho * const.lv / (state.ra + state.rssoil) * term
         frac = 1.0 - self.cveg
         return frac * le_soil
@@ -484,7 +618,12 @@ class AbstractStandardLandSurfaceModel(AbstractLandModel):
         """
         return state.le_soil + state.le_veg + state.le_liq
 
-    def compute_hf(self, state: PyTree, const: PhysicalConstants) -> Array:
+    def compute_hf(
+        self,
+        state: StandardLandSurfaceState,
+        ml_state: AbstractMixedLayerState,
+        const: PhysicalConstants
+    ) -> Array:
         """Compute the sensible heat flux ``hf``.
 
         Notes:
@@ -502,7 +641,7 @@ class AbstractStandardLandSurfaceModel(AbstractLandModel):
             Equation 9.13 from the CLASS book, but why are we using :math:`T_s` instead of :math:`\\theta_s`?
             Probably because the variations of pressure are not significant enough.
         """
-        return const.rho * const.cp / state.ra * (state.surf_temp - state.theta)
+        return const.rho * const.cp / state.ra * (state.surf_temp - ml_state.theta)
 
     def compute_gf(self, state: PyTree) -> Array:
         """Compute the ground heat flux ``gf``.
@@ -523,7 +662,13 @@ class AbstractStandardLandSurfaceModel(AbstractLandModel):
         """
         return self.lam * (state.surf_temp - state.temp_soil)
 
-    def compute_le_pot(self, state: PyTree, const: PhysicalConstants) -> Array:
+    def compute_le_pot(
+        self,
+        state: StandardLandSurfaceState,
+        ml_state: AbstractMixedLayerState,
+        rad_state: AbstractRadiationState,
+        const: PhysicalConstants
+    ) -> Array:
         """Compute the potential latent heat flux ``le_pot``.
 
         Notes:
@@ -543,12 +688,18 @@ class AbstractStandardLandSurfaceModel(AbstractLandModel):
         References:
             Equation 9.16 from the CLASS book.
         """
-        rad_term = state.dqsatdT * (state.net_rad - state.gf)
-        aerodynamic_term = const.rho * const.cp / state.ra * (state.qsat - state.q)
+        rad_term = state.dqsatdT * (rad_state.net_rad - state.gf)
+        aerodynamic_term = const.rho * const.cp / state.ra * (state.qsat - ml_state.q)
         denominator = state.dqsatdT + const.cp / const.lv
         return (rad_term + aerodynamic_term) / denominator
 
-    def compute_le_ref(self, state: PyTree, const: PhysicalConstants) -> Array:
+    def compute_le_ref(
+        self,
+        state: StandardLandSurfaceState,
+        ml_state: AbstractMixedLayerState,
+        rad_state: AbstractRadiationState,
+        const: PhysicalConstants
+    ) -> Array:
         """Compute the reference latent heat flux ``le_ref``.
 
         Notes:
@@ -571,8 +722,8 @@ class AbstractStandardLandSurfaceModel(AbstractLandModel):
         References:
             Equation 9.16 from the CLASS book.
         """
-        rad_term = state.dqsatdT * (state.net_rad - state.gf)
-        aerodynamic_term = const.rho * const.cp / state.ra * (state.qsat - state.q)
+        rad_term = state.dqsatdT * (rad_state.net_rad - state.gf)
+        aerodynamic_term = const.rho * const.cp / state.ra * (state.qsat - ml_state.q)
         den1 = state.dqsatdT
         den2 = const.cp / const.lv * (1.0 + self.rsmin / self.lai / state.ra)
         return (rad_term + aerodynamic_term) / (den1 + den2)

@@ -1,15 +1,17 @@
 from dataclasses import dataclass
 
+import jax
 import jax.numpy as jnp
 from jaxtyping import Array, PyTree
 
-from ..abstracts import AbstractRadiationModel
+from ..abstracts import AbstractCoupledState, AbstractRadiationModel, AbstractRadiationState
 from ..utils import PhysicalConstants
 
 
+@jax.tree_util.register_pytree_node_class
 @dataclass
-class StandardRadiationInitConds:
-    """Standard radiation model initial state."""
+class StandardRadiationState(AbstractRadiationState):
+    """Standard radiation model state."""
 
     net_rad: float
     """Net surface radiation [W m-2]."""
@@ -21,6 +23,16 @@ class StandardRadiationInitConds:
     """Incoming longwave radiation [W m-2]."""
     out_lrad: float = jnp.nan
     """Outgoing longwave radiation [W m-2]."""
+
+    def tree_flatten(self):
+        return (self.net_rad, self.in_srad, self.out_srad, self.in_lrad, self.out_lrad), None
+
+    @classmethod
+    def tree_unflatten(cls, aux, children):
+        return cls(*children)
+
+# Alias for backward compatibility
+StandardRadiationInitConds = StandardRadiationState
 
 
 class StandardRadiationModel(AbstractRadiationModel):
@@ -54,42 +66,36 @@ class StandardRadiationModel(AbstractRadiationModel):
 
     def run(
         self,
-        state: PyTree,
+        state: AbstractCoupledState,
         t: int,
         dt: float,
         const: PhysicalConstants,
-    ):
+    ) -> StandardRadiationState:
         """Calculate radiation components and net surface radiation.
 
         Args:
-            state: The current PyTree state of the model.
+            state: CoupledState.
             t: Current time step index [-].
             dt: Time step duration [s].
             const: PhysicalConstants object.
 
         Returns:
-            The updated state object with new radiation values.
-
-        Notes:
-            1.  Calculates solar position with
-                :meth:`~compute_solar_declination` and
-                :meth:`~compute_solar_elevation`.
-            2.  Determines atmospheric properties with
-                :meth:`~compute_air_temperature` and
-                :meth:`~compute_atmospheric_transmission`.
-            3.  Computes all radiation components and the final
-                net radiation with :meth:`~compute_radiation_components`,
-                then updates the state object with the results.
+            The updated radiation state object.
         """
+        # Access components
+        rad_state = state.radiation
+        ml_state = state.atmosphere.mixed_layer
+        land_state = state.land
+
         # solar position
         solar_declination = self.compute_solar_declination(self.doy)
         solar_elevation = self.compute_solar_elevation(t, dt, solar_declination)
 
         # atmospheric properties
         air_temp = self.compute_air_temperature(
-            state.surf_pressure,
-            state.h_abl,
-            state.theta,
+            ml_state.surf_pressure,
+            ml_state.h_abl,
+            ml_state.theta,
             const,
         )
         atmospheric_transmission = self.compute_atmospheric_transmission(
@@ -98,21 +104,21 @@ class StandardRadiationModel(AbstractRadiationModel):
 
         # all radiation components
         (
-            state.net_rad,
-            state.in_srad,
-            state.out_srad,
-            state.in_lrad,
-            state.out_lrad,
+            rad_state.net_rad,
+            rad_state.in_srad,
+            rad_state.out_srad,
+            rad_state.in_lrad,
+            rad_state.out_lrad,
         ) = self.compute_radiation_components(
             solar_elevation,
             atmospheric_transmission,
             air_temp,
-            state.alpha,
-            state.surf_temp,
+            land_state.alpha,
+            land_state.surf_temp,
             const,
         )
 
-        return state
+        return rad_state
 
     def compute_solar_declination(self, doy: float) -> Array:
         """Compute solar declination angle based on day of year.

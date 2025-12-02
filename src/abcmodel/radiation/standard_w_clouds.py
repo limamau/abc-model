@@ -1,14 +1,21 @@
 from dataclasses import dataclass
 
+import jax
 from jaxtyping import Array, PyTree
 
+from ..abstracts import AbstractCoupledState
 from ..utils import PhysicalConstants
-from .standard import StandardRadiationInitConds, StandardRadiationModel
+from .standard import StandardRadiationState, StandardRadiationModel
 
 
+@jax.tree_util.register_pytree_node_class
 @dataclass
-class StandardRadiationwCloudsInitConds(StandardRadiationInitConds):
-    """Standard radiation model with clouds initial state."""
+class StandardRadiationwCloudsState(StandardRadiationState):
+    """Standard radiation model with clouds state."""
+    pass
+
+# Alias for backward compatibility
+StandardRadiationwCloudsInitConds = StandardRadiationwCloudsState
 
 
 class StandardRadiationwCloudsModel(StandardRadiationModel):
@@ -39,66 +46,69 @@ class StandardRadiationwCloudsModel(StandardRadiationModel):
 
     def run(
         self,
-        state: PyTree,
+        state: AbstractCoupledState,
         t: int,
         dt: float,
         const: PhysicalConstants,
-    ):
+    ) -> StandardRadiationwCloudsState:
         """Calculate radiation components and net surface radiation.
 
         Args:
-            state: The current PyTree state of the model.
+            state: CoupledState.
             t: Current time step index [-].
             dt: Time step duration [s].
             const: PhysicalConstants object.
 
         Returns:
-            The updated state object with new radiation values.
-
-        Notes:
-            1.  Calculates solar position with
-                :meth:`~abcmodel.radiation.standard.StandardRadiationModel.calculate_solar_declination` and
-                :meth:`~abcmodel.radiation.standard.StandardRadiationModel.calculate_solar_elevation`.
-            2.  Determines atmospheric properties with
-                :meth:`~abcmodel.radiation.standard.StandardRadiationModel.calculate_air_temperature` and
-                :meth:`~calculate_atmospheric_transmission_w_clouds`.
-            3.  Computes all radiation components and the final
-                net radiation with :meth:`~abcmodel.radiation.standard.StandardRadiationModel.calculate_radiation_components`,
-                then updates the state object with the results.
+            The updated radiation state object.
         """
+        # Access components
+        rad_state = state.radiation
+        ml_state = state.atmosphere.mixed_layer
+        land_state = state.land
+        # Cloud transmittance is in clouds state?
+        # `cl_trans` was accessed as `state.cl_trans`.
+        # Where is `cl_trans`?
+        # In `StandardCumulusState`, there is `cl_trans`.
+        # So we need `state.atmosphere.clouds.cl_trans`.
+        # But `NoCloudModel` might not have it?
+        # `NoCloudModel` has `cl_trans`?
+        # Let's assume `state.atmosphere.clouds` has it.
+        cloud_state = state.atmosphere.clouds
+
         # solar position
         solar_declination = self.compute_solar_declination(self.doy)
         solar_elevation = self.compute_solar_elevation(t, dt, solar_declination)
 
         # atmospheric properties
         air_temp = self.compute_air_temperature(
-            state.surf_pressure,
-            state.h_abl,
-            state.theta,
+            ml_state.surf_pressure,
+            ml_state.h_abl,
+            ml_state.theta,
             const,
         )
         atmospheric_transmission = self.compute_atmospheric_transmission_w_clouds(
             solar_elevation,
-            state.cl_trans,
+            cloud_state.cl_trans,
         )
 
         # all radiation components
         (
-            state.net_rad,
-            state.in_srad,
-            state.out_srad,
-            state.in_lrad,
-            state.out_lrad,
+            rad_state.net_rad,
+            rad_state.in_srad,
+            rad_state.out_srad,
+            rad_state.in_lrad,
+            rad_state.out_lrad,
         ) = self.compute_radiation_components(
             solar_elevation,
             atmospheric_transmission,
             air_temp,
-            state.alpha,
-            state.surf_temp,
+            land_state.alpha,
+            land_state.surf_temp,
             const,
         )
 
-        return state
+        return rad_state
 
     @staticmethod
     def compute_atmospheric_transmission_w_clouds(

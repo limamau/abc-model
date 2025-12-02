@@ -4,13 +4,15 @@ import jax
 import jax.numpy as jnp
 from jaxtyping import Array, PyTree
 
+from ...abstracts import AbstractCoupledState
 from ...utils import PhysicalConstants, compute_qsat
-from ..abstracts import AbstractSurfaceLayerModel
+from ..abstracts import AbstractSurfaceLayerModel, AbstractSurfaceLayerState
 
 
+@jax.tree_util.register_pytree_node_class
 @dataclass
-class StandardSurfaceLayerInitConds:
-    """Standard surface layer model initial state."""
+class StandardSurfaceLayerState(AbstractSurfaceLayerState):
+    """Standard surface layer model state."""
 
     # the following variables should be initialized by the user
     ustar: float
@@ -58,6 +60,22 @@ class StandardSurfaceLayerInitConds:
     rib_number: float = jnp.nan
     """Bulk Richardson number [-]."""
 
+    def tree_flatten(self):
+        return (
+            self.ustar, self.z0m, self.z0h, self.theta,
+            self.drag_m, self.drag_s,
+            self.uw, self.vw, self.temp_2m, self.q2m, self.u2m, self.v2m,
+            self.e2m, self.esat2m, self.thetasurf, self.thetavsurf,
+            self.qsurf, self.obukhov_length, self.rib_number
+        ), None
+
+    @classmethod
+    def tree_unflatten(cls, aux, children):
+        return cls(*children)
+
+# Alias for backward compatibility if needed, or just for clarity in examples
+StandardSurfaceLayerInitConds = StandardSurfaceLayerState
+
 
 class StandardSurfaceLayerModel(AbstractSurfaceLayerModel):
     """Standard surface layer model with atmospheric stability corrections.
@@ -69,68 +87,83 @@ class StandardSurfaceLayerModel(AbstractSurfaceLayerModel):
     def __init__(self):
         pass
 
-    def run(self, state: PyTree, const: PhysicalConstants):
+    def run(self, state: AbstractCoupledState, const: PhysicalConstants) -> StandardSurfaceLayerState:
         """Run the model.
 
         Args:
-            state:
-            const:
+            state: CoupledState containing all components.
+            const: Physical constants.
 
         Returns:
-            The updated state.
+            The updated surface layer state.
         """
-        ueff = compute_effective_wind_speed(state.u, state.v, state.wstar)
+        # Access components
+        # We assume state is CoupledState
+        # surface layer state
+        # We need to assume state.atmosphere is DayOnlyAtmosphereState (or similar) to access surface_layer
+        # But AbstractCoupledState defines atmosphere as AbstractAtmosphereState
+        # AbstractAtmosphereState doesn't define surface_layer
+        # So we need to cast or assume.
+        # For now, we assume the runtime object has the structure.
+        
+        sl_state = state.atmosphere.surface_layer
+        # mixed layer state (for u, v, wstar, theta, q, surf_pressure)
+        ml_state = state.atmosphere.mixed_layer
+        # land state (for rs)
+        land_state = state.land
+
+        ueff = compute_effective_wind_speed(ml_state.u, ml_state.v, ml_state.wstar)
         (
-            state.thetasurf,
-            state.qsurf,
-            state.thetavsurf,
+            sl_state.thetasurf,
+            sl_state.qsurf,
+            sl_state.thetavsurf,
         ) = compute_surface_properties(
             ueff,
-            state.theta,
-            state.wtheta,
-            state.q,
-            state.surf_pressure,
-            state.rs,
-            state.drag_s,
+            ml_state.theta,
+            ml_state.wtheta,
+            ml_state.q,
+            ml_state.surf_pressure,
+            land_state.rs,
+            sl_state.drag_s,
         )
 
         # this should be a method
-        zsl = 0.1 * state.h_abl
-        state.rib_number = compute_richardson_number(
-            ueff, zsl, const.g, state.thetav, state.thetavsurf
+        zsl = 0.1 * ml_state.h_abl
+        sl_state.rib_number = compute_richardson_number(
+            ueff, zsl, const.g, ml_state.thetav, sl_state.thetavsurf
         )
-        state.obukhov_length = ribtol(zsl, state.rib_number, state.z0h, state.z0m)
-        state.drag_m, state.drag_s = compute_drag_coefficients(
-            zsl, const.k, state.obukhov_length, state.z0h, state.z0m
+        sl_state.obukhov_length = ribtol(zsl, sl_state.rib_number, sl_state.z0h, sl_state.z0m)
+        sl_state.drag_m, sl_state.drag_s = compute_drag_coefficients(
+            zsl, const.k, sl_state.obukhov_length, sl_state.z0h, sl_state.z0m
         )
-        state.ustar, state.uw, state.vw = compute_momentum_fluxes(
-            ueff, state.u, state.v, state.drag_m
+        sl_state.ustar, sl_state.uw, sl_state.vw = compute_momentum_fluxes(
+            ueff, ml_state.u, ml_state.v, sl_state.drag_m
         )
         (
-            state.temp_2m,
-            state.q2m,
-            state.u2m,
-            state.v2m,
-            state.e2m,
-            state.esat2m,
+            sl_state.temp_2m,
+            sl_state.q2m,
+            sl_state.u2m,
+            sl_state.v2m,
+            sl_state.e2m,
+            sl_state.esat2m,
         ) = compute_2m_variables(
-            state.wtheta,
-            state.wq,
-            state.surf_pressure,
+            ml_state.wtheta,
+            ml_state.wq,
+            ml_state.surf_pressure,
             const.k,
-            state.z0h,
-            state.z0m,
-            state.obukhov_length,
-            state.thetasurf,
-            state.qsurf,
-            state.ustar,
-            state.uw,
-            state.vw,
+            sl_state.z0h,
+            sl_state.z0m,
+            sl_state.obukhov_length,
+            sl_state.thetasurf,
+            sl_state.qsurf,
+            sl_state.ustar,
+            sl_state.uw,
+            sl_state.vw,
         )
-        return state
+        return sl_state
 
     @staticmethod
-    def compute_ra(state: PyTree) -> Array:
+    def compute_ra(state: AbstractCoupledState) -> Array:
         """Calculate aerodynamic resistance from wind speed and drag coefficient.
 
         Notes:
@@ -141,8 +174,11 @@ class StandardSurfaceLayerModel(AbstractSurfaceLayerModel):
 
             where :math:`C_s` is the drag coefficient for scalars and :math:`u_{\\text{eff}}` is the effective wind speed.
         """
-        ueff = jnp.sqrt(state.u**2.0 + state.v**2.0 + state.wstar**2.0)
-        return 1.0 / (state.drag_s * ueff)
+        # state is CoupledState
+        ml_state = state.atmosphere.mixed_layer
+        sl_state = state.atmosphere.surface_layer
+        ueff = jnp.sqrt(ml_state.u**2.0 + ml_state.v**2.0 + ml_state.wstar**2.0)
+        return 1.0 / (sl_state.drag_s * ueff)
 
 
 def compute_effective_wind_speed(u: Array, v: Array, wstar: Array) -> Array:

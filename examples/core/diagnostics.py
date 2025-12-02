@@ -61,12 +61,18 @@ def main():
         land=land_surface_model,
         atmosphere=atmosphere_model,
     )
+    
+    # Construct hierarchical state
+    atmosphere_state = abcmodel.atmosphere.DayOnlyAtmosphereState(
+        surface_layer=surface_layer_init_conds,
+        mixed_layer=mixed_layer_init_conds,
+        clouds=cloud_init_conds,
+    )
+    
     state = abcoupler.init_state(
         radiation_init_conds,
         land_surface_init_conds,
-        surface_layer_init_conds,
-        mixed_layer_init_conds,
-        cloud_init_conds,
+        atmosphere_state,
     )
 
     # run model with diagnostics enabled
@@ -77,22 +83,22 @@ def main():
     _, axes = plt.subplots(1, 3, figsize=(12, 4))
 
     # row 1: water budget
-    axes[0].plot(time, trajectory.total_water_mass)
+    axes[0].plot(time, trajectory.diagnostics.total_water_mass)
     axes[0].set_xlabel("time [h]")
     axes[0].set_ylabel("Total water mass [kg m-2]")
     axes[0].grid(True, alpha=0.3)
-    axes[1].plot(time, trajectory.q * trajectory.h_abl * const.rho, label="Vapor")
-    axes[1].plot(time, trajectory.wg * const.rhow * 0.1, label="Soil layer 1")
-    axes[1].plot(time, trajectory.wl * const.rhow, label="Canopy")
+    axes[1].plot(time, trajectory.atmosphere.mixed_layer.q * trajectory.atmosphere.mixed_layer.h_abl * const.rho, label="Vapor")
+    axes[1].plot(time, trajectory.land.wg * const.rhow * 0.1, label="Soil layer 1")
+    axes[1].plot(time, trajectory.land.wl * const.rhow, label="Canopy")
     axes[1].set_xlabel("time [h]")
     axes[1].set_ylabel("Water mass [kg m-2]")
     axes[1].legend()
     axes[1].grid(True, alpha=0.3)
 
-    axes[2].plot(time, trajectory.le_veg, label="LE vegetation")
-    axes[2].plot(time, trajectory.le_soil, label="LE soil")
-    axes[2].plot(time, trajectory.le_liq, label="LE liq")
-    axes[2].plot(time, trajectory.le, label="LE total")
+    axes[2].plot(time, trajectory.land.le_veg, label="LE vegetation")
+    axes[2].plot(time, trajectory.land.le_soil, label="LE soil")
+    axes[2].plot(time, trajectory.land.le_liq, label="LE liq")
+    axes[2].plot(time, trajectory.land.le, label="LE total")
     axes[2].set_xlabel("time [h]")
     axes[2].set_ylabel("Latent heat flux [W m-2]")
     axes[2].legend()

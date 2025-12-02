@@ -1,15 +1,18 @@
 from dataclasses import dataclass
 
+import jax
 import jax.numpy as jnp
 from jaxtyping import Array, PyTree
 
+from ...abstracts import AbstractCoupledState
 from ...utils import PhysicalConstants, compute_qsat
-from ..abstracts import AbstractCloudModel
+from ..abstracts import AbstractCloudModel, AbstractCloudState
 
 
+@jax.tree_util.register_pytree_node_class
 @dataclass
-class StandardCumulusInitConds:
-    """Standard cumulus initial state."""
+class StandardCumulusState(AbstractCloudState):
+    """Standard cumulus state."""
 
     cc_frac: float = 0.0
     """Cloud core fraction [-], range 0 to 1."""
@@ -23,8 +26,20 @@ class StandardCumulusInitConds:
     """Humidity variance at mixed-layer top [kg²/kg²]."""
     top_CO22: float = jnp.nan
     """CO2 variance at mixed-layer top [ppm²]."""
-    wCO2M: float = jnp.nan
-    """CO2 mass flux [mgC/m²/s]."""
+    # wCO2M is stored in MixedLayerState
+
+    def tree_flatten(self):
+        return (
+            self.cc_frac, self.cc_mf, self.cc_qf, self.cl_trans,
+            self.q2_h, self.top_CO22
+        ), None
+
+    @classmethod
+    def tree_unflatten(cls, aux, children):
+        return cls(*children)
+
+# Alias for backward compatibility
+StandardCumulusInitConds = StandardCumulusState
 
 
 class StandardCumulusModel(AbstractCloudModel):
@@ -45,35 +60,42 @@ class StandardCumulusModel(AbstractCloudModel):
         self.tcc_cc = tcc_cc
         self.tcc_trans = tcc_trans
 
-    def run(self, state: PyTree, const: PhysicalConstants):
+    def run(self, state: AbstractCoupledState, const: PhysicalConstants) -> StandardCumulusState:
         """Run the model."""
-        state.q2_h = self.compute_q2_h(
-            state.cc_qf,
-            state.wthetav,
-            state.wqe,
-            state.dq,
-            state.h_abl,
-            state.dz_h,
-            state.wstar,
-        )
-        state.top_CO22 = self.compute_top_CO22(
-            state.wthetav,
-            state.h_abl,
-            state.dz_h,
-            state.wstar,
-            state.wCO2e,
-            state.wCO2M,
-            state.deltaCO2,
-        )
-        state.cc_frac = self.compute_cc_frac(
-            state.q, state.top_T, state.top_p, state.q2_h
-        )
-        state.cc_mf = self.compute_cc_mf(state.cc_frac, state.wstar)
-        state.cc_qf = self.compute_cc_qf(state.cc_mf, state.q2_h)
-        state.wCO2M = self.compute_wCO2M(state.cc_mf, state.top_CO22, state.deltaCO2)
-        state.cl_trans = self.compute_cl_trans(state.cc_frac)
+        # Access components
+        cloud_state = state.atmosphere.clouds
+        ml_state = state.atmosphere.mixed_layer
 
-        return state
+        cloud_state.q2_h = self.compute_q2_h(
+            cloud_state.cc_qf,
+            ml_state.wthetav,
+            ml_state.wqe,
+            ml_state.dq,
+            ml_state.h_abl,
+            ml_state.dz_h,
+            ml_state.wstar,
+        )
+        cloud_state.top_CO22 = self.compute_top_CO22(
+            ml_state.wthetav,
+            ml_state.h_abl,
+            ml_state.dz_h,
+            ml_state.wstar,
+            ml_state.wCO2e,
+            ml_state.wCO2M,
+            ml_state.deltaCO2,
+        )
+        cloud_state.cc_frac = self.compute_cc_frac(
+            ml_state.q, ml_state.top_T, ml_state.top_p, cloud_state.q2_h
+        )
+        cloud_state.cc_mf = self.compute_cc_mf(cloud_state.cc_frac, ml_state.wstar)
+        cloud_state.cc_qf = self.compute_cc_qf(cloud_state.cc_mf, cloud_state.q2_h)
+        
+        # Update wCO2M in mixed layer state
+        ml_state.wCO2M = self.compute_wCO2M(cloud_state.cc_mf, cloud_state.top_CO22, ml_state.deltaCO2)
+        
+        cloud_state.cl_trans = self.compute_cl_trans(cloud_state.cc_frac)
+
+        return cloud_state
 
     @staticmethod
     def compute_q2_h(

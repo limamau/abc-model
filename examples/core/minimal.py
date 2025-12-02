@@ -59,12 +59,18 @@ def main():
         land=land_surface_model,
         atmosphere=atmosphere_model,
     )
+    
+    # Construct hierarchical state
+    atmosphere_state = abcmodel.atmosphere.DayOnlyAtmosphereState(
+        surface_layer=surface_layer_init_conds,
+        mixed_layer=mixed_layer_init_conds,
+        clouds=cloud_init_conds,
+    )
+    
     state = abcoupler.init_state(
         radiation_init_conds,
         land_surface_init_conds,
-        surface_layer_init_conds,
-        mixed_layer_init_conds,
-        cloud_init_conds,
+        atmosphere_state,
     )
 
     # run run run
@@ -74,32 +80,32 @@ def main():
     plt.figure(figsize=(12, 8))
 
     plt.subplot(231)
-    plt.plot(time, trajectory.h_abl)
+    plt.plot(time, trajectory.atmosphere.mixed_layer.h_abl)
     plt.xlabel("time [h]")
     plt.ylabel("h [m]")
 
     plt.subplot(234)
-    plt.plot(time, trajectory.theta)
+    plt.plot(time, trajectory.atmosphere.mixed_layer.theta)
     plt.xlabel("time [h]")
     plt.ylabel("theta [K]")
 
     plt.subplot(232)
-    plt.plot(time, trajectory.q * 1000.0)
+    plt.plot(time, trajectory.atmosphere.mixed_layer.q * 1000.0)
     plt.xlabel("time [h]")
     plt.ylabel("q [g kg-1]")
 
     plt.subplot(235)
-    plt.plot(time, trajectory.cc_frac)
+    plt.plot(time, trajectory.atmosphere.clouds.cc_frac)
     plt.xlabel("time [h]")
     plt.ylabel("cloud fraction [-]")
 
     plt.subplot(233)
-    plt.plot(time, trajectory.co2)
+    plt.plot(time, trajectory.atmosphere.mixed_layer.co2)
     plt.xlabel("time [h]")
     plt.ylabel("mixed-layer CO2 [ppm]")
 
     plt.subplot(236)
-    plt.plot(time, trajectory.rs)
+    plt.plot(time, trajectory.land.rs)
     plt.xlabel("time [h]")
     plt.ylabel("surface resistance [s m-1]")
 

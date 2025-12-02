@@ -1,15 +1,17 @@
 from dataclasses import dataclass
 
+import jax
 import jax.numpy as jnp
 from jaxtyping import Array, PyTree
 
-from ..abstracts import AbstractLandModel
+from ..abstracts import AbstractCoupledState, AbstractLandModel, AbstractLandState
 from ..utils import PhysicalConstants, compute_esat, compute_qsat
 
 
+@jax.tree_util.register_pytree_node_class
 @dataclass
-class MinimalLandSurfaceInitConds:
-    """Minimal land surface model initial state."""
+class MinimalLandSurfaceState(AbstractLandState):
+    """Minimal land surface model state."""
 
     alpha: float
     """surface albedo [-], range 0 to 1."""
@@ -36,6 +38,19 @@ class MinimalLandSurfaceInitConds:
     qsatsurf: float = jnp.nan
     """Saturation specific humidity at surface temperature [kg/kg]."""
 
+    def tree_flatten(self):
+        return (
+            self.alpha, self.surf_temp, self.rs, self.wg, self.wl,
+            self.ra, self.esat, self.qsat, self.dqsatdT, self.e, self.qsatsurf
+        ), None
+
+    @classmethod
+    def tree_unflatten(cls, aux, children):
+        return cls(*children)
+
+# Alias for backward compatibility
+MinimalLandSurfaceInitConds = MinimalLandSurfaceState
+
 
 class MinimalLandSurfaceModel(AbstractLandModel):
     """Minimal land surface model with fixed surface properties."""
@@ -45,31 +60,36 @@ class MinimalLandSurfaceModel(AbstractLandModel):
 
     def run(
         self,
-        state: PyTree,
+        state: AbstractCoupledState,
         const: PhysicalConstants,
-    ):
+    ) -> MinimalLandSurfaceState:
         """Run the model.
 
         Args:
-            state: the state object carrying all variables.
+            state: CoupledState.
             const: the physical constants object.
 
         Returns:
-            The updated state object.
+            The updated land state object.
         """
+        # Access components
+        land_state = state.land
+        ml_state = state.atmosphere.mixed_layer
+        sl_state = state.atmosphere.surface_layer
+
         # (1) compute aerodynamic resistance from state
-        ueff = jnp.sqrt(state.u**2.0 + state.v**2.0 + state.wstar**2.0)
-        state.ra = ueff / jnp.maximum(1.0e-3, state.ustar) ** 2.0
+        ueff = jnp.sqrt(ml_state.u**2.0 + ml_state.v**2.0 + ml_state.wstar**2.0)
+        land_state.ra = ueff / jnp.maximum(1.0e-3, sl_state.ustar) ** 2.0
 
         # (2) calculate essential thermodynamic variables
-        state.esat = compute_esat(state.theta)
-        state.qsat = compute_qsat(state.theta, state.surf_pressure)
-        state.dqsatdT = self.compute_dqsatdT(state)
-        state.e = self.compute_e(state)
+        land_state.esat = compute_esat(ml_state.theta)
+        land_state.qsat = compute_qsat(ml_state.theta, ml_state.surf_pressure)
+        land_state.dqsatdT = self.compute_dqsatdT(land_state, ml_state.theta, ml_state.surf_pressure)
+        land_state.e = self.compute_e(ml_state.q, ml_state.surf_pressure)
 
-        return state
+        return land_state
 
-    def compute_dqsatdT(self, state: PyTree) -> Array:
+    def compute_dqsatdT(self, state: MinimalLandSurfaceState, theta: float, surf_pressure: float) -> Array:
         """Compute the derivative of saturation vapor pressure with respect to temperature ``dqsatdT``.
 
         Notes:
@@ -85,13 +105,13 @@ class MinimalLandSurfaceModel(AbstractLandModel):
             .. math::
                 \\frac{\\text{d}q_{\\text{sat}}}{\\text{d} T} \\approx \\epsilon \\frac{\\frac{\\text{d}e_\\text{sat}}{\\text{d} T}}{p}.
         """
-        num = 17.2694 * (state.theta - 273.16)
-        den = (state.theta - 35.86) ** 2.0
+        num = 17.2694 * (theta - 273.16)
+        den = (theta - 35.86) ** 2.0
         mult = num / den
         desatdT = state.esat * mult
-        return 0.622 * desatdT / state.surf_pressure
+        return 0.622 * desatdT / surf_pressure
 
-    def compute_e(self, state: PyTree) -> Array:
+    def compute_e(self, q: float, surf_pressure: float) -> Array:
         """Compute the vapor pressure ``e``.
 
         Notes:
@@ -102,9 +122,9 @@ class MinimalLandSurfaceModel(AbstractLandModel):
             .. math::
                 e = q \\cdot p / 0.622.
         """
-        return state.q * state.surf_pressure / 0.622
+        return q * surf_pressure / 0.622
 
-    def integrate(self, state: PyTree, dt: float):
+    def integrate(self, state: MinimalLandSurfaceState, dt: float) -> MinimalLandSurfaceState:
         """Integrate the model forward in time.
 
         Args:

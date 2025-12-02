@@ -8,13 +8,20 @@ from jaxtyping import PyTree
 from .coupling import ABCoupler
 
 
-# limamau: this (or something similar) could be a check to run after
-# warmup since the static type checking for the state is now bad
-def print_nan_variables(state: PyTree):
-    """Print all variables in a CoupledState that have NaN values"""
+def print_nan_variables(state: PyTree, prefix: str = ""):
+    """Print all variables in a CoupledState that have NaN values, recursively."""
     nan_vars = []
 
-    for name, value in state.__dict__.items():
+    # If it's a dataclass or SimpleNamespace, iterate over fields
+    if hasattr(state, "__dict__"):
+        items = state.__dict__.items()
+    elif hasattr(state, "_asdict"): # NamedTuple
+        items = state._asdict().items()
+    else:
+        return nan_vars
+
+    for name, value in items:
+        full_name = f"{prefix}.{name}" if prefix else name
         try:
             is_nan = False
 
@@ -30,10 +37,14 @@ def print_nan_variables(state: PyTree):
             # check regular float values
             elif isinstance(value, float) and math.isnan(value):
                 is_nan = True
+            
+            # Recursive check for nested objects (like AtmosphereState)
+            if hasattr(value, "__dict__") or hasattr(value, "_asdict"):
+                 nan_vars.extend(print_nan_variables(value, full_name))
 
             if is_nan:
-                nan_vars.append((name, value))
-                print(f"Variable '{name}' contains NaN: {value}")
+                nan_vars.append((full_name, value))
+                print(f"Variable '{full_name}' contains NaN: {value}")
 
         except (TypeError, AttributeError, Exception):
             # skip variables that can't be checked for NaN
@@ -44,13 +55,16 @@ def print_nan_variables(state: PyTree):
 
 def warmup(state: PyTree, coupler: ABCoupler, t: int, dt: float) -> PyTree:
     """Warmup the model by running it for a few timesteps."""
-    state = coupler.atmosphere.statistics(state, t, coupler.const)
+    # Update atmosphere statistics
+    # statistics returns AtmosphereState, so we assign to state.atmosphere
+    state.atmosphere = coupler.atmosphere.statistics(state.atmosphere, t, coupler.const)
 
     # calculate initial diagnostic variables
-    state = coupler.radiation.run(state, t, dt, coupler.const)
+    # radiation.run returns RadiationState, so we assign to state.radiation
+    state.radiation = coupler.radiation.run(state, t, dt, coupler.const)
 
     # warmup atmosphere and land
-    # limamau: would it be possible to warmup land then atmosphere?
+    # atmosphere.warmup returns CoupledState, so we assign to state
     state = coupler.atmosphere.warmup(state, coupler.const, coupler.land)
 
     return state
@@ -58,12 +72,32 @@ def warmup(state: PyTree, coupler: ABCoupler, t: int, dt: float) -> PyTree:
 
 def timestep(state: PyTree, coupler: ABCoupler, t: int, dt: float) -> PyTree:
     """Run a single timestep of the model."""
-    state = coupler.atmosphere.statistics(state, t, coupler.const)
-    state = coupler.radiation.run(state, t, dt, coupler.const)
-    state = coupler.land.run(state, coupler.const)
-    state = coupler.atmosphere.run(state, coupler.const)
-    state = coupler.land.integrate(state, dt)
-    state = coupler.atmosphere.integrate(state, dt)
+    # Update atmosphere statistics
+    state.atmosphere = coupler.atmosphere.statistics(state.atmosphere, t, coupler.const)
+    
+    # Run radiation
+    # radiation.run takes CoupledState and returns RadiationState
+    state.radiation = coupler.radiation.run(state, t, dt, coupler.const)
+    
+    # Run land
+    state.land = coupler.land.run(state, coupler.const)
+    
+    # Run atmosphere
+    state.atmosphere = coupler.atmosphere.run(state, coupler.const)
+    
+    # Integrate prognostic variables
+    state.land = coupler.land.integrate(state.land, dt)
+    state.atmosphere = coupler.atmosphere.integrate(state.atmosphere, dt)
+    
+    # Compute diagnostics
+    state = coupler.compute_diagnostics(state)
+    return state
+    state.land = coupler.land.run(state, coupler.const)
+    state.atmosphere = coupler.atmosphere.run(state, coupler.const)
+    
+    state.land = coupler.land.integrate(state.land, dt)
+    state.atmosphere = coupler.atmosphere.integrate(state.atmosphere, dt)
+    
     state = coupler.compute_diagnostics(state)
     return state
 

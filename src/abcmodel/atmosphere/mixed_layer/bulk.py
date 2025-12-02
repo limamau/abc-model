@@ -1,9 +1,12 @@
 from dataclasses import dataclass
 
+import jax
 import jax.numpy as jnp
 from jaxtyping import Array, PyTree
 
+from ...abstracts import AbstractCoupledState
 from ...utils import PhysicalConstants
+from ..abstracts import AbstractMixedLayerModel, AbstractMixedLayerState
 from .stats import AbstractStandardStatsModel
 
 # conversion factor mgC m-2 s-1 to ppm m s-1
@@ -12,9 +15,10 @@ from .stats import AbstractStandardStatsModel
 # FAC = const.mair / (const.rho * const.mco2)
 
 
+@jax.tree_util.register_pytree_node_class
 @dataclass
-class BulkMixedLayerInitConds:
-    """Data class for bulk mixed layer model initial state."""
+class BulkMixedLayerState(AbstractMixedLayerState):
+    """Data class for bulk mixed layer model state."""
 
     # initialized by the user
     h_abl: float
@@ -120,8 +124,27 @@ class BulkMixedLayerInitConds:
     wf: float = jnp.nan
     """Mixed-layer growth due to cloud top radiative divergence [m s-1]."""
 
+    def tree_flatten(self):
+        return (
+            self.h_abl, self.theta, self.deltatheta, self.wtheta, self.q, self.dq, self.wq,
+            self.co2, self.deltaCO2, self.wCO2, self.u, self.du, self.v, self.dv, self.dz_h, self.surf_pressure,
+            self.wstar, self.we, self.wCO2A, self.wCO2R, self.wCO2M,
+            self.thetav, self.deltathetav, self.wthetav, self.wqe, self.qsat, self.e, self.esat,
+            self.wCO2e, self.wthetae, self.wthetave, self.lcl, self.top_rh, self.top_p, self.top_T,
+            self.utend, self.dutend, self.vtend, self.dvtend, self.h_abl_tend,
+            self.thetatend, self.deltathetatend, self.qtend, self.dqtend, self.co2tend, self.deltaCO2tend,
+            self.dztend, self.ws, self.wf
+        ), None
 
-class BulkMixedLayerModel(AbstractStandardStatsModel):
+    @classmethod
+    def tree_unflatten(cls, aux, children):
+        return cls(*children)
+
+# Alias for backward compatibility
+BulkMixedLayerInitConds = BulkMixedLayerState
+
+
+class BulkMixedLayerModel(AbstractStandardStatsModel, AbstractMixedLayerModel):
     """Bulk mixed layer model with full atmospheric boundary layer dynamics.
 
     Complete mixed layer model that simulates atmospheric boundary layer evolution
@@ -185,68 +208,109 @@ class BulkMixedLayerModel(AbstractStandardStatsModel):
         self.is_fix_free_trop = is_fix_free_trop
         self.is_wind_prog = is_wind_prog
 
-    def run(self, state: PyTree, const: PhysicalConstants):
+    def run(self, state: AbstractCoupledState, const: PhysicalConstants) -> BulkMixedLayerState:
         """Run the model."""
-        state.ws = self.compute_ws(state.h_abl)
-        state.wf = self.compute_wf(state.deltatheta, const)
-        w_th_ft = self.compute_w_th_ft(state.ws)
-        w_q_ft = self.compute_w_q_ft(state.ws)
-        w_CO2_ft = self.compute_w_CO2_ft(state.ws)
-        state.wstar = self.compute_wstar(
-            state.h_abl,
-            state.wthetav,
-            state.thetav,
-            const.g,
-        )
-        state.wthetave = self.compute_wthetave(state.wthetav)
-        state.we = self.compute_we(
-            state.h_abl,
-            state.wthetave,
-            state.deltathetav,
-            state.thetav,
-            state.ustar,
-            const.g,
-        )
-        state.wthetae = self.compute_wthetae(state.we, state.deltatheta)
-        state.wqe = self.compute_wqe(state.we, state.dq)
-        state.wCO2e = self.compute_wCO2e(state.we, state.deltaCO2)
-        state.h_abl_tend = self.compute_h_abl_tend(
-            state.we, state.ws, state.wf, state.cc_mf
-        )
-        state.thetatend = self.compute_thetatend(
-            state.h_abl, state.wtheta, state.wthetae
-        )
-        state.deltathetatend = self.compute_deltathetatend(
-            state.we, state.wf, state.cc_mf, state.thetatend, w_th_ft
-        )
-        state.qtend = self.compute_qtend(state.h_abl, state.wq, state.wqe, state.cc_qf)
-        state.dqtend = self.compute_dqtend(
-            state.we, state.wf, state.cc_mf, state.qtend, w_q_ft
-        )
-        state.co2tend = self.compute_co2tend(
-            state.h_abl, state.wCO2, state.wCO2e, state.wCO2M
-        )
-        state.deltaCO2tend = self.compute_deltaCO2tend(
-            state.we, state.wf, state.cc_mf, state.co2tend, w_CO2_ft
-        )
-        state.utend = self.compute_utend(
-            state.h_abl, state.we, state.uw, state.du, state.dv
-        )
-        state.vtend = self.compute_vtend(
-            state.h_abl, state.we, state.vw, state.du, state.dv
-        )
-        state.dutend = self.compute_dutend(state.we, state.wf, state.cc_mf, state.utend)
-        state.dvtend = self.compute_dvtend(state.we, state.wf, state.cc_mf, state.vtend)
-        state.dztend = self.compute_dztend(
-            state.lcl,
-            state.h_abl,
-            state.cc_frac,
-            state.dz_h,
-        )
-        return state
+        # Access components
+        ml_state = state.atmosphere.mixed_layer
+        sl_state = state.atmosphere.surface_layer
+        cloud_state = state.atmosphere.clouds
+        land_state = state.land
+        
+        # Read surface fluxes from land state if available
+        # We check if land_state has wtheta, wq, wCO2
+        # StandardLandSurfaceState has wtheta, wq.
+        # AquaCropState has wCO2.
+        # MinimalLandSurfaceState does not have wtheta, wq?
+        # MinimalLandSurfaceModel does not compute them?
+        # MinimalLandSurfaceModel computes esat, qsat, etc.
+        # But it doesn't compute fluxes?
+        # If fluxes are NaN or missing, what to do?
+        # The original code relied on `ml_state` having them initialized.
+        # If `LandModel` updates them, we use them.
+        # If `LandModel` doesn't (like Minimal?), we might use `ml_state` values?
+        # But `Minimal` doesn't update `ml_state` either.
+        # So `wtheta` would be constant?
+        # In `minimal.py` example, `wtheta` is initialized in `ml_state`.
+        # So if `LandModel` doesn't update it, we use `ml_state.wtheta`.
+        
+        # Check if land_state has wtheta and it is not NaN
+        wtheta = ml_state.wtheta
+        if hasattr(land_state, "wtheta"):
+            wtheta = jnp.where(jnp.isnan(land_state.wtheta), ml_state.wtheta, land_state.wtheta)
+            
+        wq = ml_state.wq
+        if hasattr(land_state, "wq"):
+            wq = jnp.where(jnp.isnan(land_state.wq), ml_state.wq, land_state.wq)
+            
+        wCO2 = ml_state.wCO2
+        if hasattr(land_state, "wCO2"):
+            wCO2 = jnp.where(jnp.isnan(land_state.wCO2), ml_state.wCO2, land_state.wCO2)
 
-    def integrate(self, state: PyTree, dt: float) -> PyTree:
-        """Integrate mixed layer forward in time."""
+        ml_state.ws = self.compute_ws(ml_state.h_abl)
+        ml_state.wf = self.compute_wf(ml_state.deltatheta, const)
+        w_th_ft = self.compute_w_th_ft(ml_state.ws)
+        w_q_ft = self.compute_w_q_ft(ml_state.ws)
+        w_CO2_ft = self.compute_w_CO2_ft(ml_state.ws)
+        ml_state.wstar = self.compute_wstar(
+            ml_state.h_abl,
+            ml_state.wthetav,
+            ml_state.thetav,
+            const.g,
+        )
+        ml_state.wthetave = self.compute_wthetave(ml_state.wthetav)
+        ml_state.we = self.compute_we(
+            ml_state.h_abl,
+            ml_state.wthetave,
+            ml_state.deltathetav,
+            ml_state.thetav,
+            sl_state.ustar,
+            const.g,
+        )
+        ml_state.wthetae = self.compute_wthetae(ml_state.we, ml_state.deltatheta)
+        ml_state.wqe = self.compute_wqe(ml_state.we, ml_state.dq)
+        ml_state.wCO2e = self.compute_wCO2e(ml_state.we, ml_state.deltaCO2)
+        ml_state.h_abl_tend = self.compute_h_abl_tend(
+            ml_state.we, ml_state.ws, ml_state.wf, cloud_state.cc_mf
+        )
+        ml_state.thetatend = self.compute_thetatend(
+            ml_state.h_abl, wtheta, ml_state.wthetae
+        )
+        ml_state.deltathetatend = self.compute_deltathetatend(
+            ml_state.we, ml_state.wf, cloud_state.cc_mf, ml_state.thetatend, w_th_ft
+        )
+        ml_state.qtend = self.compute_qtend(ml_state.h_abl, wq, ml_state.wqe, cloud_state.cc_qf)
+        ml_state.dqtend = self.compute_dqtend(
+            ml_state.we, ml_state.wf, cloud_state.cc_mf, ml_state.qtend, w_q_ft
+        )
+        ml_state.co2tend = self.compute_co2tend(
+            ml_state.h_abl, wCO2, ml_state.wCO2e, ml_state.wCO2M
+        )
+        ml_state.deltaCO2tend = self.compute_deltaCO2tend(
+            ml_state.we, ml_state.wf, cloud_state.cc_mf, ml_state.co2tend, w_CO2_ft
+        )
+        ml_state.utend = self.compute_utend(
+            ml_state.h_abl, ml_state.we, sl_state.uw, ml_state.du, ml_state.dv
+        )
+        ml_state.vtend = self.compute_vtend(
+            ml_state.h_abl, ml_state.we, sl_state.vw, ml_state.du, ml_state.dv
+        )
+        ml_state.dutend = self.compute_dutend(ml_state.we, ml_state.wf, cloud_state.cc_mf, ml_state.utend)
+        ml_state.dvtend = self.compute_dvtend(ml_state.we, ml_state.wf, cloud_state.cc_mf, ml_state.vtend)
+        ml_state.dztend = self.compute_dztend(
+            ml_state.lcl,
+            ml_state.h_abl,
+            cloud_state.cc_frac,
+            ml_state.dz_h,
+        )
+        return ml_state
+
+    def integrate(self, state: BulkMixedLayerState, dt: float) -> BulkMixedLayerState:
+        """Integrate mixed layer forward in time.
+        
+        Args:
+            state: BulkMixedLayerState (component state, not CoupledState).
+            dt: Time step.
+        """
         state.h_abl += dt * state.h_abl_tend
         state.theta += dt * state.thetatend
         state.deltatheta += dt * state.deltathetatend
