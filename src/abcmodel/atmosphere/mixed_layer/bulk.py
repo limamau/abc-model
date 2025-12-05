@@ -1,20 +1,17 @@
 from dataclasses import dataclass, replace
 
-import jax
 import jax.numpy as jnp
-
-from ...abstracts import AbstractCoupledState
-from ...utils import Array, PhysicalConstants
-from ..abstracts import AbstractMixedLayerModel, AbstractMixedLayerState
-from .stats import AbstractStandardStatsModel
 
 # conversion factor mgC m-2 s-1 to ppm m s-1
 # limamau: this conversion could be done in a post-processing
 # function after jax.lax.scan just like in neuralgcm/dinosaur
 # FAC = const.mair / (const.rho * const.mco2)
-
-
 from simple_pytree import Pytree
+
+from ...abstracts import AbstractCoupledState
+from ...utils import Array, PhysicalConstants
+from ..abstracts import AbstractMixedLayerModel, AbstractMixedLayerState
+from .stats import AbstractStandardStatsModel
 
 
 @dataclass
@@ -60,12 +57,6 @@ class BulkMixedLayerState(AbstractMixedLayerState, Pytree):
     """Convective velocity scale [m s-1]."""
     we: Array = -1.0
     """Entrainment velocity [m s-1]."""
-    wCO2A: Array = 0.0
-    """Surface assimulation CO2 flux [mgC/m²/s]."""
-    wCO2R: Array = 0.0
-    """Surface respiration CO2 flux [mgC/m²/s]."""
-    wCO2M: Array = 0.0
-    """CO2 mass flux [mgC/m²/s]."""
 
     # should be initialized during warmup
     thetav: Array = jnp.nan
@@ -206,11 +197,9 @@ class BulkMixedLayerModel(AbstractStandardStatsModel, AbstractMixedLayerModel):
 
         # Read surface fluxes from land state if available
         # Access fluxes from land state (using jnp.where to handle NaNs)
-        wtheta = jnp.where(
-            jnp.isnan(land_state.wtheta), ml_state.wtheta, land_state.wtheta
-        )
-        wq = jnp.where(jnp.isnan(land_state.wq), ml_state.wq, land_state.wq)
-        wCO2 = jnp.where(jnp.isnan(land_state.wCO2), ml_state.wCO2, land_state.wCO2)
+        wtheta = land_state.wtheta
+        wq = land_state.wq
+        wCO2 = land_state.wCO2
 
         ws = self.compute_ws(ml_state.h_abl)
         wf = self.compute_wf(ml_state.deltatheta, const)

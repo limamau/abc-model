@@ -73,22 +73,13 @@ class StandardCumulusModel(AbstractCloudModel):
             ml_state.dz_h,
             ml_state.wstar,
             ml_state.wCO2e,
-            ml_state.wCO2M,  # This might be stale if we don't update ml_state, but we read it.
-            # Actually, compute_top_CO22 reads wCO2M.
-            # In the old code, it read ml_state.wCO2M.
-            # In the new code, cloud_state.wCO2M is the source of truth.
-            # But the formula uses (wCO2e + wCO2M).
-            # If wCO2M is computed later, we are using the previous step's value?
-            # Yes, standard Pytree behavior.
+            cloud_state.wCO2M,
             ml_state.deltaCO2,
         )
         cc_frac = self.compute_cc_frac(ml_state.q, ml_state.top_T, ml_state.top_p, q2_h)
         cc_mf = self.compute_cc_mf(cc_frac, ml_state.wstar)
         cc_qf = self.compute_cc_qf(cc_mf, q2_h)
-
-        # Compute wCO2M
         wCO2M = self.compute_wCO2M(cc_mf, top_CO22, ml_state.deltaCO2)
-
         cl_trans = self.compute_cl_trans(cc_frac)
 
         return replace(

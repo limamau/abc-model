@@ -33,6 +33,6 @@ class NoCloudModel(AbstractCloudModel):
     def __init__(self):
         pass
 
-    def run(self, state: PyTree, const: PhysicalConstants):
+    def run(self, state: Pytree, const: PhysicalConstants):
         """No calculations."""
         return state
