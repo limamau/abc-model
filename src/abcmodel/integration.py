@@ -1,4 +1,5 @@
 import math
+from dataclasses import replace
 
 import jax
 import jax.numpy as jnp
@@ -57,11 +58,13 @@ def warmup(state: PyTree, coupler: ABCoupler, t: int, dt: float) -> PyTree:
     """Warmup the model by running it for a few timesteps."""
     # Update atmosphere statistics
     # statistics returns AtmosphereState, so we assign to state.atmosphere
-    state.atmosphere = coupler.atmosphere.statistics(state.atmosphere, t, coupler.const)
+    state = replace(
+        state, atmosphere=coupler.atmosphere.statistics(state.atmosphere, t, coupler.const)
+    )
 
     # calculate initial diagnostic variables
     # radiation.run returns RadiationState, so we assign to state.radiation
-    state.radiation = coupler.radiation.run(state, t, dt, coupler.const)
+    state = replace(state, radiation=coupler.radiation.run(state, t, dt, coupler.const))
 
     # warmup atmosphere and land
     # atmosphere.warmup returns CoupledState, so we assign to state
@@ -73,21 +76,23 @@ def warmup(state: PyTree, coupler: ABCoupler, t: int, dt: float) -> PyTree:
 def timestep(state: PyTree, coupler: ABCoupler, t: int, dt: float) -> PyTree:
     """Run a single timestep of the model."""
     # Update atmosphere statistics
-    state.atmosphere = coupler.atmosphere.statistics(state.atmosphere, t, coupler.const)
-    
+    state = replace(
+        state, atmosphere=coupler.atmosphere.statistics(state.atmosphere, t, coupler.const)
+    )
+
     # Run radiation
     # radiation.run takes CoupledState and returns RadiationState
-    state.radiation = coupler.radiation.run(state, t, dt, coupler.const)
-    
+    state = replace(state, radiation=coupler.radiation.run(state, t, dt, coupler.const))
+
     # Run land
-    state.land = coupler.land.run(state, coupler.const)
-    
+    state = replace(state, land=coupler.land.run(state, coupler.const))
+
     # Run atmosphere
-    state.atmosphere = coupler.atmosphere.run(state, coupler.const)
-    
+    state = replace(state, atmosphere=coupler.atmosphere.run(state, coupler.const))
+
     # Integrate prognostic variables
-    state.land = coupler.land.integrate(state.land, dt)
-    state.atmosphere = coupler.atmosphere.integrate(state.atmosphere, dt)
+    state = replace(state, land=coupler.land.integrate(state.land, dt))
+    state = replace(state, atmosphere=coupler.atmosphere.integrate(state.atmosphere, dt))
     
     # Compute diagnostics
     state = coupler.compute_diagnostics(state)

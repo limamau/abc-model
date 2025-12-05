@@ -13,22 +13,14 @@ from .abstracts import (
     AbstractRadiationState,
 )
 from .utils import PhysicalConstants
+from simple_pytree import Pytree
 
 
-@jax.tree_util.register_pytree_node_class
-@dataclass
-class DiagnosticsState:
+class DiagnosticsState(Pytree):
     """Diagnostic variables for the coupled system."""
 
     total_water_mass: float = 0.0
     total_energy: float = 0.0
-
-    def tree_flatten(self):
-        return (self.total_water_mass, self.total_energy), None
-
-    @classmethod
-    def tree_unflatten(cls, aux, children):
-        return cls(*children)
 
 
 # Type variables for CoupledState
@@ -37,23 +29,14 @@ L = TypeVar("L", bound=AbstractLandState)
 R = TypeVar("R", bound=AbstractRadiationState)
 
 
-@jax.tree_util.register_pytree_node_class
 @dataclass
-class CoupledState(AbstractCoupledState[A, L, R], Generic[A, L, R]):
+class CoupledState(AbstractCoupledState[A, L, R], Pytree, Generic[A, L, R]):
     """Hierarchical coupled state, generic over component types."""
 
     atmosphere: A
     land: L
     radiation: R
     diagnostics: DiagnosticsState = field(default_factory=DiagnosticsState)
-
-    def tree_flatten(self):
-        children = (self.atmosphere, self.land, self.radiation, self.diagnostics)
-        return children, None
-
-    @classmethod
-    def tree_unflatten(cls, aux, children):
-        return cls(*children)
 
 
 class ABCoupler:
