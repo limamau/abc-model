@@ -4,12 +4,13 @@ import jax
 import jax.numpy as jnp
 from jaxtyping import Array, PyTree
 
+from ...abstracts import AbstractState
 from ...utils import PhysicalConstants, compute_qsat
 from ..abstracts import AbstractSurfaceLayerModel
 
 
 @dataclass
-class StandardSurfaceLayerInitConds:
+class StandardSurfaceLayerInitConds(AbstractState):
     """Standard surface layer model initial state."""
 
     # the following variables should be initialized by the user

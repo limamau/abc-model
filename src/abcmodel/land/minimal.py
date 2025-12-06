@@ -3,12 +3,12 @@ from dataclasses import dataclass
 import jax.numpy as jnp
 from jaxtyping import Array, PyTree
 
-from ..abstracts import AbstractLandModel
+from ..abstracts import AbstractLandModel, AbstractState
 from ..utils import PhysicalConstants, compute_esat, compute_qsat
 
 
 @dataclass
-class MinimalLandSurfaceInitConds:
+class MinimalLandSurfaceInitConds(AbstractState):
     """Minimal land surface model initial state."""
 
     alpha: float

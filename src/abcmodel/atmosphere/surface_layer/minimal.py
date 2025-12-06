@@ -3,12 +3,13 @@ from dataclasses import dataclass
 import jax.numpy as jnp
 from jaxtyping import Array, PyTree
 
+from ...abstracts import AbstractState
 from ...utils import PhysicalConstants
 from ..abstracts import AbstractSurfaceLayerModel
 
 
 @dataclass
-class MinimalSurfaceLayerInitConds:
+class MinimalSurfaceLayerInitConds(AbstractState):
     """Minimal surface layer model initial state."""
 
     ustar: float

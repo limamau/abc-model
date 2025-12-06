@@ -3,12 +3,12 @@ from dataclasses import dataclass
 import jax.numpy as jnp
 from jaxtyping import Array, PyTree
 
-from ..abstracts import AbstractRadiationModel
+from ..abstracts import AbstractRadiationModel, AbstractState
 from ..utils import PhysicalConstants
 
 
 @dataclass
-class StandardRadiationInitConds:
+class StandardRadiationInitConds(AbstractState):
     """Standard radiation model initial state."""
 
     net_rad: float

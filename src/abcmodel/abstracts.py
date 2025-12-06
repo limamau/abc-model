@@ -3,8 +3,13 @@
 from abc import abstractmethod
 
 from jaxtyping import PyTree
+from simple_pytree import Pytree
 
 from .utils import PhysicalConstants
+
+
+class AbstractState(Pytree):
+    pass
 
 
 class AbstractModel:

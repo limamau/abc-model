@@ -3,6 +3,7 @@ from dataclasses import dataclass
 import jax.numpy as jnp
 from jaxtyping import Array, PyTree
 
+from ...abstracts import AbstractState
 from ...utils import PhysicalConstants
 from .stats import AbstractStandardStatsModel
 
@@ -13,7 +14,7 @@ from .stats import AbstractStandardStatsModel
 
 
 @dataclass
-class BulkMixedLayerInitConds:
+class BulkMixedLayerInitConds(AbstractState):
     """Data class for bulk mixed layer model initial state."""
 
     # initialized by the user

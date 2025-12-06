@@ -2,12 +2,13 @@ from dataclasses import dataclass
 
 from jaxtyping import PyTree
 
+from ...abstracts import AbstractState
 from ...utils import PhysicalConstants
 from ..abstracts import AbstractCloudModel
 
 
 @dataclass
-class NoCloudInitConds:
+class NoCloudInitConds(AbstractState):
     """No cloud initial state."""
 
     cc_frac: float = 0.0

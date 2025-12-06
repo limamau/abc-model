@@ -3,12 +3,13 @@ from dataclasses import dataclass
 import jax.numpy as jnp
 from jaxtyping import Array, PyTree
 
+from ...abstracts import AbstractState
 from ...utils import PhysicalConstants, compute_qsat
 from ..abstracts import AbstractCloudModel
 
 
 @dataclass
-class StandardCumulusInitConds:
+class StandardCumulusInitConds(AbstractState):
     """Standard cumulus initial state."""
 
     cc_frac: float = 0.0

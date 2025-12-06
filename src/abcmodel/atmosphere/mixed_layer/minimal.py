@@ -3,12 +3,13 @@ from dataclasses import dataclass
 import jax.numpy as jnp
 from jaxtyping import PyTree
 
+from ...abstracts import AbstractState
 from ...utils import PhysicalConstants
 from .stats import AbstractStandardStatsModel
 
 
 @dataclass
-class MinimalMixedLayerInitConds:
+class MinimalMixedLayerInitConds(AbstractState):
     """Minimal mixed layer model initial state."""
 
     # the following variables are expected to be initialized by the user
