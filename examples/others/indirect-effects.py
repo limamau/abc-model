@@ -32,11 +32,11 @@ def run_wrapper(wg: float, q: float, config):
 
     # surface layer
     surface_layer_init_conds = (
-        abcmodel.atmosphere.surface_layer.StandardSurfaceLayerInitConds(
+        abcmodel.atmosphere.surface_layer.ObukhovSurfaceLayerInitConds(
             **config.std_sl_init_conds_kwargs
         )
     )
-    surface_layer_model = abcmodel.atmosphere.surface_layer.StandardSurfaceLayerModel()
+    surface_layer_model = abcmodel.atmosphere.surface_layer.ObukhovSurfaceLayerModel()
 
     # mixed layer
     ml_kwargs = config.bulk_ml_init_conds_kwargs

@@ -28,9 +28,9 @@ def main():
 
     # surface layer
     surface_layer_init_conds = (
-        abcmodel.atmosphere.surface_layer.MinimalSurfaceLayerInitConds(ustar=0.3)
+        abcmodel.atmosphere.surface_layer.SimpleSurfaceLayerInitConds(ustar=0.3)
     )
-    surface_layer_model = abcmodel.atmosphere.surface_layer.MinimalSurfaceLayerModel()
+    surface_layer_model = abcmodel.atmosphere.surface_layer.SimpleSurfaceLayerModel()
 
     # mixed layer
     mixed_layer_init_conds = abcmodel.atmosphere.mixed_layer.BulkMixedLayerInitConds(

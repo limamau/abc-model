@@ -69,11 +69,6 @@ class MinimalLandSurfaceModel(AbstractLandModel):
         Returns:
             The updated state object.
         """
-        # (1) compute aerodynamic resistance from state
-        ueff = jnp.sqrt(state.u**2.0 + state.v**2.0 + state.wstar**2.0)
-        state.ra = ueff / jnp.maximum(1.0e-3, state.ustar) ** 2.0
-
-        # (2) calculate essential thermodynamic variables
         state.esat = compute_esat(state.theta)
         state.qsat = compute_qsat(state.theta, state.surf_pressure)
         state.dqsatdT = self.compute_dqsatdT(state)

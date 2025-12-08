@@ -6,7 +6,6 @@ import abcmodel
 
 
 def run_model(theta0: float) -> float:
-    # copy-paste setup from your main(), but modify initial conditions
     dt = 60.0
     runtime = 12 * 3600.0
 
@@ -25,11 +24,11 @@ def run_model(theta0: float) -> float:
     )
 
     surface_layer_init_conds = (
-        abcmodel.atmosphere.surface_layer.StandardSurfaceLayerInitConds(
+        abcmodel.atmosphere.surface_layer.ObukhovSurfaceLayerInitConds(
             **cm.standard_surface_layer.init_conds_kwargs
         )
     )
-    surface_layer_model = abcmodel.atmosphere.surface_layer.StandardSurfaceLayerModel()
+    surface_layer_model = abcmodel.atmosphere.surface_layer.ObukhovSurfaceLayerModel()
 
     mixed_layer_init_conds = abcmodel.atmosphere.mixed_layer.BulkMixedLayerInitConds(
         **cm.bulk_mixed_layer.init_conds_kwargs

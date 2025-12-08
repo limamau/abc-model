@@ -1,15 +1,15 @@
-from .minimal import (
-    MinimalSurfaceLayerInitConds,
-    MinimalSurfaceLayerModel,
+from .obukhov import (
+    ObukhovSurfaceLayerInitConds,
+    ObukhovSurfaceLayerModel,
 )
-from .standard import (
-    StandardSurfaceLayerInitConds,
-    StandardSurfaceLayerModel,
+from .simple import (
+    SimpleSurfaceLayerInitConds,
+    SimpleSurfaceLayerModel,
 )
 
 __all__ = [
-    "MinimalSurfaceLayerInitConds",
-    "MinimalSurfaceLayerModel",
-    "StandardSurfaceLayerModel",
-    "StandardSurfaceLayerInitConds",
+    "SimpleSurfaceLayerInitConds",
+    "SimpleSurfaceLayerModel",
+    "ObukhovSurfaceLayerModel",
+    "ObukhovSurfaceLayerInitConds",
 ]
