@@ -1,4 +1,4 @@
-from .aquacrop import AquaCropInitConds, AquaCropModel, AquaCropState
+from .ags import AgsInitConds, AgsModel, AgsState
 from .jarvis_stewart import (
     JarvisStewartInitConds,
     JarvisStewartModel,
@@ -11,9 +11,9 @@ from .minimal import (
 )
 
 __all__ = [
-    "AquaCropModel",
-    "AquaCropState",
-    "AquaCropInitConds",
+    "AgsModel",
+    "AgsState",
+    "AgsInitConds",
     "JarvisStewartModel",
     "JarvisStewartState",
     "JarvisStewartInitConds",

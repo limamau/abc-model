@@ -1,4 +1,3 @@
-import math
 from dataclasses import replace
 
 import jax
@@ -8,68 +7,14 @@ import numpy as np
 from .coupling import ABCoupler, CoupledState
 
 
-def print_nan_variables(state: CoupledState, prefix: str = ""):
-    """Print all variables in a CoupledState that have NaN values, recursively."""
-    nan_vars = []
-
-    # If it's a dataclass or SimpleNamespace, iterate over fields
-    if hasattr(state, "__dict__"):
-        items = state.__dict__.items()
-    elif hasattr(state, "_asdict"):  # NamedTuple
-        items = state._asdict().items()
-    else:
-        return nan_vars
-
-    for name, value in items:
-        full_name = f"{prefix}.{name}" if prefix else name
-        try:
-            is_nan = False
-
-            # check JAX arrays
-            if hasattr(value, "shape") and hasattr(value, "dtype"):
-                if jnp.issubdtype(value.dtype, jnp.floating):
-                    if jnp.any(jnp.isnan(value)):
-                        is_nan = True
-            # check numpy arrays
-            elif hasattr(value, "dtype") and np.issubdtype(value.dtype, np.floating):
-                if np.any(np.isnan(value)):
-                    is_nan = True
-            # check regular float values
-            elif isinstance(value, float) and math.isnan(value):
-                is_nan = True
-
-            # Recursive check for nested objects (like AtmosphereState)
-            if hasattr(value, "__dict__") or hasattr(value, "_asdict"):
-                nan_vars.extend(print_nan_variables(value, full_name))
-
-            if is_nan:
-                nan_vars.append((full_name, value))
-                print(f"Variable '{full_name}' contains NaN: {value}")
-
-        except (TypeError, AttributeError, Exception):
-            # skip variables that can't be checked for NaN
-            continue
-
-    return nan_vars
-
-
 def warmup(state: CoupledState, coupler: ABCoupler, t: int, dt: float) -> CoupledState:
     """Warmup the model by running it for a few timesteps."""
-    # Update atmosphere statistics
-    # statistics returns AtmosphereState, so we assign to state.atmosphere
     state = replace(
         state,
         atmosphere=coupler.atmosphere.statistics(state.atmosphere, t, coupler.const),
     )
-
-    # calculate initial diagnostic variables
-    # radiation.run returns RadiationState, so we assign to state.radiation
     state = replace(state, radiation=coupler.radiation.run(state, t, dt, coupler.const))
-
-    # warmup atmosphere and land
-    # atmosphere.warmup returns CoupledState, so we assign to state
     state = coupler.atmosphere.warmup(state, coupler.const, coupler.land)
-
     return state
 
 
@@ -90,7 +35,6 @@ def timestep(
     atmos = coupler.atmosphere.integrate(state.atmosphere, dt)
     state = replace(state, atmosphere=atmos)
     state = coupler.compute_diagnostics(state)
-    print_nan_variables(state, prefix=f"t={t}")
     return state
 
 

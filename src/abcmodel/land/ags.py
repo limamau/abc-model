@@ -11,8 +11,8 @@ from .standard import AbstractStandardLandSurfaceModel, StandardLandSurfaceState
 
 
 @dataclass
-class AquaCropState(StandardLandSurfaceState):
-    """AquaCrop model state."""
+class AgsState(StandardLandSurfaceState):
+    """A-gs model state."""
 
     rsCO2: Array = field(default_factory=lambda: jnp.array(jnp.nan))
     """Stomatal resistance to CO2."""
@@ -31,11 +31,11 @@ class AquaCropState(StandardLandSurfaceState):
 
 
 # alias
-AquaCropInitConds = AquaCropState
+AgsInitConds = AgsState
 
 
-class AquaCropModel(AbstractStandardLandSurfaceModel):
-    """AquaCrop land surface model with coupled photosynthesis and stomatal conductance.
+class AgsModel(AbstractStandardLandSurfaceModel):
+    """Ags land surface model with coupled photosynthesis and stomatal conductance.
 
     ... (docstring omitted for brevity) ...
     """
@@ -428,7 +428,7 @@ class AquaCropModel(AbstractStandardLandSurfaceModel):
     def update_surface_resistance(
         self, state: AbstractCoupledState, const: PhysicalConstants
     ) -> AbstractCoupledState:
-        """Compute surface resistance using AquaCrop photosynthesis-conductance model."""
+        """Compute surface resistance using Ags photosynthesis-conductance model."""
         land_state = state.land
         ml_state = state.atmosphere.mixed_layer
         sl_state = state.atmosphere.surface_layer

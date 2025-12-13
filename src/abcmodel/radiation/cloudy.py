@@ -8,16 +8,16 @@ from .standard import StandardRadiationModel, StandardRadiationState
 
 
 @dataclass
-class StandardRadiationwCloudsState(StandardRadiationState):
+class CloudyRadiationState(StandardRadiationState):
     """Standard radiation model with clouds state."""
 
     pass
 
 
-StandardRadiationwCloudsInitConds = StandardRadiationwCloudsState
+CloudyRadiationInitConds = CloudyRadiationState
 
 
-class StandardRadiationwCloudsModel(StandardRadiationModel):
+class CloudyRadiationModel(StandardRadiationModel):
     """Standard radiation model with solar position and atmospheric effects including prognostic cloud transmittance.
 
     Calculates time-varying solar radiation based on geographic location and
@@ -33,10 +33,10 @@ class StandardRadiationwCloudsModel(StandardRadiationModel):
 
     def __init__(
         self,
-        lat: float,
-        lon: float,
-        doy: float,
-        tstart: float,
+        lat: Array,
+        lon: Array,
+        doy: Array,
+        tstart: Array,
     ):
         self.lat = lat
         self.lon = lon
@@ -49,7 +49,7 @@ class StandardRadiationwCloudsModel(StandardRadiationModel):
         t: int,
         dt: float,
         const: PhysicalConstants,
-    ) -> StandardRadiationwCloudsState:
+    ) -> CloudyRadiationState:
         """Calculate radiation components and net surface radiation.
 
         Args:

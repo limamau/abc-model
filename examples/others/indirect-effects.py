@@ -23,20 +23,20 @@ def run_wrapper(wg: float, q: float, config):
     # land surface
     ags_kwargs = config.ags_init_conds_kwargs
     ags_kwargs["wg"] = wg
-    land_surface_init_conds = abcmodel.land.AquaCropInitConds(
+    land_surface_init_conds = abcmodel.land.AgsInitConds(
         **ags_kwargs,
     )
-    land_surface_model = abcmodel.land.AquaCropModel(
+    land_surface_model = abcmodel.land.AgsModel(
         **config.ags_model_kwargs,
     )
 
     # surface layer
     surface_layer_init_conds = (
-        abcmodel.atmosphere.surface_layer.StandardSurfaceLayerInitConds(
+        abcmodel.atmosphere.surface_layer.ObukhovSurfaceLayerInitConds(
             **config.std_sl_init_conds_kwargs
         )
     )
-    surface_layer_model = abcmodel.atmosphere.surface_layer.StandardSurfaceLayerModel()
+    surface_layer_model = abcmodel.atmosphere.surface_layer.ObukhovSurfaceLayerModel()
 
     # mixed layer
     ml_kwargs = config.bulk_ml_init_conds_kwargs
@@ -49,15 +49,19 @@ def run_wrapper(wg: float, q: float, config):
     )
 
     # clouds
-    cloud_init_conds = abcmodel.atmosphere.clouds.StandardCumulusInitConds()
-    cloud_model = abcmodel.atmosphere.clouds.StandardCumulusModel()
+    cloud_init_conds = abcmodel.atmosphere.clouds.CumulusInitConds()
+    cloud_model = abcmodel.atmosphere.clouds.CumulusModel()
 
-    # define coupler and coupled state
     # define atmosphere model
     atmosphere_model = abcmodel.atmosphere.DayOnlyAtmosphereModel(
         surface_layer=surface_layer_model,
         mixed_layer=mixed_layer_model,
         clouds=cloud_model,
+    )
+    atmosphere_init_conds = abcmodel.atmosphere.DayOnlyAtmosphereState(
+        surface_layer=surface_layer_init_conds,
+        mixed_layer=mixed_layer_init_conds,
+        clouds=cloud_init_conds,
     )
 
     # define coupler and coupled state
@@ -66,12 +70,11 @@ def run_wrapper(wg: float, q: float, config):
         land=land_surface_model,
         atmosphere=atmosphere_model,
     )
+
     state = abcoupler.init_state(
         radiation_init_conds,
         land_surface_init_conds,
-        surface_layer_init_conds,
-        mixed_layer_init_conds,
-        cloud_init_conds,
+        atmosphere_init_conds,
     )
 
     return abcmodel.integrate(state, abcoupler, dt=dt, runtime=runtime)
@@ -89,7 +92,7 @@ def make_fancy_plot(
     # mixed layer
     axes[0, 0].plot(
         time[::factor],
-        traj.h_abl[::factor],
+        traj.atmosphere.mixed_layer.h_abl[::factor],
         color=color,
         marker=marker,
         linestyle="None",
@@ -99,7 +102,7 @@ def make_fancy_plot(
 
     axes[0, 1].plot(
         time[::factor],
-        traj.wCO2A[::factor],
+        traj.land.wCO2A[::factor],
         color=color,
         marker=marker,
         linestyle="None",
@@ -108,7 +111,7 @@ def make_fancy_plot(
 
     axes[0, 2].plot(
         time[::factor],
-        traj.wCO2R[::factor],
+        traj.land.wCO2R[::factor],
         color=color,
         marker=marker,
         linestyle="None",
@@ -117,7 +120,7 @@ def make_fancy_plot(
 
     axes[0, 3].plot(
         time[::factor],
-        traj.wCO2[::factor],
+        traj.land.wCO2[::factor],
         color=color,
         marker=marker,
         linestyle="None",
@@ -127,7 +130,7 @@ def make_fancy_plot(
     # temperature
     axes[1, 0].plot(
         time[::factor],
-        traj.temp_soil[::factor],
+        traj.land.temp_soil[::factor],
         color=color,
         marker=marker,
         linestyle="None",
@@ -136,7 +139,7 @@ def make_fancy_plot(
 
     axes[1, 1].plot(
         time[::factor],
-        traj.surf_temp[::factor],
+        traj.land.surf_temp[::factor],
         color=color,
         marker=marker,
         linestyle="None",
@@ -145,7 +148,7 @@ def make_fancy_plot(
 
     axes[1, 2].plot(
         time[::factor],
-        traj.theta[::factor],
+        traj.atmosphere.mixed_layer.theta[::factor],
         color=color,
         marker=marker,
         linestyle="None",
@@ -154,7 +157,7 @@ def make_fancy_plot(
 
     axes[1, 3].plot(
         time[::factor],
-        traj.temp_2m[::factor],
+        traj.atmosphere.surface_layer.temp_2m[::factor],
         color=color,
         marker=marker,
         linestyle="None",
@@ -163,19 +166,27 @@ def make_fancy_plot(
 
     # water
     # this is the core of this example! #
-    vpd = (compute_esat(traj.surf_temp) - traj.e) / 1000.0  # kPa
+    vpd = (compute_esat(traj.land.surf_temp) - traj.land.e) / 1000.0  # kPa
     axes[2, 0].plot(
         time[::factor], vpd[::factor], color=color, marker=marker, linestyle="None"
     )
     axes[2, 0].set_title("VPD [kPa]")
 
     axes[2, 1].plot(
-        time[::factor], traj.wg[::factor], color=color, marker=marker, linestyle="None"
+        time[::factor],
+        traj.land.wg[::factor],
+        color=color,
+        marker=marker,
+        linestyle="None",
     )
     axes[2, 1].set_title("wg [kg/kg]")
     # - - - - - - - - - - - - - - - - - #
     axes[2, 2].plot(
-        time[::factor], traj.q[::factor], color=color, marker=marker, linestyle="None"
+        time[::factor],
+        traj.atmosphere.mixed_layer.q[::factor],
+        color=color,
+        marker=marker,
+        linestyle="None",
     )
     axes[2, 2].set_title("q [kg/kg]")
 
@@ -193,18 +204,26 @@ def make_fancy_plot(
 
     # energy fluxes
     axes[3, 0].plot(
-        time[::factor], traj.hf[::factor], color=color, marker=marker, linestyle="None"
+        time[::factor],
+        traj.land.hf[::factor],
+        color=color,
+        marker=marker,
+        linestyle="None",
     )
     axes[3, 0].set_title("H [W/m²]")
 
     axes[3, 1].plot(
-        time[::factor], traj.le[::factor], color=color, marker=marker, linestyle="None"
+        time[::factor],
+        traj.land.le[::factor],
+        color=color,
+        marker=marker,
+        linestyle="None",
     )
     axes[3, 1].set_title("LE [W/m²]")
 
     axes[3, 2].plot(
         time[::factor],
-        traj.le_veg[::factor],
+        traj.land.le_veg[::factor],
         color=color,
         marker=marker,
         linestyle="None",
@@ -213,7 +232,7 @@ def make_fancy_plot(
 
     axes[3, 3].plot(
         time[::factor],
-        traj.le_liq[::factor],
+        traj.land.le_liq[::factor],
         color=color,
         marker=marker,
         linestyle="None",
@@ -223,7 +242,7 @@ def make_fancy_plot(
     # radiation
     axes[4, 0].plot(
         time[::factor],
-        traj.in_srad[::factor],
+        traj.radiation.in_srad[::factor],
         color=color,
         marker=marker,
         linestyle="None",
@@ -232,7 +251,7 @@ def make_fancy_plot(
 
     axes[4, 1].plot(
         time[::factor],
-        traj.out_srad[::factor],
+        traj.radiation.out_srad[::factor],
         color=color,
         marker=marker,
         linestyle="None",
@@ -241,7 +260,7 @@ def make_fancy_plot(
 
     axes[4, 2].plot(
         time[::factor],
-        traj.in_lrad[::factor],
+        traj.radiation.in_lrad[::factor],
         color=color,
         marker=marker,
         linestyle="None",
@@ -250,7 +269,7 @@ def make_fancy_plot(
 
     axes[4, 3].plot(
         time[::factor],
-        traj.out_lrad[::factor],
+        traj.radiation.out_lrad[::factor],
         color=color,
         marker=marker,
         linestyle="None",

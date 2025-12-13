@@ -28,5 +28,6 @@ model_kwargs = {
     "cveg": jnp.array(0.85),
     "wmax": jnp.array(0.0002),
     "lam": jnp.array(5.9),
+    "c3c4": "c3",
 }
 """"""

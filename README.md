@@ -61,7 +61,7 @@ land_surface_init_conds = abcmodel.land_surface.JarvisStewartInitConds(
     **cm.jarvis_stewart.init_conds_kwargs,
 )
 surface_layer_init_conds = abcmodel.surface_layer.StandardSurfaceLayerInitConds(
-    **cm.standard_surface_layer.init_conds_kwargs
+    **cm.obukhov_surface_layer.init_conds_kwargs
 )
 mixed_layer_init_conds = abcmodel.mixed_layer.BulkMixedLayerInitConds(
     **cm.bulk_mixed_layer.init_conds_kwargs,
@@ -136,18 +136,18 @@ Which should give us something like the figure below.
 
 ## Changing models, parameters and initial conditions
 Now let's say you want to use a different model for the land surface.
-Instead of the Jarvis Stewart model, you may choose AquaCrop.
+Instead of the Jarvis Stewart model, you may choose Ags.
 We also provide a configuration for that, which you can load using the `abcconfigs` module, as previously done.
-You can take a look at the config [here](https://git.bgc-jena.mpg.de/abc3/abc-model/-/blob/main/src/abcconfigs/class_model/aquacrop.py?ref_type=heads).
+You can take a look at the config [here](https://git.bgc-jena.mpg.de/abc3/abc-model/-/blob/main/src/abcconfigs/class_model/ags.py?ref_type=heads).
 
 Now, for example, you may change from C3 to C4 with something like the following.
 ```python
 # new parameters definition
-aquacrop_model_kwargs = cm.aquacrop.model_kwargs
-aquacrop_model_kwargs['c3c4'] = 'c4'
+ags_model_kwargs = cm.ags.model_kwargs
+ags_model_kwargs['c3c4'] = 'c4'
 
 # define a new land model
-land_surface_model = abcmodel.land_surface.AquaCropModel(**aquacrop_model_kwargs)
+land_surface_model = abcmodel.land_surface.AgsModel(**ags_model_kwargs)
 ```
 
 Then you can redefine the coupler, create a new state and integrate it to see different outcomes. You can do something similar to change initial conditions, or even recreate your own!

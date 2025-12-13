@@ -2,7 +2,7 @@
 Standard Radiation W Clouds
 ===========================
 
-.. automodule:: abcconfigs.class_model.standard_radiation_w_clouds
+.. automodule:: abcconfigs.class_model.cloudy_radiation
    :members:
    :show-inheritance:
    :undoc-members:

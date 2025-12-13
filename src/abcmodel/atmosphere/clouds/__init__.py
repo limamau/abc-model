@@ -1,9 +1,9 @@
-from .cumulus import StandardCumulusInitConds, StandardCumulusModel
+from .cumulus import CumulusInitConds, CumulusModel
 from .no_clouds import NoCloudModel, NoCloudState
 
 __all__ = [
-    "StandardCumulusInitConds",
-    "StandardCumulusModel",
+    "CumulusInitConds",
+    "CumulusModel",
     "NoCloudState",
     "NoCloudModel",
 ]

@@ -1,7 +1,7 @@
 from .cloudy import (
-    StandardRadiationwCloudsInitConds,
-    StandardRadiationwCloudsModel,
-    StandardRadiationwCloudsState,
+    CloudyRadiationInitConds,
+    CloudyRadiationModel,
+    CloudyRadiationState,
 )
 from .standard import (
     StandardRadiationInitConds,
@@ -13,7 +13,7 @@ __all__ = [
     "StandardRadiationInitConds",
     "StandardRadiationModel",
     "StandardRadiationState",
-    "StandardRadiationwCloudsInitConds",
-    "StandardRadiationwCloudsModel",
-    "StandardRadiationwCloudsState",
+    "CloudyRadiationInitConds",
+    "CloudyRadiationModel",
+    "CloudyRadiationState",
 ]

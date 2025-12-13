@@ -40,10 +40,10 @@
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'source/api/abcconfigs.class_model.standard_radiation_w_clouds';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'source/api/abcconfigs.class_model.cloudy_radiation';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Standard Surface Layer" href="abcconfigs.class_model.standard_surface_layer.html" />
+    <link rel="next" title="Standard Surface Layer" href="abcconfigs.class_model.obukhov_surface_layer.html" />
     <link rel="prev" title="Standard Radiation" href="abcconfigs.class_model.standard_radiation.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -202,7 +202,7 @@
 <li class="toctree-l3"><a class="reference internal" href="abcconfigs.class_model.jarvis_stewart.html">Jarvis Stewart</a></li>
 <li class="toctree-l3"><a class="reference internal" href="abcconfigs.class_model.standard_radiation.html">Standard Radiation</a></li>
 <li class="toctree-l3 current active"><a class="current reference internal" href="#">Standard Radiation W Clouds</a></li>
-<li class="toctree-l3"><a class="reference internal" href="abcconfigs.class_model.standard_surface_layer.html">Standard Surface Layer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="abcconfigs.class_model.obukhov_surface_layer.html">Standard Surface Layer</a></li>
 </ul>
 </details></li>
 </ul>
@@ -276,7 +276,7 @@
       
       
       
-      <li><a href="../../_sources/source/api/abcconfigs.class_model.standard_radiation_w_clouds.rst" target="_blank"
+      <li><a href="../../_sources/source/api/abcconfigs.class_model.cloudy_radiation.rst" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -354,8 +354,8 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#abcconfigs.class_model.standard_radiation_w_clouds.init_conds_kwargs"><code class="docutils literal notranslate"><span class="pre">init_conds_kwargs</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#abcconfigs.class_model.standard_radiation_w_clouds.model_kwargs"><code class="docutils literal notranslate"><span class="pre">model_kwargs</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#abcconfigs.class_model.cloudy_radiation.init_conds_kwargs"><code class="docutils literal notranslate"><span class="pre">init_conds_kwargs</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#abcconfigs.class_model.cloudy_radiation.model_kwargs"><code class="docutils literal notranslate"><span class="pre">model_kwargs</span></code></a></li>
 </ul>
             </nav>
         </div>
@@ -367,16 +367,16 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="module-abcconfigs.class_model.standard_radiation_w_clouds">
-<span id="standard-radiation-w-clouds"></span><h1>Standard Radiation W Clouds<a class="headerlink" href="#module-abcconfigs.class_model.standard_radiation_w_clouds" title="Link to this heading">#</a></h1>
+  <section id="module-abcconfigs.class_model.cloudy_radiation">
+<span id="standard-radiation-w-clouds"></span><h1>Standard Radiation W Clouds<a class="headerlink" href="#module-abcconfigs.class_model.cloudy_radiation" title="Link to this heading">#</a></h1>
 <dl class="py data">
-<dt class="sig sig-object py" id="abcconfigs.class_model.standard_radiation_w_clouds.init_conds_kwargs">
-<span class="sig-prename descclassname"><span class="pre">abcconfigs.class_model.standard_radiation_w_clouds.</span></span><span class="sig-name descname"><span class="pre">init_conds_kwargs</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'net_rad':</span> <span class="pre">400}</span></em><a class="headerlink" href="#abcconfigs.class_model.standard_radiation_w_clouds.init_conds_kwargs" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="abcconfigs.class_model.cloudy_radiation.init_conds_kwargs">
+<span class="sig-prename descclassname"><span class="pre">abcconfigs.class_model.cloudy_radiation.</span></span><span class="sig-name descname"><span class="pre">init_conds_kwargs</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'net_rad':</span> <span class="pre">400}</span></em><a class="headerlink" href="#abcconfigs.class_model.cloudy_radiation.init_conds_kwargs" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py data">
-<dt class="sig sig-object py" id="abcconfigs.class_model.standard_radiation_w_clouds.model_kwargs">
-<span class="sig-prename descclassname"><span class="pre">abcconfigs.class_model.standard_radiation_w_clouds.</span></span><span class="sig-name descname"><span class="pre">model_kwargs</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'doy':</span> <span class="pre">268.0,</span> <span class="pre">'lat':</span> <span class="pre">51.97,</span> <span class="pre">'lon':</span> <span class="pre">-4.93,</span> <span class="pre">'tstart':</span> <span class="pre">6.8}</span></em><a class="headerlink" href="#abcconfigs.class_model.standard_radiation_w_clouds.model_kwargs" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="abcconfigs.class_model.cloudy_radiation.model_kwargs">
+<span class="sig-prename descclassname"><span class="pre">abcconfigs.class_model.cloudy_radiation.</span></span><span class="sig-name descname"><span class="pre">model_kwargs</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'doy':</span> <span class="pre">268.0,</span> <span class="pre">'lat':</span> <span class="pre">51.97,</span> <span class="pre">'lon':</span> <span class="pre">-4.93,</span> <span class="pre">'tstart':</span> <span class="pre">6.8}</span></em><a class="headerlink" href="#abcconfigs.class_model.cloudy_radiation.model_kwargs" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 </section>
@@ -402,7 +402,7 @@ document.write(`
       </div>
     </a>
     <a class="right-next"
-       href="abcconfigs.class_model.standard_surface_layer.html"
+       href="abcconfigs.class_model.obukhov_surface_layer.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
@@ -426,8 +426,8 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#abcconfigs.class_model.standard_radiation_w_clouds.init_conds_kwargs"><code class="docutils literal notranslate"><span class="pre">init_conds_kwargs</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#abcconfigs.class_model.standard_radiation_w_clouds.model_kwargs"><code class="docutils literal notranslate"><span class="pre">model_kwargs</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#abcconfigs.class_model.cloudy_radiation.init_conds_kwargs"><code class="docutils literal notranslate"><span class="pre">init_conds_kwargs</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#abcconfigs.class_model.cloudy_radiation.model_kwargs"><code class="docutils literal notranslate"><span class="pre">model_kwargs</span></code></a></li>
 </ul>
   </nav></div>
 

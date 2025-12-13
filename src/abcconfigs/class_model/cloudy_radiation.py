@@ -1,7 +1,7 @@
 import jax.numpy as jnp
 
 init_conds_kwargs = {
-    "net_rad": jnp.array(400),
+    "net_rad": jnp.array(400.0),
 }
 """"""
 model_kwargs = {
@@ -9,6 +9,5 @@ model_kwargs = {
     "lon": jnp.array(-4.93),
     "doy": jnp.array(268.0),
     "tstart": jnp.array(6.8),
-    "cc": jnp.array(0.0),
 }
 """"""

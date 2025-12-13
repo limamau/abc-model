@@ -10,7 +10,7 @@ from ..abstracts import AbstractSurfaceLayerModel
 
 
 @dataclass
-class MinimalSurfaceLayerState(Pytree):
+class SimpleSurfaceLayerState(Pytree):
     """Minimal surface layer model initial state."""
 
     ustar: Array
@@ -24,10 +24,10 @@ class MinimalSurfaceLayerState(Pytree):
 
 
 # alias
-MinimalSurfaceLayerInitConds = MinimalSurfaceLayerState
+SimpleSurfaceLayerInitConds = SimpleSurfaceLayerState
 
 
-class MinimalSurfaceLayerModel(AbstractSurfaceLayerModel):
+class SimpleSurfaceLayerModel(AbstractSurfaceLayerModel):
     """Minimal surface layer model with constant friction velocity."""
 
     def __init__(self):

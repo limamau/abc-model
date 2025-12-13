@@ -88,5 +88,5 @@ class JarvisStewartModel(AbstractStandardLandSurfaceModel):
         state: AbstractCoupledState,
         const: PhysicalConstants,
     ) -> AbstractCoupledState:
-        """No CO2 flux is computed using this model. See :class:`~abcmodel.land_surface.aquacrop.AquaCropModel`."""
+        """No CO2 flux is computed using this model. See :class:`~abcmodel.land_surface.ags.AgsModel`."""
         return state

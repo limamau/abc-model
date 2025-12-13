@@ -11,7 +11,7 @@ from ..abstracts import AbstractSurfaceLayerModel, AbstractSurfaceLayerState
 
 
 @dataclass
-class StandardSurfaceLayerState(AbstractSurfaceLayerState, Pytree):
+class ObukhovSurfaceLayerState(AbstractSurfaceLayerState, Pytree):
     """Standard surface layer model state."""
 
     # the following variables should be initialized by the user
@@ -64,10 +64,10 @@ class StandardSurfaceLayerState(AbstractSurfaceLayerState, Pytree):
 
 
 # alias
-StandardSurfaceLayerInitConds = StandardSurfaceLayerState
+ObukhovSurfaceLayerInitConds = ObukhovSurfaceLayerState
 
 
-class StandardSurfaceLayerModel(AbstractSurfaceLayerModel):
+class ObukhovSurfaceLayerModel(AbstractSurfaceLayerModel):
     """Standard surface layer model with atmospheric stability corrections.
 
     Calculates surface-atmosphere exchange using Monin-Obukhov similarity theory
@@ -79,7 +79,7 @@ class StandardSurfaceLayerModel(AbstractSurfaceLayerModel):
 
     def run(
         self, state: AbstractCoupledState, const: PhysicalConstants
-    ) -> StandardSurfaceLayerState:
+    ) -> ObukhovSurfaceLayerState:
         """Run the model.
 
         Args:

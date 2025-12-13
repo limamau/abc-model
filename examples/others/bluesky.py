@@ -28,11 +28,11 @@ def main():
 
     # surface layer
     surface_layer_init_conds = (
-        abcmodel.atmosphere.surface_layer.StandardSurfaceLayerInitConds(
-            **cm.standard_surface_layer.init_conds_kwargs
+        abcmodel.atmosphere.surface_layer.ObukhovSurfaceLayerInitConds(
+            **cm.obukhov_surface_layer.init_conds_kwargs
         )
     )
-    surface_layer_model = abcmodel.atmosphere.surface_layer.StandardSurfaceLayerModel()
+    surface_layer_model = abcmodel.atmosphere.surface_layer.ObukhovSurfaceLayerModel()
 
     # mixed layer
     mixed_layer_init_conds = abcmodel.atmosphere.mixed_layer.BulkMixedLayerInitConds(
@@ -46,12 +46,16 @@ def main():
     cloud_init_conds = abcmodel.atmosphere.clouds.NoCloudState()
     cloud_model = abcmodel.atmosphere.clouds.NoCloudModel()
 
-    # define coupler and coupled state
     # define atmosphere model
     atmosphere_model = abcmodel.atmosphere.DayOnlyAtmosphereModel(
         surface_layer=surface_layer_model,
         mixed_layer=mixed_layer_model,
         clouds=cloud_model,
+    )
+    atmosphere_init_conds = abcmodel.atmosphere.DayOnlyAtmosphereState(
+        surface_layer=surface_layer_init_conds,
+        mixed_layer=mixed_layer_init_conds,
+        clouds=cloud_init_conds,
     )
 
     # define coupler and coupled state
@@ -61,11 +65,7 @@ def main():
         atmosphere=atmosphere_model,
     )
     state = abcoupler.init_state(
-        radiation_init_conds,
-        land_surface_init_conds,
-        surface_layer_init_conds,
-        mixed_layer_init_conds,
-        cloud_init_conds,
+        radiation_init_conds, land_surface_init_conds, atmosphere_init_conds
     )
 
     # run run run
@@ -75,32 +75,32 @@ def main():
     plt.figure(figsize=(12, 8))
 
     plt.subplot(231)
-    plt.plot(time, trajectory.h_abl)
+    plt.plot(time, trajectory.atmosphere.mixed_layer.h_abl)
     plt.xlabel("time [h]")
     plt.ylabel("h [m]")
 
     plt.subplot(234)
-    plt.plot(time, trajectory.theta)
+    plt.plot(time, trajectory.atmosphere.mixed_layer.theta)
     plt.xlabel("time [h]")
     plt.ylabel("theta [K]")
 
     plt.subplot(232)
-    plt.plot(time, trajectory.q * 1000.0)
+    plt.plot(time, trajectory.atmosphere.mixed_layer.q * 1000.0)
     plt.xlabel("time [h]")
     plt.ylabel("q [g kg-1]")
 
     plt.subplot(235)
-    plt.plot(time, trajectory.cc_frac)
+    plt.plot(time, trajectory.atmosphere.clouds.cc_frac)
     plt.xlabel("time [h]")
     plt.ylabel("cloud fraction [-]")
 
     plt.subplot(233)
-    plt.plot(time, trajectory.wCO2)
+    plt.plot(time, trajectory.land.wCO2)
     plt.xlabel("time [h]")
     plt.ylabel("surface kinematic CO2 flux [mgC m-2 s-1]")
 
     plt.subplot(236)
-    plt.plot(time, trajectory.le_veg)
+    plt.plot(time, trajectory.land.le_veg)
     plt.xlabel("time [h]")
     plt.ylabel("transpiration [W m-2]")
 

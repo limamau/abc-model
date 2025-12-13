@@ -29,11 +29,11 @@ def main():
 
     # surface layer
     surface_layer_init_conds = (
-        abcmodel.atmosphere.surface_layer.StandardSurfaceLayerInitConds(
-            **cm.standard_surface_layer.init_conds_kwargs
+        abcmodel.atmosphere.surface_layer.ObukhovSurfaceLayerInitConds(
+            **cm.obukhov_surface_layer.init_conds_kwargs
         )
     )
-    surface_layer_model = abcmodel.atmosphere.surface_layer.StandardSurfaceLayerModel()
+    surface_layer_model = abcmodel.atmosphere.surface_layer.ObukhovSurfaceLayerModel()
 
     # mixed layer
     mixed_layer_init_conds = abcmodel.atmosphere.mixed_layer.BulkMixedLayerInitConds(
@@ -44,10 +44,9 @@ def main():
     )
 
     # clouds
-    cloud_init_conds = abcmodel.atmosphere.clouds.StandardCumulusInitConds()
-    cloud_model = abcmodel.atmosphere.clouds.StandardCumulusModel()
+    cloud_init_conds = abcmodel.atmosphere.clouds.CumulusInitConds()
+    cloud_model = abcmodel.atmosphere.clouds.CumulusModel()
 
-    # define coupler and coupled state
     # define atmosphere model
     atmosphere_model = abcmodel.atmosphere.DayOnlyAtmosphereModel(
         surface_layer=surface_layer_model,
@@ -61,14 +60,11 @@ def main():
         land=land_surface_model,
         atmosphere=atmosphere_model,
     )
-    
-    # Construct hierarchical state
     atmosphere_state = abcmodel.atmosphere.DayOnlyAtmosphereState(
         surface_layer=surface_layer_init_conds,
         mixed_layer=mixed_layer_init_conds,
         clouds=cloud_init_conds,
     )
-    
     state = abcoupler.init_state(
         radiation_init_conds,
         land_surface_init_conds,
@@ -87,7 +83,13 @@ def main():
     axes[0].set_xlabel("time [h]")
     axes[0].set_ylabel("Total water mass [kg m-2]")
     axes[0].grid(True, alpha=0.3)
-    axes[1].plot(time, trajectory.atmosphere.mixed_layer.q * trajectory.atmosphere.mixed_layer.h_abl * const.rho, label="Vapor")
+    axes[1].plot(
+        time,
+        trajectory.atmosphere.mixed_layer.q
+        * trajectory.atmosphere.mixed_layer.h_abl
+        * const.rho,
+        label="Vapor",
+    )
     axes[1].plot(time, trajectory.land.wg * const.rhow * 0.1, label="Soil layer 1")
     axes[1].plot(time, trajectory.land.wl * const.rhow, label="Canopy")
     axes[1].set_xlabel("time [h]")

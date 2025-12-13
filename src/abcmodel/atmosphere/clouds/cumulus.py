@@ -9,7 +9,7 @@ from ..abstracts import AbstractCloudModel, AbstractCloudState
 
 
 @dataclass
-class StandardCumulusState(AbstractCloudState, Pytree):
+class CumulusState(AbstractCloudState, Pytree):
     """Standard cumulus state."""
 
     cc_frac: Array = field(default_factory=lambda: jnp.array(0.0))
@@ -29,10 +29,10 @@ class StandardCumulusState(AbstractCloudState, Pytree):
 
 
 # alias
-StandardCumulusInitConds = StandardCumulusState
+CumulusInitConds = CumulusState
 
 
-class StandardCumulusModel(AbstractCloudModel):
+class CumulusModel(AbstractCloudModel):
     """Standard cumulus cloud model based on Neggers et al. (2006/7).
 
     This model calculates shallow cumulus convection properties using a variance-based
@@ -52,7 +52,7 @@ class StandardCumulusModel(AbstractCloudModel):
 
     def run(
         self, state: AbstractCoupledState, const: PhysicalConstants
-    ) -> StandardCumulusState:
+    ) -> CumulusState:
         """Run the model."""
         cloud_state = state.atmosphere.clouds
         ml_state = state.atmosphere.mixed_layer

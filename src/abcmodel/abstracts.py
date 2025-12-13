@@ -81,7 +81,7 @@ class AbstractModel:
 class AbstractRadiationModel(AbstractModel, Generic[R]):
     """Abstract radiation model class to define the interface for all radiation models."""
 
-    tstart: float
+    tstart: Array
     """Start time of the model."""
 
     @abstractmethod

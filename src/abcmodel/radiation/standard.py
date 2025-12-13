@@ -48,11 +48,11 @@ class StandardRadiationModel(AbstractRadiationModel[StandardRadiationState]):
 
     def __init__(
         self,
-        lat: float,
-        lon: float,
-        doy: float,
-        tstart: float,
-        cc: float,
+        lat: Array,
+        lon: Array,
+        doy: Array,
+        tstart: Array,
+        cc: Array,
     ):
         self.lat = lat
         self.lon = lon
@@ -118,7 +118,7 @@ class StandardRadiationModel(AbstractRadiationModel[StandardRadiationState]):
             out_lrad=out_lrad,
         )
 
-    def compute_solar_declination(self, doy: float) -> Array:
+    def compute_solar_declination(self, doy: Array) -> Array:
         """Compute solar declination angle based on day of year.
 
         Args:
@@ -189,11 +189,11 @@ class StandardRadiationModel(AbstractRadiationModel[StandardRadiationState]):
 
     def compute_air_temperature(
         self,
-        surf_pressure: float,
-        h_abl: float,
-        theta: float,
+        surf_pressure: Array,
+        h_abl: Array,
+        theta: Array,
         const: PhysicalConstants,
-    ) -> float:
+    ) -> Array:
         """Compute air temperature at reference level using potential temperature.
 
         Args:
@@ -282,7 +282,7 @@ class StandardRadiationModel(AbstractRadiationModel[StandardRadiationState]):
         self,
         solar_elevation: Array,
         atmospheric_transmission: Array,
-        air_temp: float,
+        air_temp: Array,
         alpha: Array,
         surf_temp: Array,
         const: PhysicalConstants,

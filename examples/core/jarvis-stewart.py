@@ -28,11 +28,11 @@ def main():
 
     # surface layer
     surface_layer_init_conds = (
-        abcmodel.atmosphere.surface_layer.StandardSurfaceLayerInitConds(
-            **cm.standard_surface_layer.init_conds_kwargs
+        abcmodel.atmosphere.surface_layer.ObukhovSurfaceLayerInitConds(
+            **cm.obukhov_surface_layer.init_conds_kwargs
         )
     )
-    surface_layer_model = abcmodel.atmosphere.surface_layer.StandardSurfaceLayerModel()
+    surface_layer_model = abcmodel.atmosphere.surface_layer.ObukhovSurfaceLayerModel()
 
     # mixed layer
     mixed_layer_init_conds = abcmodel.atmosphere.mixed_layer.BulkMixedLayerInitConds(
@@ -43,31 +43,26 @@ def main():
     )
 
     # clouds
-    cloud_init_conds = abcmodel.atmosphere.clouds.StandardCumulusInitConds()
-    cloud_model = abcmodel.atmosphere.clouds.StandardCumulusModel()
+    cloud_init_conds = abcmodel.atmosphere.clouds.CumulusInitConds()
+    cloud_model = abcmodel.atmosphere.clouds.CumulusModel()
 
-    # define coupler and coupled state
     # define atmosphere model
     atmosphere_model = abcmodel.atmosphere.DayOnlyAtmosphereModel(
         surface_layer=surface_layer_model,
         mixed_layer=mixed_layer_model,
         clouds=cloud_model,
     )
-
     # define coupler and coupled state
     abcoupler = abcmodel.ABCoupler(
         radiation=radiation_model,
         land=land_surface_model,
         atmosphere=atmosphere_model,
     )
-    
-    # Construct hierarchical state
     atmosphere_state = abcmodel.atmosphere.DayOnlyAtmosphereState(
         surface_layer=surface_layer_init_conds,
         mixed_layer=mixed_layer_init_conds,
         clouds=cloud_init_conds,
     )
-    
     state = abcoupler.init_state(
         radiation_init_conds,
         land_surface_init_conds,

@@ -79,7 +79,7 @@ loaded through the ``abcconfigs`` module.
        **cm.jarvis_stewart.init_conds_kwargs,
    )
    surface_layer_init_conds = abcmodel.surface_layer.StandardSurfaceLayerInitConds(
-       **cm.standard_surface_layer.init_conds_kwargs
+       **cm.obukhov_surface_layer.init_conds_kwargs
    )
    mixed_layer_init_conds = abcmodel.mixed_layer.BulkMixedLayerInitConds(
        **cm.bulk_mixed_layer.init_conds_kwargs,
@@ -110,17 +110,17 @@ Changing Models and Parameters
 ------------------------------
 
 You can easily swap out models or change their parameters. For example, to
-replace the ``JarvisStewartModel`` with ``AquaCropModel`` and change it from
+replace the ``JarvisStewartModel`` with ``AgsModel`` and change it from
 C3 to C4 vegetation, you can do the following:
 
 .. code-block:: python
 
    # New parameters definition
-   aquacrop_model_kwargs = cm.aquacrop.model_kwargs
-   aquacrop_model_kwargs['c3c4'] = 'c4'
+   ags_model_kwargs = cm.ags.model_kwargs
+   ags_model_kwargs['c3c4'] = 'c4'
 
    # Define a new land model
-   land_surface_model = abcmodel.land_surface.AquaCropModel(**aquacrop_model_kwargs)
+   land_surface_model = abcmodel.land_surface.AgsModel(**ags_model_kwargs)
 
    # ... then redefine the coupler, create a new state, and integrate.
 

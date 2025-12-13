@@ -22,7 +22,6 @@ class DiagnosticsState(Pytree):
     total_energy: float = 0.0
 
 
-# type variables for CoupledState
 A = TypeVar("A", bound=AbstractAtmosphereState)
 L = TypeVar("L", bound=AbstractLandState)
 R = TypeVar("R", bound=AbstractRadiationState)
