@@ -1,11 +1,6 @@
 from dataclasses import dataclass, field, replace
 
 import jax.numpy as jnp
-
-# conversion factor mgC m-2 s-1 to ppm m s-1
-# limamau: this conversion could be done in a post-processing
-# function after jax.lax.scan just like in neuralgcm/dinosaur
-# FAC = const.mair / (const.rho * const.mco2)
 from simple_pytree import Pytree
 
 from ...abstracts import AbstractCoupledState
