@@ -31,9 +31,9 @@ A = TypeVar("A", bound=AbstractAtmosphereState)
 class CoupledState(AbstractCoupledState[R, L, A], Generic[R, L, A]):
     """Hierarchical coupled state, generic over component types."""
 
-    radiation: R
+    rad: R
     land: L
-    atmosphere: A
+    atmos: A
     diagnostics: DiagnosticsState = field(default_factory=DiagnosticsState)
 
 
@@ -42,25 +42,25 @@ class ABCoupler:
 
     def __init__(
         self,
-        radiation: AbstractRadiationModel,
+        rad: AbstractRadiationModel,
         land: AbstractLandModel,
-        atmosphere: AbstractAtmosphereModel,
+        atmos: AbstractAtmosphereModel,
     ):
-        self.radiation = radiation
+        self.rad = rad
         self.land = land
-        self.atmosphere = atmosphere
+        self.atmos = atmos
         self.const = PhysicalConstants()
 
     @staticmethod
     def init_state(
-        radiation_state: R,
+        rad_state: R,
         land_state: L,
-        atmosphere_state: A,
+        atmos_state: A,
     ) -> CoupledState[R, L, A]:
         return CoupledState(
-            radiation=radiation_state,
+            rad=rad_state,
             land=land_state,
-            atmosphere=atmosphere_state,
+            atmos=atmos_state,
         )
 
     def compute_diagnostics(self, state: CoupledState) -> CoupledState:

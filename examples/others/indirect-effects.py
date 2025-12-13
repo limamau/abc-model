@@ -12,53 +12,51 @@ def run_wrapper(wg: float, q: float, config):
     # total run time [s]
     runtime = 12 * 3600.0
 
-    # radiation with clouds
-    radiation_init_conds = abcmodel.radiation.StandardRadiationInitConds(
+    # rad with clouds
+    rad_init_conds = abcmodel.rad.StandardRadiationInitConds(
         **config.std_rad_init_conds_kwargs
     )
-    radiation_model = abcmodel.radiation.StandardRadiationModel(
-        **config.std_rad_model_kwargs
-    )
+    rad_model = abcmodel.rad.StandardRadiationModel(**config.std_rad_model_kwargs)
 
     # land surface
     ags_kwargs = config.ags_init_conds_kwargs
     ags_kwargs["wg"] = wg
-    land_surface_init_conds = abcmodel.land.AgsInitConds(
+    land_init_conds = abcmodel.land.AgsInitConds(
         **ags_kwargs,
     )
-    land_surface_model = abcmodel.land.AgsModel(
+    land_model = abcmodel.land.AgsModel(
         **config.ags_model_kwargs,
     )
 
     # surface layer
     surface_layer_init_conds = (
-        abcmodel.atmosphere.surface_layer.ObukhovSurfaceLayerInitConds(
+        abcmodel.atmos.surface_layer.ObukhovSurfaceLayerInitConds(
             **config.std_sl_init_conds_kwargs
         )
     )
-    surface_layer_model = abcmodel.atmosphere.surface_layer.ObukhovSurfaceLayerModel()
+    surface_layer_model = abcmodel.atmos.surface_layer.ObukhovSurfaceLayerModel()
 
     # mixed layer
     ml_kwargs = config.bulk_ml_init_conds_kwargs
     ml_kwargs["q"] = q
-    mixed_layer_init_conds = abcmodel.atmosphere.mixed_layer.BulkMixedLayerInitConds(
+    mixed_layer_init_conds = abcmodel.atmos.mixed_layer.BulkMixedLayerInitConds(
         **ml_kwargs,
     )
-    mixed_layer_model = abcmodel.atmosphere.mixed_layer.BulkMixedLayerModel(
+    mixed_layer_model = abcmodel.atmos.mixed_layer.BulkMixedLayerModel(
         **config.bulk_ml_model_kwargs,
     )
 
     # clouds
-    cloud_init_conds = abcmodel.atmosphere.clouds.CumulusInitConds()
-    cloud_model = abcmodel.atmosphere.clouds.CumulusModel()
+    cloud_init_conds = abcmodel.atmos.clouds.CumulusInitConds()
+    cloud_model = abcmodel.atmos.clouds.CumulusModel()
 
-    # define atmosphere model
-    atmosphere_model = abcmodel.atmosphere.DayOnlyAtmosphereModel(
+    # define atmos model
+    atmos_model = abcmodel.atmos.DayOnlyAtmosphereModel(
         surface_layer=surface_layer_model,
         mixed_layer=mixed_layer_model,
         clouds=cloud_model,
     )
-    atmosphere_init_conds = abcmodel.atmosphere.DayOnlyAtmosphereState(
+    atmos_init_conds = abcmodel.atmos.DayOnlyAtmosphereState(
         surface_layer=surface_layer_init_conds,
         mixed_layer=mixed_layer_init_conds,
         clouds=cloud_init_conds,
@@ -66,15 +64,15 @@ def run_wrapper(wg: float, q: float, config):
 
     # define coupler and coupled state
     abcoupler = abcmodel.ABCoupler(
-        radiation=radiation_model,
-        land=land_surface_model,
-        atmosphere=atmosphere_model,
+        rad=rad_model,
+        land=land_model,
+        atmos=atmos_model,
     )
 
     state = abcoupler.init_state(
-        radiation_init_conds,
-        land_surface_init_conds,
-        atmosphere_init_conds,
+        rad_init_conds,
+        land_init_conds,
+        atmos_init_conds,
     )
 
     return abcmodel.integrate(state, abcoupler, dt=dt, runtime=runtime)
@@ -92,7 +90,7 @@ def make_fancy_plot(
     # mixed layer
     axes[0, 0].plot(
         time[::factor],
-        traj.atmosphere.mixed_layer.h_abl[::factor],
+        traj.atmos.mixed_layer.h_abl[::factor],
         color=color,
         marker=marker,
         linestyle="None",
@@ -148,7 +146,7 @@ def make_fancy_plot(
 
     axes[1, 2].plot(
         time[::factor],
-        traj.atmosphere.mixed_layer.theta[::factor],
+        traj.atmos.mixed_layer.theta[::factor],
         color=color,
         marker=marker,
         linestyle="None",
@@ -157,7 +155,7 @@ def make_fancy_plot(
 
     axes[1, 3].plot(
         time[::factor],
-        traj.atmosphere.surface_layer.temp_2m[::factor],
+        traj.atmos.surface_layer.temp_2m[::factor],
         color=color,
         marker=marker,
         linestyle="None",
@@ -183,7 +181,7 @@ def make_fancy_plot(
     # - - - - - - - - - - - - - - - - - #
     axes[2, 2].plot(
         time[::factor],
-        traj.atmosphere.mixed_layer.q[::factor],
+        traj.atmos.mixed_layer.q[::factor],
         color=color,
         marker=marker,
         linestyle="None",
@@ -239,10 +237,10 @@ def make_fancy_plot(
     )
     axes[3, 3].set_title("LEliq [W/m²]")
 
-    # radiation
+    # rad
     axes[4, 0].plot(
         time[::factor],
-        traj.radiation.in_srad[::factor],
+        traj.rad.in_srad[::factor],
         color=color,
         marker=marker,
         linestyle="None",
@@ -251,7 +249,7 @@ def make_fancy_plot(
 
     axes[4, 1].plot(
         time[::factor],
-        traj.radiation.out_srad[::factor],
+        traj.rad.out_srad[::factor],
         color=color,
         marker=marker,
         linestyle="None",
@@ -260,7 +258,7 @@ def make_fancy_plot(
 
     axes[4, 2].plot(
         time[::factor],
-        traj.radiation.in_lrad[::factor],
+        traj.rad.in_lrad[::factor],
         color=color,
         marker=marker,
         linestyle="None",
@@ -269,7 +267,7 @@ def make_fancy_plot(
 
     axes[4, 3].plot(
         time[::factor],
-        traj.radiation.out_lrad[::factor],
+        traj.rad.out_lrad[::factor],
         color=color,
         marker=marker,
         linestyle="None",

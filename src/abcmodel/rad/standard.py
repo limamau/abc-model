@@ -14,18 +14,18 @@ from ..utils import Array, PhysicalConstants
 
 @dataclass
 class StandardRadiationState(AbstractRadiationState):
-    """Standard radiation model state."""
+    """Standard rad model state."""
 
     net_rad: Array
-    """Net surface radiation [W m-2]."""
+    """Net surface rad [W m-2]."""
     in_srad: Array = field(default_factory=lambda: jnp.array(jnp.nan))
-    """Incoming solar radiation [W m-2]."""
+    """Incoming solar rad [W m-2]."""
     out_srad: Array = field(default_factory=lambda: jnp.array(jnp.nan))
-    """Outgoing solar radiation [W m-2]."""
+    """Outgoing solar rad [W m-2]."""
     in_lrad: Array = field(default_factory=lambda: jnp.array(jnp.nan))
-    """Incoming longwave radiation [W m-2]."""
+    """Incoming longwave rad [W m-2]."""
     out_lrad: Array = field(default_factory=lambda: jnp.array(jnp.nan))
-    """Outgoing longwave radiation [W m-2]."""
+    """Outgoing longwave rad [W m-2]."""
 
 
 StandardRadiationInitConds = StandardRadiationState
@@ -33,11 +33,11 @@ StateAlias = AbstractCoupledState[StandardRadiationState, LandT, AtmosT]
 
 
 class StandardRadiationModel(AbstractRadiationModel[StandardRadiationState]):
-    """Standard radiation model with solar position and atmospheric effects.
+    """Standard rad model with solar position and atmospheric effects.
 
-    Calculates time-varying solar radiation based on geographic location and
+    Calculates time-varying solar rad based on geographic location and
     atmospheric conditions. Includes both shortwave (solar) and longwave (thermal)
-    radiation components.
+    rad components.
 
     Args:
         lat: latitude [degrees], range -90 to +90.
@@ -68,7 +68,7 @@ class StandardRadiationModel(AbstractRadiationModel[StandardRadiationState]):
         dt: float,
         const: PhysicalConstants,
     ) -> StandardRadiationState:
-        """Calculate radiation components and net surface radiation.
+        """Calculate rad components and net surface rad.
 
         Args:
             state: CoupledState.
@@ -77,7 +77,7 @@ class StandardRadiationModel(AbstractRadiationModel[StandardRadiationState]):
             const: PhysicalConstants object.
 
         Returns:
-            The updated radiation state object.
+            The updated rad state object.
         """
         # needed components
         rad_state = state.rad
@@ -102,7 +102,7 @@ class StandardRadiationModel(AbstractRadiationModel[StandardRadiationState]):
             out_srad,
             in_lrad,
             out_lrad,
-        ) = self.compute_radiation_components(
+        ) = self.compute_rad_components(
             solar_elevation,
             atmospheric_transmission,
             air_temp,
@@ -242,7 +242,7 @@ class StandardRadiationModel(AbstractRadiationModel[StandardRadiationState]):
         return air_temp
 
     def compute_atmospheric_transmission(self, solar_elevation: Array) -> Array:
-        """Compute atmospheric transmission coefficient for solar radiation.
+        """Compute atmospheric transmission coefficient for solar rad.
 
         Args:
             solar_elevation: sine of the solar elevation angle [-].
@@ -279,7 +279,7 @@ class StandardRadiationModel(AbstractRadiationModel[StandardRadiationState]):
 
         return clear_sky_trans * cloud_reduction
 
-    def compute_radiation_components(
+    def compute_rad_components(
         self,
         solar_elevation: Array,
         atmospheric_transmission: Array,
@@ -288,7 +288,7 @@ class StandardRadiationModel(AbstractRadiationModel[StandardRadiationState]):
         surf_temp: Array,
         const: PhysicalConstants,
     ) -> tuple[Array, Array, Array, Array, Array]:
-        """Compute all radiation components and update attributes.
+        """Compute all rad components and update attributes.
 
         Args:
             solar_elevation: sine of the solar elevation angle [-].
@@ -299,17 +299,17 @@ class StandardRadiationModel(AbstractRadiationModel[StandardRadiationState]):
             const:
 
         Returns:
-            A tuple containing net radiation, incoming shortwave radiation, outgoing shortwave
-            radiation, incoming longwave radiation and outgoing longwave radiation [W/m^2].
+            A tuple containing net rad, incoming shortwave rad, outgoing shortwave
+            rad, incoming longwave rad and outgoing longwave rad [W/m^2].
 
         Notes:
-            This function calculates the four components of the surface radiation
-            budget and the resulting net radiation.
+            This function calculates the four components of the surface rad
+            budget and the resulting net rad.
 
-            **Shortwave radiation:**
+            **Shortwave rad:**
 
             1.  Incoming shortwave :math:`SW_{\\text{in}}` is the solar constant
-                :math:`S` attenuated by the atmosphere and projected onto the
+                :math:`S` attenuated by the atmos and projected onto the
                 surface, given by
 
                 .. math::
@@ -319,18 +319,18 @@ class StandardRadiationModel(AbstractRadiationModel[StandardRadiationState]):
                 :math:`\\sin(\\alpha)` is the sine of the solar elevation.
 
             2.  Outgoing shortwave :math:`SW_{\\text{out}}` is the fraction of
-                incoming radiation reflected by the surface (albedo, :math:`\\alpha`), given by
+                incoming rad reflected by the surface (albedo, :math:`\\alpha`), given by
 
                 .. math::
                     SW_{\\text{out}} = \\alpha \\cdot SW_{\\text{in}}.
 
-            **Longwave radiation:**
+            **Longwave rad:**
 
             Both longwave components are calculated using the Stefan-Boltzmann
             law :math:`E = \\epsilon \\sigma T^4`.
 
-            3.  Incoming longwave :math:`LW_{\\text{in}}` is the radiation from the
-                atmosphere, which is treated as a grey body with an emissivity
+            3.  Incoming longwave :math:`LW_{\\text{in}}` is the rad from the
+                atmos, which is treated as a grey body with an emissivity
                 :math:`\\epsilon_{\\text{atm}} = 0.8`, given by
 
                 .. math::
@@ -338,29 +338,29 @@ class StandardRadiationModel(AbstractRadiationModel[StandardRadiationState]):
 
                 where :math:`\\sigma` is the Stefan-Boltzmann constant `const.bolz`.
 
-            4.  Outgoing longwave :math:`LW_{\\text{out}}` is the radiation from the
+            4.  Outgoing longwave :math:`LW_{\\text{out}}` is the rad from the
                 surface, assuming an emissivity of 1.0, given by
 
                 .. math::
                     LW_{\\text{out}} = \\sigma \\cdot T_{\\text{surf}}^4.
 
-            **Net radiation:**
+            **Net rad:**
 
-            Finally, the net radiation :math:`R_{\\text{net}}` is given by the balance
+            Finally, the net rad :math:`R_{\\text{net}}` is given by the balance
 
             .. math::
                 R_{\\text{net}} = (SW_{\\text{in}} - SW_{\\text{out}}) +
                                  (LW_{\\text{in}} - LW_{\\text{out}}).
         """
-        # shortwave radiation components
+        # shortwave rad components
         in_srad = const.solar_in * atmospheric_transmission * solar_elevation
         out_srad = alpha * const.solar_in * atmospheric_transmission * solar_elevation
 
-        # longwave radiation components
+        # longwave rad components
         in_lrad = 0.8 * const.bolz * air_temp**4.0
         out_lrad = const.bolz * surf_temp**4.0
 
-        # net radiation
+        # net rad
         net_rad = in_srad - out_srad + in_lrad - out_lrad
 
         return net_rad, in_srad, out_srad, in_lrad, out_lrad

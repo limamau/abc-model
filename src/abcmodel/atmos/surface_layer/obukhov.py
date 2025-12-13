@@ -68,7 +68,7 @@ ObukhovSurfaceLayerInitConds = ObukhovSurfaceLayerState
 class ObukhovSurfaceLayerModel(AbstractSurfaceLayerModel):
     """Standard surface layer model with atmospheric stability corrections.
 
-    Calculates surface-atmosphere exchange using Monin-Obukhov similarity theory
+    Calculates surface-atmos exchange using Monin-Obukhov similarity theory
     with stability functions and iterative solution for Obukhov length.
     """
 

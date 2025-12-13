@@ -1,4 +1,4 @@
-"""Abstract classes for atmosphere sub-modules."""
+"""Abstract classes for atmos sub-modules."""
 
 from abc import abstractmethod
 

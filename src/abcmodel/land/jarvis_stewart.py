@@ -52,7 +52,7 @@ class JarvisStewartModel(AbstractStandardLandSurfaceModel):
         return new_state
 
     def compute_f1(self, in_srad: Array) -> Array:
-        """Compute radiation factor f1."""
+        """Compute rad factor f1."""
         ratio = (0.004 * in_srad + 0.05) / (0.81 * (0.004 * in_srad + 1.0))
         f1 = 1.0 / jnp.minimum(1.0, ratio)
         return f1
@@ -84,5 +84,5 @@ class JarvisStewartModel(AbstractStandardLandSurfaceModel):
         state: AbstractCoupledState,
         const: PhysicalConstants,
     ) -> AbstractCoupledState:
-        """No CO2 flux is computed using this model. See :class:`~abcmodel.land_surface.ags.AgsModel`."""
+        """No CO2 flux is computed using this model. See :class:`~abcmodel.land.ags.AgsModel`."""
         return state

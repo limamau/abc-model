@@ -349,10 +349,10 @@ class AgsModel(AbstractStandardLandSurfaceModel):
         self,
         in_srad: Array,
     ) -> Array:
-        """Compute absorbed photosynthetically active radiation (PAR).
+        """Compute absorbed photosynthetically active rad (PAR).
 
         Notes:
-            Absorbed PAR is estimated as 50% of the incoming shortwave radiation scaled by vegetation cover:
+            Absorbed PAR is estimated as 50% of the incoming shortwave rad scaled by vegetation cover:
 
             .. math::
                 PAR = 0.5 \\cdot S_{\\downarrow} \\cdot c_{veg}
@@ -394,7 +394,7 @@ class AgsModel(AbstractStandardLandSurfaceModel):
 
         Notes:
             The canopy conductance is obtained by integrating the leaf conductance over the canopy depth,
-            assuming an exponential decay of radiation and photosynthetic capacity.
+            assuming an exponential decay of rad and photosynthetic capacity.
 
         References:
             Equations E.13, E.14, E.15 from the CLASS book.

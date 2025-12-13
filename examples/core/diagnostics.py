@@ -11,44 +11,44 @@ def main():
     # total run time [s]
     runtime = 12 * 3600.0
 
-    # radiation
-    radiation_init_conds = abcmodel.radiation.StandardRadiationInitConds(
+    # rad
+    rad_init_conds = abcmodel.rad.StandardRadiationInitConds(
         **cm.standard_radiation.init_conds_kwargs
     )
-    radiation_model = abcmodel.radiation.StandardRadiationModel(
+    rad_model = abcmodel.rad.StandardRadiationModel(
         **cm.standard_radiation.model_kwargs,
     )
 
     # land surface
-    land_surface_init_conds = abcmodel.land.JarvisStewartInitConds(
+    land_init_conds = abcmodel.land.JarvisStewartInitConds(
         **cm.jarvis_stewart.init_conds_kwargs,
     )
-    land_surface_model = abcmodel.land.JarvisStewartModel(
+    land_model = abcmodel.land.JarvisStewartModel(
         **cm.jarvis_stewart.model_kwargs,
     )
 
     # surface layer
     surface_layer_init_conds = (
-        abcmodel.atmosphere.surface_layer.ObukhovSurfaceLayerInitConds(
+        abcmodel.atmos.surface_layer.ObukhovSurfaceLayerInitConds(
             **cm.obukhov_surface_layer.init_conds_kwargs
         )
     )
-    surface_layer_model = abcmodel.atmosphere.surface_layer.ObukhovSurfaceLayerModel()
+    surface_layer_model = abcmodel.atmos.surface_layer.ObukhovSurfaceLayerModel()
 
     # mixed layer
-    mixed_layer_init_conds = abcmodel.atmosphere.mixed_layer.BulkMixedLayerInitConds(
+    mixed_layer_init_conds = abcmodel.atmos.mixed_layer.BulkMixedLayerInitConds(
         **cm.bulk_mixed_layer.init_conds_kwargs,
     )
-    mixed_layer_model = abcmodel.atmosphere.mixed_layer.BulkMixedLayerModel(
+    mixed_layer_model = abcmodel.atmos.mixed_layer.BulkMixedLayerModel(
         **cm.bulk_mixed_layer.model_kwargs,
     )
 
     # clouds
-    cloud_init_conds = abcmodel.atmosphere.clouds.CumulusInitConds()
-    cloud_model = abcmodel.atmosphere.clouds.CumulusModel()
+    cloud_init_conds = abcmodel.atmos.clouds.CumulusInitConds()
+    cloud_model = abcmodel.atmos.clouds.CumulusModel()
 
-    # define atmosphere model
-    atmosphere_model = abcmodel.atmosphere.DayOnlyAtmosphereModel(
+    # define atmos model
+    atmos_model = abcmodel.atmos.DayOnlyAtmosphereModel(
         surface_layer=surface_layer_model,
         mixed_layer=mixed_layer_model,
         clouds=cloud_model,
@@ -56,19 +56,19 @@ def main():
 
     # define coupler and coupled state
     abcoupler = abcmodel.ABCoupler(
-        radiation=radiation_model,
-        land=land_surface_model,
-        atmosphere=atmosphere_model,
+        rad=rad_model,
+        land=land_model,
+        atmos=atmos_model,
     )
-    atmosphere_state = abcmodel.atmosphere.DayOnlyAtmosphereState(
+    atmos_state = abcmodel.atmos.DayOnlyAtmosphereState(
         surface_layer=surface_layer_init_conds,
         mixed_layer=mixed_layer_init_conds,
         clouds=cloud_init_conds,
     )
     state = abcoupler.init_state(
-        radiation_init_conds,
-        land_surface_init_conds,
-        atmosphere_state,
+        rad_init_conds,
+        land_init_conds,
+        atmos_state,
     )
 
     # run model with diagnostics enabled
@@ -85,9 +85,7 @@ def main():
     axes[0].grid(True, alpha=0.3)
     axes[1].plot(
         time,
-        trajectory.atmosphere.mixed_layer.q
-        * trajectory.atmosphere.mixed_layer.h_abl
-        * const.rho,
+        trajectory.atmos.mixed_layer.q * trajectory.atmos.mixed_layer.h_abl * const.rho,
         label="Vapor",
     )
     axes[1].plot(time, trajectory.land.wg * const.rhow * 0.1, label="Soil layer 1")

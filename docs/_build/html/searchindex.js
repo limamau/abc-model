@@ -70,24 +70,24 @@ Search.setIndex({
     "source/api/abcconfigs.class_model.ags",
     "source/api/abcconfigs.class_model.bulk_mixed_layer",
     "source/api/abcconfigs.class_model.jarvis_stewart",
-    "source/api/abcconfigs.class_model.standard_radiation",
-    "source/api/abcconfigs.class_model.cloudy_radiation",
+    "source/api/abcconfigs.class_model.standard_rad",
+    "source/api/abcconfigs.class_model.cloudy_rad",
     "source/api/abcconfigs.class_model.obukhov_surface_layer",
     "source/api/abcmodel",
     "source/api/abcmodel.abstracts",
-    "source/api/abcmodel.atmosphere",
-    "source/api/abcmodel.atmosphere.abstracts",
-    "source/api/abcmodel.atmosphere.clouds",
-    "source/api/abcmodel.atmosphere.clouds.cumulus",
-    "source/api/abcmodel.atmosphere.clouds.no_clouds",
-    "source/api/abcmodel.atmosphere.dayonly",
-    "source/api/abcmodel.atmosphere.mixed_layer",
-    "source/api/abcmodel.atmosphere.mixed_layer.bulk",
-    "source/api/abcmodel.atmosphere.mixed_layer.minimal",
-    "source/api/abcmodel.atmosphere.mixed_layer.stats",
-    "source/api/abcmodel.atmosphere.surface_layer",
-    "source/api/abcmodel.atmosphere.surface_layer.minimal",
-    "source/api/abcmodel.atmosphere.surface_layer.standard",
+    "source/api/abcmodel.atmos",
+    "source/api/abcmodel.atmos.abstracts",
+    "source/api/abcmodel.atmos.clouds",
+    "source/api/abcmodel.atmos.clouds.cumulus",
+    "source/api/abcmodel.atmos.clouds.no_clouds",
+    "source/api/abcmodel.atmos.dayonly",
+    "source/api/abcmodel.atmos.mixed_layer",
+    "source/api/abcmodel.atmos.mixed_layer.bulk",
+    "source/api/abcmodel.atmos.mixed_layer.minimal",
+    "source/api/abcmodel.atmos.mixed_layer.stats",
+    "source/api/abcmodel.atmos.surface_layer",
+    "source/api/abcmodel.atmos.surface_layer.minimal",
+    "source/api/abcmodel.atmos.surface_layer.standard",
     "source/api/abcmodel.coupling",
     "source/api/abcmodel.integration",
     "source/api/abcmodel.land",
@@ -95,9 +95,9 @@ Search.setIndex({
     "source/api/abcmodel.land.jarvis_stewart",
     "source/api/abcmodel.land.minimal",
     "source/api/abcmodel.land.standard",
-    "source/api/abcmodel.radiation",
-    "source/api/abcmodel.radiation.standard",
-    "source/api/abcmodel.radiation.standard_w_clouds",
+    "source/api/abcmodel.rad",
+    "source/api/abcmodel.rad.standard",
+    "source/api/abcmodel.rad.standard_w_clouds",
     "source/api/abcmodel.utils",
   ],
   envversion: {
@@ -125,24 +125,24 @@ Search.setIndex({
     "source/api/abcconfigs.class_model.ags.rst",
     "source/api/abcconfigs.class_model.bulk_mixed_layer.rst",
     "source/api/abcconfigs.class_model.jarvis_stewart.rst",
-    "source/api/abcconfigs.class_model.standard_radiation.rst",
-    "source/api/abcconfigs.class_model.cloudy_radiation.rst",
+    "source/api/abcconfigs.class_model.standard_rad.rst",
+    "source/api/abcconfigs.class_model.cloudy_rad.rst",
     "source/api/abcconfigs.class_model.obukhov_surface_layer.rst",
     "source/api/abcmodel.rst",
     "source/api/abcmodel.abstracts.rst",
-    "source/api/abcmodel.atmosphere.rst",
-    "source/api/abcmodel.atmosphere.abstracts.rst",
-    "source/api/abcmodel.atmosphere.clouds.rst",
-    "source/api/abcmodel.atmosphere.clouds.cumulus.rst",
-    "source/api/abcmodel.atmosphere.clouds.no_clouds.rst",
-    "source/api/abcmodel.atmosphere.dayonly.rst",
-    "source/api/abcmodel.atmosphere.mixed_layer.rst",
-    "source/api/abcmodel.atmosphere.mixed_layer.bulk.rst",
-    "source/api/abcmodel.atmosphere.mixed_layer.minimal.rst",
-    "source/api/abcmodel.atmosphere.mixed_layer.stats.rst",
-    "source/api/abcmodel.atmosphere.surface_layer.rst",
-    "source/api/abcmodel.atmosphere.surface_layer.minimal.rst",
-    "source/api/abcmodel.atmosphere.surface_layer.standard.rst",
+    "source/api/abcmodel.atmos.rst",
+    "source/api/abcmodel.atmos.abstracts.rst",
+    "source/api/abcmodel.atmos.clouds.rst",
+    "source/api/abcmodel.atmos.clouds.cumulus.rst",
+    "source/api/abcmodel.atmos.clouds.no_clouds.rst",
+    "source/api/abcmodel.atmos.dayonly.rst",
+    "source/api/abcmodel.atmos.mixed_layer.rst",
+    "source/api/abcmodel.atmos.mixed_layer.bulk.rst",
+    "source/api/abcmodel.atmos.mixed_layer.minimal.rst",
+    "source/api/abcmodel.atmos.mixed_layer.stats.rst",
+    "source/api/abcmodel.atmos.surface_layer.rst",
+    "source/api/abcmodel.atmos.surface_layer.minimal.rst",
+    "source/api/abcmodel.atmos.surface_layer.standard.rst",
     "source/api/abcmodel.coupling.rst",
     "source/api/abcmodel.integration.rst",
     "source/api/abcmodel.land.rst",
@@ -150,9 +150,9 @@ Search.setIndex({
     "source/api/abcmodel.land.jarvis_stewart.rst",
     "source/api/abcmodel.land.minimal.rst",
     "source/api/abcmodel.land.standard.rst",
-    "source/api/abcmodel.radiation.rst",
-    "source/api/abcmodel.radiation.standard.rst",
-    "source/api/abcmodel.radiation.standard_w_clouds.rst",
+    "source/api/abcmodel.rad.rst",
+    "source/api/abcmodel.rad.standard.rst",
+    "source/api/abcmodel.rad.standard_w_clouds.rst",
     "source/api/abcmodel.utils.rst",
   ],
   indexentries: {
@@ -174,42 +174,40 @@ Search.setIndex({
     "abcconfigs.class_model.jarvis_stewart": [
       [9, "module-abcconfigs.class_model.jarvis_stewart", false],
     ],
-    "abcconfigs.class_model.standard_radiation": [
-      [10, "module-abcconfigs.class_model.standard_radiation", false],
+    "abcconfigs.class_model.standard_rad": [
+      [10, "module-abcconfigs.class_model.standard_rad", false],
     ],
-    "abcconfigs.class_model.cloudy_radiation": [
-      [11, "module-abcconfigs.class_model.cloudy_radiation", false],
+    "abcconfigs.class_model.cloudy_rad": [
+      [11, "module-abcconfigs.class_model.cloudy_rad", false],
     ],
     "abcconfigs.class_model.obukhov_surface_layer": [
       [12, "module-abcconfigs.class_model.obukhov_surface_layer", false],
     ],
     "abcmodel.abstracts": [[14, "module-abcmodel.abstracts", false]],
-    "abcmodel.atmosphere.abstracts": [
-      [16, "module-abcmodel.atmosphere.abstracts", false],
+    "abcmodel.atmos.abstracts": [
+      [16, "module-abcmodel.atmos.abstracts", false],
     ],
-    "abcmodel.atmosphere.clouds.cumulus": [
-      [18, "module-abcmodel.atmosphere.clouds.cumulus", false],
+    "abcmodel.atmos.clouds.cumulus": [
+      [18, "module-abcmodel.atmos.clouds.cumulus", false],
     ],
-    "abcmodel.atmosphere.clouds.no_clouds": [
-      [19, "module-abcmodel.atmosphere.clouds.no_clouds", false],
+    "abcmodel.atmos.clouds.no_clouds": [
+      [19, "module-abcmodel.atmos.clouds.no_clouds", false],
     ],
-    "abcmodel.atmosphere.dayonly": [
-      [20, "module-abcmodel.atmosphere.dayonly", false],
+    "abcmodel.atmos.dayonly": [[20, "module-abcmodel.atmos.dayonly", false]],
+    "abcmodel.atmos.mixed_layer.bulk": [
+      [22, "module-abcmodel.atmos.mixed_layer.bulk", false],
     ],
-    "abcmodel.atmosphere.mixed_layer.bulk": [
-      [22, "module-abcmodel.atmosphere.mixed_layer.bulk", false],
+    "abcmodel.atmos.mixed_layer.minimal": [
+      [23, "module-abcmodel.atmos.mixed_layer.minimal", false],
     ],
-    "abcmodel.atmosphere.mixed_layer.minimal": [
-      [23, "module-abcmodel.atmosphere.mixed_layer.minimal", false],
+    "abcmodel.atmos.mixed_layer.stats": [
+      [24, "module-abcmodel.atmos.mixed_layer.stats", false],
     ],
-    "abcmodel.atmosphere.mixed_layer.stats": [
-      [24, "module-abcmodel.atmosphere.mixed_layer.stats", false],
+    "abcmodel.atmos.surface_layer.minimal": [
+      [26, "module-abcmodel.atmos.surface_layer.minimal", false],
     ],
-    "abcmodel.atmosphere.surface_layer.minimal": [
-      [26, "module-abcmodel.atmosphere.surface_layer.minimal", false],
-    ],
-    "abcmodel.atmosphere.surface_layer.standard": [
-      [27, "module-abcmodel.atmosphere.surface_layer.standard", false],
+    "abcmodel.atmos.surface_layer.standard": [
+      [27, "module-abcmodel.atmos.surface_layer.standard", false],
     ],
     "abcmodel.coupling": [[28, "module-abcmodel.coupling", false]],
     "abcmodel.integration": [[29, "module-abcmodel.integration", false]],
@@ -219,47 +217,44 @@ Search.setIndex({
     ],
     "abcmodel.land.minimal": [[33, "module-abcmodel.land.minimal", false]],
     "abcmodel.land.standard": [[34, "module-abcmodel.land.standard", false]],
-    "abcmodel.radiation.standard": [
-      [36, "module-abcmodel.radiation.standard", false],
-    ],
-    "abcmodel.radiation.standard_w_clouds": [
-      [37, "module-abcmodel.radiation.standard_w_clouds", false],
+    "abcmodel.rad.standard": [[36, "module-abcmodel.rad.standard", false]],
+    "abcmodel.rad.standard_w_clouds": [
+      [37, "module-abcmodel.rad.standard_w_clouds", false],
     ],
     "abcmodel.utils": [[38, "module-abcmodel.utils", false]],
     "abcoupler (class in abcmodel.coupling)": [
       [28, "abcmodel.coupling.ABCoupler", false],
     ],
-    "abstractatmospheremodel (class in abcmodel.abstracts)": [
+    "abstractatmosmodel (class in abcmodel.abstracts)": [
       [14, "abcmodel.abstracts.AbstractAtmosphereModel", false],
     ],
-    "abstractcloudmodel (class in abcmodel.atmosphere.abstracts)": [
-      [16, "abcmodel.atmosphere.abstracts.AbstractCloudModel", false],
+    "abstractcloudmodel (class in abcmodel.atmos.abstracts)": [
+      [16, "abcmodel.atmos.abstracts.AbstractCloudModel", false],
     ],
     "abstractlandmodel (class in abcmodel.abstracts)": [
       [14, "abcmodel.abstracts.AbstractLandModel", false],
     ],
-    "abstractmixedlayermodel (class in abcmodel.atmosphere.abstracts)": [
-      [16, "abcmodel.atmosphere.abstracts.AbstractMixedLayerModel", false],
+    "abstractmixedlayermodel (class in abcmodel.atmos.abstracts)": [
+      [16, "abcmodel.atmos.abstracts.AbstractMixedLayerModel", false],
     ],
     "abstractmodel (class in abcmodel.abstracts)": [
       [14, "abcmodel.abstracts.AbstractModel", false],
     ],
-    "abstractradiationmodel (class in abcmodel.abstracts)": [
+    "abstractradmodel (class in abcmodel.abstracts)": [
       [14, "abcmodel.abstracts.AbstractRadiationModel", false],
     ],
     "abstractstandardlandsurfacemodel (class in abcmodel.land.standard)": [
       [34, "abcmodel.land.standard.AbstractStandardLandSurfaceModel", false],
     ],
-    "abstractstandardstatsmodel (class in abcmodel.atmosphere.mixed_layer.stats)":
+    "abstractstandardstatsmodel (class in abcmodel.atmos.mixed_layer.stats)": [
       [
-        [
-          24,
-          "abcmodel.atmosphere.mixed_layer.stats.AbstractStandardStatsModel",
-          false,
-        ],
+        24,
+        "abcmodel.atmos.mixed_layer.stats.AbstractStandardStatsModel",
+        false,
       ],
-    "abstractsurfacelayermodel (class in abcmodel.atmosphere.abstracts)": [
-      [16, "abcmodel.atmosphere.abstracts.AbstractSurfaceLayerModel", false],
+    ],
+    "abstractsurfacelayermodel (class in abcmodel.atmos.abstracts)": [
+      [16, "abcmodel.atmos.abstracts.AbstractSurfaceLayerModel", false],
     ],
     "ags_init_conds_kwargs (in module abcconfigs.aridities.arid)": [
       [3, "abcconfigs.aridities.arid.ags_init_conds_kwargs", false],
@@ -312,186 +307,163 @@ Search.setIndex({
     "bulk_ml_model_kwargs (in module abcconfigs.aridities.standard)": [
       [5, "abcconfigs.aridities.standard.bulk_ml_model_kwargs", false],
     ],
-    "bulkmixedlayerinitconds (class in abcmodel.atmosphere.mixed_layer.bulk)": [
-      [
-        22,
-        "abcmodel.atmosphere.mixed_layer.bulk.BulkMixedLayerInitConds",
-        false,
-      ],
+    "bulkmixedlayerinitconds (class in abcmodel.atmos.mixed_layer.bulk)": [
+      [22, "abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerInitConds", false],
     ],
-    "bulkmixedlayermodel (class in abcmodel.atmosphere.mixed_layer.bulk)": [
-      [22, "abcmodel.atmosphere.mixed_layer.bulk.BulkMixedLayerModel", false],
+    "bulkmixedlayermodel (class in abcmodel.atmos.mixed_layer.bulk)": [
+      [22, "abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerModel", false],
     ],
-    "calculate_momentum_fluxes() (abcmodel.atmosphere.surface_layer.minimal.minimalsurfacelayermodel static method)":
+    "calculate_momentum_fluxes() (abcmodel.atmos.surface_layer.minimal.minimalsurfacelayermodel static method)":
       [
         [
           26,
-          "abcmodel.atmosphere.surface_layer.minimal.MinimalSurfaceLayerModel.calculate_momentum_fluxes",
+          "abcmodel.atmos.surface_layer.minimal.MinimalSurfaceLayerModel.calculate_momentum_fluxes",
           false,
         ],
       ],
-    "cc_frac (abcmodel.atmosphere.clouds.cumulus.standardcumulusinitconds attribute)":
+    "cc_frac (abcmodel.atmos.clouds.cumulus.standardcumulusinitconds attribute)":
       [
         [
           18,
-          "abcmodel.atmosphere.clouds.cumulus.StandardCumulusInitConds.cc_frac",
+          "abcmodel.atmos.clouds.cumulus.StandardCumulusInitConds.cc_frac",
           false,
         ],
       ],
-    "cc_frac (abcmodel.atmosphere.clouds.no_clouds.nocloudinitconds attribute)":
-      [
-        [
-          19,
-          "abcmodel.atmosphere.clouds.no_clouds.NoCloudInitConds.cc_frac",
-          false,
-        ],
-      ],
-    "cc_mf (abcmodel.atmosphere.clouds.cumulus.standardcumulusinitconds attribute)":
-      [
-        [
-          18,
-          "abcmodel.atmosphere.clouds.cumulus.StandardCumulusInitConds.cc_mf",
-          false,
-        ],
-      ],
-    "cc_mf (abcmodel.atmosphere.clouds.no_clouds.nocloudinitconds attribute)": [
-      [
-        19,
-        "abcmodel.atmosphere.clouds.no_clouds.NoCloudInitConds.cc_mf",
-        false,
-      ],
+    "cc_frac (abcmodel.atmos.clouds.no_clouds.nocloudinitconds attribute)": [
+      [19, "abcmodel.atmos.clouds.no_clouds.NoCloudInitConds.cc_frac", false],
     ],
-    "cc_qf (abcmodel.atmosphere.clouds.cumulus.standardcumulusinitconds attribute)":
+    "cc_mf (abcmodel.atmos.clouds.cumulus.standardcumulusinitconds attribute)":
       [
         [
           18,
-          "abcmodel.atmosphere.clouds.cumulus.StandardCumulusInitConds.cc_qf",
+          "abcmodel.atmos.clouds.cumulus.StandardCumulusInitConds.cc_mf",
           false,
         ],
       ],
-    "cc_qf (abcmodel.atmosphere.clouds.no_clouds.nocloudinitconds attribute)": [
+    "cc_mf (abcmodel.atmos.clouds.no_clouds.nocloudinitconds attribute)": [
+      [19, "abcmodel.atmos.clouds.no_clouds.NoCloudInitConds.cc_mf", false],
+    ],
+    "cc_qf (abcmodel.atmos.clouds.cumulus.standardcumulusinitconds attribute)":
       [
-        19,
-        "abcmodel.atmosphere.clouds.no_clouds.NoCloudInitConds.cc_qf",
-        false,
+        [
+          18,
+          "abcmodel.atmos.clouds.cumulus.StandardCumulusInitConds.cc_qf",
+          false,
+        ],
       ],
+    "cc_qf (abcmodel.atmos.clouds.no_clouds.nocloudinitconds attribute)": [
+      [19, "abcmodel.atmos.clouds.no_clouds.NoCloudInitConds.cc_qf", false],
     ],
     "ci (abcmodel.land.ags.agsinitconds attribute)": [
       [31, "abcmodel.land.ags.AgsInitConds.ci", false],
     ],
-    "cl_trans (abcmodel.atmosphere.clouds.cumulus.standardcumulusinitconds attribute)":
+    "cl_trans (abcmodel.atmos.clouds.cumulus.standardcumulusinitconds attribute)":
       [
         [
           18,
-          "abcmodel.atmosphere.clouds.cumulus.StandardCumulusInitConds.cl_trans",
+          "abcmodel.atmos.clouds.cumulus.StandardCumulusInitConds.cl_trans",
           false,
         ],
       ],
-    "cl_trans (abcmodel.atmosphere.clouds.no_clouds.nocloudinitconds attribute)":
-      [
-        [
-          19,
-          "abcmodel.atmosphere.clouds.no_clouds.NoCloudInitConds.cl_trans",
-          false,
-        ],
-      ],
+    "cl_trans (abcmodel.atmos.clouds.no_clouds.nocloudinitconds attribute)": [
+      [19, "abcmodel.atmos.clouds.no_clouds.NoCloudInitConds.cl_trans", false],
+    ],
     "cliq (abcmodel.land.standard.standardlandsurfaceinitconds attribute)": [
       [34, "abcmodel.land.standard.StandardLandSurfaceInitConds.cliq", false],
     ],
-    "co2 (abcmodel.atmosphere.mixed_layer.bulk.bulkmixedlayerinitconds attribute)":
+    "co2 (abcmodel.atmos.mixed_layer.bulk.bulkmixedlayerinitconds attribute)": [
       [
-        [
-          22,
-          "abcmodel.atmosphere.mixed_layer.bulk.BulkMixedLayerInitConds.co2",
-          false,
-        ],
+        22,
+        "abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerInitConds.co2",
+        false,
       ],
-    "co2 (abcmodel.atmosphere.mixed_layer.minimal.minimalmixedlayerinitconds attribute)":
+    ],
+    "co2 (abcmodel.atmos.mixed_layer.minimal.minimalmixedlayerinitconds attribute)":
       [
         [
           23,
-          "abcmodel.atmosphere.mixed_layer.minimal.MinimalMixedLayerInitConds.co2",
+          "abcmodel.atmos.mixed_layer.minimal.MinimalMixedLayerInitConds.co2",
           false,
         ],
       ],
     "co2abs (abcmodel.land.ags.agsinitconds attribute)": [
       [31, "abcmodel.land.ags.AgsInitConds.co2abs", false],
     ],
-    "co2tend (abcmodel.atmosphere.mixed_layer.bulk.bulkmixedlayerinitconds attribute)":
+    "co2tend (abcmodel.atmos.mixed_layer.bulk.bulkmixedlayerinitconds attribute)":
       [
         [
           22,
-          "abcmodel.atmosphere.mixed_layer.bulk.BulkMixedLayerInitConds.co2tend",
+          "abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerInitConds.co2tend",
           false,
         ],
       ],
-    "compute_2m_variables() (in module abcmodel.atmosphere.surface_layer.standard)":
+    "compute_2m_variables() (in module abcmodel.atmos.surface_layer.standard)":
       [
         [
           27,
-          "abcmodel.atmosphere.surface_layer.standard.compute_2m_variables",
+          "abcmodel.atmos.surface_layer.standard.compute_2m_variables",
           false,
         ],
       ],
     "compute_absorbed_par() (abcmodel.land.ags.agsmodel method)": [
       [31, "abcmodel.land.ags.AgsModel.compute_absorbed_par", false],
     ],
-    "compute_air_temperature() (abcmodel.radiation.standard.standardradiationmodel method)":
+    "compute_air_temperature() (abcmodel.rad.standard.standardradmodel method)":
       [
         [
           36,
-          "abcmodel.radiation.standard.StandardRadiationModel.compute_air_temperature",
+          "abcmodel.rad.standard.StandardRadiationModel.compute_air_temperature",
           false,
         ],
       ],
-    "compute_atmospheric_transmission() (abcmodel.radiation.standard.standardradiationmodel method)":
+    "compute_atmospheric_transmission() (abcmodel.rad.standard.standardradmodel method)":
       [
         [
           36,
-          "abcmodel.radiation.standard.StandardRadiationModel.compute_atmospheric_transmission",
+          "abcmodel.rad.standard.StandardRadiationModel.compute_atmospheric_transmission",
           false,
         ],
       ],
-    "compute_atmospheric_transmission_w_clouds() (abcmodel.radiation.standard_w_clouds.standardradiationwcloudsmodel static method)":
+    "compute_atmospheric_transmission_w_clouds() (abcmodel.rad.standard_w_clouds.standardradwcloudsmodel static method)":
       [
         [
           37,
-          "abcmodel.radiation.standard_w_clouds.StandardRadiationwCloudsModel.compute_atmospheric_transmission_w_clouds",
+          "abcmodel.rad.standard_w_clouds.StandardRadiationwCloudsModel.compute_atmospheric_transmission_w_clouds",
           false,
         ],
       ],
     "compute_canopy_co2_conductance() (abcmodel.land.ags.agsmodel method)": [
       [31, "abcmodel.land.ags.AgsModel.compute_canopy_co2_conductance", false],
     ],
-    "compute_cc_frac() (abcmodel.atmosphere.clouds.cumulus.standardcumulusmodel static method)":
+    "compute_cc_frac() (abcmodel.atmos.clouds.cumulus.standardcumulusmodel static method)":
       [
         [
           18,
-          "abcmodel.atmosphere.clouds.cumulus.StandardCumulusModel.compute_cc_frac",
+          "abcmodel.atmos.clouds.cumulus.StandardCumulusModel.compute_cc_frac",
           false,
         ],
       ],
-    "compute_cc_mf() (abcmodel.atmosphere.clouds.cumulus.standardcumulusmodel static method)":
+    "compute_cc_mf() (abcmodel.atmos.clouds.cumulus.standardcumulusmodel static method)":
       [
         [
           18,
-          "abcmodel.atmosphere.clouds.cumulus.StandardCumulusModel.compute_cc_mf",
+          "abcmodel.atmos.clouds.cumulus.StandardCumulusModel.compute_cc_mf",
           false,
         ],
       ],
-    "compute_cc_qf() (abcmodel.atmosphere.clouds.cumulus.standardcumulusmodel static method)":
+    "compute_cc_qf() (abcmodel.atmos.clouds.cumulus.standardcumulusmodel static method)":
       [
         [
           18,
-          "abcmodel.atmosphere.clouds.cumulus.StandardCumulusModel.compute_cc_qf",
+          "abcmodel.atmos.clouds.cumulus.StandardCumulusModel.compute_cc_qf",
           false,
         ],
       ],
-    "compute_cl_trans() (abcmodel.atmosphere.clouds.cumulus.standardcumulusmodel method)":
+    "compute_cl_trans() (abcmodel.atmos.clouds.cumulus.standardcumulusmodel method)":
       [
         [
           18,
-          "abcmodel.atmosphere.clouds.cumulus.StandardCumulusModel.compute_cl_trans",
+          "abcmodel.atmos.clouds.cumulus.StandardCumulusModel.compute_cl_trans",
           false,
         ],
       ],
@@ -506,11 +478,11 @@ Search.setIndex({
     "compute_co2comp() (abcmodel.land.ags.agsmodel method)": [
       [31, "abcmodel.land.ags.AgsModel.compute_co2comp", false],
     ],
-    "compute_co2tend() (abcmodel.atmosphere.mixed_layer.bulk.bulkmixedlayermodel method)":
+    "compute_co2tend() (abcmodel.atmos.mixed_layer.bulk.bulkmixedlayermodel method)":
       [
         [
           22,
-          "abcmodel.atmosphere.mixed_layer.bulk.BulkMixedLayerModel.compute_co2tend",
+          "abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerModel.compute_co2tend",
           false,
         ],
       ],
@@ -520,19 +492,19 @@ Search.setIndex({
     "compute_dark_respiration() (abcmodel.land.ags.agsmodel method)": [
       [31, "abcmodel.land.ags.AgsModel.compute_dark_respiration", false],
     ],
-    "compute_deltaco2tend() (abcmodel.atmosphere.mixed_layer.bulk.bulkmixedlayermodel method)":
+    "compute_deltaco2tend() (abcmodel.atmos.mixed_layer.bulk.bulkmixedlayermodel method)":
       [
         [
           22,
-          "abcmodel.atmosphere.mixed_layer.bulk.BulkMixedLayerModel.compute_deltaCO2tend",
+          "abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerModel.compute_deltaCO2tend",
           false,
         ],
       ],
-    "compute_deltathetatend() (abcmodel.atmosphere.mixed_layer.bulk.bulkmixedlayermodel method)":
+    "compute_deltathetatend() (abcmodel.atmos.mixed_layer.bulk.bulkmixedlayermodel method)":
       [
         [
           22,
-          "abcmodel.atmosphere.mixed_layer.bulk.BulkMixedLayerModel.compute_deltathetatend",
+          "abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerModel.compute_deltathetatend",
           false,
         ],
       ],
@@ -555,46 +527,46 @@ Search.setIndex({
           false,
         ],
       ],
-    "compute_dqtend() (abcmodel.atmosphere.mixed_layer.bulk.bulkmixedlayermodel method)":
+    "compute_dqtend() (abcmodel.atmos.mixed_layer.bulk.bulkmixedlayermodel method)":
       [
         [
           22,
-          "abcmodel.atmosphere.mixed_layer.bulk.BulkMixedLayerModel.compute_dqtend",
+          "abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerModel.compute_dqtend",
           false,
         ],
       ],
-    "compute_drag_coefficients() (in module abcmodel.atmosphere.surface_layer.standard)":
+    "compute_drag_coefficients() (in module abcmodel.atmos.surface_layer.standard)":
       [
         [
           27,
-          "abcmodel.atmosphere.surface_layer.standard.compute_drag_coefficients",
+          "abcmodel.atmos.surface_layer.standard.compute_drag_coefficients",
           false,
         ],
       ],
     "compute_ds() (abcmodel.land.ags.agsmodel method)": [
       [31, "abcmodel.land.ags.AgsModel.compute_ds", false],
     ],
-    "compute_dutend() (abcmodel.atmosphere.mixed_layer.bulk.bulkmixedlayermodel method)":
+    "compute_dutend() (abcmodel.atmos.mixed_layer.bulk.bulkmixedlayermodel method)":
       [
         [
           22,
-          "abcmodel.atmosphere.mixed_layer.bulk.BulkMixedLayerModel.compute_dutend",
+          "abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerModel.compute_dutend",
           false,
         ],
       ],
-    "compute_dvtend() (abcmodel.atmosphere.mixed_layer.bulk.bulkmixedlayermodel method)":
+    "compute_dvtend() (abcmodel.atmos.mixed_layer.bulk.bulkmixedlayermodel method)":
       [
         [
           22,
-          "abcmodel.atmosphere.mixed_layer.bulk.BulkMixedLayerModel.compute_dvtend",
+          "abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerModel.compute_dvtend",
           false,
         ],
       ],
-    "compute_dztend() (abcmodel.atmosphere.mixed_layer.bulk.bulkmixedlayermodel method)":
+    "compute_dztend() (abcmodel.atmos.mixed_layer.bulk.bulkmixedlayermodel method)":
       [
         [
           22,
-          "abcmodel.atmosphere.mixed_layer.bulk.BulkMixedLayerModel.compute_dztend",
+          "abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerModel.compute_dztend",
           false,
         ],
       ],
@@ -609,11 +581,11 @@ Search.setIndex({
           false,
         ],
       ],
-    "compute_effective_wind_speed() (in module abcmodel.atmosphere.surface_layer.standard)":
+    "compute_effective_wind_speed() (in module abcmodel.atmos.surface_layer.standard)":
       [
         [
           27,
-          "abcmodel.atmosphere.surface_layer.standard.compute_effective_wind_speed",
+          "abcmodel.atmos.surface_layer.standard.compute_effective_wind_speed",
           false,
         ],
       ],
@@ -649,11 +621,11 @@ Search.setIndex({
     "compute_gross_assimilation() (abcmodel.land.ags.agsmodel method)": [
       [31, "abcmodel.land.ags.AgsModel.compute_gross_assimilation", false],
     ],
-    "compute_h_abl_tend() (abcmodel.atmosphere.mixed_layer.bulk.bulkmixedlayermodel method)":
+    "compute_h_abl_tend() (abcmodel.atmos.mixed_layer.bulk.bulkmixedlayermodel method)":
       [
         [
           22,
-          "abcmodel.atmosphere.mixed_layer.bulk.BulkMixedLayerModel.compute_h_abl_tend",
+          "abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerModel.compute_h_abl_tend",
           false,
         ],
       ],
@@ -668,11 +640,11 @@ Search.setIndex({
     "compute_internal_co2() (abcmodel.land.ags.agsmodel method)": [
       [31, "abcmodel.land.ags.AgsModel.compute_internal_co2", false],
     ],
-    "compute_lcl() (abcmodel.atmosphere.mixed_layer.stats.abstractstandardstatsmodel method)":
+    "compute_lcl() (abcmodel.atmos.mixed_layer.stats.abstractstandardstatsmodel method)":
       [
         [
           24,
-          "abcmodel.atmosphere.mixed_layer.stats.AbstractStandardStatsModel.compute_lcl",
+          "abcmodel.atmos.mixed_layer.stats.AbstractStandardStatsModel.compute_lcl",
           false,
         ],
       ],
@@ -735,117 +707,117 @@ Search.setIndex({
           false,
         ],
       ],
-    "compute_mixed_layer_top_properties() (abcmodel.atmosphere.mixed_layer.stats.abstractstandardstatsmodel method)":
+    "compute_mixed_layer_top_properties() (abcmodel.atmos.mixed_layer.stats.abstractstandardstatsmodel method)":
       [
         [
           24,
-          "abcmodel.atmosphere.mixed_layer.stats.AbstractStandardStatsModel.compute_mixed_layer_top_properties",
+          "abcmodel.atmos.mixed_layer.stats.AbstractStandardStatsModel.compute_mixed_layer_top_properties",
           false,
         ],
       ],
-    "compute_momentum_correction_term() (in module abcmodel.atmosphere.surface_layer.standard)":
+    "compute_momentum_correction_term() (in module abcmodel.atmos.surface_layer.standard)":
       [
         [
           27,
-          "abcmodel.atmosphere.surface_layer.standard.compute_momentum_correction_term",
+          "abcmodel.atmos.surface_layer.standard.compute_momentum_correction_term",
           false,
         ],
       ],
-    "compute_momentum_fluxes() (in module abcmodel.atmosphere.surface_layer.standard)":
+    "compute_momentum_fluxes() (in module abcmodel.atmos.surface_layer.standard)":
       [
         [
           27,
-          "abcmodel.atmosphere.surface_layer.standard.compute_momentum_fluxes",
+          "abcmodel.atmos.surface_layer.standard.compute_momentum_fluxes",
           false,
         ],
       ],
     "compute_net_assimilation() (abcmodel.land.ags.agsmodel method)": [
       [31, "abcmodel.land.ags.AgsModel.compute_net_assimilation", false],
     ],
-    "compute_psih() (in module abcmodel.atmosphere.surface_layer.standard)": [
-      [27, "abcmodel.atmosphere.surface_layer.standard.compute_psih", false],
+    "compute_psih() (in module abcmodel.atmos.surface_layer.standard)": [
+      [27, "abcmodel.atmos.surface_layer.standard.compute_psih", false],
     ],
-    "compute_psim() (in module abcmodel.atmosphere.surface_layer.standard)": [
-      [27, "abcmodel.atmosphere.surface_layer.standard.compute_psim", false],
+    "compute_psim() (in module abcmodel.atmos.surface_layer.standard)": [
+      [27, "abcmodel.atmos.surface_layer.standard.compute_psim", false],
     ],
-    "compute_q2_h() (abcmodel.atmosphere.clouds.cumulus.standardcumulusmodel static method)":
+    "compute_q2_h() (abcmodel.atmos.clouds.cumulus.standardcumulusmodel static method)":
       [
         [
           18,
-          "abcmodel.atmosphere.clouds.cumulus.StandardCumulusModel.compute_q2_h",
+          "abcmodel.atmos.clouds.cumulus.StandardCumulusModel.compute_q2_h",
           false,
         ],
       ],
     "compute_qsat() (in module abcmodel.utils)": [
       [38, "abcmodel.utils.compute_qsat", false],
     ],
-    "compute_qtend() (abcmodel.atmosphere.mixed_layer.bulk.bulkmixedlayermodel method)":
+    "compute_qtend() (abcmodel.atmos.mixed_layer.bulk.bulkmixedlayermodel method)":
       [
         [
           22,
-          "abcmodel.atmosphere.mixed_layer.bulk.BulkMixedLayerModel.compute_qtend",
+          "abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerModel.compute_qtend",
           false,
         ],
       ],
-    "compute_ra() (abcmodel.atmosphere.abstracts.abstractsurfacelayermodel static method)":
+    "compute_ra() (abcmodel.atmos.abstracts.abstractsurfacelayermodel static method)":
       [
         [
           16,
-          "abcmodel.atmosphere.abstracts.AbstractSurfaceLayerModel.compute_ra",
+          "abcmodel.atmos.abstracts.AbstractSurfaceLayerModel.compute_ra",
           false,
         ],
       ],
-    "compute_ra() (abcmodel.atmosphere.surface_layer.minimal.minimalsurfacelayermodel static method)":
+    "compute_ra() (abcmodel.atmos.surface_layer.minimal.minimalsurfacelayermodel static method)":
       [
         [
           26,
-          "abcmodel.atmosphere.surface_layer.minimal.MinimalSurfaceLayerModel.compute_ra",
+          "abcmodel.atmos.surface_layer.minimal.MinimalSurfaceLayerModel.compute_ra",
           false,
         ],
       ],
-    "compute_ra() (abcmodel.atmosphere.surface_layer.standard.standardsurfacelayermodel static method)":
+    "compute_ra() (abcmodel.atmos.surface_layer.standard.standardsurfacelayermodel static method)":
       [
         [
           27,
-          "abcmodel.atmosphere.surface_layer.standard.StandardSurfaceLayerModel.compute_ra",
+          "abcmodel.atmos.surface_layer.standard.StandardSurfaceLayerModel.compute_ra",
           false,
         ],
       ],
-    "compute_radiation_components() (abcmodel.radiation.standard.standardradiationmodel method)":
+    "compute_rad_components() (abcmodel.rad.standard.standardradmodel method)":
       [
         [
           36,
-          "abcmodel.radiation.standard.StandardRadiationModel.compute_radiation_components",
+          "abcmodel.rad.standard.StandardRadiationModel.compute_rad_components",
           false,
         ],
       ],
     "compute_respiration() (abcmodel.land.ags.agsmodel method)": [
       [31, "abcmodel.land.ags.AgsModel.compute_respiration", false],
     ],
-    "compute_rib_function() (in module abcmodel.atmosphere.surface_layer.standard)":
+    "compute_rib_function() (in module abcmodel.atmos.surface_layer.standard)":
       [
         [
           27,
-          "abcmodel.atmosphere.surface_layer.standard.compute_rib_function",
+          "abcmodel.atmos.surface_layer.standard.compute_rib_function",
           false,
         ],
       ],
-    "compute_richardson_number() (in module abcmodel.atmosphere.surface_layer.standard)":
+    "compute_richardson_number() (in module abcmodel.atmos.surface_layer.standard)":
       [
         [
           27,
-          "abcmodel.atmosphere.surface_layer.standard.compute_richardson_number",
+          "abcmodel.atmos.surface_layer.standard.compute_richardson_number",
           false,
         ],
       ],
     "compute_rs() (abcmodel.land.ags.agsmodel method)": [
       [31, "abcmodel.land.ags.AgsModel.compute_rs", false],
     ],
-    "compute_scalar_correction_term() (in module abcmodel.atmosphere.surface_layer.standard)":
+    "compute_scalar_correction_term() (in module abcmodel.atmos.surface_layer.standard)":
       [
         [
           27,
-          "abcmodel.atmosphere.surface_layer.standard.compute_scalar_correction_term",
+          "abcmodel.atmos.surface_layer.standard.compute_scalar_correction_term",
           false,
         ],
       ],
@@ -876,30 +848,30 @@ Search.setIndex({
     "compute_soil_water_fraction() (abcmodel.land.ags.agsmodel method)": [
       [31, "abcmodel.land.ags.AgsModel.compute_soil_water_fraction", false],
     ],
-    "compute_solar_declination() (abcmodel.radiation.standard.standardradiationmodel method)":
+    "compute_solar_declination() (abcmodel.rad.standard.standardradmodel method)":
       [
         [
           36,
-          "abcmodel.radiation.standard.StandardRadiationModel.compute_solar_declination",
+          "abcmodel.rad.standard.StandardRadiationModel.compute_solar_declination",
           false,
         ],
       ],
-    "compute_solar_elevation() (abcmodel.radiation.standard.standardradiationmodel method)":
+    "compute_solar_elevation() (abcmodel.rad.standard.standardradmodel method)":
       [
         [
           36,
-          "abcmodel.radiation.standard.StandardRadiationModel.compute_solar_elevation",
+          "abcmodel.rad.standard.StandardRadiationModel.compute_solar_elevation",
           false,
         ],
       ],
     "compute_surface_co2_resistance() (abcmodel.land.ags.agsmodel method)": [
       [31, "abcmodel.land.ags.AgsModel.compute_surface_co2_resistance", false],
     ],
-    "compute_surface_properties() (in module abcmodel.atmosphere.surface_layer.standard)":
+    "compute_surface_properties() (in module abcmodel.atmos.surface_layer.standard)":
       [
         [
           27,
-          "abcmodel.atmosphere.surface_layer.standard.compute_surface_properties",
+          "abcmodel.atmos.surface_layer.standard.compute_surface_properties",
           false,
         ],
       ],
@@ -911,99 +883,99 @@ Search.setIndex({
           false,
         ],
       ],
-    "compute_thetatend() (abcmodel.atmosphere.mixed_layer.bulk.bulkmixedlayermodel method)":
+    "compute_thetatend() (abcmodel.atmos.mixed_layer.bulk.bulkmixedlayermodel method)":
       [
         [
           22,
-          "abcmodel.atmosphere.mixed_layer.bulk.BulkMixedLayerModel.compute_thetatend",
+          "abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerModel.compute_thetatend",
           false,
         ],
       ],
-    "compute_top_co22() (abcmodel.atmosphere.clouds.cumulus.standardcumulusmodel static method)":
+    "compute_top_co22() (abcmodel.atmos.clouds.cumulus.standardcumulusmodel static method)":
       [
         [
           18,
-          "abcmodel.atmosphere.clouds.cumulus.StandardCumulusModel.compute_top_CO22",
+          "abcmodel.atmos.clouds.cumulus.StandardCumulusModel.compute_top_CO22",
           false,
         ],
       ],
-    "compute_utend() (abcmodel.atmosphere.mixed_layer.bulk.bulkmixedlayermodel method)":
+    "compute_utend() (abcmodel.atmos.mixed_layer.bulk.bulkmixedlayermodel method)":
       [
         [
           22,
-          "abcmodel.atmosphere.mixed_layer.bulk.BulkMixedLayerModel.compute_utend",
+          "abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerModel.compute_utend",
           false,
         ],
       ],
-    "compute_virtual_temperatures() (abcmodel.atmosphere.mixed_layer.stats.abstractstandardstatsmodel method)":
+    "compute_virtual_temperatures() (abcmodel.atmos.mixed_layer.stats.abstractstandardstatsmodel method)":
       [
         [
           24,
-          "abcmodel.atmosphere.mixed_layer.stats.AbstractStandardStatsModel.compute_virtual_temperatures",
+          "abcmodel.atmos.mixed_layer.stats.AbstractStandardStatsModel.compute_virtual_temperatures",
           false,
         ],
       ],
-    "compute_vtend() (abcmodel.atmosphere.mixed_layer.bulk.bulkmixedlayermodel method)":
+    "compute_vtend() (abcmodel.atmos.mixed_layer.bulk.bulkmixedlayermodel method)":
       [
         [
           22,
-          "abcmodel.atmosphere.mixed_layer.bulk.BulkMixedLayerModel.compute_vtend",
+          "abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerModel.compute_vtend",
           false,
         ],
       ],
-    "compute_w_co2_ft() (abcmodel.atmosphere.mixed_layer.bulk.bulkmixedlayermodel method)":
+    "compute_w_co2_ft() (abcmodel.atmos.mixed_layer.bulk.bulkmixedlayermodel method)":
       [
         [
           22,
-          "abcmodel.atmosphere.mixed_layer.bulk.BulkMixedLayerModel.compute_w_CO2_ft",
+          "abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerModel.compute_w_CO2_ft",
           false,
         ],
       ],
-    "compute_w_q_ft() (abcmodel.atmosphere.mixed_layer.bulk.bulkmixedlayermodel method)":
+    "compute_w_q_ft() (abcmodel.atmos.mixed_layer.bulk.bulkmixedlayermodel method)":
       [
         [
           22,
-          "abcmodel.atmosphere.mixed_layer.bulk.BulkMixedLayerModel.compute_w_q_ft",
+          "abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerModel.compute_w_q_ft",
           false,
         ],
       ],
-    "compute_w_th_ft() (abcmodel.atmosphere.mixed_layer.bulk.bulkmixedlayermodel method)":
+    "compute_w_th_ft() (abcmodel.atmos.mixed_layer.bulk.bulkmixedlayermodel method)":
       [
         [
           22,
-          "abcmodel.atmosphere.mixed_layer.bulk.BulkMixedLayerModel.compute_w_th_ft",
+          "abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerModel.compute_w_th_ft",
           false,
         ],
       ],
-    "compute_wco2e() (abcmodel.atmosphere.mixed_layer.bulk.bulkmixedlayermodel method)":
+    "compute_wco2e() (abcmodel.atmos.mixed_layer.bulk.bulkmixedlayermodel method)":
       [
         [
           22,
-          "abcmodel.atmosphere.mixed_layer.bulk.BulkMixedLayerModel.compute_wCO2e",
+          "abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerModel.compute_wCO2e",
           false,
         ],
       ],
-    "compute_wco2m() (abcmodel.atmosphere.clouds.cumulus.standardcumulusmodel static method)":
+    "compute_wco2m() (abcmodel.atmos.clouds.cumulus.standardcumulusmodel static method)":
       [
         [
           18,
-          "abcmodel.atmosphere.clouds.cumulus.StandardCumulusModel.compute_wCO2M",
+          "abcmodel.atmos.clouds.cumulus.StandardCumulusModel.compute_wCO2M",
           false,
         ],
       ],
-    "compute_we() (abcmodel.atmosphere.mixed_layer.bulk.bulkmixedlayermodel method)":
+    "compute_we() (abcmodel.atmos.mixed_layer.bulk.bulkmixedlayermodel method)":
       [
         [
           22,
-          "abcmodel.atmosphere.mixed_layer.bulk.BulkMixedLayerModel.compute_we",
+          "abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerModel.compute_we",
           false,
         ],
       ],
-    "compute_wf() (abcmodel.atmosphere.mixed_layer.bulk.bulkmixedlayermodel method)":
+    "compute_wf() (abcmodel.atmos.mixed_layer.bulk.bulkmixedlayermodel method)":
       [
         [
           22,
-          "abcmodel.atmosphere.mixed_layer.bulk.BulkMixedLayerModel.compute_wf",
+          "abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerModel.compute_wf",
           false,
         ],
       ],
@@ -1031,27 +1003,27 @@ Search.setIndex({
           false,
         ],
       ],
-    "compute_wqe() (abcmodel.atmosphere.mixed_layer.bulk.bulkmixedlayermodel method)":
+    "compute_wqe() (abcmodel.atmos.mixed_layer.bulk.bulkmixedlayermodel method)":
       [
         [
           22,
-          "abcmodel.atmosphere.mixed_layer.bulk.BulkMixedLayerModel.compute_wqe",
+          "abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerModel.compute_wqe",
           false,
         ],
       ],
-    "compute_ws() (abcmodel.atmosphere.mixed_layer.bulk.bulkmixedlayermodel method)":
+    "compute_ws() (abcmodel.atmos.mixed_layer.bulk.bulkmixedlayermodel method)":
       [
         [
           22,
-          "abcmodel.atmosphere.mixed_layer.bulk.BulkMixedLayerModel.compute_ws",
+          "abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerModel.compute_ws",
           false,
         ],
       ],
-    "compute_wstar() (abcmodel.atmosphere.mixed_layer.bulk.bulkmixedlayermodel method)":
+    "compute_wstar() (abcmodel.atmos.mixed_layer.bulk.bulkmixedlayermodel method)":
       [
         [
           22,
-          "abcmodel.atmosphere.mixed_layer.bulk.BulkMixedLayerModel.compute_wstar",
+          "abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerModel.compute_wstar",
           false,
         ],
       ],
@@ -1063,19 +1035,19 @@ Search.setIndex({
           false,
         ],
       ],
-    "compute_wthetae() (abcmodel.atmosphere.mixed_layer.bulk.bulkmixedlayermodel method)":
+    "compute_wthetae() (abcmodel.atmos.mixed_layer.bulk.bulkmixedlayermodel method)":
       [
         [
           22,
-          "abcmodel.atmosphere.mixed_layer.bulk.BulkMixedLayerModel.compute_wthetae",
+          "abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerModel.compute_wthetae",
           false,
         ],
       ],
-    "compute_wthetave() (abcmodel.atmosphere.mixed_layer.bulk.bulkmixedlayermodel method)":
+    "compute_wthetave() (abcmodel.atmos.mixed_layer.bulk.bulkmixedlayermodel method)":
       [
         [
           22,
-          "abcmodel.atmosphere.mixed_layer.bulk.BulkMixedLayerModel.compute_wthetave",
+          "abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerModel.compute_wthetave",
           false,
         ],
       ],
@@ -1088,86 +1060,81 @@ Search.setIndex({
     "d1 (abcmodel.abstracts.abstractlandmodel attribute)": [
       [14, "abcmodel.abstracts.AbstractLandModel.d1", false],
     ],
-    "dayonlyatmospheremodel (class in abcmodel.atmosphere.dayonly)": [
-      [20, "abcmodel.atmosphere.dayonly.DayOnlyAtmosphereModel", false],
+    "dayonlyatmosmodel (class in abcmodel.atmos.dayonly)": [
+      [20, "abcmodel.atmos.dayonly.DayOnlyAtmosphereModel", false],
     ],
-    "deltaco2 (abcmodel.atmosphere.mixed_layer.bulk.bulkmixedlayerinitconds attribute)":
+    "deltaco2 (abcmodel.atmos.mixed_layer.bulk.bulkmixedlayerinitconds attribute)":
       [
         [
           22,
-          "abcmodel.atmosphere.mixed_layer.bulk.BulkMixedLayerInitConds.deltaCO2",
+          "abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerInitConds.deltaCO2",
           false,
         ],
       ],
-    "deltaco2 (abcmodel.atmosphere.mixed_layer.minimal.minimalmixedlayerinitconds attribute)":
+    "deltaco2 (abcmodel.atmos.mixed_layer.minimal.minimalmixedlayerinitconds attribute)":
       [
         [
           23,
-          "abcmodel.atmosphere.mixed_layer.minimal.MinimalMixedLayerInitConds.deltaCO2",
+          "abcmodel.atmos.mixed_layer.minimal.MinimalMixedLayerInitConds.deltaCO2",
           false,
         ],
       ],
-    "deltaco2tend (abcmodel.atmosphere.mixed_layer.bulk.bulkmixedlayerinitconds attribute)":
+    "deltaco2tend (abcmodel.atmos.mixed_layer.bulk.bulkmixedlayerinitconds attribute)":
       [
         [
           22,
-          "abcmodel.atmosphere.mixed_layer.bulk.BulkMixedLayerInitConds.deltaCO2tend",
+          "abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerInitConds.deltaCO2tend",
           false,
         ],
       ],
-    "deltatheta (abcmodel.atmosphere.mixed_layer.bulk.bulkmixedlayerinitconds attribute)":
+    "deltatheta (abcmodel.atmos.mixed_layer.bulk.bulkmixedlayerinitconds attribute)":
       [
         [
           22,
-          "abcmodel.atmosphere.mixed_layer.bulk.BulkMixedLayerInitConds.deltatheta",
+          "abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerInitConds.deltatheta",
           false,
         ],
       ],
-    "deltatheta (abcmodel.atmosphere.mixed_layer.minimal.minimalmixedlayerinitconds attribute)":
+    "deltatheta (abcmodel.atmos.mixed_layer.minimal.minimalmixedlayerinitconds attribute)":
       [
         [
           23,
-          "abcmodel.atmosphere.mixed_layer.minimal.MinimalMixedLayerInitConds.deltatheta",
+          "abcmodel.atmos.mixed_layer.minimal.MinimalMixedLayerInitConds.deltatheta",
           false,
         ],
       ],
-    "deltathetatend (abcmodel.atmosphere.mixed_layer.bulk.bulkmixedlayerinitconds attribute)":
+    "deltathetatend (abcmodel.atmos.mixed_layer.bulk.bulkmixedlayerinitconds attribute)":
       [
         [
           22,
-          "abcmodel.atmosphere.mixed_layer.bulk.BulkMixedLayerInitConds.deltathetatend",
+          "abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerInitConds.deltathetatend",
           false,
         ],
       ],
-    "deltathetav (abcmodel.atmosphere.mixed_layer.bulk.bulkmixedlayerinitconds attribute)":
+    "deltathetav (abcmodel.atmos.mixed_layer.bulk.bulkmixedlayerinitconds attribute)":
       [
         [
           22,
-          "abcmodel.atmosphere.mixed_layer.bulk.BulkMixedLayerInitConds.deltathetav",
+          "abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerInitConds.deltathetav",
           false,
         ],
       ],
-    "deltathetav (abcmodel.atmosphere.mixed_layer.minimal.minimalmixedlayerinitconds attribute)":
+    "deltathetav (abcmodel.atmos.mixed_layer.minimal.minimalmixedlayerinitconds attribute)":
       [
         [
           23,
-          "abcmodel.atmosphere.mixed_layer.minimal.MinimalMixedLayerInitConds.deltathetav",
+          "abcmodel.atmos.mixed_layer.minimal.MinimalMixedLayerInitConds.deltathetav",
           false,
         ],
       ],
-    "dq (abcmodel.atmosphere.mixed_layer.bulk.bulkmixedlayerinitconds attribute)":
-      [
-        [
-          22,
-          "abcmodel.atmosphere.mixed_layer.bulk.BulkMixedLayerInitConds.dq",
-          false,
-        ],
-      ],
-    "dq (abcmodel.atmosphere.mixed_layer.minimal.minimalmixedlayerinitconds attribute)":
+    "dq (abcmodel.atmos.mixed_layer.bulk.bulkmixedlayerinitconds attribute)": [
+      [22, "abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerInitConds.dq", false],
+    ],
+    "dq (abcmodel.atmos.mixed_layer.minimal.minimalmixedlayerinitconds attribute)":
       [
         [
           23,
-          "abcmodel.atmosphere.mixed_layer.minimal.MinimalMixedLayerInitConds.dq",
+          "abcmodel.atmos.mixed_layer.minimal.MinimalMixedLayerInitConds.dq",
           false,
         ],
       ],
@@ -1181,99 +1148,84 @@ Search.setIndex({
         false,
       ],
     ],
-    "dqtend (abcmodel.atmosphere.mixed_layer.bulk.bulkmixedlayerinitconds attribute)":
+    "dqtend (abcmodel.atmos.mixed_layer.bulk.bulkmixedlayerinitconds attribute)":
       [
         [
           22,
-          "abcmodel.atmosphere.mixed_layer.bulk.BulkMixedLayerInitConds.dqtend",
+          "abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerInitConds.dqtend",
           false,
         ],
       ],
-    "drag_m (abcmodel.atmosphere.surface_layer.standard.standardsurfacelayerinitconds attribute)":
+    "drag_m (abcmodel.atmos.surface_layer.standard.standardsurfacelayerinitconds attribute)":
       [
         [
           27,
-          "abcmodel.atmosphere.surface_layer.standard.StandardSurfaceLayerInitConds.drag_m",
+          "abcmodel.atmos.surface_layer.standard.StandardSurfaceLayerInitConds.drag_m",
           false,
         ],
       ],
-    "drag_s (abcmodel.atmosphere.surface_layer.standard.standardsurfacelayerinitconds attribute)":
+    "drag_s (abcmodel.atmos.surface_layer.standard.standardsurfacelayerinitconds attribute)":
       [
         [
           27,
-          "abcmodel.atmosphere.surface_layer.standard.StandardSurfaceLayerInitConds.drag_s",
+          "abcmodel.atmos.surface_layer.standard.StandardSurfaceLayerInitConds.drag_s",
           false,
         ],
       ],
-    "du (abcmodel.atmosphere.mixed_layer.bulk.bulkmixedlayerinitconds attribute)":
+    "du (abcmodel.atmos.mixed_layer.bulk.bulkmixedlayerinitconds attribute)": [
+      [22, "abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerInitConds.du", false],
+    ],
+    "dutend (abcmodel.atmos.mixed_layer.bulk.bulkmixedlayerinitconds attribute)":
       [
         [
           22,
-          "abcmodel.atmosphere.mixed_layer.bulk.BulkMixedLayerInitConds.du",
+          "abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerInitConds.dutend",
           false,
         ],
       ],
-    "dutend (abcmodel.atmosphere.mixed_layer.bulk.bulkmixedlayerinitconds attribute)":
+    "dv (abcmodel.atmos.mixed_layer.bulk.bulkmixedlayerinitconds attribute)": [
+      [22, "abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerInitConds.dv", false],
+    ],
+    "dvtend (abcmodel.atmos.mixed_layer.bulk.bulkmixedlayerinitconds attribute)":
       [
         [
           22,
-          "abcmodel.atmosphere.mixed_layer.bulk.BulkMixedLayerInitConds.dutend",
+          "abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerInitConds.dvtend",
           false,
         ],
       ],
-    "dv (abcmodel.atmosphere.mixed_layer.bulk.bulkmixedlayerinitconds attribute)":
+    "dz_h (abcmodel.atmos.mixed_layer.bulk.bulkmixedlayerinitconds attribute)":
       [
         [
           22,
-          "abcmodel.atmosphere.mixed_layer.bulk.BulkMixedLayerInitConds.dv",
+          "abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerInitConds.dz_h",
           false,
         ],
       ],
-    "dvtend (abcmodel.atmosphere.mixed_layer.bulk.bulkmixedlayerinitconds attribute)":
-      [
-        [
-          22,
-          "abcmodel.atmosphere.mixed_layer.bulk.BulkMixedLayerInitConds.dvtend",
-          false,
-        ],
-      ],
-    "dz_h (abcmodel.atmosphere.mixed_layer.bulk.bulkmixedlayerinitconds attribute)":
-      [
-        [
-          22,
-          "abcmodel.atmosphere.mixed_layer.bulk.BulkMixedLayerInitConds.dz_h",
-          false,
-        ],
-      ],
-    "dz_h (abcmodel.atmosphere.mixed_layer.minimal.minimalmixedlayerinitconds attribute)":
+    "dz_h (abcmodel.atmos.mixed_layer.minimal.minimalmixedlayerinitconds attribute)":
       [
         [
           23,
-          "abcmodel.atmosphere.mixed_layer.minimal.MinimalMixedLayerInitConds.dz_h",
+          "abcmodel.atmos.mixed_layer.minimal.MinimalMixedLayerInitConds.dz_h",
           false,
         ],
       ],
-    "dztend (abcmodel.atmosphere.mixed_layer.bulk.bulkmixedlayerinitconds attribute)":
+    "dztend (abcmodel.atmos.mixed_layer.bulk.bulkmixedlayerinitconds attribute)":
       [
         [
           22,
-          "abcmodel.atmosphere.mixed_layer.bulk.BulkMixedLayerInitConds.dztend",
+          "abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerInitConds.dztend",
           false,
         ],
       ],
-    "e (abcmodel.atmosphere.mixed_layer.bulk.bulkmixedlayerinitconds attribute)":
-      [
-        [
-          22,
-          "abcmodel.atmosphere.mixed_layer.bulk.BulkMixedLayerInitConds.e",
-          false,
-        ],
-      ],
-    "e (abcmodel.atmosphere.mixed_layer.minimal.minimalmixedlayerinitconds attribute)":
+    "e (abcmodel.atmos.mixed_layer.bulk.bulkmixedlayerinitconds attribute)": [
+      [22, "abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerInitConds.e", false],
+    ],
+    "e (abcmodel.atmos.mixed_layer.minimal.minimalmixedlayerinitconds attribute)":
       [
         [
           23,
-          "abcmodel.atmosphere.mixed_layer.minimal.MinimalMixedLayerInitConds.e",
+          "abcmodel.atmos.mixed_layer.minimal.MinimalMixedLayerInitConds.e",
           false,
         ],
       ],
@@ -1283,27 +1235,27 @@ Search.setIndex({
     "e (abcmodel.land.standard.standardlandsurfaceinitconds attribute)": [
       [34, "abcmodel.land.standard.StandardLandSurfaceInitConds.e", false],
     ],
-    "e2m (abcmodel.atmosphere.surface_layer.standard.standardsurfacelayerinitconds attribute)":
+    "e2m (abcmodel.atmos.surface_layer.standard.standardsurfacelayerinitconds attribute)":
       [
         [
           27,
-          "abcmodel.atmosphere.surface_layer.standard.StandardSurfaceLayerInitConds.e2m",
+          "abcmodel.atmos.surface_layer.standard.StandardSurfaceLayerInitConds.e2m",
           false,
         ],
       ],
-    "esat (abcmodel.atmosphere.mixed_layer.bulk.bulkmixedlayerinitconds attribute)":
+    "esat (abcmodel.atmos.mixed_layer.bulk.bulkmixedlayerinitconds attribute)":
       [
         [
           22,
-          "abcmodel.atmosphere.mixed_layer.bulk.BulkMixedLayerInitConds.esat",
+          "abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerInitConds.esat",
           false,
         ],
       ],
-    "esat (abcmodel.atmosphere.mixed_layer.minimal.minimalmixedlayerinitconds attribute)":
+    "esat (abcmodel.atmos.mixed_layer.minimal.minimalmixedlayerinitconds attribute)":
       [
         [
           23,
-          "abcmodel.atmosphere.mixed_layer.minimal.MinimalMixedLayerInitConds.esat",
+          "abcmodel.atmos.mixed_layer.minimal.MinimalMixedLayerInitConds.esat",
           false,
         ],
       ],
@@ -1313,11 +1265,11 @@ Search.setIndex({
     "esat (abcmodel.land.standard.standardlandsurfaceinitconds attribute)": [
       [34, "abcmodel.land.standard.StandardLandSurfaceInitConds.esat", false],
     ],
-    "esat2m (abcmodel.atmosphere.surface_layer.standard.standardsurfacelayerinitconds attribute)":
+    "esat2m (abcmodel.atmos.surface_layer.standard.standardsurfacelayerinitconds attribute)":
       [
         [
           27,
-          "abcmodel.atmosphere.surface_layer.standard.StandardSurfaceLayerInitConds.esat2m",
+          "abcmodel.atmos.surface_layer.standard.StandardSurfaceLayerInitConds.esat2m",
           false,
         ],
       ],
@@ -1330,49 +1282,39 @@ Search.setIndex({
     "gf (abcmodel.land.standard.standardlandsurfaceinitconds attribute)": [
       [34, "abcmodel.land.standard.StandardLandSurfaceInitConds.gf", false],
     ],
-    "h_abl (abcmodel.atmosphere.mixed_layer.bulk.bulkmixedlayerinitconds attribute)":
+    "h_abl (abcmodel.atmos.mixed_layer.bulk.bulkmixedlayerinitconds attribute)":
       [
         [
           22,
-          "abcmodel.atmosphere.mixed_layer.bulk.BulkMixedLayerInitConds.h_abl",
+          "abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerInitConds.h_abl",
           false,
         ],
       ],
-    "h_abl (abcmodel.atmosphere.mixed_layer.minimal.minimalmixedlayerinitconds attribute)":
+    "h_abl (abcmodel.atmos.mixed_layer.minimal.minimalmixedlayerinitconds attribute)":
       [
         [
           23,
-          "abcmodel.atmosphere.mixed_layer.minimal.MinimalMixedLayerInitConds.h_abl",
+          "abcmodel.atmos.mixed_layer.minimal.MinimalMixedLayerInitConds.h_abl",
           false,
         ],
       ],
-    "h_abl_tend (abcmodel.atmosphere.mixed_layer.bulk.bulkmixedlayerinitconds attribute)":
+    "h_abl_tend (abcmodel.atmos.mixed_layer.bulk.bulkmixedlayerinitconds attribute)":
       [
         [
           22,
-          "abcmodel.atmosphere.mixed_layer.bulk.BulkMixedLayerInitConds.h_abl_tend",
+          "abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerInitConds.h_abl_tend",
           false,
         ],
       ],
     "hf (abcmodel.land.standard.standardlandsurfaceinitconds attribute)": [
       [34, "abcmodel.land.standard.StandardLandSurfaceInitConds.hf", false],
     ],
-    "in_lrad (abcmodel.radiation.standard.standardradiationinitconds attribute)":
-      [
-        [
-          36,
-          "abcmodel.radiation.standard.StandardRadiationInitConds.in_lrad",
-          false,
-        ],
-      ],
-    "in_srad (abcmodel.radiation.standard.standardradiationinitconds attribute)":
-      [
-        [
-          36,
-          "abcmodel.radiation.standard.StandardRadiationInitConds.in_srad",
-          false,
-        ],
-      ],
+    "in_lrad (abcmodel.rad.standard.standardradinitconds attribute)": [
+      [36, "abcmodel.rad.standard.StandardRadiationInitConds.in_lrad", false],
+    ],
+    "in_srad (abcmodel.rad.standard.standardradinitconds attribute)": [
+      [36, "abcmodel.rad.standard.StandardRadiationInitConds.in_srad", false],
+    ],
     "init_conds_kwargs (in module abcconfigs.class_model.ags)": [
       [7, "abcconfigs.class_model.ags.init_conds_kwargs", false],
     ],
@@ -1382,21 +1324,12 @@ Search.setIndex({
     "init_conds_kwargs (in module abcconfigs.class_model.jarvis_stewart)": [
       [9, "abcconfigs.class_model.jarvis_stewart.init_conds_kwargs", false],
     ],
-    "init_conds_kwargs (in module abcconfigs.class_model.standard_radiation)": [
-      [
-        10,
-        "abcconfigs.class_model.standard_radiation.init_conds_kwargs",
-        false,
-      ],
+    "init_conds_kwargs (in module abcconfigs.class_model.standard_rad)": [
+      [10, "abcconfigs.class_model.standard_rad.init_conds_kwargs", false],
     ],
-    "init_conds_kwargs (in module abcconfigs.class_model.cloudy_radiation)":
-      [
-        [
-          11,
-          "abcconfigs.class_model.cloudy_radiation.init_conds_kwargs",
-          false,
-        ],
-      ],
+    "init_conds_kwargs (in module abcconfigs.class_model.cloudy_rad)": [
+      [11, "abcconfigs.class_model.cloudy_rad.init_conds_kwargs", false],
+    ],
     "init_conds_kwargs (in module abcconfigs.class_model.obukhov_surface_layer)":
       [
         [
@@ -1408,40 +1341,31 @@ Search.setIndex({
     "init_state() (abcmodel.coupling.abcoupler static method)": [
       [28, "abcmodel.coupling.ABCoupler.init_state", false],
     ],
-    "integrate() (abcmodel.abstracts.abstractatmospheremodel method)": [
+    "integrate() (abcmodel.abstracts.abstractatmosmodel method)": [
       [14, "abcmodel.abstracts.AbstractAtmosphereModel.integrate", false],
     ],
     "integrate() (abcmodel.abstracts.abstractlandmodel method)": [
       [14, "abcmodel.abstracts.AbstractLandModel.integrate", false],
     ],
-    "integrate() (abcmodel.atmosphere.abstracts.abstractmixedlayermodel method)":
-      [
-        [
-          16,
-          "abcmodel.atmosphere.abstracts.AbstractMixedLayerModel.integrate",
-          false,
-        ],
-      ],
-    "integrate() (abcmodel.atmosphere.dayonly.dayonlyatmospheremodel method)": [
-      [
-        20,
-        "abcmodel.atmosphere.dayonly.DayOnlyAtmosphereModel.integrate",
-        false,
-      ],
+    "integrate() (abcmodel.atmos.abstracts.abstractmixedlayermodel method)": [
+      [16, "abcmodel.atmos.abstracts.AbstractMixedLayerModel.integrate", false],
     ],
-    "integrate() (abcmodel.atmosphere.mixed_layer.bulk.bulkmixedlayermodel method)":
+    "integrate() (abcmodel.atmos.dayonly.dayonlyatmosmodel method)": [
+      [20, "abcmodel.atmos.dayonly.DayOnlyAtmosphereModel.integrate", false],
+    ],
+    "integrate() (abcmodel.atmos.mixed_layer.bulk.bulkmixedlayermodel method)":
       [
         [
           22,
-          "abcmodel.atmosphere.mixed_layer.bulk.BulkMixedLayerModel.integrate",
+          "abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerModel.integrate",
           false,
         ],
       ],
-    "integrate() (abcmodel.atmosphere.mixed_layer.minimal.minimalmixedlayermodel method)":
+    "integrate() (abcmodel.atmos.mixed_layer.minimal.minimalmixedlayermodel method)":
       [
         [
           23,
-          "abcmodel.atmosphere.mixed_layer.minimal.MinimalMixedLayerModel.integrate",
+          "abcmodel.atmos.mixed_layer.minimal.MinimalMixedLayerModel.integrate",
           false,
         ],
       ],
@@ -1468,19 +1392,18 @@ Search.setIndex({
     "k (abcmodel.utils.physicalconstants attribute)": [
       [38, "abcmodel.utils.PhysicalConstants.k", false],
     ],
-    "lcl (abcmodel.atmosphere.mixed_layer.bulk.bulkmixedlayerinitconds attribute)":
+    "lcl (abcmodel.atmos.mixed_layer.bulk.bulkmixedlayerinitconds attribute)": [
       [
-        [
-          22,
-          "abcmodel.atmosphere.mixed_layer.bulk.BulkMixedLayerInitConds.lcl",
-          false,
-        ],
+        22,
+        "abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerInitConds.lcl",
+        false,
       ],
-    "lcl (abcmodel.atmosphere.mixed_layer.minimal.minimalmixedlayerinitconds attribute)":
+    ],
+    "lcl (abcmodel.atmos.mixed_layer.minimal.minimalmixedlayerinitconds attribute)":
       [
         [
           23,
-          "abcmodel.atmosphere.mixed_layer.minimal.MinimalMixedLayerInitConds.lcl",
+          "abcmodel.atmos.mixed_layer.minimal.MinimalMixedLayerInitConds.lcl",
           false,
         ],
       ],
@@ -1521,35 +1444,30 @@ Search.setIndex({
     "minimallandsurfacemodel (class in abcmodel.land.minimal)": [
       [33, "abcmodel.land.minimal.MinimalLandSurfaceModel", false],
     ],
-    "minimalmixedlayerinitconds (class in abcmodel.atmosphere.mixed_layer.minimal)":
+    "minimalmixedlayerinitconds (class in abcmodel.atmos.mixed_layer.minimal)":
       [
         [
           23,
-          "abcmodel.atmosphere.mixed_layer.minimal.MinimalMixedLayerInitConds",
+          "abcmodel.atmos.mixed_layer.minimal.MinimalMixedLayerInitConds",
           false,
         ],
       ],
-    "minimalmixedlayermodel (class in abcmodel.atmosphere.mixed_layer.minimal)":
-      [
-        [
-          23,
-          "abcmodel.atmosphere.mixed_layer.minimal.MinimalMixedLayerModel",
-          false,
-        ],
-      ],
-    "minimalsurfacelayerinitconds (class in abcmodel.atmosphere.surface_layer.minimal)":
+    "minimalmixedlayermodel (class in abcmodel.atmos.mixed_layer.minimal)": [
+      [23, "abcmodel.atmos.mixed_layer.minimal.MinimalMixedLayerModel", false],
+    ],
+    "minimalsurfacelayerinitconds (class in abcmodel.atmos.surface_layer.minimal)":
       [
         [
           26,
-          "abcmodel.atmosphere.surface_layer.minimal.MinimalSurfaceLayerInitConds",
+          "abcmodel.atmos.surface_layer.minimal.MinimalSurfaceLayerInitConds",
           false,
         ],
       ],
-    "minimalsurfacelayermodel (class in abcmodel.atmosphere.surface_layer.minimal)":
+    "minimalsurfacelayermodel (class in abcmodel.atmos.surface_layer.minimal)":
       [
         [
           26,
-          "abcmodel.atmosphere.surface_layer.minimal.MinimalSurfaceLayerModel",
+          "abcmodel.atmos.surface_layer.minimal.MinimalSurfaceLayerModel",
           false,
         ],
       ],
@@ -1562,17 +1480,12 @@ Search.setIndex({
     "model_kwargs (in module abcconfigs.class_model.jarvis_stewart)": [
       [9, "abcconfigs.class_model.jarvis_stewart.model_kwargs", false],
     ],
-    "model_kwargs (in module abcconfigs.class_model.standard_radiation)": [
-      [10, "abcconfigs.class_model.standard_radiation.model_kwargs", false],
+    "model_kwargs (in module abcconfigs.class_model.standard_rad)": [
+      [10, "abcconfigs.class_model.standard_rad.model_kwargs", false],
     ],
-    "model_kwargs (in module abcconfigs.class_model.cloudy_radiation)":
-      [
-        [
-          11,
-          "abcconfigs.class_model.cloudy_radiation.model_kwargs",
-          false,
-        ],
-      ],
+    "model_kwargs (in module abcconfigs.class_model.cloudy_rad)": [
+      [11, "abcconfigs.class_model.cloudy_rad.model_kwargs", false],
+    ],
     module: [
       [3, "module-abcconfigs.aridities.arid", false],
       [4, "module-abcconfigs.aridities.humid", false],
@@ -1580,124 +1493,103 @@ Search.setIndex({
       [7, "module-abcconfigs.class_model.ags", false],
       [8, "module-abcconfigs.class_model.bulk_mixed_layer", false],
       [9, "module-abcconfigs.class_model.jarvis_stewart", false],
-      [10, "module-abcconfigs.class_model.standard_radiation", false],
-      [11, "module-abcconfigs.class_model.cloudy_radiation", false],
+      [10, "module-abcconfigs.class_model.standard_rad", false],
+      [11, "module-abcconfigs.class_model.cloudy_rad", false],
       [12, "module-abcconfigs.class_model.obukhov_surface_layer", false],
       [14, "module-abcmodel.abstracts", false],
-      [16, "module-abcmodel.atmosphere.abstracts", false],
-      [18, "module-abcmodel.atmosphere.clouds.cumulus", false],
-      [19, "module-abcmodel.atmosphere.clouds.no_clouds", false],
-      [20, "module-abcmodel.atmosphere.dayonly", false],
-      [22, "module-abcmodel.atmosphere.mixed_layer.bulk", false],
-      [23, "module-abcmodel.atmosphere.mixed_layer.minimal", false],
-      [24, "module-abcmodel.atmosphere.mixed_layer.stats", false],
-      [26, "module-abcmodel.atmosphere.surface_layer.minimal", false],
-      [27, "module-abcmodel.atmosphere.surface_layer.standard", false],
+      [16, "module-abcmodel.atmos.abstracts", false],
+      [18, "module-abcmodel.atmos.clouds.cumulus", false],
+      [19, "module-abcmodel.atmos.clouds.no_clouds", false],
+      [20, "module-abcmodel.atmos.dayonly", false],
+      [22, "module-abcmodel.atmos.mixed_layer.bulk", false],
+      [23, "module-abcmodel.atmos.mixed_layer.minimal", false],
+      [24, "module-abcmodel.atmos.mixed_layer.stats", false],
+      [26, "module-abcmodel.atmos.surface_layer.minimal", false],
+      [27, "module-abcmodel.atmos.surface_layer.standard", false],
       [28, "module-abcmodel.coupling", false],
       [29, "module-abcmodel.integration", false],
       [31, "module-abcmodel.land.ags", false],
       [32, "module-abcmodel.land.jarvis_stewart", false],
       [33, "module-abcmodel.land.minimal", false],
       [34, "module-abcmodel.land.standard", false],
-      [36, "module-abcmodel.radiation.standard", false],
-      [37, "module-abcmodel.radiation.standard_w_clouds", false],
+      [36, "module-abcmodel.rad.standard", false],
+      [37, "module-abcmodel.rad.standard_w_clouds", false],
       [38, "module-abcmodel.utils", false],
     ],
-    "net_rad (abcmodel.radiation.standard.standardradiationinitconds attribute)":
-      [
-        [
-          36,
-          "abcmodel.radiation.standard.StandardRadiationInitConds.net_rad",
-          false,
-        ],
-      ],
-    "nocloudinitconds (class in abcmodel.atmosphere.clouds.no_clouds)": [
-      [19, "abcmodel.atmosphere.clouds.no_clouds.NoCloudInitConds", false],
+    "net_rad (abcmodel.rad.standard.standardradinitconds attribute)": [
+      [36, "abcmodel.rad.standard.StandardRadiationInitConds.net_rad", false],
     ],
-    "nocloudmodel (class in abcmodel.atmosphere.clouds.no_clouds)": [
-      [19, "abcmodel.atmosphere.clouds.no_clouds.NoCloudModel", false],
+    "nocloudinitconds (class in abcmodel.atmos.clouds.no_clouds)": [
+      [19, "abcmodel.atmos.clouds.no_clouds.NoCloudInitConds", false],
+    ],
+    "nocloudmodel (class in abcmodel.atmos.clouds.no_clouds)": [
+      [19, "abcmodel.atmos.clouds.no_clouds.NoCloudModel", false],
     ],
     "nuco2q (abcmodel.utils.physicalconstants attribute)": [
       [38, "abcmodel.utils.PhysicalConstants.nuco2q", false],
     ],
-    "obukhov_length (abcmodel.atmosphere.surface_layer.standard.standardsurfacelayerinitconds attribute)":
+    "obukhov_length (abcmodel.atmos.surface_layer.standard.standardsurfacelayerinitconds attribute)":
       [
         [
           27,
-          "abcmodel.atmosphere.surface_layer.standard.StandardSurfaceLayerInitConds.obukhov_length",
+          "abcmodel.atmos.surface_layer.standard.StandardSurfaceLayerInitConds.obukhov_length",
           false,
         ],
       ],
-    "out_lrad (abcmodel.radiation.standard.standardradiationinitconds attribute)":
-      [
-        [
-          36,
-          "abcmodel.radiation.standard.StandardRadiationInitConds.out_lrad",
-          false,
-        ],
-      ],
-    "out_srad (abcmodel.radiation.standard.standardradiationinitconds attribute)":
-      [
-        [
-          36,
-          "abcmodel.radiation.standard.StandardRadiationInitConds.out_srad",
-          false,
-        ],
-      ],
+    "out_lrad (abcmodel.rad.standard.standardradinitconds attribute)": [
+      [36, "abcmodel.rad.standard.StandardRadiationInitConds.out_lrad", false],
+    ],
+    "out_srad (abcmodel.rad.standard.standardradinitconds attribute)": [
+      [36, "abcmodel.rad.standard.StandardRadiationInitConds.out_srad", false],
+    ],
     "physicalconstants (class in abcmodel.utils)": [
       [38, "abcmodel.utils.PhysicalConstants", false],
     ],
     "print_nan_variables() (in module abcmodel.integration)": [
       [29, "abcmodel.integration.print_nan_variables", false],
     ],
-    "q (abcmodel.atmosphere.mixed_layer.bulk.bulkmixedlayerinitconds attribute)":
-      [
-        [
-          22,
-          "abcmodel.atmosphere.mixed_layer.bulk.BulkMixedLayerInitConds.q",
-          false,
-        ],
-      ],
-    "q (abcmodel.atmosphere.mixed_layer.minimal.minimalmixedlayerinitconds attribute)":
+    "q (abcmodel.atmos.mixed_layer.bulk.bulkmixedlayerinitconds attribute)": [
+      [22, "abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerInitConds.q", false],
+    ],
+    "q (abcmodel.atmos.mixed_layer.minimal.minimalmixedlayerinitconds attribute)":
       [
         [
           23,
-          "abcmodel.atmosphere.mixed_layer.minimal.MinimalMixedLayerInitConds.q",
+          "abcmodel.atmos.mixed_layer.minimal.MinimalMixedLayerInitConds.q",
           false,
         ],
       ],
-    "q2_h (abcmodel.atmosphere.clouds.cumulus.standardcumulusinitconds attribute)":
+    "q2_h (abcmodel.atmos.clouds.cumulus.standardcumulusinitconds attribute)": [
       [
-        [
-          18,
-          "abcmodel.atmosphere.clouds.cumulus.StandardCumulusInitConds.q2_h",
-          false,
-        ],
+        18,
+        "abcmodel.atmos.clouds.cumulus.StandardCumulusInitConds.q2_h",
+        false,
       ],
-    "q2_h (abcmodel.atmosphere.clouds.no_clouds.nocloudinitconds attribute)": [
-      [19, "abcmodel.atmosphere.clouds.no_clouds.NoCloudInitConds.q2_h", false],
     ],
-    "q2m (abcmodel.atmosphere.surface_layer.standard.standardsurfacelayerinitconds attribute)":
+    "q2_h (abcmodel.atmos.clouds.no_clouds.nocloudinitconds attribute)": [
+      [19, "abcmodel.atmos.clouds.no_clouds.NoCloudInitConds.q2_h", false],
+    ],
+    "q2m (abcmodel.atmos.surface_layer.standard.standardsurfacelayerinitconds attribute)":
       [
         [
           27,
-          "abcmodel.atmosphere.surface_layer.standard.StandardSurfaceLayerInitConds.q2m",
+          "abcmodel.atmos.surface_layer.standard.StandardSurfaceLayerInitConds.q2m",
           false,
         ],
       ],
-    "qsat (abcmodel.atmosphere.mixed_layer.bulk.bulkmixedlayerinitconds attribute)":
+    "qsat (abcmodel.atmos.mixed_layer.bulk.bulkmixedlayerinitconds attribute)":
       [
         [
           22,
-          "abcmodel.atmosphere.mixed_layer.bulk.BulkMixedLayerInitConds.qsat",
+          "abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerInitConds.qsat",
           false,
         ],
       ],
-    "qsat (abcmodel.atmosphere.mixed_layer.minimal.minimalmixedlayerinitconds attribute)":
+    "qsat (abcmodel.atmos.mixed_layer.minimal.minimalmixedlayerinitconds attribute)":
       [
         [
           23,
-          "abcmodel.atmosphere.mixed_layer.minimal.MinimalMixedLayerInitConds.qsat",
+          "abcmodel.atmos.mixed_layer.minimal.MinimalMixedLayerInitConds.qsat",
           false,
         ],
       ],
@@ -1718,19 +1610,19 @@ Search.setIndex({
           false,
         ],
       ],
-    "qsurf (abcmodel.atmosphere.surface_layer.standard.standardsurfacelayerinitconds attribute)":
+    "qsurf (abcmodel.atmos.surface_layer.standard.standardsurfacelayerinitconds attribute)":
       [
         [
           27,
-          "abcmodel.atmosphere.surface_layer.standard.StandardSurfaceLayerInitConds.qsurf",
+          "abcmodel.atmos.surface_layer.standard.StandardSurfaceLayerInitConds.qsurf",
           false,
         ],
       ],
-    "qtend (abcmodel.atmosphere.mixed_layer.bulk.bulkmixedlayerinitconds attribute)":
+    "qtend (abcmodel.atmos.mixed_layer.bulk.bulkmixedlayerinitconds attribute)":
       [
         [
           22,
-          "abcmodel.atmosphere.mixed_layer.bulk.BulkMixedLayerInitConds.qtend",
+          "abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerInitConds.qtend",
           false,
         ],
       ],
@@ -1749,16 +1641,16 @@ Search.setIndex({
     "rhow (abcmodel.utils.physicalconstants attribute)": [
       [38, "abcmodel.utils.PhysicalConstants.rhow", false],
     ],
-    "rib_number (abcmodel.atmosphere.surface_layer.standard.standardsurfacelayerinitconds attribute)":
+    "rib_number (abcmodel.atmos.surface_layer.standard.standardsurfacelayerinitconds attribute)":
       [
         [
           27,
-          "abcmodel.atmosphere.surface_layer.standard.StandardSurfaceLayerInitConds.rib_number",
+          "abcmodel.atmos.surface_layer.standard.StandardSurfaceLayerInitConds.rib_number",
           false,
         ],
       ],
-    "ribtol() (in module abcmodel.atmosphere.surface_layer.standard)": [
-      [27, "abcmodel.atmosphere.surface_layer.standard.ribtol", false],
+    "ribtol() (in module abcmodel.atmos.surface_layer.standard)": [
+      [27, "abcmodel.atmos.surface_layer.standard.ribtol", false],
     ],
     "rs (abcmodel.land.minimal.minimallandsurfaceinitconds attribute)": [
       [33, "abcmodel.land.minimal.MinimalLandSurfaceInitConds.rs", false],
@@ -1772,69 +1664,57 @@ Search.setIndex({
     "rssoil (abcmodel.land.standard.standardlandsurfaceinitconds attribute)": [
       [34, "abcmodel.land.standard.StandardLandSurfaceInitConds.rssoil", false],
     ],
-    "run() (abcmodel.abstracts.abstractatmospheremodel method)": [
+    "run() (abcmodel.abstracts.abstractatmosmodel method)": [
       [14, "abcmodel.abstracts.AbstractAtmosphereModel.run", false],
     ],
     "run() (abcmodel.abstracts.abstractlandmodel method)": [
       [14, "abcmodel.abstracts.AbstractLandModel.run", false],
     ],
-    "run() (abcmodel.abstracts.abstractradiationmodel method)": [
+    "run() (abcmodel.abstracts.abstractradmodel method)": [
       [14, "abcmodel.abstracts.AbstractRadiationModel.run", false],
     ],
-    "run() (abcmodel.atmosphere.abstracts.abstractcloudmodel method)": [
-      [16, "abcmodel.atmosphere.abstracts.AbstractCloudModel.run", false],
+    "run() (abcmodel.atmos.abstracts.abstractcloudmodel method)": [
+      [16, "abcmodel.atmos.abstracts.AbstractCloudModel.run", false],
     ],
-    "run() (abcmodel.atmosphere.abstracts.abstractmixedlayermodel method)": [
-      [16, "abcmodel.atmosphere.abstracts.AbstractMixedLayerModel.run", false],
+    "run() (abcmodel.atmos.abstracts.abstractmixedlayermodel method)": [
+      [16, "abcmodel.atmos.abstracts.AbstractMixedLayerModel.run", false],
     ],
-    "run() (abcmodel.atmosphere.abstracts.abstractsurfacelayermodel method)": [
-      [
-        16,
-        "abcmodel.atmosphere.abstracts.AbstractSurfaceLayerModel.run",
-        false,
-      ],
+    "run() (abcmodel.atmos.abstracts.abstractsurfacelayermodel method)": [
+      [16, "abcmodel.atmos.abstracts.AbstractSurfaceLayerModel.run", false],
     ],
-    "run() (abcmodel.atmosphere.clouds.cumulus.standardcumulusmodel method)": [
-      [
-        18,
-        "abcmodel.atmosphere.clouds.cumulus.StandardCumulusModel.run",
-        false,
-      ],
+    "run() (abcmodel.atmos.clouds.cumulus.standardcumulusmodel method)": [
+      [18, "abcmodel.atmos.clouds.cumulus.StandardCumulusModel.run", false],
     ],
-    "run() (abcmodel.atmosphere.clouds.no_clouds.nocloudmodel method)": [
-      [19, "abcmodel.atmosphere.clouds.no_clouds.NoCloudModel.run", false],
+    "run() (abcmodel.atmos.clouds.no_clouds.nocloudmodel method)": [
+      [19, "abcmodel.atmos.clouds.no_clouds.NoCloudModel.run", false],
     ],
-    "run() (abcmodel.atmosphere.dayonly.dayonlyatmospheremodel method)": [
-      [20, "abcmodel.atmosphere.dayonly.DayOnlyAtmosphereModel.run", false],
+    "run() (abcmodel.atmos.dayonly.dayonlyatmosmodel method)": [
+      [20, "abcmodel.atmos.dayonly.DayOnlyAtmosphereModel.run", false],
     ],
-    "run() (abcmodel.atmosphere.mixed_layer.bulk.bulkmixedlayermodel method)": [
-      [
-        22,
-        "abcmodel.atmosphere.mixed_layer.bulk.BulkMixedLayerModel.run",
-        false,
-      ],
+    "run() (abcmodel.atmos.mixed_layer.bulk.bulkmixedlayermodel method)": [
+      [22, "abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerModel.run", false],
     ],
-    "run() (abcmodel.atmosphere.mixed_layer.minimal.minimalmixedlayermodel method)":
+    "run() (abcmodel.atmos.mixed_layer.minimal.minimalmixedlayermodel method)":
       [
         [
           23,
-          "abcmodel.atmosphere.mixed_layer.minimal.MinimalMixedLayerModel.run",
+          "abcmodel.atmos.mixed_layer.minimal.MinimalMixedLayerModel.run",
           false,
         ],
       ],
-    "run() (abcmodel.atmosphere.surface_layer.minimal.minimalsurfacelayermodel method)":
+    "run() (abcmodel.atmos.surface_layer.minimal.minimalsurfacelayermodel method)":
       [
         [
           26,
-          "abcmodel.atmosphere.surface_layer.minimal.MinimalSurfaceLayerModel.run",
+          "abcmodel.atmos.surface_layer.minimal.MinimalSurfaceLayerModel.run",
           false,
         ],
       ],
-    "run() (abcmodel.atmosphere.surface_layer.standard.standardsurfacelayermodel method)":
+    "run() (abcmodel.atmos.surface_layer.standard.standardsurfacelayermodel method)":
       [
         [
           27,
-          "abcmodel.atmosphere.surface_layer.standard.StandardSurfaceLayerModel.run",
+          "abcmodel.atmos.surface_layer.standard.StandardSurfaceLayerModel.run",
           false,
         ],
       ],
@@ -1848,17 +1728,16 @@ Search.setIndex({
         false,
       ],
     ],
-    "run() (abcmodel.radiation.standard.standardradiationmodel method)": [
-      [36, "abcmodel.radiation.standard.StandardRadiationModel.run", false],
+    "run() (abcmodel.rad.standard.standardradmodel method)": [
+      [36, "abcmodel.rad.standard.StandardRadiationModel.run", false],
     ],
-    "run() (abcmodel.radiation.standard_w_clouds.standardradiationwcloudsmodel method)":
+    "run() (abcmodel.rad.standard_w_clouds.standardradwcloudsmodel method)": [
       [
-        [
-          37,
-          "abcmodel.radiation.standard_w_clouds.StandardRadiationwCloudsModel.run",
-          false,
-        ],
+        37,
+        "abcmodel.rad.standard_w_clouds.StandardRadiationwCloudsModel.run",
+        false,
       ],
+    ],
     "rv (abcmodel.utils.physicalconstants attribute)": [
       [38, "abcmodel.utils.PhysicalConstants.rv", false],
     ],
@@ -1868,81 +1747,69 @@ Search.setIndex({
     "solar_in (abcmodel.utils.physicalconstants attribute)": [
       [38, "abcmodel.utils.PhysicalConstants.solar_in", false],
     ],
-    "standardcumulusinitconds (class in abcmodel.atmosphere.clouds.cumulus)": [
-      [
-        18,
-        "abcmodel.atmosphere.clouds.cumulus.StandardCumulusInitConds",
-        false,
-      ],
+    "standardcumulusinitconds (class in abcmodel.atmos.clouds.cumulus)": [
+      [18, "abcmodel.atmos.clouds.cumulus.StandardCumulusInitConds", false],
     ],
-    "standardcumulusmodel (class in abcmodel.atmosphere.clouds.cumulus)": [
-      [18, "abcmodel.atmosphere.clouds.cumulus.StandardCumulusModel", false],
+    "standardcumulusmodel (class in abcmodel.atmos.clouds.cumulus)": [
+      [18, "abcmodel.atmos.clouds.cumulus.StandardCumulusModel", false],
     ],
     "standardlandsurfaceinitconds (class in abcmodel.land.standard)": [
       [34, "abcmodel.land.standard.StandardLandSurfaceInitConds", false],
     ],
-    "standardradiationinitconds (class in abcmodel.radiation.standard)": [
-      [36, "abcmodel.radiation.standard.StandardRadiationInitConds", false],
+    "standardradinitconds (class in abcmodel.rad.standard)": [
+      [36, "abcmodel.rad.standard.StandardRadiationInitConds", false],
     ],
-    "standardradiationmodel (class in abcmodel.radiation.standard)": [
-      [36, "abcmodel.radiation.standard.StandardRadiationModel", false],
+    "standardradmodel (class in abcmodel.rad.standard)": [
+      [36, "abcmodel.rad.standard.StandardRadiationModel", false],
     ],
-    "standardradiationwcloudsinitconds (class in abcmodel.radiation.standard_w_clouds)":
+    "standardradwcloudsinitconds (class in abcmodel.rad.standard_w_clouds)": [
       [
-        [
-          37,
-          "abcmodel.radiation.standard_w_clouds.StandardRadiationwCloudsInitConds",
-          false,
-        ],
+        37,
+        "abcmodel.rad.standard_w_clouds.StandardRadiationwCloudsInitConds",
+        false,
       ],
-    "standardradiationwcloudsmodel (class in abcmodel.radiation.standard_w_clouds)":
+    ],
+    "standardradwcloudsmodel (class in abcmodel.rad.standard_w_clouds)": [
       [
-        [
-          37,
-          "abcmodel.radiation.standard_w_clouds.StandardRadiationwCloudsModel",
-          false,
-        ],
+        37,
+        "abcmodel.rad.standard_w_clouds.StandardRadiationwCloudsModel",
+        false,
       ],
-    "standardsurfacelayerinitconds (class in abcmodel.atmosphere.surface_layer.standard)":
+    ],
+    "standardsurfacelayerinitconds (class in abcmodel.atmos.surface_layer.standard)":
       [
         [
           27,
-          "abcmodel.atmosphere.surface_layer.standard.StandardSurfaceLayerInitConds",
+          "abcmodel.atmos.surface_layer.standard.StandardSurfaceLayerInitConds",
           false,
         ],
       ],
-    "standardsurfacelayermodel (class in abcmodel.atmosphere.surface_layer.standard)":
+    "standardsurfacelayermodel (class in abcmodel.atmos.surface_layer.standard)":
       [
         [
           27,
-          "abcmodel.atmosphere.surface_layer.standard.StandardSurfaceLayerModel",
+          "abcmodel.atmos.surface_layer.standard.StandardSurfaceLayerModel",
           false,
         ],
       ],
-    "statistics() (abcmodel.abstracts.abstractatmospheremodel method)": [
+    "statistics() (abcmodel.abstracts.abstractatmosmodel method)": [
       [14, "abcmodel.abstracts.AbstractAtmosphereModel.statistics", false],
     ],
-    "statistics() (abcmodel.atmosphere.abstracts.abstractmixedlayermodel method)":
+    "statistics() (abcmodel.atmos.abstracts.abstractmixedlayermodel method)": [
       [
-        [
-          16,
-          "abcmodel.atmosphere.abstracts.AbstractMixedLayerModel.statistics",
-          false,
-        ],
+        16,
+        "abcmodel.atmos.abstracts.AbstractMixedLayerModel.statistics",
+        false,
       ],
-    "statistics() (abcmodel.atmosphere.dayonly.dayonlyatmospheremodel method)":
-      [
-        [
-          20,
-          "abcmodel.atmosphere.dayonly.DayOnlyAtmosphereModel.statistics",
-          false,
-        ],
-      ],
-    "statistics() (abcmodel.atmosphere.mixed_layer.stats.abstractstandardstatsmodel method)":
+    ],
+    "statistics() (abcmodel.atmos.dayonly.dayonlyatmosmodel method)": [
+      [20, "abcmodel.atmos.dayonly.DayOnlyAtmosphereModel.statistics", false],
+    ],
+    "statistics() (abcmodel.atmos.mixed_layer.stats.abstractstandardstatsmodel method)":
       [
         [
           24,
-          "abcmodel.atmosphere.mixed_layer.stats.AbstractStandardStatsModel.statistics",
+          "abcmodel.atmos.mixed_layer.stats.AbstractStandardStatsModel.statistics",
           false,
         ],
       ],
@@ -1967,27 +1834,27 @@ Search.setIndex({
     "std_sl_init_conds_kwargs (in module abcconfigs.aridities.standard)": [
       [5, "abcconfigs.aridities.standard.std_sl_init_conds_kwargs", false],
     ],
-    "surf_pressure (abcmodel.atmosphere.mixed_layer.bulk.bulkmixedlayerinitconds attribute)":
+    "surf_pressure (abcmodel.atmos.mixed_layer.bulk.bulkmixedlayerinitconds attribute)":
       [
         [
           22,
-          "abcmodel.atmosphere.mixed_layer.bulk.BulkMixedLayerInitConds.surf_pressure",
+          "abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerInitConds.surf_pressure",
           false,
         ],
       ],
-    "surf_pressure (abcmodel.atmosphere.mixed_layer.minimal.minimalmixedlayerinitconds attribute)":
+    "surf_pressure (abcmodel.atmos.mixed_layer.minimal.minimalmixedlayerinitconds attribute)":
       [
         [
           23,
-          "abcmodel.atmosphere.mixed_layer.minimal.MinimalMixedLayerInitConds.surf_pressure",
+          "abcmodel.atmos.mixed_layer.minimal.MinimalMixedLayerInitConds.surf_pressure",
           false,
         ],
       ],
-    "surf_pressure (abcmodel.atmosphere.mixed_layer.stats.abstractstandardstatsmodel attribute)":
+    "surf_pressure (abcmodel.atmos.mixed_layer.stats.abstractstandardstatsmodel attribute)":
       [
         [
           24,
-          "abcmodel.atmosphere.mixed_layer.stats.AbstractStandardStatsModel.surf_pressure",
+          "abcmodel.atmos.mixed_layer.stats.AbstractStandardStatsModel.surf_pressure",
           false,
         ],
       ],
@@ -2009,11 +1876,11 @@ Search.setIndex({
     "temp2 (abcmodel.land.standard.standardlandsurfaceinitconds attribute)": [
       [34, "abcmodel.land.standard.StandardLandSurfaceInitConds.temp2", false],
     ],
-    "temp_2m (abcmodel.atmosphere.surface_layer.standard.standardsurfacelayerinitconds attribute)":
+    "temp_2m (abcmodel.atmos.surface_layer.standard.standardsurfacelayerinitconds attribute)":
       [
         [
           27,
-          "abcmodel.atmosphere.surface_layer.standard.StandardSurfaceLayerInitConds.temp_2m",
+          "abcmodel.atmos.surface_layer.standard.StandardSurfaceLayerInitConds.temp_2m",
           false,
         ],
       ],
@@ -2033,161 +1900,151 @@ Search.setIndex({
           false,
         ],
       ],
-    "theta (abcmodel.atmosphere.mixed_layer.bulk.bulkmixedlayerinitconds attribute)":
+    "theta (abcmodel.atmos.mixed_layer.bulk.bulkmixedlayerinitconds attribute)":
       [
         [
           22,
-          "abcmodel.atmosphere.mixed_layer.bulk.BulkMixedLayerInitConds.theta",
+          "abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerInitConds.theta",
           false,
         ],
       ],
-    "theta (abcmodel.atmosphere.mixed_layer.minimal.minimalmixedlayerinitconds attribute)":
+    "theta (abcmodel.atmos.mixed_layer.minimal.minimalmixedlayerinitconds attribute)":
       [
         [
           23,
-          "abcmodel.atmosphere.mixed_layer.minimal.MinimalMixedLayerInitConds.theta",
+          "abcmodel.atmos.mixed_layer.minimal.MinimalMixedLayerInitConds.theta",
           false,
         ],
       ],
-    "theta (abcmodel.atmosphere.surface_layer.standard.standardsurfacelayerinitconds attribute)":
+    "theta (abcmodel.atmos.surface_layer.standard.standardsurfacelayerinitconds attribute)":
       [
         [
           27,
-          "abcmodel.atmosphere.surface_layer.standard.StandardSurfaceLayerInitConds.theta",
+          "abcmodel.atmos.surface_layer.standard.StandardSurfaceLayerInitConds.theta",
           false,
         ],
       ],
-    "thetasurf (abcmodel.atmosphere.surface_layer.standard.standardsurfacelayerinitconds attribute)":
+    "thetasurf (abcmodel.atmos.surface_layer.standard.standardsurfacelayerinitconds attribute)":
       [
         [
           27,
-          "abcmodel.atmosphere.surface_layer.standard.StandardSurfaceLayerInitConds.thetasurf",
+          "abcmodel.atmos.surface_layer.standard.StandardSurfaceLayerInitConds.thetasurf",
           false,
         ],
       ],
-    "thetatend (abcmodel.atmosphere.mixed_layer.bulk.bulkmixedlayerinitconds attribute)":
+    "thetatend (abcmodel.atmos.mixed_layer.bulk.bulkmixedlayerinitconds attribute)":
       [
         [
           22,
-          "abcmodel.atmosphere.mixed_layer.bulk.BulkMixedLayerInitConds.thetatend",
+          "abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerInitConds.thetatend",
           false,
         ],
       ],
-    "thetav (abcmodel.atmosphere.mixed_layer.bulk.bulkmixedlayerinitconds attribute)":
+    "thetav (abcmodel.atmos.mixed_layer.bulk.bulkmixedlayerinitconds attribute)":
       [
         [
           22,
-          "abcmodel.atmosphere.mixed_layer.bulk.BulkMixedLayerInitConds.thetav",
+          "abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerInitConds.thetav",
           false,
         ],
       ],
-    "thetav (abcmodel.atmosphere.mixed_layer.minimal.minimalmixedlayerinitconds attribute)":
+    "thetav (abcmodel.atmos.mixed_layer.minimal.minimalmixedlayerinitconds attribute)":
       [
         [
           23,
-          "abcmodel.atmosphere.mixed_layer.minimal.MinimalMixedLayerInitConds.thetav",
+          "abcmodel.atmos.mixed_layer.minimal.MinimalMixedLayerInitConds.thetav",
           false,
         ],
       ],
-    "thetavsurf (abcmodel.atmosphere.surface_layer.standard.standardsurfacelayerinitconds attribute)":
+    "thetavsurf (abcmodel.atmos.surface_layer.standard.standardsurfacelayerinitconds attribute)":
       [
         [
           27,
-          "abcmodel.atmosphere.surface_layer.standard.StandardSurfaceLayerInitConds.thetavsurf",
+          "abcmodel.atmos.surface_layer.standard.StandardSurfaceLayerInitConds.thetavsurf",
           false,
         ],
       ],
     "timestep() (in module abcmodel.integration)": [
       [29, "abcmodel.integration.timestep", false],
     ],
-    "top_co22 (abcmodel.atmosphere.clouds.cumulus.standardcumulusinitconds attribute)":
+    "top_co22 (abcmodel.atmos.clouds.cumulus.standardcumulusinitconds attribute)":
       [
         [
           18,
-          "abcmodel.atmosphere.clouds.cumulus.StandardCumulusInitConds.top_CO22",
+          "abcmodel.atmos.clouds.cumulus.StandardCumulusInitConds.top_CO22",
           false,
         ],
       ],
-    "top_co22 (abcmodel.atmosphere.clouds.no_clouds.nocloudinitconds attribute)":
-      [
-        [
-          19,
-          "abcmodel.atmosphere.clouds.no_clouds.NoCloudInitConds.top_CO22",
-          false,
-        ],
-      ],
-    "top_p (abcmodel.atmosphere.mixed_layer.bulk.bulkmixedlayerinitconds attribute)":
+    "top_co22 (abcmodel.atmos.clouds.no_clouds.nocloudinitconds attribute)": [
+      [19, "abcmodel.atmos.clouds.no_clouds.NoCloudInitConds.top_CO22", false],
+    ],
+    "top_p (abcmodel.atmos.mixed_layer.bulk.bulkmixedlayerinitconds attribute)":
       [
         [
           22,
-          "abcmodel.atmosphere.mixed_layer.bulk.BulkMixedLayerInitConds.top_p",
+          "abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerInitConds.top_p",
           false,
         ],
       ],
-    "top_p (abcmodel.atmosphere.mixed_layer.minimal.minimalmixedlayerinitconds attribute)":
+    "top_p (abcmodel.atmos.mixed_layer.minimal.minimalmixedlayerinitconds attribute)":
       [
         [
           23,
-          "abcmodel.atmosphere.mixed_layer.minimal.MinimalMixedLayerInitConds.top_p",
+          "abcmodel.atmos.mixed_layer.minimal.MinimalMixedLayerInitConds.top_p",
           false,
         ],
       ],
-    "top_rh (abcmodel.atmosphere.mixed_layer.bulk.bulkmixedlayerinitconds attribute)":
+    "top_rh (abcmodel.atmos.mixed_layer.bulk.bulkmixedlayerinitconds attribute)":
       [
         [
           22,
-          "abcmodel.atmosphere.mixed_layer.bulk.BulkMixedLayerInitConds.top_rh",
+          "abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerInitConds.top_rh",
           false,
         ],
       ],
-    "top_rh (abcmodel.atmosphere.mixed_layer.minimal.minimalmixedlayerinitconds attribute)":
+    "top_rh (abcmodel.atmos.mixed_layer.minimal.minimalmixedlayerinitconds attribute)":
       [
         [
           23,
-          "abcmodel.atmosphere.mixed_layer.minimal.MinimalMixedLayerInitConds.top_rh",
+          "abcmodel.atmos.mixed_layer.minimal.MinimalMixedLayerInitConds.top_rh",
           false,
         ],
       ],
-    "top_t (abcmodel.atmosphere.mixed_layer.bulk.bulkmixedlayerinitconds attribute)":
+    "top_t (abcmodel.atmos.mixed_layer.bulk.bulkmixedlayerinitconds attribute)":
       [
         [
           22,
-          "abcmodel.atmosphere.mixed_layer.bulk.BulkMixedLayerInitConds.top_T",
+          "abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerInitConds.top_T",
           false,
         ],
       ],
-    "top_t (abcmodel.atmosphere.mixed_layer.minimal.minimalmixedlayerinitconds attribute)":
+    "top_t (abcmodel.atmos.mixed_layer.minimal.minimalmixedlayerinitconds attribute)":
       [
         [
           23,
-          "abcmodel.atmosphere.mixed_layer.minimal.MinimalMixedLayerInitConds.top_T",
+          "abcmodel.atmos.mixed_layer.minimal.MinimalMixedLayerInitConds.top_T",
           false,
         ],
       ],
-    "tstart (abcmodel.abstracts.abstractradiationmodel attribute)": [
+    "tstart (abcmodel.abstracts.abstractradmodel attribute)": [
       [14, "abcmodel.abstracts.AbstractRadiationModel.tstart", false],
     ],
-    "u (abcmodel.atmosphere.mixed_layer.bulk.bulkmixedlayerinitconds attribute)":
-      [
-        [
-          22,
-          "abcmodel.atmosphere.mixed_layer.bulk.BulkMixedLayerInitConds.u",
-          false,
-        ],
-      ],
-    "u (abcmodel.atmosphere.mixed_layer.minimal.minimalmixedlayerinitconds attribute)":
+    "u (abcmodel.atmos.mixed_layer.bulk.bulkmixedlayerinitconds attribute)": [
+      [22, "abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerInitConds.u", false],
+    ],
+    "u (abcmodel.atmos.mixed_layer.minimal.minimalmixedlayerinitconds attribute)":
       [
         [
           23,
-          "abcmodel.atmosphere.mixed_layer.minimal.MinimalMixedLayerInitConds.u",
+          "abcmodel.atmos.mixed_layer.minimal.MinimalMixedLayerInitConds.u",
           false,
         ],
       ],
-    "u2m (abcmodel.atmosphere.surface_layer.standard.standardsurfacelayerinitconds attribute)":
+    "u2m (abcmodel.atmos.surface_layer.standard.standardsurfacelayerinitconds attribute)":
       [
         [
           27,
-          "abcmodel.atmosphere.surface_layer.standard.StandardSurfaceLayerInitConds.u2m",
+          "abcmodel.atmos.surface_layer.standard.StandardSurfaceLayerInitConds.u2m",
           false,
         ],
       ],
@@ -2229,214 +2086,195 @@ Search.setIndex({
           false,
         ],
       ],
-    "ustar (abcmodel.atmosphere.surface_layer.minimal.minimalsurfacelayerinitconds attribute)":
+    "ustar (abcmodel.atmos.surface_layer.minimal.minimalsurfacelayerinitconds attribute)":
       [
         [
           26,
-          "abcmodel.atmosphere.surface_layer.minimal.MinimalSurfaceLayerInitConds.ustar",
+          "abcmodel.atmos.surface_layer.minimal.MinimalSurfaceLayerInitConds.ustar",
           false,
         ],
       ],
-    "ustar (abcmodel.atmosphere.surface_layer.standard.standardsurfacelayerinitconds attribute)":
+    "ustar (abcmodel.atmos.surface_layer.standard.standardsurfacelayerinitconds attribute)":
       [
         [
           27,
-          "abcmodel.atmosphere.surface_layer.standard.StandardSurfaceLayerInitConds.ustar",
+          "abcmodel.atmos.surface_layer.standard.StandardSurfaceLayerInitConds.ustar",
           false,
         ],
       ],
-    "utend (abcmodel.atmosphere.mixed_layer.bulk.bulkmixedlayerinitconds attribute)":
+    "utend (abcmodel.atmos.mixed_layer.bulk.bulkmixedlayerinitconds attribute)":
       [
         [
           22,
-          "abcmodel.atmosphere.mixed_layer.bulk.BulkMixedLayerInitConds.utend",
+          "abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerInitConds.utend",
           false,
         ],
       ],
-    "uw (abcmodel.atmosphere.surface_layer.minimal.minimalsurfacelayerinitconds attribute)":
+    "uw (abcmodel.atmos.surface_layer.minimal.minimalsurfacelayerinitconds attribute)":
       [
         [
           26,
-          "abcmodel.atmosphere.surface_layer.minimal.MinimalSurfaceLayerInitConds.uw",
+          "abcmodel.atmos.surface_layer.minimal.MinimalSurfaceLayerInitConds.uw",
           false,
         ],
       ],
-    "uw (abcmodel.atmosphere.surface_layer.standard.standardsurfacelayerinitconds attribute)":
+    "uw (abcmodel.atmos.surface_layer.standard.standardsurfacelayerinitconds attribute)":
       [
         [
           27,
-          "abcmodel.atmosphere.surface_layer.standard.StandardSurfaceLayerInitConds.uw",
+          "abcmodel.atmos.surface_layer.standard.StandardSurfaceLayerInitConds.uw",
           false,
         ],
       ],
-    "v (abcmodel.atmosphere.mixed_layer.bulk.bulkmixedlayerinitconds attribute)":
-      [
-        [
-          22,
-          "abcmodel.atmosphere.mixed_layer.bulk.BulkMixedLayerInitConds.v",
-          false,
-        ],
-      ],
-    "v (abcmodel.atmosphere.mixed_layer.minimal.minimalmixedlayerinitconds attribute)":
+    "v (abcmodel.atmos.mixed_layer.bulk.bulkmixedlayerinitconds attribute)": [
+      [22, "abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerInitConds.v", false],
+    ],
+    "v (abcmodel.atmos.mixed_layer.minimal.minimalmixedlayerinitconds attribute)":
       [
         [
           23,
-          "abcmodel.atmosphere.mixed_layer.minimal.MinimalMixedLayerInitConds.v",
+          "abcmodel.atmos.mixed_layer.minimal.MinimalMixedLayerInitConds.v",
           false,
         ],
       ],
-    "v2m (abcmodel.atmosphere.surface_layer.standard.standardsurfacelayerinitconds attribute)":
+    "v2m (abcmodel.atmos.surface_layer.standard.standardsurfacelayerinitconds attribute)":
       [
         [
           27,
-          "abcmodel.atmosphere.surface_layer.standard.StandardSurfaceLayerInitConds.v2m",
+          "abcmodel.atmos.surface_layer.standard.StandardSurfaceLayerInitConds.v2m",
           false,
         ],
       ],
-    "vtend (abcmodel.atmosphere.mixed_layer.bulk.bulkmixedlayerinitconds attribute)":
+    "vtend (abcmodel.atmos.mixed_layer.bulk.bulkmixedlayerinitconds attribute)":
       [
         [
           22,
-          "abcmodel.atmosphere.mixed_layer.bulk.BulkMixedLayerInitConds.vtend",
+          "abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerInitConds.vtend",
           false,
         ],
       ],
-    "vw (abcmodel.atmosphere.surface_layer.minimal.minimalsurfacelayerinitconds attribute)":
+    "vw (abcmodel.atmos.surface_layer.minimal.minimalsurfacelayerinitconds attribute)":
       [
         [
           26,
-          "abcmodel.atmosphere.surface_layer.minimal.MinimalSurfaceLayerInitConds.vw",
+          "abcmodel.atmos.surface_layer.minimal.MinimalSurfaceLayerInitConds.vw",
           false,
         ],
       ],
-    "vw (abcmodel.atmosphere.surface_layer.standard.standardsurfacelayerinitconds attribute)":
+    "vw (abcmodel.atmos.surface_layer.standard.standardsurfacelayerinitconds attribute)":
       [
         [
           27,
-          "abcmodel.atmosphere.surface_layer.standard.StandardSurfaceLayerInitConds.vw",
+          "abcmodel.atmos.surface_layer.standard.StandardSurfaceLayerInitConds.vw",
           false,
         ],
       ],
-    "warmup() (abcmodel.abstracts.abstractatmospheremodel method)": [
+    "warmup() (abcmodel.abstracts.abstractatmosmodel method)": [
       [14, "abcmodel.abstracts.AbstractAtmosphereModel.warmup", false],
     ],
-    "warmup() (abcmodel.atmosphere.dayonly.dayonlyatmospheremodel method)": [
-      [20, "abcmodel.atmosphere.dayonly.DayOnlyAtmosphereModel.warmup", false],
+    "warmup() (abcmodel.atmos.dayonly.dayonlyatmosmodel method)": [
+      [20, "abcmodel.atmos.dayonly.DayOnlyAtmosphereModel.warmup", false],
     ],
     "warmup() (in module abcmodel.integration)": [
       [29, "abcmodel.integration.warmup", false],
     ],
-    "wco2 (abcmodel.atmosphere.mixed_layer.bulk.bulkmixedlayerinitconds attribute)":
+    "wco2 (abcmodel.atmos.mixed_layer.bulk.bulkmixedlayerinitconds attribute)":
       [
         [
           22,
-          "abcmodel.atmosphere.mixed_layer.bulk.BulkMixedLayerInitConds.wCO2",
+          "abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerInitConds.wCO2",
           false,
         ],
       ],
-    "wco2 (abcmodel.atmosphere.mixed_layer.minimal.minimalmixedlayerinitconds attribute)":
+    "wco2 (abcmodel.atmos.mixed_layer.minimal.minimalmixedlayerinitconds attribute)":
       [
         [
           23,
-          "abcmodel.atmosphere.mixed_layer.minimal.MinimalMixedLayerInitConds.wCO2",
+          "abcmodel.atmos.mixed_layer.minimal.MinimalMixedLayerInitConds.wCO2",
           false,
         ],
       ],
-    "wco2a (abcmodel.atmosphere.mixed_layer.bulk.bulkmixedlayerinitconds attribute)":
+    "wco2a (abcmodel.atmos.mixed_layer.bulk.bulkmixedlayerinitconds attribute)":
       [
         [
           22,
-          "abcmodel.atmosphere.mixed_layer.bulk.BulkMixedLayerInitConds.wCO2A",
+          "abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerInitConds.wCO2A",
           false,
         ],
       ],
-    "wco2a (abcmodel.atmosphere.mixed_layer.minimal.minimalmixedlayerinitconds attribute)":
+    "wco2a (abcmodel.atmos.mixed_layer.minimal.minimalmixedlayerinitconds attribute)":
       [
         [
           23,
-          "abcmodel.atmosphere.mixed_layer.minimal.MinimalMixedLayerInitConds.wCO2A",
+          "abcmodel.atmos.mixed_layer.minimal.MinimalMixedLayerInitConds.wCO2A",
           false,
         ],
       ],
-    "wco2e (abcmodel.atmosphere.mixed_layer.bulk.bulkmixedlayerinitconds attribute)":
+    "wco2e (abcmodel.atmos.mixed_layer.bulk.bulkmixedlayerinitconds attribute)":
       [
         [
           22,
-          "abcmodel.atmosphere.mixed_layer.bulk.BulkMixedLayerInitConds.wCO2e",
+          "abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerInitConds.wCO2e",
           false,
         ],
       ],
-    "wco2e (abcmodel.atmosphere.mixed_layer.minimal.minimalmixedlayerinitconds attribute)":
+    "wco2e (abcmodel.atmos.mixed_layer.minimal.minimalmixedlayerinitconds attribute)":
       [
         [
           23,
-          "abcmodel.atmosphere.mixed_layer.minimal.MinimalMixedLayerInitConds.wCO2e",
+          "abcmodel.atmos.mixed_layer.minimal.MinimalMixedLayerInitConds.wCO2e",
           false,
         ],
       ],
-    "wco2m (abcmodel.atmosphere.clouds.cumulus.standardcumulusinitconds attribute)":
+    "wco2m (abcmodel.atmos.clouds.cumulus.standardcumulusinitconds attribute)":
       [
         [
           18,
-          "abcmodel.atmosphere.clouds.cumulus.StandardCumulusInitConds.wCO2M",
+          "abcmodel.atmos.clouds.cumulus.StandardCumulusInitConds.wCO2M",
           false,
         ],
       ],
-    "wco2m (abcmodel.atmosphere.clouds.no_clouds.nocloudinitconds attribute)": [
-      [
-        19,
-        "abcmodel.atmosphere.clouds.no_clouds.NoCloudInitConds.wCO2M",
-        false,
-      ],
+    "wco2m (abcmodel.atmos.clouds.no_clouds.nocloudinitconds attribute)": [
+      [19, "abcmodel.atmos.clouds.no_clouds.NoCloudInitConds.wCO2M", false],
     ],
-    "wco2m (abcmodel.atmosphere.mixed_layer.bulk.bulkmixedlayerinitconds attribute)":
+    "wco2m (abcmodel.atmos.mixed_layer.bulk.bulkmixedlayerinitconds attribute)":
       [
         [
           22,
-          "abcmodel.atmosphere.mixed_layer.bulk.BulkMixedLayerInitConds.wCO2M",
+          "abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerInitConds.wCO2M",
           false,
         ],
       ],
-    "wco2m (abcmodel.atmosphere.mixed_layer.minimal.minimalmixedlayerinitconds attribute)":
+    "wco2m (abcmodel.atmos.mixed_layer.minimal.minimalmixedlayerinitconds attribute)":
       [
         [
           23,
-          "abcmodel.atmosphere.mixed_layer.minimal.MinimalMixedLayerInitConds.wCO2M",
+          "abcmodel.atmos.mixed_layer.minimal.MinimalMixedLayerInitConds.wCO2M",
           false,
         ],
       ],
-    "wco2r (abcmodel.atmosphere.mixed_layer.bulk.bulkmixedlayerinitconds attribute)":
+    "wco2r (abcmodel.atmos.mixed_layer.bulk.bulkmixedlayerinitconds attribute)":
       [
         [
           22,
-          "abcmodel.atmosphere.mixed_layer.bulk.BulkMixedLayerInitConds.wCO2R",
+          "abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerInitConds.wCO2R",
           false,
         ],
       ],
-    "wco2r (abcmodel.atmosphere.mixed_layer.minimal.minimalmixedlayerinitconds attribute)":
+    "wco2r (abcmodel.atmos.mixed_layer.minimal.minimalmixedlayerinitconds attribute)":
       [
         [
           23,
-          "abcmodel.atmosphere.mixed_layer.minimal.MinimalMixedLayerInitConds.wCO2R",
+          "abcmodel.atmos.mixed_layer.minimal.MinimalMixedLayerInitConds.wCO2R",
           false,
         ],
       ],
-    "we (abcmodel.atmosphere.mixed_layer.bulk.bulkmixedlayerinitconds attribute)":
-      [
-        [
-          22,
-          "abcmodel.atmosphere.mixed_layer.bulk.BulkMixedLayerInitConds.we",
-          false,
-        ],
-      ],
-    "wf (abcmodel.atmosphere.mixed_layer.bulk.bulkmixedlayerinitconds attribute)":
-      [
-        [
-          22,
-          "abcmodel.atmosphere.mixed_layer.bulk.BulkMixedLayerInitConds.wf",
-          false,
-        ],
-      ],
+    "we (abcmodel.atmos.mixed_layer.bulk.bulkmixedlayerinitconds attribute)": [
+      [22, "abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerInitConds.we", false],
+    ],
+    "wf (abcmodel.atmos.mixed_layer.bulk.bulkmixedlayerinitconds attribute)": [
+      [22, "abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerInitConds.wf", false],
+    ],
     "wg (abcmodel.land.minimal.minimallandsurfaceinitconds attribute)": [
       [33, "abcmodel.land.minimal.MinimalLandSurfaceInitConds.wg", false],
     ],
@@ -2455,123 +2293,112 @@ Search.setIndex({
     "wltend (abcmodel.land.standard.standardlandsurfaceinitconds attribute)": [
       [34, "abcmodel.land.standard.StandardLandSurfaceInitConds.wltend", false],
     ],
-    "wq (abcmodel.atmosphere.mixed_layer.bulk.bulkmixedlayerinitconds attribute)":
-      [
-        [
-          22,
-          "abcmodel.atmosphere.mixed_layer.bulk.BulkMixedLayerInitConds.wq",
-          false,
-        ],
-      ],
-    "wq (abcmodel.atmosphere.mixed_layer.minimal.minimalmixedlayerinitconds attribute)":
+    "wq (abcmodel.atmos.mixed_layer.bulk.bulkmixedlayerinitconds attribute)": [
+      [22, "abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerInitConds.wq", false],
+    ],
+    "wq (abcmodel.atmos.mixed_layer.minimal.minimalmixedlayerinitconds attribute)":
       [
         [
           23,
-          "abcmodel.atmosphere.mixed_layer.minimal.MinimalMixedLayerInitConds.wq",
+          "abcmodel.atmos.mixed_layer.minimal.MinimalMixedLayerInitConds.wq",
           false,
         ],
       ],
-    "wqe (abcmodel.atmosphere.mixed_layer.bulk.bulkmixedlayerinitconds attribute)":
+    "wqe (abcmodel.atmos.mixed_layer.bulk.bulkmixedlayerinitconds attribute)": [
       [
-        [
-          22,
-          "abcmodel.atmosphere.mixed_layer.bulk.BulkMixedLayerInitConds.wqe",
-          false,
-        ],
+        22,
+        "abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerInitConds.wqe",
+        false,
       ],
-    "wqe (abcmodel.atmosphere.mixed_layer.minimal.minimalmixedlayerinitconds attribute)":
-      [
-        [
-          23,
-          "abcmodel.atmosphere.mixed_layer.minimal.MinimalMixedLayerInitConds.wqe",
-          false,
-        ],
-      ],
-    "ws (abcmodel.atmosphere.mixed_layer.bulk.bulkmixedlayerinitconds attribute)":
-      [
-        [
-          22,
-          "abcmodel.atmosphere.mixed_layer.bulk.BulkMixedLayerInitConds.ws",
-          false,
-        ],
-      ],
-    "wstar (abcmodel.atmosphere.mixed_layer.bulk.bulkmixedlayerinitconds attribute)":
-      [
-        [
-          22,
-          "abcmodel.atmosphere.mixed_layer.bulk.BulkMixedLayerInitConds.wstar",
-          false,
-        ],
-      ],
-    "wstar (abcmodel.atmosphere.mixed_layer.minimal.minimalmixedlayerinitconds attribute)":
+    ],
+    "wqe (abcmodel.atmos.mixed_layer.minimal.minimalmixedlayerinitconds attribute)":
       [
         [
           23,
-          "abcmodel.atmosphere.mixed_layer.minimal.MinimalMixedLayerInitConds.wstar",
+          "abcmodel.atmos.mixed_layer.minimal.MinimalMixedLayerInitConds.wqe",
           false,
         ],
       ],
-    "wtheta (abcmodel.atmosphere.mixed_layer.bulk.bulkmixedlayerinitconds attribute)":
+    "ws (abcmodel.atmos.mixed_layer.bulk.bulkmixedlayerinitconds attribute)": [
+      [22, "abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerInitConds.ws", false],
+    ],
+    "wstar (abcmodel.atmos.mixed_layer.bulk.bulkmixedlayerinitconds attribute)":
       [
         [
           22,
-          "abcmodel.atmosphere.mixed_layer.bulk.BulkMixedLayerInitConds.wtheta",
+          "abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerInitConds.wstar",
           false,
         ],
       ],
-    "wtheta (abcmodel.atmosphere.mixed_layer.minimal.minimalmixedlayerinitconds attribute)":
+    "wstar (abcmodel.atmos.mixed_layer.minimal.minimalmixedlayerinitconds attribute)":
       [
         [
           23,
-          "abcmodel.atmosphere.mixed_layer.minimal.MinimalMixedLayerInitConds.wtheta",
+          "abcmodel.atmos.mixed_layer.minimal.MinimalMixedLayerInitConds.wstar",
           false,
         ],
       ],
-    "wthetae (abcmodel.atmosphere.mixed_layer.bulk.bulkmixedlayerinitconds attribute)":
+    "wtheta (abcmodel.atmos.mixed_layer.bulk.bulkmixedlayerinitconds attribute)":
       [
         [
           22,
-          "abcmodel.atmosphere.mixed_layer.bulk.BulkMixedLayerInitConds.wthetae",
+          "abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerInitConds.wtheta",
           false,
         ],
       ],
-    "wthetav (abcmodel.atmosphere.mixed_layer.bulk.bulkmixedlayerinitconds attribute)":
-      [
-        [
-          22,
-          "abcmodel.atmosphere.mixed_layer.bulk.BulkMixedLayerInitConds.wthetav",
-          false,
-        ],
-      ],
-    "wthetav (abcmodel.atmosphere.mixed_layer.minimal.minimalmixedlayerinitconds attribute)":
+    "wtheta (abcmodel.atmos.mixed_layer.minimal.minimalmixedlayerinitconds attribute)":
       [
         [
           23,
-          "abcmodel.atmosphere.mixed_layer.minimal.MinimalMixedLayerInitConds.wthetav",
+          "abcmodel.atmos.mixed_layer.minimal.MinimalMixedLayerInitConds.wtheta",
           false,
         ],
       ],
-    "wthetave (abcmodel.atmosphere.mixed_layer.bulk.bulkmixedlayerinitconds attribute)":
+    "wthetae (abcmodel.atmos.mixed_layer.bulk.bulkmixedlayerinitconds attribute)":
       [
         [
           22,
-          "abcmodel.atmosphere.mixed_layer.bulk.BulkMixedLayerInitConds.wthetave",
+          "abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerInitConds.wthetae",
           false,
         ],
       ],
-    "z0h (abcmodel.atmosphere.surface_layer.standard.standardsurfacelayerinitconds attribute)":
+    "wthetav (abcmodel.atmos.mixed_layer.bulk.bulkmixedlayerinitconds attribute)":
+      [
+        [
+          22,
+          "abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerInitConds.wthetav",
+          false,
+        ],
+      ],
+    "wthetav (abcmodel.atmos.mixed_layer.minimal.minimalmixedlayerinitconds attribute)":
+      [
+        [
+          23,
+          "abcmodel.atmos.mixed_layer.minimal.MinimalMixedLayerInitConds.wthetav",
+          false,
+        ],
+      ],
+    "wthetave (abcmodel.atmos.mixed_layer.bulk.bulkmixedlayerinitconds attribute)":
+      [
+        [
+          22,
+          "abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerInitConds.wthetave",
+          false,
+        ],
+      ],
+    "z0h (abcmodel.atmos.surface_layer.standard.standardsurfacelayerinitconds attribute)":
       [
         [
           27,
-          "abcmodel.atmosphere.surface_layer.standard.StandardSurfaceLayerInitConds.z0h",
+          "abcmodel.atmos.surface_layer.standard.StandardSurfaceLayerInitConds.z0h",
           false,
         ],
       ],
-    "z0m (abcmodel.atmosphere.surface_layer.standard.standardsurfacelayerinitconds attribute)":
+    "z0m (abcmodel.atmos.surface_layer.standard.standardsurfacelayerinitconds attribute)":
       [
         [
           27,
-          "abcmodel.atmosphere.surface_layer.standard.StandardSurfaceLayerInitConds.z0m",
+          "abcmodel.atmos.surface_layer.standard.StandardSurfaceLayerInitConds.z0m",
           false,
         ],
       ],
@@ -2611,8 +2438,8 @@ Search.setIndex({
       [7, 0, 0, "-", "ags"],
       [8, 0, 0, "-", "bulk_mixed_layer"],
       [9, 0, 0, "-", "jarvis_stewart"],
-      [10, 0, 0, "-", "standard_radiation"],
-      [11, 0, 0, "-", "cloudy_radiation"],
+      [10, 0, 0, "-", "standard_rad"],
+      [11, 0, 0, "-", "cloudy_rad"],
       [12, 0, 0, "-", "obukhov_surface_layer"],
     ],
     "abcconfigs.class_model.ags": [
@@ -2627,11 +2454,11 @@ Search.setIndex({
       [9, 1, 1, "", "init_conds_kwargs"],
       [9, 1, 1, "", "model_kwargs"],
     ],
-    "abcconfigs.class_model.standard_radiation": [
+    "abcconfigs.class_model.standard_rad": [
       [10, 1, 1, "", "init_conds_kwargs"],
       [10, 1, 1, "", "model_kwargs"],
     ],
-    "abcconfigs.class_model.cloudy_radiation": [
+    "abcconfigs.class_model.cloudy_rad": [
       [11, 1, 1, "", "init_conds_kwargs"],
       [11, 1, 1, "", "model_kwargs"],
     ],
@@ -2665,34 +2492,34 @@ Search.setIndex({
       [14, 3, 1, "", "run"],
       [14, 4, 1, "", "tstart"],
     ],
-    "abcmodel.atmosphere": [
+    "abcmodel.atmos": [
       [16, 0, 0, "-", "abstracts"],
       [20, 0, 0, "-", "dayonly"],
     ],
-    "abcmodel.atmosphere.abstracts": [
+    "abcmodel.atmos.abstracts": [
       [16, 2, 1, "", "AbstractCloudModel"],
       [16, 2, 1, "", "AbstractMixedLayerModel"],
       [16, 2, 1, "", "AbstractSurfaceLayerModel"],
     ],
-    "abcmodel.atmosphere.abstracts.AbstractCloudModel": [[16, 3, 1, "", "run"]],
-    "abcmodel.atmosphere.abstracts.AbstractMixedLayerModel": [
+    "abcmodel.atmos.abstracts.AbstractCloudModel": [[16, 3, 1, "", "run"]],
+    "abcmodel.atmos.abstracts.AbstractMixedLayerModel": [
       [16, 3, 1, "", "integrate"],
       [16, 3, 1, "", "run"],
       [16, 3, 1, "", "statistics"],
     ],
-    "abcmodel.atmosphere.abstracts.AbstractSurfaceLayerModel": [
+    "abcmodel.atmos.abstracts.AbstractSurfaceLayerModel": [
       [16, 3, 1, "", "compute_ra"],
       [16, 3, 1, "", "run"],
     ],
-    "abcmodel.atmosphere.clouds": [
+    "abcmodel.atmos.clouds": [
       [18, 0, 0, "-", "cumulus"],
       [19, 0, 0, "-", "no_clouds"],
     ],
-    "abcmodel.atmosphere.clouds.cumulus": [
+    "abcmodel.atmos.clouds.cumulus": [
       [18, 2, 1, "", "StandardCumulusInitConds"],
       [18, 2, 1, "", "StandardCumulusModel"],
     ],
-    "abcmodel.atmosphere.clouds.cumulus.StandardCumulusInitConds": [
+    "abcmodel.atmos.clouds.cumulus.StandardCumulusInitConds": [
       [18, 4, 1, "", "cc_frac"],
       [18, 4, 1, "", "cc_mf"],
       [18, 4, 1, "", "cc_qf"],
@@ -2701,7 +2528,7 @@ Search.setIndex({
       [18, 4, 1, "", "top_CO22"],
       [18, 4, 1, "", "wCO2M"],
     ],
-    "abcmodel.atmosphere.clouds.cumulus.StandardCumulusModel": [
+    "abcmodel.atmos.clouds.cumulus.StandardCumulusModel": [
       [18, 3, 1, "", "compute_cc_frac"],
       [18, 3, 1, "", "compute_cc_mf"],
       [18, 3, 1, "", "compute_cc_qf"],
@@ -2711,11 +2538,11 @@ Search.setIndex({
       [18, 3, 1, "", "compute_wCO2M"],
       [18, 3, 1, "", "run"],
     ],
-    "abcmodel.atmosphere.clouds.no_clouds": [
+    "abcmodel.atmos.clouds.no_clouds": [
       [19, 2, 1, "", "NoCloudInitConds"],
       [19, 2, 1, "", "NoCloudModel"],
     ],
-    "abcmodel.atmosphere.clouds.no_clouds.NoCloudInitConds": [
+    "abcmodel.atmos.clouds.no_clouds.NoCloudInitConds": [
       [19, 4, 1, "", "cc_frac"],
       [19, 4, 1, "", "cc_mf"],
       [19, 4, 1, "", "cc_qf"],
@@ -2724,26 +2551,24 @@ Search.setIndex({
       [19, 4, 1, "", "top_CO22"],
       [19, 4, 1, "", "wCO2M"],
     ],
-    "abcmodel.atmosphere.clouds.no_clouds.NoCloudModel": [
-      [19, 3, 1, "", "run"],
-    ],
-    "abcmodel.atmosphere.dayonly": [[20, 2, 1, "", "DayOnlyAtmosphereModel"]],
-    "abcmodel.atmosphere.dayonly.DayOnlyAtmosphereModel": [
+    "abcmodel.atmos.clouds.no_clouds.NoCloudModel": [[19, 3, 1, "", "run"]],
+    "abcmodel.atmos.dayonly": [[20, 2, 1, "", "DayOnlyAtmosphereModel"]],
+    "abcmodel.atmos.dayonly.DayOnlyAtmosphereModel": [
       [20, 3, 1, "", "integrate"],
       [20, 3, 1, "", "run"],
       [20, 3, 1, "", "statistics"],
       [20, 3, 1, "", "warmup"],
     ],
-    "abcmodel.atmosphere.mixed_layer": [
+    "abcmodel.atmos.mixed_layer": [
       [22, 0, 0, "-", "bulk"],
       [23, 0, 0, "-", "minimal"],
       [24, 0, 0, "-", "stats"],
     ],
-    "abcmodel.atmosphere.mixed_layer.bulk": [
+    "abcmodel.atmos.mixed_layer.bulk": [
       [22, 2, 1, "", "BulkMixedLayerInitConds"],
       [22, 2, 1, "", "BulkMixedLayerModel"],
     ],
-    "abcmodel.atmosphere.mixed_layer.bulk.BulkMixedLayerInitConds": [
+    "abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerInitConds": [
       [22, 4, 1, "", "co2"],
       [22, 4, 1, "", "co2tend"],
       [22, 4, 1, "", "deltaCO2"],
@@ -2794,7 +2619,7 @@ Search.setIndex({
       [22, 4, 1, "", "wthetav"],
       [22, 4, 1, "", "wthetave"],
     ],
-    "abcmodel.atmosphere.mixed_layer.bulk.BulkMixedLayerModel": [
+    "abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerModel": [
       [22, 3, 1, "", "compute_co2tend"],
       [22, 3, 1, "", "compute_deltaCO2tend"],
       [22, 3, 1, "", "compute_deltathetatend"],
@@ -2821,11 +2646,11 @@ Search.setIndex({
       [22, 3, 1, "", "integrate"],
       [22, 3, 1, "", "run"],
     ],
-    "abcmodel.atmosphere.mixed_layer.minimal": [
+    "abcmodel.atmos.mixed_layer.minimal": [
       [23, 2, 1, "", "MinimalMixedLayerInitConds"],
       [23, 2, 1, "", "MinimalMixedLayerModel"],
     ],
-    "abcmodel.atmosphere.mixed_layer.minimal.MinimalMixedLayerInitConds": [
+    "abcmodel.atmos.mixed_layer.minimal.MinimalMixedLayerInitConds": [
       [23, 4, 1, "", "co2"],
       [23, 4, 1, "", "deltaCO2"],
       [23, 4, 1, "", "deltatheta"],
@@ -2857,39 +2682,39 @@ Search.setIndex({
       [23, 4, 1, "", "wtheta"],
       [23, 4, 1, "", "wthetav"],
     ],
-    "abcmodel.atmosphere.mixed_layer.minimal.MinimalMixedLayerModel": [
+    "abcmodel.atmos.mixed_layer.minimal.MinimalMixedLayerModel": [
       [23, 3, 1, "", "integrate"],
       [23, 3, 1, "", "run"],
     ],
-    "abcmodel.atmosphere.mixed_layer.stats": [
+    "abcmodel.atmos.mixed_layer.stats": [
       [24, 2, 1, "", "AbstractStandardStatsModel"],
     ],
-    "abcmodel.atmosphere.mixed_layer.stats.AbstractStandardStatsModel": [
+    "abcmodel.atmos.mixed_layer.stats.AbstractStandardStatsModel": [
       [24, 3, 1, "", "compute_lcl"],
       [24, 3, 1, "", "compute_mixed_layer_top_properties"],
       [24, 3, 1, "", "compute_virtual_temperatures"],
       [24, 3, 1, "", "statistics"],
       [24, 4, 1, "", "surf_pressure"],
     ],
-    "abcmodel.atmosphere.surface_layer": [
+    "abcmodel.atmos.surface_layer": [
       [26, 0, 0, "-", "minimal"],
       [27, 0, 0, "-", "standard"],
     ],
-    "abcmodel.atmosphere.surface_layer.minimal": [
+    "abcmodel.atmos.surface_layer.minimal": [
       [26, 2, 1, "", "MinimalSurfaceLayerInitConds"],
       [26, 2, 1, "", "MinimalSurfaceLayerModel"],
     ],
-    "abcmodel.atmosphere.surface_layer.minimal.MinimalSurfaceLayerInitConds": [
+    "abcmodel.atmos.surface_layer.minimal.MinimalSurfaceLayerInitConds": [
       [26, 4, 1, "", "ustar"],
       [26, 4, 1, "", "uw"],
       [26, 4, 1, "", "vw"],
     ],
-    "abcmodel.atmosphere.surface_layer.minimal.MinimalSurfaceLayerModel": [
+    "abcmodel.atmos.surface_layer.minimal.MinimalSurfaceLayerModel": [
       [26, 3, 1, "", "calculate_momentum_fluxes"],
       [26, 3, 1, "", "compute_ra"],
       [26, 3, 1, "", "run"],
     ],
-    "abcmodel.atmosphere.surface_layer.standard": [
+    "abcmodel.atmos.surface_layer.standard": [
       [27, 2, 1, "", "StandardSurfaceLayerInitConds"],
       [27, 2, 1, "", "StandardSurfaceLayerModel"],
       [27, 5, 1, "", "compute_2m_variables"],
@@ -2905,29 +2730,28 @@ Search.setIndex({
       [27, 5, 1, "", "compute_surface_properties"],
       [27, 5, 1, "", "ribtol"],
     ],
-    "abcmodel.atmosphere.surface_layer.standard.StandardSurfaceLayerInitConds":
-      [
-        [27, 4, 1, "", "drag_m"],
-        [27, 4, 1, "", "drag_s"],
-        [27, 4, 1, "", "e2m"],
-        [27, 4, 1, "", "esat2m"],
-        [27, 4, 1, "", "obukhov_length"],
-        [27, 4, 1, "", "q2m"],
-        [27, 4, 1, "", "qsurf"],
-        [27, 4, 1, "", "rib_number"],
-        [27, 4, 1, "", "temp_2m"],
-        [27, 4, 1, "", "theta"],
-        [27, 4, 1, "", "thetasurf"],
-        [27, 4, 1, "", "thetavsurf"],
-        [27, 4, 1, "", "u2m"],
-        [27, 4, 1, "", "ustar"],
-        [27, 4, 1, "", "uw"],
-        [27, 4, 1, "", "v2m"],
-        [27, 4, 1, "", "vw"],
-        [27, 4, 1, "", "z0h"],
-        [27, 4, 1, "", "z0m"],
-      ],
-    "abcmodel.atmosphere.surface_layer.standard.StandardSurfaceLayerModel": [
+    "abcmodel.atmos.surface_layer.standard.StandardSurfaceLayerInitConds": [
+      [27, 4, 1, "", "drag_m"],
+      [27, 4, 1, "", "drag_s"],
+      [27, 4, 1, "", "e2m"],
+      [27, 4, 1, "", "esat2m"],
+      [27, 4, 1, "", "obukhov_length"],
+      [27, 4, 1, "", "q2m"],
+      [27, 4, 1, "", "qsurf"],
+      [27, 4, 1, "", "rib_number"],
+      [27, 4, 1, "", "temp_2m"],
+      [27, 4, 1, "", "theta"],
+      [27, 4, 1, "", "thetasurf"],
+      [27, 4, 1, "", "thetavsurf"],
+      [27, 4, 1, "", "u2m"],
+      [27, 4, 1, "", "ustar"],
+      [27, 4, 1, "", "uw"],
+      [27, 4, 1, "", "v2m"],
+      [27, 4, 1, "", "vw"],
+      [27, 4, 1, "", "z0h"],
+      [27, 4, 1, "", "z0m"],
+    ],
+    "abcmodel.atmos.surface_layer.standard.StandardSurfaceLayerModel": [
       [27, 3, 1, "", "compute_ra"],
       [27, 3, 1, "", "run"],
     ],
@@ -3075,34 +2899,34 @@ Search.setIndex({
       [34, 4, 1, "", "wl"],
       [34, 4, 1, "", "wltend"],
     ],
-    "abcmodel.radiation": [
+    "abcmodel.rad": [
       [36, 0, 0, "-", "standard"],
       [37, 0, 0, "-", "standard_w_clouds"],
     ],
-    "abcmodel.radiation.standard": [
+    "abcmodel.rad.standard": [
       [36, 2, 1, "", "StandardRadiationInitConds"],
       [36, 2, 1, "", "StandardRadiationModel"],
     ],
-    "abcmodel.radiation.standard.StandardRadiationInitConds": [
+    "abcmodel.rad.standard.StandardRadiationInitConds": [
       [36, 4, 1, "", "in_lrad"],
       [36, 4, 1, "", "in_srad"],
       [36, 4, 1, "", "net_rad"],
       [36, 4, 1, "", "out_lrad"],
       [36, 4, 1, "", "out_srad"],
     ],
-    "abcmodel.radiation.standard.StandardRadiationModel": [
+    "abcmodel.rad.standard.StandardRadiationModel": [
       [36, 3, 1, "", "compute_air_temperature"],
       [36, 3, 1, "", "compute_atmospheric_transmission"],
-      [36, 3, 1, "", "compute_radiation_components"],
+      [36, 3, 1, "", "compute_rad_components"],
       [36, 3, 1, "", "compute_solar_declination"],
       [36, 3, 1, "", "compute_solar_elevation"],
       [36, 3, 1, "", "run"],
     ],
-    "abcmodel.radiation.standard_w_clouds": [
+    "abcmodel.rad.standard_w_clouds": [
       [37, 2, 1, "", "StandardRadiationwCloudsInitConds"],
       [37, 2, 1, "", "StandardRadiationwCloudsModel"],
     ],
-    "abcmodel.radiation.standard_w_clouds.StandardRadiationwCloudsModel": [
+    "abcmodel.rad.standard_w_clouds.StandardRadiationwCloudsModel": [
       [37, 3, 1, "", "compute_atmospheric_transmission_w_clouds"],
       [37, 3, 1, "", "run"],
     ],
@@ -3324,13 +3148,13 @@ Search.setIndex({
     abov: [27, 34],
     absorb: 31,
     abstract: [13, 15, 24, 34],
-    abstractatmospheremodel: [14, 20],
+    abstractatmosmodel: [14, 20],
     abstractcloudmodel: [16, 18, 19],
     abstractlandmodel: [14, 33, 34],
     abstractmethod: [14, 16, 34],
     abstractmixedlayermodel: [16, 24],
     abstractmodel: [14, 16],
-    abstractradiationmodel: [14, 36],
+    abstractradmodel: [14, 36],
     abstractstandardlandsurfacemodel: [31, 32, 34],
     abstractstandardstatsmodel: [22, 23, 24],
     abstractsurfacelayermodel: [16, 26, 27],
@@ -3466,7 +3290,7 @@ Search.setIndex({
     calculate_air_temperatur: 37,
     calculate_atmospheric_transmission_w_cloud: 37,
     calculate_momentum_flux: 26,
-    calculate_radiation_compon: 37,
+    calculate_rad_compon: 37,
     calculate_solar_declin: 37,
     calculate_solar_elev: 37,
     calibr: 0,
@@ -3588,7 +3412,7 @@ Search.setIndex({
     compute_qtend: 22,
     compute_r: 31,
     compute_ra: [16, 26, 27],
-    compute_radiation_compon: 36,
+    compute_rad_compon: 36,
     compute_respir: 31,
     compute_rib_funct: 27,
     compute_richardson_numb: 27,
@@ -3666,7 +3490,7 @@ Search.setIndex({
     dark: 31,
     data: [13, 22],
     dayonli: 15,
-    dayonlyatmospheremodel: 20,
+    dayonlyatmosmodel: 20,
     daytim: 15,
     de: [0, 27],
     decai: 31,
@@ -3943,8 +3767,8 @@ Search.setIndex({
     lambda_: 36,
     land: [0, 13, 14, 20, 28, 31, 32, 33, 34],
     land_surfac: 0,
-    land_surface_init_cond: 0,
-    land_surface_model: 0,
+    land_init_cond: 0,
+    land_model: 0,
     laps: 22,
     larg: 22,
     lat: [3, 4, 10, 11, 36, 37],
@@ -4167,8 +3991,8 @@ Search.setIndex({
     radi: 22,
     radian: 36,
     radiat: [0, 6, 13, 14, 28, 31, 32, 34, 36, 37],
-    radiation_init_cond: 0,
-    radiation_model: 0,
+    rad_init_cond: 0,
+    rad_model: 0,
     rang: [18, 19, 33, 36, 37],
     raphson: 27,
     rate: [22, 31, 34],
@@ -4282,16 +4106,16 @@ Search.setIndex({
     stabl: 27,
     standard: [2, 6, 18, 24, 25, 30, 32, 35],
     standard_radi: [0, 10],
-    standard_radiation_w_cloud: 11,
+    standard_rad_w_cloud: 11,
     standard_surface_lay: [0, 12],
     standard_w_cloud: 37,
     standardcumulusinitcond: [0, 18],
     standardcumulusmodel: [0, 18],
     standardlandsurfaceinitcond: [31, 32, 34],
-    standardradiationinitcond: [0, 36, 37],
-    standardradiationmodel: [0, 36, 37],
-    standardradiationwcloudsinitcond: 37,
-    standardradiationwcloudsmodel: 37,
+    standardradinitcond: [0, 36, 37],
+    standardradmodel: [0, 36, 37],
+    standardradwcloudsinitcond: 37,
+    standardradwcloudsmodel: 37,
     standardsurfacelayerinitcond: [0, 27],
     standardsurfacelayermodel: [0, 27],
     start: [14, 36, 37],

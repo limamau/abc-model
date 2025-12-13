@@ -10,12 +10,11 @@ from .coupling import A, ABCoupler, CoupledState, L, R
 
 def warmup(state: CoupledState, coupler: ABCoupler, t: int, dt: float) -> CoupledState:
     """Warmup the model by running it for a few timesteps."""
-    state = replace(
-        state,
-        atmosphere=coupler.atmosphere.statistics(state.atmosphere, t, coupler.const),
+    state = state.replace(
+        atmos=coupler.atmos.statistics(state.atmos, t, coupler.const),
     )
-    state = replace(state, radiation=coupler.radiation.run(state, t, dt, coupler.const))
-    state = coupler.atmosphere.warmup(state, coupler.const, coupler.land)
+    state = replace(state, rad=coupler.rad.run(state, t, dt, coupler.const))
+    state = coupler.atmos.warmup(state, coupler.const, coupler.land)
     return state
 
 
@@ -23,18 +22,18 @@ def timestep(
     state: CoupledState[R, L, A], coupler: ABCoupler, t: int, dt: float
 ) -> CoupledState[R, L, A]:
     """Run a single timestep of the model."""
-    atmos = coupler.atmosphere.statistics(state.atmosphere, t, coupler.const)
-    state = replace(state, atmosphere=atmos)
-    rad = coupler.radiation.run(state, t, dt, coupler.const)
-    state = replace(state, radiation=rad)
+    atmos = coupler.atmos.statistics(state.atmos, t, coupler.const)
+    state = state.replace(atmos=atmos)
+    rad = coupler.rad.run(state, t, dt, coupler.const)
+    state = state.replace(rad=rad)
     land = coupler.land.run(state, coupler.const)
-    state = replace(state, land=land)
-    atmos = coupler.atmosphere.run(state, coupler.const)
-    state = replace(state, atmosphere=atmos)
+    state = state.replace(land=land)
+    atmos = coupler.atmos.run(state, coupler.const)
+    state = state.replace(atmos=atmos)
     land = coupler.land.integrate(state.land, dt)
     state = replace(state, land=land)
-    atmos = coupler.atmosphere.integrate(state.atmosphere, dt)
-    state = replace(state, atmosphere=atmos)
+    atmos = coupler.atmos.integrate(state.atmos, dt)
+    state = replace(state, atmos=atmos)
     state = coupler.compute_diagnostics(state)
     return state
 
@@ -67,6 +66,6 @@ def integrate(
     timesteps = jnp.arange(tsteps)
     state, trajectory = jax.lax.scan(iter_fn, state, timesteps, length=tsteps)
 
-    times = jnp.arange(tsteps) * dt / 3600.0 + coupler.radiation.tstart
+    times = jnp.arange(tsteps) * dt / 3600.0 + coupler.rad.tstart
 
     return times, trajectory

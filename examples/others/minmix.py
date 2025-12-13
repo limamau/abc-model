@@ -1,3 +1,4 @@
+import jax.numpy as jnp
 import matplotlib.pyplot as plt
 
 import abcconfigs.class_model as cm
@@ -12,10 +13,10 @@ def main():
 
     # rad
     rad_init_conds = abcmodel.rad.StandardRadiationInitConds(
-        **cm.standard_radiation.init_conds_kwargs
+        **cm.standard_rad.init_conds_kwargs
     )
     rad_model = abcmodel.rad.StandardRadiationModel(
-        **cm.standard_radiation.model_kwargs,
+        **cm.standard_rad.model_kwargs,
     )
 
     # land surface
@@ -35,12 +36,23 @@ def main():
     surface_layer_model = abcmodel.atmos.surface_layer.ObukhovSurfaceLayerModel()
 
     # mixed layer
-    mixed_layer_init_conds = abcmodel.atmos.mixed_layer.BulkMixedLayerInitConds(
-        **cm.bulk_mixed_layer.init_conds_kwargs,
+    mixed_layer_init_conds = abcmodel.atmos.mixed_layer.MinimalMixedLayerState(
+        h_abl=jnp.array(200.0),
+        surf_pressure=jnp.array(101300.0),
+        theta=jnp.array(288.0),
+        deltatheta=jnp.array(1.0),
+        wtheta=jnp.array(0.1),
+        q=jnp.array(0.008),
+        dq=jnp.array(-0.001),
+        wq=jnp.array(1e-4),
+        co2=jnp.array(422.0),
+        deltaCO2=jnp.array(-44.0),
+        wCO2=jnp.array(0.0),
+        u=jnp.array(6.0),
+        v=jnp.array(-4.0),
+        dz_h=jnp.array(150.0),
     )
-    mixed_layer_model = abcmodel.atmos.mixed_layer.BulkMixedLayerModel(
-        **cm.bulk_mixed_layer.model_kwargs,
-    )
+    mixed_layer_model = abcmodel.atmos.mixed_layer.MinimalMixedLayerModel()
 
     # clouds
     cloud_init_conds = abcmodel.atmos.clouds.CumulusInitConds()
@@ -52,21 +64,22 @@ def main():
         mixed_layer=mixed_layer_model,
         clouds=cloud_model,
     )
+    atmos_init_conds = abcmodel.atmos.DayOnlyAtmosphereState(
+        surface_layer_init_conds,
+        mixed_layer_init_conds,
+        cloud_init_conds,
+    )
+
     # define coupler and coupled state
     abcoupler = abcmodel.ABCoupler(
         rad=rad_model,
         land=land_model,
         atmos=atmos_model,
     )
-    atmos_state = abcmodel.atmos.DayOnlyAtmosphereState(
-        surface_layer=surface_layer_init_conds,
-        mixed_layer=mixed_layer_init_conds,
-        clouds=cloud_init_conds,
-    )
     state = abcoupler.init_state(
         rad_init_conds,
         land_init_conds,
-        atmos_state,
+        atmos_init_conds,
     )
 
     # run run run
@@ -76,34 +89,34 @@ def main():
     plt.figure(figsize=(12, 8))
 
     plt.subplot(231)
-    plt.plot(time, trajectory.atmos.mixed_layer.h_abl)
+    plt.plot(time, trajectory.h_abl)
     plt.xlabel("time [h]")
     plt.ylabel("h [m]")
 
     plt.subplot(234)
-    plt.plot(time, trajectory.atmos.mixed_layer.theta)
+    plt.plot(time, trajectory.theta)
     plt.xlabel("time [h]")
     plt.ylabel("theta [K]")
 
     plt.subplot(232)
-    plt.plot(time, trajectory.atmos.mixed_layer.q * 1000.0)
+    plt.plot(time, trajectory.q * 1000.0)
     plt.xlabel("time [h]")
     plt.ylabel("q [g kg-1]")
 
     plt.subplot(235)
-    plt.plot(time, trajectory.atmos.clouds.cc_frac)
+    plt.plot(time, trajectory.cc_frac)
     plt.xlabel("time [h]")
     plt.ylabel("cloud fraction [-]")
 
     plt.subplot(233)
-    plt.plot(time, trajectory.land.gf)
+    plt.plot(time, trajectory.wCO2)
     plt.xlabel("time [h]")
-    plt.ylabel("ground heat flux [W m-2]")
+    plt.ylabel("surface kinematic CO2 flux [mgC m-2 s-1]")
 
     plt.subplot(236)
-    plt.plot(time, trajectory.land.le_veg)
+    plt.plot(time, trajectory.le_veg)
     plt.xlabel("time [h]")
-    plt.ylabel("latent heat flux from vegetation [W m-2]")
+    plt.ylabel("transpiration [W m-2]")
 
     plt.tight_layout()
     plt.show()

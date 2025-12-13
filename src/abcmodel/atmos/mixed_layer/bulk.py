@@ -123,16 +123,16 @@ class BulkMixedLayerModel(AbstractStandardStatsModel, AbstractMixedLayerModel):
     Args:
         divU: horizontal large-scale divergence of wind [s-1].
         coriolis_param: Coriolis parameter [s-1].
-        gammatheta: free atmosphere potential temperature lapse rate [K m-1].
+        gammatheta: free atmos potential temperature lapse rate [K m-1].
         advtheta: advection of heat [K s-1].
         beta: entrainment ratio for virtual heat [-].
-        gammaq: free atmosphere specific humidity lapse rate [kg/kg m-1].
+        gammaq: free atmos specific humidity lapse rate [kg/kg m-1].
         advq: advection of moisture [kg/kg s-1].
-        gammaCO2: free atmosphere CO2 lapse rate [ppm m-1].
+        gammaCO2: free atmos CO2 lapse rate [ppm m-1].
         advCO2: advection of CO2 [ppm s-1].
-        gammau: free atmosphere u-wind speed lapse rate [s-1].
+        gammau: free atmos u-wind speed lapse rate [s-1].
         advu: advection of u-wind [m s-2].
-        gammav: free atmosphere v-wind speed lapse rate [s-1].
+        gammav: free atmos v-wind speed lapse rate [s-1].
         advv: advection of v-wind [m s-2].
         dFz: cloud top radiative divergence [W m-2].
         is_shear_growing: shear growth mixed-layer switch.

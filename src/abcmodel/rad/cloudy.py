@@ -9,7 +9,7 @@ from .standard import StandardRadiationModel, StandardRadiationState
 
 @dataclass
 class CloudyRadiationState(StandardRadiationState):
-    """Standard radiation model with clouds state."""
+    """Standard rad model with clouds state."""
 
     pass
 
@@ -19,11 +19,11 @@ StateAlias = AbstractCoupledState[StandardRadiationState, LandT, AtmosT]
 
 
 class CloudyRadiationModel(StandardRadiationModel):
-    """Standard radiation model with solar position and atmospheric effects including prognostic cloud transmittance.
+    """Standard rad model with solar position and atmospheric effects including prognostic cloud transmittance.
 
-    Calculates time-varying solar radiation based on geographic location and
+    Calculates time-varying solar rad based on geographic location and
     atmospheric conditions. Includes both shortwave (solar) and longwave (thermal)
-    radiation components.
+    rad components.
 
     Args:
         lat: latitude [degrees], range -90 to +90.
@@ -51,7 +51,7 @@ class CloudyRadiationModel(StandardRadiationModel):
         dt: float,
         const: PhysicalConstants,
     ) -> StandardRadiationState:
-        """Calculate radiation components and net surface radiation.
+        """Calculate rad components and net surface rad.
 
         Args:
             state: CoupledState.
@@ -60,7 +60,7 @@ class CloudyRadiationModel(StandardRadiationModel):
             const: PhysicalConstants object.
 
         Returns:
-            The updated radiation state object.
+            The updated rad state object.
         """
         # needed components
         rad_state = state.rad
@@ -87,7 +87,7 @@ class CloudyRadiationModel(StandardRadiationModel):
             out_srad,
             in_lrad,
             out_lrad,
-        ) = self.compute_radiation_components(
+        ) = self.compute_rad_components(
             solar_elevation,
             atmospheric_transmission,
             air_temp,
@@ -109,7 +109,7 @@ class CloudyRadiationModel(StandardRadiationModel):
     def compute_atmospheric_transmission_w_clouds(
         solar_elevation: Array, cl_trans: Array
     ) -> Array:
-        """Calculate atmospheric transmission coefficient for solar radiation.
+        """Calculate atmospheric transmission coefficient for solar rad.
 
         Args:
             solar_elevation: sine of the solar elevation angle [-].

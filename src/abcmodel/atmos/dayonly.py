@@ -46,14 +46,14 @@ class DayOnlyAtmosphereModel(AbstractAtmosphereModel[DayOnlyAtmosphereState]):
         const: PhysicalConstants,
     ) -> DayOnlyAtmosphereState:
         sl_state = self.surface_layer.run(state, const)
-        new_atmosphere = replace(state.atmos, surface_layer=sl_state)
-        state_with_sl = replace(state, atmosphere=new_atmosphere)
+        new_atmos = replace(state.atmos, surface_layer=sl_state)
+        state_with_sl = replace(state, atmos=new_atmos)
         cl_state = self.clouds.run(state_with_sl, const)
-        new_atmosphere = replace(new_atmosphere, clouds=cl_state)
-        state_with_cl = replace(state_with_sl, atmosphere=new_atmosphere)
+        new_atmos = replace(new_atmos, clouds=cl_state)
+        state_with_cl = replace(state_with_sl, atmos=new_atmos)
         ml_state = self.mixed_layer.run(state_with_cl, const)
-        new_atmosphere = replace(new_atmosphere, mixed_layer=ml_state)
-        return new_atmosphere
+        new_atmos = replace(new_atmos, mixed_layer=ml_state)
+        return new_atmos
 
     def statistics(
         self, state: DayOnlyAtmosphereState, t: int, const: PhysicalConstants
@@ -71,24 +71,24 @@ class DayOnlyAtmosphereModel(AbstractAtmosphereModel[DayOnlyAtmosphereState]):
         const: PhysicalConstants,
         land: AbstractLandModel,
     ) -> AbstractCoupledState:
-        """Warmup the atmosphere by running it for a few timesteps."""
+        """Warmup the atmos by running it for a few timesteps."""
         for _ in range(10):
             sl_state = self.surface_layer.run(state, const)
-            new_atmosphere = replace(state.atmos, surface_layer=sl_state)
-            state = replace(state, atmosphere=new_atmosphere)
+            new_atmos = replace(state.atmos, surface_layer=sl_state)
+            state = replace(state, atmos=new_atmos)
         land_state = land.run(state, const)
         state = replace(state, land=land_state)
 
         if not isinstance(self.clouds, NoCloudModel):
             ml_state = self.mixed_layer.run(state, const)
-            new_atmosphere = replace(state.atmos, mixed_layer=ml_state)
-            state = replace(state, atmosphere=new_atmosphere)
+            new_atmos = replace(state.atmos, mixed_layer=ml_state)
+            state = replace(state, atmos=new_atmos)
             cl_state = self.clouds.run(state, const)
-            new_atmosphere = replace(state.atmos, clouds=cl_state)
-            state = replace(state, atmosphere=new_atmosphere)
+            new_atmos = replace(state.atmos, clouds=cl_state)
+            state = replace(state, atmos=new_atmos)
         ml_state = self.mixed_layer.run(state, const)
-        new_atmosphere = replace(state.atmos, mixed_layer=ml_state)
-        state = replace(state, atmosphere=new_atmosphere)
+        new_atmos = replace(state.atmos, mixed_layer=ml_state)
+        state = replace(state, atmos=new_atmos)
         return state
 
     def integrate(

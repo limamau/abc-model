@@ -1,6 +1,6 @@
 import jax.numpy as jnp
 
-# radiation #
+# rad #
 std_rad_init_conds_kwargs = {
     "net_rad": jnp.array(400),
 }

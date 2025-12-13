@@ -14,18 +14,18 @@ class AbstractState(Pytree):
 
 
 class AbstractRadiationState(AbstractState):
-    """Abstract radiation state."""
+    """Abstract rad state."""
 
     net_rad: Array
-    """Net surface radiation [W m-2]."""
+    """Net surface rad [W m-2]."""
     in_srad: Array
-    """Incoming solar radiation [W m-2]."""
+    """Incoming solar rad [W m-2]."""
     out_srad: Array
-    """Outgoing solar radiation [W m-2]."""
+    """Outgoing solar rad [W m-2]."""
     in_lrad: Array
-    """Incoming longwave radiation [W m-2]."""
+    """Incoming longwave rad [W m-2]."""
     out_lrad: Array
-    """Outgoing longwave radiation [W m-2]."""
+    """Outgoing longwave rad [W m-2]."""
 
 
 class AbstractLandState(AbstractState):
@@ -61,7 +61,7 @@ class AbstractLandState(AbstractState):
 
 
 class AbstractAtmosphereState(AbstractState):
-    """Abstract atmosphere state."""
+    """Abstract atmos state."""
 
 
 RadT = TypeVar("RadT", bound=AbstractRadiationState)
@@ -70,7 +70,7 @@ AtmosT = TypeVar("AtmosT", bound=AbstractAtmosphereState)
 
 
 class AbstractCoupledState(AbstractState, Generic[RadT, LandT, AtmosT]):
-    """Abstract coupled state, generic over radiation, land and atmosphere types."""
+    """Abstract coupled state, generic over rad, land and atmos types."""
 
     rad: RadT
     land: LandT
@@ -78,12 +78,12 @@ class AbstractCoupledState(AbstractState, Generic[RadT, LandT, AtmosT]):
 
     @property
     def net_rad(self) -> Array:
-        """Net surface radiation [W m-2]."""
+        """Net surface rad [W m-2]."""
         return self.rad.net_rad
 
     @property
     def in_srad(self) -> Array:
-        """Incoming shortwave radiation [W m-2]."""
+        """Incoming shortwave rad [W m-2]."""
         return self.rad.in_srad
 
 
@@ -92,7 +92,7 @@ class AbstractModel:
 
 
 class AbstractRadiationModel(AbstractModel, Generic[RadT]):
-    """Abstract radiation model class to define the interface for all radiation models."""
+    """Abstract rad model class to define the interface for all rad models."""
 
     tstart: Array
     """Start time of the model."""
@@ -125,7 +125,7 @@ class AbstractLandModel(AbstractModel, Generic[LandT]):
 
 
 class AbstractAtmosphereModel(AbstractModel, Generic[AtmosT]):
-    """Abstract atmosphere model class to define the interface for all atmosphere models."""
+    """Abstract atmos model class to define the interface for all atmos models."""
 
     @abstractmethod
     def warmup(

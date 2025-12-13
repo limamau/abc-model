@@ -58,8 +58,8 @@ class SimpleSurfaceLayerModel(AbstractSurfaceLayerModel):
         Returns:
             Updated MinimalSurfaceLayerState.
         """
-        sl_state = state.atmosphere.surface_layer
-        ml_state = state.atmosphere.mixed_layer
+        sl_state = state.atmos.surface_layer
+        ml_state = state.atmos.mixed_layer
         uw, vw = self.calculate_momentum_fluxes(ml_state.u, ml_state.v, sl_state.ustar)
         ra = self.compute_ra(ml_state.u, ml_state.v, ml_state.wstar, sl_state.ustar)
         return replace(sl_state, uw=uw, vw=vw, ra=ra)
