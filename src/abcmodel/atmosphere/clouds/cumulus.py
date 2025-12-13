@@ -52,8 +52,8 @@ class CumulusModel(AbstractCloudModel):
         self, state: AbstractCoupledState, const: PhysicalConstants
     ) -> CumulusState:
         """Run the model."""
-        cloud_state = state.atmosphere.clouds
-        ml_state = state.atmosphere.mixed_layer
+        cloud_state = state.atmos.clouds
+        ml_state = state.atmos.mixed_layer
 
         q2_h = self.compute_q2_h(
             cloud_state.cc_qf,

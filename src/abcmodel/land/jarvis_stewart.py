@@ -45,7 +45,7 @@ class JarvisStewartModel(AbstractStandardLandSurfaceModel):
         f1 = self.compute_f1(state.in_srad)
         f2 = self.compute_f2(state.land.wg)
         f3 = self.compute_f3(state.land.esat, state.land.e)
-        f4 = self.compute_f4(state.atmosphere.mixed_layer.theta)
+        f4 = self.compute_f4(state.atmos.mixed_layer.theta)
         rs = self.rsmin / self.lai * f1 * f2 * f3 * f4
         new_land = replace(state.land, rs=rs)
         new_state = replace(state, land=new_land)

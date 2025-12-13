@@ -66,7 +66,7 @@ class MinimalLandSurfaceModel(AbstractLandModel):
             The updated land state object.
         """
         land_state = state.land
-        ml_state = state.atmosphere.mixed_layer
+        ml_state = state.atmos.mixed_layer
         esat = compute_esat(ml_state.theta)
         qsat = compute_qsat(ml_state.theta, ml_state.surf_pressure)
         dqsatdT = self.compute_dqsatdT(esat, ml_state.theta, ml_state.surf_pressure)

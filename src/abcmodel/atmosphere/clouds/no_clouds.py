@@ -40,4 +40,4 @@ class NoCloudModel(AbstractCloudModel):
         self, state: AbstractCoupledState, const: PhysicalConstants
     ) -> NoCloudState:
         """No calculations."""
-        return state.atmosphere.clouds
+        return state.atmos.clouds

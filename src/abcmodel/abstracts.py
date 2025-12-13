@@ -64,34 +64,34 @@ class AbstractAtmosphereState(AbstractState):
     """Abstract atmosphere state."""
 
 
-R = TypeVar("R", bound=AbstractRadiationState)
-L = TypeVar("L", bound=AbstractLandState)
-A = TypeVar("A", bound=AbstractAtmosphereState)
+RadT = TypeVar("RadT", bound=AbstractRadiationState)
+LandT = TypeVar("LandT", bound=AbstractLandState)
+AtmosT = TypeVar("AtmosT", bound=AbstractAtmosphereState)
 
 
-class AbstractCoupledState(AbstractState, Generic[R, L, A]):
+class AbstractCoupledState(AbstractState, Generic[RadT, LandT, AtmosT]):
     """Abstract coupled state, generic over radiation, land and atmosphere types."""
 
-    radiation: R
-    land: L
-    atmosphere: A
+    rad: RadT
+    land: LandT
+    atmos: AtmosT
 
     @property
     def net_rad(self) -> Array:
         """Net surface radiation [W m-2]."""
-        return self.radiation.net_rad
+        return self.rad.net_rad
 
     @property
     def in_srad(self) -> Array:
         """Incoming shortwave radiation [W m-2]."""
-        return self.radiation.in_srad
+        return self.rad.in_srad
 
 
 class AbstractModel:
     """Abstract model class to define the interface for all models."""
 
 
-class AbstractRadiationModel(AbstractModel, Generic[R]):
+class AbstractRadiationModel(AbstractModel, Generic[RadT]):
     """Abstract radiation model class to define the interface for all radiation models."""
 
     tstart: Array
@@ -100,56 +100,59 @@ class AbstractRadiationModel(AbstractModel, Generic[R]):
     @abstractmethod
     def run(
         self,
-        state: AbstractCoupledState[R, L, A],
+        state: AbstractCoupledState[RadT, LandT, AtmosT],
         t: int,
         dt: float,
         const: PhysicalConstants,
-    ) -> R:
+    ) -> RadT:
         raise NotImplementedError
 
 
-class AbstractLandModel(AbstractModel, Generic[L]):
+class AbstractLandModel(AbstractModel, Generic[LandT]):
     """Abstract land model class to define the interface for all land models."""
 
     @abstractmethod
     def run(
         self,
-        state: AbstractCoupledState[R, L, A],
+        state: AbstractCoupledState[RadT, LandT, AtmosT],
         const: PhysicalConstants,
-    ) -> L:
+    ) -> LandT:
         raise NotImplementedError
 
     @abstractmethod
-    def integrate(self, state: L, dt: float) -> L:
+    def integrate(self, state: LandT, dt: float) -> LandT:
         raise NotImplementedError
 
 
-class AbstractAtmosphereModel(AbstractModel, Generic[A]):
+class AbstractAtmosphereModel(AbstractModel, Generic[AtmosT]):
     """Abstract atmosphere model class to define the interface for all atmosphere models."""
 
     @abstractmethod
     def warmup(
         self,
-        state: AbstractCoupledState[R, L, A],
+        state: AbstractCoupledState[RadT, LandT, AtmosT],
         const: PhysicalConstants,
-        land: AbstractLandModel[L],
-    ) -> AbstractCoupledState[R, L, A]:
+        land: AbstractLandModel[LandT],
+    ) -> AbstractCoupledState[RadT, LandT, AtmosT]:
         raise NotImplementedError
 
     @abstractmethod
     def run(
         self,
-        state: AbstractCoupledState[R, L, A],
+        state: AbstractCoupledState[RadT, LandT, AtmosT],
         const: PhysicalConstants,
-    ) -> A:
+    ) -> AtmosT:
         raise NotImplementedError
 
     @abstractmethod
     def statistics(
-        self, state: AbstractCoupledState[R, L, A], t: int, const: PhysicalConstants
-    ) -> AbstractCoupledState[R, L, A]:
+        self,
+        state: AbstractCoupledState[RadT, LandT, AtmosT],
+        t: int,
+        const: PhysicalConstants,
+    ) -> AbstractCoupledState[RadT, LandT, AtmosT]:
         raise NotImplementedError
 
     @abstractmethod
-    def integrate(self, state: A, dt: float) -> A:
+    def integrate(self, state: AtmosT, dt: float) -> AtmosT:
         raise NotImplementedError

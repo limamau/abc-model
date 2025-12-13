@@ -6,6 +6,8 @@ from ..abstracts import (
     AbstractCoupledState,
     AbstractRadiationModel,
     AbstractRadiationState,
+    AtmosT,
+    LandT,
 )
 from ..utils import Array, PhysicalConstants
 
@@ -26,8 +28,8 @@ class StandardRadiationState(AbstractRadiationState):
     """Outgoing longwave radiation [W m-2]."""
 
 
-# alias
 StandardRadiationInitConds = StandardRadiationState
+StateAlias = AbstractCoupledState[StandardRadiationState, LandT, AtmosT]
 
 
 class StandardRadiationModel(AbstractRadiationModel[StandardRadiationState]):
@@ -61,7 +63,7 @@ class StandardRadiationModel(AbstractRadiationModel[StandardRadiationState]):
 
     def run(
         self,
-        state: AbstractCoupledState,
+        state: StateAlias,
         t: int,
         dt: float,
         const: PhysicalConstants,
@@ -78,8 +80,8 @@ class StandardRadiationModel(AbstractRadiationModel[StandardRadiationState]):
             The updated radiation state object.
         """
         # needed components
-        rad_state = state.radiation
-        ml_state = state.atmosphere.mixed_layer
+        rad_state = state.rad
+        ml_state = state.atmos.mixed_layer
         land_state = state.land
 
         # computations

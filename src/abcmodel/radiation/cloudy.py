@@ -2,7 +2,7 @@ from dataclasses import dataclass, replace
 
 from jax import Array
 
-from ..abstracts import AbstractCoupledState
+from ..abstracts import AbstractCoupledState, AtmosT, LandT
 from ..utils import PhysicalConstants
 from .standard import StandardRadiationModel, StandardRadiationState
 
@@ -15,6 +15,7 @@ class CloudyRadiationState(StandardRadiationState):
 
 
 CloudyRadiationInitConds = CloudyRadiationState
+StateAlias = AbstractCoupledState[StandardRadiationState, LandT, AtmosT]
 
 
 class CloudyRadiationModel(StandardRadiationModel):
@@ -45,11 +46,11 @@ class CloudyRadiationModel(StandardRadiationModel):
 
     def run(
         self,
-        state: AbstractCoupledState,
+        state: StateAlias,
         t: int,
         dt: float,
         const: PhysicalConstants,
-    ) -> CloudyRadiationState:
+    ) -> StandardRadiationState:
         """Calculate radiation components and net surface radiation.
 
         Args:
@@ -62,10 +63,10 @@ class CloudyRadiationModel(StandardRadiationModel):
             The updated radiation state object.
         """
         # needed components
-        rad_state = state.radiation
-        ml_state = state.atmosphere.mixed_layer
+        rad_state = state.rad
+        ml_state = state.atmos.mixed_layer
         land_state = state.land
-        cloud_state = state.atmosphere.clouds
+        cloud_state = state.atmos.clouds
 
         # computations
         solar_declination = self.compute_solar_declination(self.doy)

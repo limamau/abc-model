@@ -197,8 +197,8 @@ class AbstractStandardLandSurfaceModel(AbstractLandModel):
         """
         # Access components
         land_state = state.land
-        ml_state = state.atmosphere.mixed_layer
-        sl_state = state.atmosphere.surface_layer
+        ml_state = state.atmos.mixed_layer
+        sl_state = state.atmos.surface_layer
         ra = sl_state.ra
         esat = compute_esat(ml_state.theta)
         qsat = compute_qsat(ml_state.theta, ml_state.surf_pressure)

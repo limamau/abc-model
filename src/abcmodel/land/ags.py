@@ -428,8 +428,8 @@ class AgsModel(AbstractStandardLandSurfaceModel):
     ) -> AbstractCoupledState:
         """Compute surface resistance using Ags photosynthesis-conductance model."""
         land_state = state.land
-        ml_state = state.atmosphere.mixed_layer
-        sl_state = state.atmosphere.surface_layer
+        ml_state = state.atmos.mixed_layer
+        sl_state = state.atmos.surface_layer
         thetasurf = sl_state.thetasurf
         co2comp = self.compute_co2comp(thetasurf, const.rho)
         gm = self.compute_gm(thetasurf)
@@ -547,7 +547,7 @@ class AgsModel(AbstractStandardLandSurfaceModel):
         """
         # state is CoupledState
         land_state = state.land
-        sl_state = state.atmosphere.surface_layer
+        sl_state = state.atmos.surface_layer
 
         rsCO2 = self.compute_surface_co2_resistance(land_state.gcco2)
         an = self.compute_net_assimilation(

@@ -46,7 +46,7 @@ class DayOnlyAtmosphereModel(AbstractAtmosphereModel[DayOnlyAtmosphereState]):
         const: PhysicalConstants,
     ) -> DayOnlyAtmosphereState:
         sl_state = self.surface_layer.run(state, const)
-        new_atmosphere = replace(state.atmosphere, surface_layer=sl_state)
+        new_atmosphere = replace(state.atmos, surface_layer=sl_state)
         state_with_sl = replace(state, atmosphere=new_atmosphere)
         cl_state = self.clouds.run(state_with_sl, const)
         new_atmosphere = replace(new_atmosphere, clouds=cl_state)
@@ -74,20 +74,20 @@ class DayOnlyAtmosphereModel(AbstractAtmosphereModel[DayOnlyAtmosphereState]):
         """Warmup the atmosphere by running it for a few timesteps."""
         for _ in range(10):
             sl_state = self.surface_layer.run(state, const)
-            new_atmosphere = replace(state.atmosphere, surface_layer=sl_state)
+            new_atmosphere = replace(state.atmos, surface_layer=sl_state)
             state = replace(state, atmosphere=new_atmosphere)
         land_state = land.run(state, const)
         state = replace(state, land=land_state)
 
         if not isinstance(self.clouds, NoCloudModel):
             ml_state = self.mixed_layer.run(state, const)
-            new_atmosphere = replace(state.atmosphere, mixed_layer=ml_state)
+            new_atmosphere = replace(state.atmos, mixed_layer=ml_state)
             state = replace(state, atmosphere=new_atmosphere)
             cl_state = self.clouds.run(state, const)
-            new_atmosphere = replace(state.atmosphere, clouds=cl_state)
+            new_atmosphere = replace(state.atmos, clouds=cl_state)
             state = replace(state, atmosphere=new_atmosphere)
         ml_state = self.mixed_layer.run(state, const)
-        new_atmosphere = replace(state.atmosphere, mixed_layer=ml_state)
+        new_atmosphere = replace(state.atmos, mixed_layer=ml_state)
         state = replace(state, atmosphere=new_atmosphere)
         return state
 

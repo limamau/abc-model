@@ -182,9 +182,9 @@ class BulkMixedLayerModel(AbstractStandardStatsModel, AbstractMixedLayerModel):
         self, state: AbstractCoupledState, const: PhysicalConstants
     ) -> BulkMixedLayerState:
         """Run the model."""
-        ml_state = state.atmosphere.mixed_layer
-        sl_state = state.atmosphere.surface_layer
-        cloud_state = state.atmosphere.clouds
+        ml_state = state.atmos.mixed_layer
+        sl_state = state.atmos.surface_layer
+        cloud_state = state.atmos.clouds
         land_state = state.land
         wtheta = land_state.wtheta
         wq = land_state.wq

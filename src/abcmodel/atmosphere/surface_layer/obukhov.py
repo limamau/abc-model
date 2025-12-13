@@ -87,8 +87,8 @@ class ObukhovSurfaceLayerModel(AbstractSurfaceLayerModel):
         Returns:
             The updated surface layer state.
         """
-        sl_state = state.atmosphere.surface_layer
-        ml_state = state.atmosphere.mixed_layer
+        sl_state = state.atmos.surface_layer
+        ml_state = state.atmos.mixed_layer
         land_state = state.land
 
         ueff = compute_effective_wind_speed(ml_state.u, ml_state.v, ml_state.wstar)
