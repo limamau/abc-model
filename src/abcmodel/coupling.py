@@ -63,6 +63,6 @@ class ABCoupler:
             atmos=atmos_state,
         )
 
-    def compute_diagnostics(self, state: CoupledState) -> CoupledState:
+    def compute_diagnostics(self, state: AbstractCoupledState) -> AbstractCoupledState:
         """Compute diagnostic variables for total water budget."""
         return state

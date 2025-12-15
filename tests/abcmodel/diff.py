@@ -1,11 +1,12 @@
 import jax
 import jax.numpy as jnp
+from jax import Array
 
 import abcconfigs.class_model as cm
 import abcmodel
 
 
-def run_model(theta0: float) -> float:
+def run_model(theta0: float) -> Array:
     dt = 60.0
     runtime = 12 * 3600.0
 

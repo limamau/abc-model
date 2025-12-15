@@ -1,4 +1,5 @@
 from dataclasses import dataclass, replace
+from typing import Generic
 
 from ..abstracts import (
     AbstractAtmosphereModel,
@@ -9,23 +10,23 @@ from ..abstracts import (
 )
 from ..utils import PhysicalConstants
 from .abstracts import (
+    CL,
+    ML,
+    SL,
     AbstractCloudModel,
-    AbstractCloudState,
     AbstractMixedLayerModel,
-    AbstractMixedLayerState,
     AbstractSurfaceLayerModel,
-    AbstractSurfaceLayerState,
 )
 from .clouds import NoCloudModel
 
 
 @dataclass
-class DayOnlyAtmosphereState(AbstractAtmosphereState):
+class DayOnlyAtmosphereState(AbstractAtmosphereState, Generic[SL, ML, CL]):
     """Atmosphere state aggregating surface layer, mixed layer, and clouds."""
 
-    surface: AbstractSurfaceLayerState
-    mixed: AbstractMixedLayerState
-    clouds: AbstractCloudState
+    surface: SL
+    mixed: ML
+    clouds: CL
 
 
 class DayOnlyAtmosphereModel(AbstractAtmosphereModel[DayOnlyAtmosphereState]):
@@ -83,6 +84,7 @@ class DayOnlyAtmosphereModel(AbstractAtmosphereModel[DayOnlyAtmosphereState]):
         land_state = landmodel.run(state, const)
         state = state.replace(land=land_state)
 
+        # this is if clause is ok because it's outise the scan!
         if not isinstance(self.clouds, NoCloudModel):
             ml_state = self.mixed_layer.run(state, const)
             new_atmos = replace(state.atmos, mixed=ml_state)

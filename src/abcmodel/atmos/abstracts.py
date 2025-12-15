@@ -1,6 +1,7 @@
 """Abstract classes for atmos sub-modules."""
 
 from abc import abstractmethod
+from typing import TypeVar
 
 from ..abstracts import AbstractCoupledState, AbstractModel, AbstractState
 from ..utils import Array, PhysicalConstants
@@ -19,6 +20,11 @@ class AbstractMixedLayerState(AbstractState):
 
 class AbstractCloudState(AbstractState):
     """Abstract cloud state."""
+
+
+SL = TypeVar("SL", bound=AbstractSurfaceLayerState)
+ML = TypeVar("ML", bound=AbstractMixedLayerState)
+CL = TypeVar("CL", bound=AbstractCloudState)
 
 
 class AbstractSurfaceLayerModel(AbstractModel):
