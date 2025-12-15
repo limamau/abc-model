@@ -175,7 +175,15 @@ class BulkMixedLayerModel(
     def run(
         self, state: AbstractCoupledState, const: PhysicalConstants
     ) -> BulkMixedLayerState:
-        """Run the model."""
+        """Run the model.
+
+        Args:
+            state:
+
+        Returns:
+            The updated mixed layer state.
+
+        """
         land_state = state.land
         sl_state = state.atmos.surface
         ml_state = state.atmos.mixed

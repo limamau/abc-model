@@ -31,7 +31,8 @@ class DayOnlyAtmosphereState(AbstractAtmosphereState, Generic[SurfT, MixedT, Clo
     clouds: CloudT
 
 
-# limamau: can we use this?
+# in this case we are sure that the coupled state being used here
+# has the atmos as the day-only atmos
 StateAlias = AbstractCoupledState[
     RadT,
     LandT,
@@ -54,7 +55,7 @@ class DayOnlyAtmosphereModel(AbstractAtmosphereModel[DayOnlyAtmosphereState]):
 
     def run(
         self,
-        state: AbstractCoupledState,
+        state: StateAlias,
         const: PhysicalConstants,
     ) -> DayOnlyAtmosphereState:
         sl_state = self.surface_layer.run(state, const)
@@ -68,7 +69,7 @@ class DayOnlyAtmosphereModel(AbstractAtmosphereModel[DayOnlyAtmosphereState]):
         return atmostate
 
     def statistics(
-        self, state: AbstractCoupledState, t: int, const: PhysicalConstants
+        self, state: StateAlias, t: int, const: PhysicalConstants
     ) -> DayOnlyAtmosphereState:
         """Update statistics."""
         ml_state = self.mixed_layer.statistics(state, t, const)
@@ -78,11 +79,11 @@ class DayOnlyAtmosphereModel(AbstractAtmosphereModel[DayOnlyAtmosphereState]):
         self,
         radmodel: AbstractRadiationModel,
         landmodel: AbstractLandModel,
-        state: AbstractCoupledState,
+        state: StateAlias,
         t: int,
         dt: float,
         const: PhysicalConstants,
-    ) -> AbstractCoupledState:
+    ) -> StateAlias:
         """Warmup the atmos by running it for a few timesteps."""
         state = state.replace(
             atmos=self.statistics(state, t, const),

@@ -30,7 +30,7 @@ class CumulusState(AbstractCloudState):
 CumulusInitConds = CumulusState
 
 
-class CumulusModel(AbstractCloudModel):
+class CumulusModel(AbstractCloudModel[CumulusState]):
     """Standard cumulus cloud model based on Neggers et al. (2006/7).
 
     This model calculates shallow cumulus convection properties using a variance-based
@@ -51,7 +51,16 @@ class CumulusModel(AbstractCloudModel):
     def run(
         self, state: AbstractCoupledState, const: PhysicalConstants
     ) -> CumulusState:
-        """Run the model."""
+        """Run the model.
+
+        Args:
+            state:
+            const:
+
+        Returns:
+            The updated cloud state.
+
+        """
         cloud_state = state.atmos.clouds
         ml_state = state.atmos.mixed
 

@@ -1,18 +1,6 @@
 
-
-
 Aridities
 =========
-
-
-
-
-
-
-
-
-
-
 
 .. toctree::
     :maxdepth: 1
@@ -20,6 +8,3 @@ Aridities
     abcconfigs.aridities.arid
     abcconfigs.aridities.humid
     abcconfigs.aridities.standard
-
-
-

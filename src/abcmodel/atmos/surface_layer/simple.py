@@ -28,8 +28,8 @@ class SimpleSurfaceLayerState(AbstractSurfaceLayerState):
 SimpleSurfaceLayerInitConds = SimpleSurfaceLayerState
 
 
-class SimpleSurfaceLayerModel(AbstractSurfaceLayerModel):
-    """Minimal surface layer model with constant friction velocity."""
+class SimpleSurfaceLayerModel(AbstractSurfaceLayerModel[SimpleSurfaceLayerState]):
+    """Simple surface layer model with constant friction velocity."""
 
     def __init__(self):
         pass
@@ -59,7 +59,7 @@ class SimpleSurfaceLayerModel(AbstractSurfaceLayerModel):
             const: PhysicalConstants.
 
         Returns:
-            Updated MinimalSurfaceLayerState.
+            The updated surface layer state.
         """
         sl_state = state.atmos.surface_layer
         ml_state = state.atmos.mixed_layer

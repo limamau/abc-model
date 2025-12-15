@@ -95,7 +95,7 @@ class AbstractModel:
 
 
 class AbstractRadiationModel(AbstractModel, Generic[RadT]):
-    """Abstract rad model class to define the interface for all rad models."""
+    """Abstract radiation model class to define the interface for all rad models."""
 
     tstart: Array
     """Start time of the model."""

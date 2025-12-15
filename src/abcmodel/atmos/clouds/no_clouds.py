@@ -30,7 +30,7 @@ class NoCloudState(AbstractCloudState):
 NoCloudInitConds = NoCloudState
 
 
-class NoCloudModel(AbstractCloudModel):
+class NoCloudModel(AbstractCloudModel[NoCloudState]):
     """No cloud is formed using this model."""
 
     def __init__(self):

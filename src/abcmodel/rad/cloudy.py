@@ -9,7 +9,7 @@ from .standard import StandardRadiationModel, StandardRadiationState
 
 @dataclass
 class CloudyRadiationState(StandardRadiationState):
-    """Standard rad model with clouds state."""
+    """Standard radiation model with clouds state."""
 
     pass
 
@@ -19,7 +19,7 @@ StateAlias = AbstractCoupledState[StandardRadiationState, LandT, AtmosT]
 
 
 class CloudyRadiationModel(StandardRadiationModel):
-    """Standard rad model with solar position and atmospheric effects including prognostic cloud transmittance.
+    """Standard radiation model with solar position and atmospheric effects including prognostic cloud transmittance.
 
     Calculates time-varying solar rad based on geographic location and
     atmospheric conditions. Includes both shortwave (solar) and longwave (thermal)

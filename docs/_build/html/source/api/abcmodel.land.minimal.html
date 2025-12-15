@@ -153,11 +153,11 @@
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="abcmodel.html">ABC Model</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2 has-children"><a class="reference internal" href="abcmodel.rad.html">Radiation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3"><a class="reference internal" href="abcmodel.rad.standard.html">Standard</a></li>
-<li class="toctree-l3"><a class="reference internal" href="abcmodel.rad.standard_w_clouds.html">Standard With Clouds</a></li>
+<li class="toctree-l3"><a class="reference internal" href="abcmodel.rad.cloudy.html">Cloudy</a></li>
 </ul>
 </details></li>
 <li class="toctree-l2 current active has-children"><a class="reference internal" href="abcmodel.land.html">Land</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="abcmodel.land.aquacrop.html">Aquacrop</a></li>
+<li class="toctree-l3"><a class="reference internal" href="abcmodel.land.ags.html">Ags</a></li>
 <li class="toctree-l3"><a class="reference internal" href="abcmodel.land.jarvis_stewart.html">Jarvis Stewart</a></li>
 <li class="toctree-l3 current active"><a class="current reference internal" href="#">Minimal</a></li>
 <li class="toctree-l3"><a class="reference internal" href="abcmodel.land.standard.html">Standard</a></li>
@@ -166,13 +166,12 @@
 <li class="toctree-l2 has-children"><a class="reference internal" href="abcmodel.atmos.html">Atmosphere</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3"><a class="reference internal" href="abcmodel.atmos.dayonly.html">Dayonly</a></li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="abcmodel.atmos.surface_layer.html">Surface Layer</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l4"><a class="reference internal" href="abcmodel.atmos.surface_layer.minimal.html">Minimal</a></li>
-<li class="toctree-l4"><a class="reference internal" href="abcmodel.atmos.surface_layer.standard.html">Standard</a></li>
+<li class="toctree-l4"><a class="reference internal" href="abcmodel.atmos.surface_layer.simple.html">Minimal</a></li>
+<li class="toctree-l4"><a class="reference internal" href="abcmodel.atmos.surface_layer.obukhov.html">Standard</a></li>
 </ul>
 </details></li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="abcmodel.atmos.mixed_layer.html">Mixed Layer</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l4"><a class="reference internal" href="abcmodel.atmos.mixed_layer.bulk.html">Bulk</a></li>
-<li class="toctree-l4"><a class="reference internal" href="abcmodel.atmos.mixed_layer.minimal.html">Minimal</a></li>
 <li class="toctree-l4"><a class="reference internal" href="abcmodel.atmos.mixed_layer.stats.html">Stats</a></li>
 </ul>
 </details></li>
@@ -198,11 +197,11 @@
 </ul>
 </details></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="abcconfigs.class_model.html">Class Model</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l3"><a class="reference internal" href="abcconfigs.class_model.aquacrop.html">Aquacrop</a></li>
+<li class="toctree-l3"><a class="reference internal" href="abcconfigs.class_model.ags.html">Aquacrop</a></li>
 <li class="toctree-l3"><a class="reference internal" href="abcconfigs.class_model.bulk_mixed_layer.html">Bulk Mixed Layer</a></li>
 <li class="toctree-l3"><a class="reference internal" href="abcconfigs.class_model.jarvis_stewart.html">Jarvis Stewart</a></li>
-<li class="toctree-l3"><a class="reference internal" href="abcconfigs.class_model.standard_rad.html">Standard Radiation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="abcconfigs.class_model.cloudy_rad.html">Standard Radiation W Clouds</a></li>
+<li class="toctree-l3"><a class="reference internal" href="abcconfigs.class_model.standard_radiation.html">Standard Radiation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="abcconfigs.class_model.cloudy_radiation.html">Standard Radiation W Clouds</a></li>
 <li class="toctree-l3"><a class="reference internal" href="abcconfigs.class_model.obukhov_surface_layer.html">Standard Surface Layer</a></li>
 </ul>
 </details></li>
@@ -355,20 +354,23 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.land.minimal.MinimalLandSurfaceInitConds"><code class="docutils literal notranslate"><span class="pre">MinimalLandSurfaceInitConds</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.land.minimal.MinimalLandSurfaceInitConds.alpha"><code class="docutils literal notranslate"><span class="pre">MinimalLandSurfaceInitConds.alpha</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.land.minimal.MinimalLandSurfaceInitConds.surf_temp"><code class="docutils literal notranslate"><span class="pre">MinimalLandSurfaceInitConds.surf_temp</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.land.minimal.MinimalLandSurfaceInitConds.rs"><code class="docutils literal notranslate"><span class="pre">MinimalLandSurfaceInitConds.rs</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.land.minimal.MinimalLandSurfaceInitConds.wg"><code class="docutils literal notranslate"><span class="pre">MinimalLandSurfaceInitConds.wg</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.land.minimal.MinimalLandSurfaceInitConds.wl"><code class="docutils literal notranslate"><span class="pre">MinimalLandSurfaceInitConds.wl</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.land.minimal.MinimalLandSurfaceInitConds.ra"><code class="docutils literal notranslate"><span class="pre">MinimalLandSurfaceInitConds.ra</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.land.minimal.MinimalLandSurfaceInitConds.esat"><code class="docutils literal notranslate"><span class="pre">MinimalLandSurfaceInitConds.esat</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.land.minimal.MinimalLandSurfaceInitConds.qsat"><code class="docutils literal notranslate"><span class="pre">MinimalLandSurfaceInitConds.qsat</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.land.minimal.MinimalLandSurfaceInitConds.dqsatdT"><code class="docutils literal notranslate"><span class="pre">MinimalLandSurfaceInitConds.dqsatdT</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.land.minimal.MinimalLandSurfaceInitConds.e"><code class="docutils literal notranslate"><span class="pre">MinimalLandSurfaceInitConds.e</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.land.minimal.MinimalLandSurfaceInitConds.qsatsurf"><code class="docutils literal notranslate"><span class="pre">MinimalLandSurfaceInitConds.qsatsurf</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.land.minimal.MinimalLandSurfaceState"><code class="docutils literal notranslate"><span class="pre">MinimalLandSurfaceState</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.land.minimal.MinimalLandSurfaceState.alpha"><code class="docutils literal notranslate"><span class="pre">MinimalLandSurfaceState.alpha</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.land.minimal.MinimalLandSurfaceState.surf_temp"><code class="docutils literal notranslate"><span class="pre">MinimalLandSurfaceState.surf_temp</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.land.minimal.MinimalLandSurfaceState.rs"><code class="docutils literal notranslate"><span class="pre">MinimalLandSurfaceState.rs</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.land.minimal.MinimalLandSurfaceState.wg"><code class="docutils literal notranslate"><span class="pre">MinimalLandSurfaceState.wg</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.land.minimal.MinimalLandSurfaceState.wl"><code class="docutils literal notranslate"><span class="pre">MinimalLandSurfaceState.wl</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.land.minimal.MinimalLandSurfaceState.esat"><code class="docutils literal notranslate"><span class="pre">MinimalLandSurfaceState.esat</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.land.minimal.MinimalLandSurfaceState.qsat"><code class="docutils literal notranslate"><span class="pre">MinimalLandSurfaceState.qsat</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.land.minimal.MinimalLandSurfaceState.dqsatdT"><code class="docutils literal notranslate"><span class="pre">MinimalLandSurfaceState.dqsatdT</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.land.minimal.MinimalLandSurfaceState.e"><code class="docutils literal notranslate"><span class="pre">MinimalLandSurfaceState.e</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.land.minimal.MinimalLandSurfaceState.qsatsurf"><code class="docutils literal notranslate"><span class="pre">MinimalLandSurfaceState.qsatsurf</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.land.minimal.MinimalLandSurfaceState.wtheta"><code class="docutils literal notranslate"><span class="pre">MinimalLandSurfaceState.wtheta</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.land.minimal.MinimalLandSurfaceState.wq"><code class="docutils literal notranslate"><span class="pre">MinimalLandSurfaceState.wq</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.land.minimal.MinimalLandSurfaceState.wCO2"><code class="docutils literal notranslate"><span class="pre">MinimalLandSurfaceState.wCO2</span></code></a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.land.minimal.MinimalLandSurfaceInitConds"><code class="docutils literal notranslate"><span class="pre">MinimalLandSurfaceInitConds</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.land.minimal.MinimalLandSurfaceModel"><code class="docutils literal notranslate"><span class="pre">MinimalLandSurfaceModel</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.land.minimal.MinimalLandSurfaceModel.run"><code class="docutils literal notranslate"><span class="pre">MinimalLandSurfaceModel.run()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.land.minimal.MinimalLandSurfaceModel.compute_dqsatdT"><code class="docutils literal notranslate"><span class="pre">MinimalLandSurfaceModel.compute_dqsatdT()</span></code></a></li>
@@ -390,76 +392,94 @@ document.write(`
   <section id="module-abcmodel.land.minimal">
 <span id="minimal"></span><h1>Minimal<a class="headerlink" href="#module-abcmodel.land.minimal" title="Link to this heading">#</a></h1>
 <dl class="py class">
-<dt class="sig sig-object py" id="abcmodel.land.minimal.MinimalLandSurfaceInitConds">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abcmodel.land.minimal.</span></span><span class="sig-name descname"><span class="pre">MinimalLandSurfaceInitConds</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">surf_temp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wg</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wl</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ra</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">nan</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">esat</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">nan</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qsat</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">nan</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dqsatdT</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">nan</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">e</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">nan</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qsatsurf</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">nan</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/abcmodel/land/minimal.html#MinimalLandSurfaceInitConds"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#abcmodel.land.minimal.MinimalLandSurfaceInitConds" title="Link to this definition">#</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Minimal land surface model initial state.</p>
+<dt class="sig sig-object py" id="abcmodel.land.minimal.MinimalLandSurfaceState">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abcmodel.land.minimal.</span></span><span class="sig-name descname"><span class="pre">MinimalLandSurfaceState</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">surf_temp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wg=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wl=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">esat=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qsat=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dqsatdT=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">e=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qsatsurf=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wtheta=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wq=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wCO2=&lt;factory&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/abcmodel/land/minimal.html#MinimalLandSurfaceState"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#abcmodel.land.minimal.MinimalLandSurfaceState" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="abcmodel.abstracts.html#abcmodel.abstracts.AbstractLandState" title="abcmodel.abstracts.AbstractLandState"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractLandState</span></code></a></p>
+<p>Minimal land surface model state.</p>
 <dl class="py attribute">
-<dt class="sig sig-object py" id="abcmodel.land.minimal.MinimalLandSurfaceInitConds.alpha">
-<span class="sig-name descname"><span class="pre">alpha</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><a class="headerlink" href="#abcmodel.land.minimal.MinimalLandSurfaceInitConds.alpha" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="abcmodel.land.minimal.MinimalLandSurfaceState.alpha">
+<span class="sig-name descname"><span class="pre">alpha</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code></em><a class="headerlink" href="#abcmodel.land.minimal.MinimalLandSurfaceState.alpha" title="Link to this definition">#</a></dt>
 <dd><p>surface albedo [-], range 0 to 1.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="abcmodel.land.minimal.MinimalLandSurfaceInitConds.surf_temp">
-<span class="sig-name descname"><span class="pre">surf_temp</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><a class="headerlink" href="#abcmodel.land.minimal.MinimalLandSurfaceInitConds.surf_temp" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="abcmodel.land.minimal.MinimalLandSurfaceState.surf_temp">
+<span class="sig-name descname"><span class="pre">surf_temp</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code></em><a class="headerlink" href="#abcmodel.land.minimal.MinimalLandSurfaceState.surf_temp" title="Link to this definition">#</a></dt>
 <dd><p>Surface temperature [K].</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="abcmodel.land.minimal.MinimalLandSurfaceInitConds.rs">
-<span class="sig-name descname"><span class="pre">rs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><a class="headerlink" href="#abcmodel.land.minimal.MinimalLandSurfaceInitConds.rs" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="abcmodel.land.minimal.MinimalLandSurfaceState.rs">
+<span class="sig-name descname"><span class="pre">rs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code></em><a class="headerlink" href="#abcmodel.land.minimal.MinimalLandSurfaceState.rs" title="Link to this definition">#</a></dt>
 <dd><p>Surface resistance [s m-1].</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="abcmodel.land.minimal.MinimalLandSurfaceInitConds.wg">
-<span class="sig-name descname"><span class="pre">wg</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.0</span></em><a class="headerlink" href="#abcmodel.land.minimal.MinimalLandSurfaceInitConds.wg" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="abcmodel.land.minimal.MinimalLandSurfaceState.wg">
+<span class="sig-name descname"><span class="pre">wg</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code></em><a class="headerlink" href="#abcmodel.land.minimal.MinimalLandSurfaceState.wg" title="Link to this definition">#</a></dt>
 <dd><p>No moisture content in the root zone [m3 m-3].</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="abcmodel.land.minimal.MinimalLandSurfaceInitConds.wl">
-<span class="sig-name descname"><span class="pre">wl</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.0</span></em><a class="headerlink" href="#abcmodel.land.minimal.MinimalLandSurfaceInitConds.wl" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="abcmodel.land.minimal.MinimalLandSurfaceState.wl">
+<span class="sig-name descname"><span class="pre">wl</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code></em><a class="headerlink" href="#abcmodel.land.minimal.MinimalLandSurfaceState.wl" title="Link to this definition">#</a></dt>
 <dd><p>No water content in the canopy [m].</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="abcmodel.land.minimal.MinimalLandSurfaceInitConds.ra">
-<span class="sig-name descname"><span class="pre">ra</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">nan</span></em><a class="headerlink" href="#abcmodel.land.minimal.MinimalLandSurfaceInitConds.ra" title="Link to this definition">#</a></dt>
-<dd><p>Aerodynamic resistance [s/m].</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="abcmodel.land.minimal.MinimalLandSurfaceInitConds.esat">
-<span class="sig-name descname"><span class="pre">esat</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">nan</span></em><a class="headerlink" href="#abcmodel.land.minimal.MinimalLandSurfaceInitConds.esat" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="abcmodel.land.minimal.MinimalLandSurfaceState.esat">
+<span class="sig-name descname"><span class="pre">esat</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code></em><a class="headerlink" href="#abcmodel.land.minimal.MinimalLandSurfaceState.esat" title="Link to this definition">#</a></dt>
 <dd><p>Saturation vapor pressure [Pa].</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="abcmodel.land.minimal.MinimalLandSurfaceInitConds.qsat">
-<span class="sig-name descname"><span class="pre">qsat</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">nan</span></em><a class="headerlink" href="#abcmodel.land.minimal.MinimalLandSurfaceInitConds.qsat" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="abcmodel.land.minimal.MinimalLandSurfaceState.qsat">
+<span class="sig-name descname"><span class="pre">qsat</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code></em><a class="headerlink" href="#abcmodel.land.minimal.MinimalLandSurfaceState.qsat" title="Link to this definition">#</a></dt>
 <dd><p>Saturation specific humidity [kg/kg].</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="abcmodel.land.minimal.MinimalLandSurfaceInitConds.dqsatdT">
-<span class="sig-name descname"><span class="pre">dqsatdT</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">nan</span></em><a class="headerlink" href="#abcmodel.land.minimal.MinimalLandSurfaceInitConds.dqsatdT" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="abcmodel.land.minimal.MinimalLandSurfaceState.dqsatdT">
+<span class="sig-name descname"><span class="pre">dqsatdT</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code></em><a class="headerlink" href="#abcmodel.land.minimal.MinimalLandSurfaceState.dqsatdT" title="Link to this definition">#</a></dt>
 <dd><p>Derivative of saturation specific humidity with respect to temperature [kg/kg/K].</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="abcmodel.land.minimal.MinimalLandSurfaceInitConds.e">
-<span class="sig-name descname"><span class="pre">e</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">nan</span></em><a class="headerlink" href="#abcmodel.land.minimal.MinimalLandSurfaceInitConds.e" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="abcmodel.land.minimal.MinimalLandSurfaceState.e">
+<span class="sig-name descname"><span class="pre">e</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code></em><a class="headerlink" href="#abcmodel.land.minimal.MinimalLandSurfaceState.e" title="Link to this definition">#</a></dt>
 <dd><p>Vapor pressure [Pa].</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="abcmodel.land.minimal.MinimalLandSurfaceInitConds.qsatsurf">
-<span class="sig-name descname"><span class="pre">qsatsurf</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">nan</span></em><a class="headerlink" href="#abcmodel.land.minimal.MinimalLandSurfaceInitConds.qsatsurf" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="abcmodel.land.minimal.MinimalLandSurfaceState.qsatsurf">
+<span class="sig-name descname"><span class="pre">qsatsurf</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code></em><a class="headerlink" href="#abcmodel.land.minimal.MinimalLandSurfaceState.qsatsurf" title="Link to this definition">#</a></dt>
 <dd><p>Saturation specific humidity at surface temperature [kg/kg].</p>
 </dd></dl>
 
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abcmodel.land.minimal.MinimalLandSurfaceState.wtheta">
+<span class="sig-name descname"><span class="pre">wtheta</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code></em><a class="headerlink" href="#abcmodel.land.minimal.MinimalLandSurfaceState.wtheta" title="Link to this definition">#</a></dt>
+<dd><p>Kinematic heat flux [K m/s].</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abcmodel.land.minimal.MinimalLandSurfaceState.wq">
+<span class="sig-name descname"><span class="pre">wq</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code></em><a class="headerlink" href="#abcmodel.land.minimal.MinimalLandSurfaceState.wq" title="Link to this definition">#</a></dt>
+<dd><p>Kinematic moisture flux [kg/kg m/s].</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abcmodel.land.minimal.MinimalLandSurfaceState.wCO2">
+<span class="sig-name descname"><span class="pre">wCO2</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code></em><a class="headerlink" href="#abcmodel.land.minimal.MinimalLandSurfaceState.wCO2" title="Link to this definition">#</a></dt>
+<dd><p>Kinematic CO2 flux [kg/kg m/s] or [mol m-2 s-1].</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abcmodel.land.minimal.MinimalLandSurfaceInitConds">
+<span class="sig-prename descclassname"><span class="pre">abcmodel.land.minimal.</span></span><span class="sig-name descname"><span class="pre">MinimalLandSurfaceInitConds</span></span><a class="headerlink" href="#abcmodel.land.minimal.MinimalLandSurfaceInitConds" title="Link to this definition">#</a></dt>
+<dd><p>alias of <a class="reference internal" href="#abcmodel.land.minimal.MinimalLandSurfaceState" title="abcmodel.land.minimal.MinimalLandSurfaceState"><code class="xref py py-class docutils literal notranslate"><span class="pre">MinimalLandSurfaceState</span></code></a></p>
 </dd></dl>
 
 <dl class="py class">
@@ -474,19 +494,19 @@ document.write(`
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>state</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">PyTree</span></code></span>) – the state object carrying all variables.</p></li>
+<li><p><strong>state</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="abcmodel.abstracts.html#abcmodel.abstracts.AbstractCoupledState" title="abcmodel.abstracts.AbstractCoupledState"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractCoupledState</span></code></a></span>) – CoupledState.</p></li>
 <li><p><strong>const</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="abcmodel.utils.html#abcmodel.utils.PhysicalConstants" title="abcmodel.utils.PhysicalConstants"><code class="xref py py-class docutils literal notranslate"><span class="pre">PhysicalConstants</span></code></a></span>) – the physical constants object.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The updated state object.</p>
+<dd class="field-even"><p>The updated land state object.</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abcmodel.land.minimal.MinimalLandSurfaceModel.compute_dqsatdT">
-<span class="sig-name descname"><span class="pre">compute_dqsatdT</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/abcmodel/land/minimal.html#MinimalLandSurfaceModel.compute_dqsatdT"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#abcmodel.land.minimal.MinimalLandSurfaceModel.compute_dqsatdT" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">compute_dqsatdT</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">esat</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theta</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">surf_pressure</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/abcmodel/land/minimal.html#MinimalLandSurfaceModel.compute_dqsatdT"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#abcmodel.land.minimal.MinimalLandSurfaceModel.compute_dqsatdT" title="Link to this definition">#</a></dt>
 <dd><p>Compute the derivative of saturation vapor pressure with respect to temperature <code class="docutils literal notranslate"><span class="pre">dqsatdT</span></code>.</p>
 <p class="rubric">Notes</p>
 <p>Using <a class="reference internal" href="abcmodel.utils.html#abcmodel.utils.compute_esat" title="abcmodel.utils.compute_esat"><code class="xref py py-meth docutils literal notranslate"><span class="pre">compute_esat()</span></code></a>, the derivative of the saturated vapor pressure
@@ -501,7 +521,7 @@ e_\text{sat}\frac{17.2694(T-237.16)}{(T-35.86)^2},\]</div>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abcmodel.land.minimal.MinimalLandSurfaceModel.compute_e">
-<span class="sig-name descname"><span class="pre">compute_e</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/abcmodel/land/minimal.html#MinimalLandSurfaceModel.compute_e"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#abcmodel.land.minimal.MinimalLandSurfaceModel.compute_e" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">compute_e</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">q</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">surf_pressure</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/abcmodel/land/minimal.html#MinimalLandSurfaceModel.compute_e"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#abcmodel.land.minimal.MinimalLandSurfaceModel.compute_e" title="Link to this definition">#</a></dt>
 <dd><p>Compute the vapor pressure <code class="docutils literal notranslate"><span class="pre">e</span></code>.</p>
 <p class="rubric">Notes</p>
 <p>This function uses the same formula used in <a class="reference internal" href="abcmodel.utils.html#abcmodel.utils.compute_esat" title="abcmodel.utils.compute_esat"><code class="xref py py-meth docutils literal notranslate"><span class="pre">compute_esat()</span></code></a>,
@@ -518,7 +538,7 @@ and surface pressure <span class="math notranslate nohighlight">\(p\)</span>, wh
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>state</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">PyTree</span></code></span>) – the state object carrying all variables.</p></li>
+<li><p><strong>state</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#abcmodel.land.minimal.MinimalLandSurfaceState" title="abcmodel.land.minimal.MinimalLandSurfaceState"><code class="xref py py-class docutils literal notranslate"><span class="pre">MinimalLandSurfaceState</span></code></a></span>) – the state object carrying all variables.</p></li>
 <li><p><strong>dt</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></span>) – the time step.</p></li>
 </ul>
 </dd>
@@ -577,20 +597,23 @@ and surface pressure <span class="math notranslate nohighlight">\(p\)</span>, wh
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.land.minimal.MinimalLandSurfaceInitConds"><code class="docutils literal notranslate"><span class="pre">MinimalLandSurfaceInitConds</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.land.minimal.MinimalLandSurfaceInitConds.alpha"><code class="docutils literal notranslate"><span class="pre">MinimalLandSurfaceInitConds.alpha</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.land.minimal.MinimalLandSurfaceInitConds.surf_temp"><code class="docutils literal notranslate"><span class="pre">MinimalLandSurfaceInitConds.surf_temp</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.land.minimal.MinimalLandSurfaceInitConds.rs"><code class="docutils literal notranslate"><span class="pre">MinimalLandSurfaceInitConds.rs</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.land.minimal.MinimalLandSurfaceInitConds.wg"><code class="docutils literal notranslate"><span class="pre">MinimalLandSurfaceInitConds.wg</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.land.minimal.MinimalLandSurfaceInitConds.wl"><code class="docutils literal notranslate"><span class="pre">MinimalLandSurfaceInitConds.wl</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.land.minimal.MinimalLandSurfaceInitConds.ra"><code class="docutils literal notranslate"><span class="pre">MinimalLandSurfaceInitConds.ra</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.land.minimal.MinimalLandSurfaceInitConds.esat"><code class="docutils literal notranslate"><span class="pre">MinimalLandSurfaceInitConds.esat</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.land.minimal.MinimalLandSurfaceInitConds.qsat"><code class="docutils literal notranslate"><span class="pre">MinimalLandSurfaceInitConds.qsat</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.land.minimal.MinimalLandSurfaceInitConds.dqsatdT"><code class="docutils literal notranslate"><span class="pre">MinimalLandSurfaceInitConds.dqsatdT</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.land.minimal.MinimalLandSurfaceInitConds.e"><code class="docutils literal notranslate"><span class="pre">MinimalLandSurfaceInitConds.e</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.land.minimal.MinimalLandSurfaceInitConds.qsatsurf"><code class="docutils literal notranslate"><span class="pre">MinimalLandSurfaceInitConds.qsatsurf</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.land.minimal.MinimalLandSurfaceState"><code class="docutils literal notranslate"><span class="pre">MinimalLandSurfaceState</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.land.minimal.MinimalLandSurfaceState.alpha"><code class="docutils literal notranslate"><span class="pre">MinimalLandSurfaceState.alpha</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.land.minimal.MinimalLandSurfaceState.surf_temp"><code class="docutils literal notranslate"><span class="pre">MinimalLandSurfaceState.surf_temp</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.land.minimal.MinimalLandSurfaceState.rs"><code class="docutils literal notranslate"><span class="pre">MinimalLandSurfaceState.rs</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.land.minimal.MinimalLandSurfaceState.wg"><code class="docutils literal notranslate"><span class="pre">MinimalLandSurfaceState.wg</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.land.minimal.MinimalLandSurfaceState.wl"><code class="docutils literal notranslate"><span class="pre">MinimalLandSurfaceState.wl</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.land.minimal.MinimalLandSurfaceState.esat"><code class="docutils literal notranslate"><span class="pre">MinimalLandSurfaceState.esat</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.land.minimal.MinimalLandSurfaceState.qsat"><code class="docutils literal notranslate"><span class="pre">MinimalLandSurfaceState.qsat</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.land.minimal.MinimalLandSurfaceState.dqsatdT"><code class="docutils literal notranslate"><span class="pre">MinimalLandSurfaceState.dqsatdT</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.land.minimal.MinimalLandSurfaceState.e"><code class="docutils literal notranslate"><span class="pre">MinimalLandSurfaceState.e</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.land.minimal.MinimalLandSurfaceState.qsatsurf"><code class="docutils literal notranslate"><span class="pre">MinimalLandSurfaceState.qsatsurf</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.land.minimal.MinimalLandSurfaceState.wtheta"><code class="docutils literal notranslate"><span class="pre">MinimalLandSurfaceState.wtheta</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.land.minimal.MinimalLandSurfaceState.wq"><code class="docutils literal notranslate"><span class="pre">MinimalLandSurfaceState.wq</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.land.minimal.MinimalLandSurfaceState.wCO2"><code class="docutils literal notranslate"><span class="pre">MinimalLandSurfaceState.wCO2</span></code></a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.land.minimal.MinimalLandSurfaceInitConds"><code class="docutils literal notranslate"><span class="pre">MinimalLandSurfaceInitConds</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.land.minimal.MinimalLandSurfaceModel"><code class="docutils literal notranslate"><span class="pre">MinimalLandSurfaceModel</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.land.minimal.MinimalLandSurfaceModel.run"><code class="docutils literal notranslate"><span class="pre">MinimalLandSurfaceModel.run()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#abcmodel.land.minimal.MinimalLandSurfaceModel.compute_dqsatdT"><code class="docutils literal notranslate"><span class="pre">MinimalLandSurfaceModel.compute_dqsatdT()</span></code></a></li>

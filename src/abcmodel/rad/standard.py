@@ -14,7 +14,7 @@ from ..utils import Array, PhysicalConstants
 
 @dataclass
 class StandardRadiationState(AbstractRadiationState):
-    """Standard rad model state."""
+    """Standard radiation model state."""
 
     net_rad: Array
     """Net surface rad [W m-2]."""
@@ -33,7 +33,7 @@ StateAlias = AbstractCoupledState[StandardRadiationState, LandT, AtmosT]
 
 
 class StandardRadiationModel(AbstractRadiationModel[StandardRadiationState]):
-    """Standard rad model with solar position and atmospheric effects.
+    """Standard radiation model with solar position and atmospheric effects.
 
     Calculates time-varying solar rad based on geographic location and
     atmospheric conditions. Includes both shortwave (solar) and longwave (thermal)
