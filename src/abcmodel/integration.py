@@ -12,9 +12,12 @@ def warmup(
     coupler: ABCoupler,
     t: int,
     dt: float,
+    tstart: float,
 ) -> AbstractCoupledState[RadT, LandT, AtmosT]:
     """Warmup the model by running it for a few timesteps."""
-    state = coupler.atmos.warmup(coupler.rad, coupler.land, state, t, dt, coupler.const)
+    state = coupler.atmos.warmup(
+        coupler.rad, coupler.land, state, t, dt, tstart, coupler.const
+    )
     return state
 
 
@@ -23,11 +26,12 @@ def timestep(
     coupler: ABCoupler,
     t: int,
     dt: float,
+    tstart: float,
 ) -> AbstractCoupledState[RadT, LandT, AtmosT]:
     """Run a single timestep of the model."""
     atmos = coupler.atmos.statistics(state, t, coupler.const)
     state = state.replace(atmos=atmos)
-    rad = coupler.rad.run(state, t, dt, coupler.const)
+    rad = coupler.rad.run(state, t, dt, tstart, coupler.const)
     state = state.replace(rad=rad)
     land = coupler.land.run(state, coupler.const)
     state = state.replace(land=land)
@@ -46,6 +50,7 @@ def integrate(
     coupler: ABCoupler,
     dt: float,
     runtime: float,
+    tstart: float,
 ) -> tuple[Array, AbstractCoupledState[RadT, LandT, AtmosT]]:
     """Integrate the coupler forward in time.
 
@@ -62,16 +67,16 @@ def integrate(
     tsteps = int(np.floor(runtime / dt))
 
     # warmup
-    state = warmup(state, coupler, 0, dt)
+    state = warmup(state, coupler, 0, dt, tstart)
     state = coupler.compute_diagnostics(state)
 
     def iter_fn(state, t):
-        state = timestep(state, coupler, t, dt)
+        state = timestep(state, coupler, t, dt, tstart)
         return state, state
 
     timesteps = jnp.arange(tsteps)
     state, trajectory = jax.lax.scan(iter_fn, state, timesteps, length=tsteps)
 
-    times = jnp.arange(tsteps) * dt / 3600.0 + coupler.rad.tstart
+    times = jnp.arange(tsteps) * dt / 3600.0 + tstart
 
     return times, trajectory

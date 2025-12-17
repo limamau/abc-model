@@ -29,7 +29,6 @@ class CloudyRadiationModel(StandardRadiationModel):
         lat: latitude [degrees], range -90 to +90.
         lon: longitude [degrees], range -180 to +180.
         doy: day of year [-], range 1 to 365.
-        tstart: start time of day [hours UTC], range 0 to 24.
     """
 
     def __init__(
@@ -37,18 +36,17 @@ class CloudyRadiationModel(StandardRadiationModel):
         lat: Array,
         lon: Array,
         doy: Array,
-        tstart: Array,
     ):
         self.lat = lat
         self.lon = lon
         self.doy = doy
-        self.tstart = tstart
 
     def run(
         self,
         state: StateAlias,
         t: int,
         dt: float,
+        tstart: float,
         const: PhysicalConstants,
     ) -> StandardRadiationState:
         """Calculate rad components and net surface rad.
@@ -57,6 +55,7 @@ class CloudyRadiationModel(StandardRadiationModel):
             state: CoupledState.
             t: Current time step index [-].
             dt: Time step duration [s].
+            tstart: Start time of day [hours UTC], range 0 to 24.
             const: PhysicalConstants object.
 
         Returns:
@@ -70,7 +69,7 @@ class CloudyRadiationModel(StandardRadiationModel):
 
         # computations
         solar_declination = self.compute_solar_declination(self.doy)
-        solar_elevation = self.compute_solar_elevation(t, dt, solar_declination)
+        solar_elevation = self.compute_solar_elevation(t, dt, tstart, solar_declination)
         air_temp = self.compute_air_temperature(
             ml_state.surf_pressure,
             ml_state.h_abl,

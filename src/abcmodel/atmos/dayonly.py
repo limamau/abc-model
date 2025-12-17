@@ -82,13 +82,14 @@ class DayOnlyAtmosphereModel(AbstractAtmosphereModel[DayOnlyAtmosphereState]):
         state: StateAlias,
         t: int,
         dt: float,
+        tstart: float,
         const: PhysicalConstants,
     ) -> StateAlias:
         """Warmup the atmos by running it for a few timesteps."""
         state = state.replace(
             atmos=self.statistics(state, t, const),
         )
-        state = state.replace(rad=radmodel.run(state, t, dt, const))
+        state = state.replace(rad=radmodel.run(state, t, dt, tstart, const))
         for _ in range(10):
             sl_state = self.surface_layer.run(state, const)
             atmostate = replace(state.atmos, surface=sl_state)

@@ -37,10 +37,10 @@
   <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
     <script src="../../_static/documentation_options.js?v=a1637f0b"></script>
-    <script src="../../_static/doctools.js?v=9bcbadda"></script>
-    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
-    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'source/api/abcmodel.rad.standard';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -387,36 +387,36 @@ document.write(`
 <span id="standard"></span><h1>Standard<a class="headerlink" href="#module-abcmodel.rad.standard" title="Link to this heading">#</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="abcmodel.rad.standard.StandardRadiationState">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abcmodel.rad.standard.</span></span><span class="sig-name descname"><span class="pre">StandardRadiationState</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">net_rad</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">in_srad=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_srad=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">in_lrad=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_lrad=&lt;factory&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/abcmodel/rad/standard.html#StandardRadiationState"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#abcmodel.rad.standard.StandardRadiationState" title="Link to this definition">#</a></dt>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">abcmodel.rad.standard.</span></span><span class="sig-name descname"><span class="pre">StandardRadiationState</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">net_rad</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">in_srad</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_srad</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">in_lrad</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_lrad</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/abcmodel/rad/standard.html#StandardRadiationState"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#abcmodel.rad.standard.StandardRadiationState" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference internal" href="abcmodel.abstracts.html#abcmodel.abstracts.AbstractRadiationState" title="abcmodel.abstracts.AbstractRadiationState"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractRadiationState</span></code></a></p>
 <p>Standard radiation model state.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abcmodel.rad.standard.StandardRadiationState.net_rad">
-<span class="sig-name descname"><span class="pre">net_rad</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code></em><a class="headerlink" href="#abcmodel.rad.standard.StandardRadiationState.net_rad" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">net_rad</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Array</span></span><a class="headerlink" href="#abcmodel.rad.standard.StandardRadiationState.net_rad" title="Link to this definition">#</a></dt>
 <dd><p>Net surface rad [W m-2].</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abcmodel.rad.standard.StandardRadiationState.in_srad">
-<span class="sig-name descname"><span class="pre">in_srad</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code></em><a class="headerlink" href="#abcmodel.rad.standard.StandardRadiationState.in_srad" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">in_srad</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Array</span></span><a class="headerlink" href="#abcmodel.rad.standard.StandardRadiationState.in_srad" title="Link to this definition">#</a></dt>
 <dd><p>Incoming solar rad [W m-2].</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abcmodel.rad.standard.StandardRadiationState.out_srad">
-<span class="sig-name descname"><span class="pre">out_srad</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code></em><a class="headerlink" href="#abcmodel.rad.standard.StandardRadiationState.out_srad" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">out_srad</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Array</span></span><a class="headerlink" href="#abcmodel.rad.standard.StandardRadiationState.out_srad" title="Link to this definition">#</a></dt>
 <dd><p>Outgoing solar rad [W m-2].</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abcmodel.rad.standard.StandardRadiationState.in_lrad">
-<span class="sig-name descname"><span class="pre">in_lrad</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code></em><a class="headerlink" href="#abcmodel.rad.standard.StandardRadiationState.in_lrad" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">in_lrad</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Array</span></span><a class="headerlink" href="#abcmodel.rad.standard.StandardRadiationState.in_lrad" title="Link to this definition">#</a></dt>
 <dd><p>Incoming longwave rad [W m-2].</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abcmodel.rad.standard.StandardRadiationState.out_lrad">
-<span class="sig-name descname"><span class="pre">out_lrad</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code></em><a class="headerlink" href="#abcmodel.rad.standard.StandardRadiationState.out_lrad" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">out_lrad</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Array</span></span><a class="headerlink" href="#abcmodel.rad.standard.StandardRadiationState.out_lrad" title="Link to this definition">#</a></dt>
 <dd><p>Outgoing longwave rad [W m-2].</p>
 </dd></dl>
 
@@ -430,7 +430,7 @@ document.write(`
 
 <dl class="py class">
 <dt class="sig sig-object py" id="abcmodel.rad.standard.StandardRadiationModel">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abcmodel.rad.standard.</span></span><span class="sig-name descname"><span class="pre">StandardRadiationModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lat</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lon</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">doy</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tstart</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cc</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/abcmodel/rad/standard.html#StandardRadiationModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#abcmodel.rad.standard.StandardRadiationModel" title="Link to this definition">#</a></dt>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">abcmodel.rad.standard.</span></span><span class="sig-name descname"><span class="pre">StandardRadiationModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lat</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lon</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">doy</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cc</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/abcmodel/rad/standard.html#StandardRadiationModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#abcmodel.rad.standard.StandardRadiationModel" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference internal" href="abcmodel.abstracts.html#abcmodel.abstracts.AbstractRadiationModel" title="abcmodel.abstracts.AbstractRadiationModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractRadiationModel</span></code></a>[<a class="reference internal" href="#abcmodel.rad.standard.StandardRadiationState" title="abcmodel.rad.standard.StandardRadiationState"><code class="xref py py-class docutils literal notranslate"><span class="pre">StandardRadiationState</span></code></a>]</p>
 <p>Standard radiation model with solar position and atmospheric effects.</p>
 <p>Calculates time-varying solar rad based on geographic location and
@@ -442,14 +442,14 @@ rad components.</p>
 <li><p><strong>lat</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code></span>) – latitude [degrees], range -90 to +90.</p></li>
 <li><p><strong>lon</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code></span>) – longitude [degrees], range -180 to +180.</p></li>
 <li><p><strong>doy</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code></span>) – day of year [-], range 1 to 365.</p></li>
-<li><p><strong>tstart</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code></span>) – start time of day [hours UTC], range 0 to 24.</p></li>
+<li><p><strong>tstart</strong> – start time of day [hours UTC], range 0 to 24.</p></li>
 <li><p><strong>cc</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code></span>) – cloud cover fraction [-], range 0 to 1.</p></li>
 </ul>
 </dd>
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="abcmodel.rad.standard.StandardRadiationModel.run">
-<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">const</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/abcmodel/rad/standard.html#StandardRadiationModel.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#abcmodel.rad.standard.StandardRadiationModel.run" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tstart</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">const</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/abcmodel/rad/standard.html#StandardRadiationModel.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#abcmodel.rad.standard.StandardRadiationModel.run" title="Link to this definition">#</a></dt>
 <dd><p>Calculate rad components and net surface rad.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -457,6 +457,7 @@ rad components.</p>
 <li><p><strong>state</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="abcmodel.abstracts.html#abcmodel.abstracts.AbstractCoupledState" title="abcmodel.abstracts.AbstractCoupledState"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractCoupledState</span></code></a>[<a class="reference internal" href="#abcmodel.rad.standard.StandardRadiationState" title="abcmodel.rad.standard.StandardRadiationState"><code class="xref py py-class docutils literal notranslate"><span class="pre">StandardRadiationState</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">TypeVar</span></code>(<code class="docutils literal notranslate"><span class="pre">LandT</span></code>, bound= <a class="reference internal" href="abcmodel.abstracts.html#abcmodel.abstracts.AbstractLandState" title="abcmodel.abstracts.AbstractLandState"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractLandState</span></code></a>), <code class="xref py py-class docutils literal notranslate"><span class="pre">TypeVar</span></code>(<code class="docutils literal notranslate"><span class="pre">AtmosT</span></code>, bound= <a class="reference internal" href="abcmodel.abstracts.html#abcmodel.abstracts.AbstractAtmosphereState" title="abcmodel.abstracts.AbstractAtmosphereState"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractAtmosphereState</span></code></a>)]</span>) – CoupledState.</p></li>
 <li><p><strong>t</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></span>) – Current time step index [-].</p></li>
 <li><p><strong>dt</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></span>) – Time step duration [s].</p></li>
+<li><p><strong>tstart</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></span>) – Start time of day [hours UTC], range 0 to 24.</p></li>
 <li><p><strong>const</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="abcmodel.utils.html#abcmodel.utils.PhysicalConstants" title="abcmodel.utils.PhysicalConstants"><code class="xref py py-class docutils literal notranslate"><span class="pre">PhysicalConstants</span></code></a></span>) – PhysicalConstants object.</p></li>
 </ul>
 </dd>
@@ -492,7 +493,7 @@ phase shift for the cosine wave.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abcmodel.rad.standard.StandardRadiationModel.compute_solar_elevation">
-<span class="sig-name descname"><span class="pre">compute_solar_elevation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">t</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">solar_declination</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/abcmodel/rad/standard.html#StandardRadiationModel.compute_solar_elevation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#abcmodel.rad.standard.StandardRadiationModel.compute_solar_elevation" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">compute_solar_elevation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">t</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tstart</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">solar_declination</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/abcmodel/rad/standard.html#StandardRadiationModel.compute_solar_elevation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#abcmodel.rad.standard.StandardRadiationModel.compute_solar_elevation" title="Link to this definition">#</a></dt>
 <dd><p>Compute solar elevation angle (sine of elevation).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>

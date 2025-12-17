@@ -36,8 +36,8 @@
   <script src="../../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
     <script src="../../../_static/documentation_options.js?v=a1637f0b"></script>
-    <script src="../../../_static/doctools.js?v=9bcbadda"></script>
-    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = '_modules/abcmodel/rad/cloudy';</script>
     <link rel="index" title="Index" href="../../../genindex.html" />
@@ -343,7 +343,6 @@ document.write(`
 <span class="sd">        lat: latitude [degrees], range -90 to +90.</span>
 <span class="sd">        lon: longitude [degrees], range -180 to +180.</span>
 <span class="sd">        doy: day of year [-], range 1 to 365.</span>
-<span class="sd">        tstart: start time of day [hours UTC], range 0 to 24.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
@@ -351,12 +350,10 @@ document.write(`
         <span class="n">lat</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span>
         <span class="n">lon</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span>
         <span class="n">doy</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span>
-        <span class="n">tstart</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span>
     <span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">lat</span> <span class="o">=</span> <span class="n">lat</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">lon</span> <span class="o">=</span> <span class="n">lon</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">doy</span> <span class="o">=</span> <span class="n">doy</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">tstart</span> <span class="o">=</span> <span class="n">tstart</span>
 
 <div class="viewcode-block" id="CloudyRadiationModel.run">
 <a class="viewcode-back" href="../../../source/api/abcmodel.rad.cloudy.html#abcmodel.rad.cloudy.CloudyRadiationModel.run">[docs]</a>
@@ -365,6 +362,7 @@ document.write(`
         <span class="n">state</span><span class="p">:</span> <span class="n">StateAlias</span><span class="p">,</span>
         <span class="n">t</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
         <span class="n">dt</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">tstart</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
         <span class="n">const</span><span class="p">:</span> <span class="n">PhysicalConstants</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">StandardRadiationState</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculate rad components and net surface rad.</span>
@@ -373,6 +371,7 @@ document.write(`
 <span class="sd">            state: CoupledState.</span>
 <span class="sd">            t: Current time step index [-].</span>
 <span class="sd">            dt: Time step duration [s].</span>
+<span class="sd">            tstart: Start time of day [hours UTC], range 0 to 24.</span>
 <span class="sd">            const: PhysicalConstants object.</span>
 
 <span class="sd">        Returns:</span>
@@ -386,7 +385,7 @@ document.write(`
 
         <span class="c1"># computations</span>
         <span class="n">solar_declination</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_solar_declination</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">doy</span><span class="p">)</span>
-        <span class="n">solar_elevation</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_solar_elevation</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">solar_declination</span><span class="p">)</span>
+        <span class="n">solar_elevation</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_solar_elevation</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">tstart</span><span class="p">,</span> <span class="n">solar_declination</span><span class="p">)</span>
         <span class="n">air_temp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_air_temperature</span><span class="p">(</span>
             <span class="n">ml_state</span><span class="o">.</span><span class="n">surf_pressure</span><span class="p">,</span>
             <span class="n">ml_state</span><span class="o">.</span><span class="n">h_abl</span><span class="p">,</span>

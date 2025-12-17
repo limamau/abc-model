@@ -9,7 +9,6 @@ std_rad_model_kwargs = {
     "lat": jnp.array(51.97),
     "lon": jnp.array(-4.93),
     "doy": jnp.array(268.0),
-    "tstart": jnp.array(6.8),
     "cc": jnp.array(0.0),
 }
 

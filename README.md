@@ -88,7 +88,7 @@ dt = 60.0
 # total run time [s]
 runtime = 12 * 3600.0
 
-time, trajectory = abcmodel.integrate(state, abcoupler, dt=dt, runtime=runtime)
+time, trajectory = abcmodel.integrate(state, abcoupler, dt, runtime, tstart)
 ```
 
 To plot the results, we will typically follow something like the code below.

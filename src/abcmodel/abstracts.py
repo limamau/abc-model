@@ -106,6 +106,7 @@ class AbstractRadiationModel(AbstractModel, Generic[RadT]):
         state: AbstractCoupledState[RadT, LandT, AtmosT],
         t: int,
         dt: float,
+        tstart: float,
         const: PhysicalConstants,
     ) -> RadT:
         raise NotImplementedError
@@ -138,6 +139,7 @@ class AbstractAtmosphereModel(AbstractModel, Generic[AtmosT]):
         state: AbstractCoupledState[RadT, LandT, AtmosT],
         t: int,
         dt: float,
+        tstart: float,
         const: PhysicalConstants,
     ) -> AbstractCoupledState[RadT, LandT, AtmosT]:
         raise NotImplementedError

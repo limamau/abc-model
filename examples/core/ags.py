@@ -9,6 +9,8 @@ def main():
     dt = 15.0
     # total run time [s]
     runtime = 12 * 3600.0
+    # start time of the day [h]
+    tstart = 6.8
 
     # rad with clouds
     rad_init_conds = abcmodel.rad.CloudyRadiationInitConds(
@@ -71,7 +73,7 @@ def main():
     )
 
     # run run run
-    time, trajectory = abcmodel.integrate(state, abcoupler, dt=dt, runtime=runtime)
+    time, trajectory = abcmodel.integrate(state, abcoupler, dt, runtime, tstart)
 
     # plot output
     plt.figure(figsize=(12, 8))

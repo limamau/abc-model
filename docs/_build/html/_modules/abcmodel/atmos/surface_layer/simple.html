@@ -36,8 +36,8 @@
   <script src="../../../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
     <script src="../../../../_static/documentation_options.js?v=a1637f0b"></script>
-    <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
-    <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = '_modules/abcmodel/atmos/surface_layer/simple';</script>
     <link rel="index" title="Index" href="../../../../genindex.html" />
@@ -312,12 +312,15 @@ document.write(`
 <span class="kn">import</span><span class="w"> </span><span class="nn">jax.numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">jnp</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">jax</span><span class="w"> </span><span class="kn">import</span> <span class="n">Array</span>
 
+<span class="kn">from</span><span class="w"> </span><span class="nn">...abstracts</span><span class="w"> </span><span class="kn">import</span> <span class="n">AbstractCoupledState</span><span class="p">,</span> <span class="n">LandT</span><span class="p">,</span> <span class="n">RadT</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">...utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">PhysicalConstants</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">..abstracts</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
-    <span class="n">AbstractCoupledState</span><span class="p">,</span>
     <span class="n">AbstractSurfaceLayerModel</span><span class="p">,</span>
     <span class="n">AbstractSurfaceLayerState</span><span class="p">,</span>
+    <span class="n">CloudT</span><span class="p">,</span>
+    <span class="n">MixedT</span><span class="p">,</span>
 <span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..dayonly</span><span class="w"> </span><span class="kn">import</span> <span class="n">DayOnlyAtmosphereState</span>
 
 
 <div class="viewcode-block" id="SimpleSurfaceLayerState">
@@ -338,6 +341,16 @@ document.write(`
 
 
 <span class="n">SimpleSurfaceLayerInitConds</span> <span class="o">=</span> <span class="n">SimpleSurfaceLayerState</span>
+<span class="c1"># limamau: maybe these type variables could be abstracts...</span>
+<span class="n">StateAlias</span> <span class="o">=</span> <span class="n">AbstractCoupledState</span><span class="p">[</span>
+    <span class="n">RadT</span><span class="p">,</span>
+    <span class="n">LandT</span><span class="p">,</span>
+    <span class="n">DayOnlyAtmosphereState</span><span class="p">[</span>
+        <span class="n">SimpleSurfaceLayerState</span><span class="p">,</span>
+        <span class="n">MixedT</span><span class="p">,</span>
+        <span class="n">CloudT</span><span class="p">,</span>
+    <span class="p">],</span>
+<span class="p">]</span>
 
 
 <div class="viewcode-block" id="SimpleSurfaceLayerModel">
@@ -374,8 +387,7 @@ document.write(`
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Run the model.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            state: CoupledState.</span>
-<span class="sd">            const: PhysicalConstants.</span>
+<span class="sd">            state:</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            The updated surface layer state.</span>

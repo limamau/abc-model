@@ -52,13 +52,11 @@ class StandardRadiationModel(AbstractRadiationModel[StandardRadiationState]):
         lat: Array,
         lon: Array,
         doy: Array,
-        tstart: Array,
         cc: Array,
     ):
         self.lat = lat
         self.lon = lon
         self.doy = doy
-        self.tstart = tstart
         self.cc = cc
 
     def run(
@@ -66,6 +64,7 @@ class StandardRadiationModel(AbstractRadiationModel[StandardRadiationState]):
         state: StateAlias,
         t: int,
         dt: float,
+        tstart: float,
         const: PhysicalConstants,
     ) -> StandardRadiationState:
         """Calculate rad components and net surface rad.
@@ -74,6 +73,7 @@ class StandardRadiationModel(AbstractRadiationModel[StandardRadiationState]):
             state: CoupledState.
             t: Current time step index [-].
             dt: Time step duration [s].
+            tstart: Start time of day [hours UTC], range 0 to 24.
             const: PhysicalConstants object.
 
         Returns:
@@ -86,7 +86,7 @@ class StandardRadiationModel(AbstractRadiationModel[StandardRadiationState]):
 
         # computations
         solar_declination = self.compute_solar_declination(self.doy)
-        solar_elevation = self.compute_solar_elevation(t, dt, solar_declination)
+        solar_elevation = self.compute_solar_elevation(t, dt, tstart, solar_declination)
         air_temp = self.compute_air_temperature(
             ml_state.surf_pressure,
             ml_state.h_abl,
@@ -144,7 +144,11 @@ class StandardRadiationModel(AbstractRadiationModel[StandardRadiationState]):
         return 0.409 * jnp.cos(2.0 * jnp.pi * (doy - 173.0) / 365.0)
 
     def compute_solar_elevation(
-        self, t: int, dt: float, solar_declination: Array
+        self,
+        t: int,
+        dt: float,
+        tstart: float,
+        solar_declination: Array,
     ) -> Array:
         """Compute solar elevation angle (sine of elevation).
 
@@ -180,7 +184,7 @@ class StandardRadiationModel(AbstractRadiationModel[StandardRadiationState]):
         """
         lat_rad = 2.0 * jnp.pi * self.lat / 360.0
         lon_rad = 2.0 * jnp.pi * self.lon / 360.0
-        time_rad = 2.0 * jnp.pi * (t * dt + self.tstart * 3600.0) / 86400.0
+        time_rad = 2.0 * jnp.pi * (t * dt + tstart * 3600.0) / 86400.0
 
         sinlea = jnp.sin(lat_rad) * jnp.sin(solar_declination) - jnp.cos(
             lat_rad

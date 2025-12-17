@@ -9,6 +9,7 @@ import abcmodel
 def run_model(theta0: float) -> Array:
     dt = 60.0
     runtime = 12 * 3600.0
+    tstart = 6.8
 
     rad_init_conds = abcmodel.rad.StandardRadiationInitConds(
         **cm.standard_radiation.init_conds_kwargs
@@ -66,7 +67,7 @@ def run_model(theta0: float) -> Array:
     )
     state = abcoupler.init_state(rad_init_conds, land_init_conds, atmos_init_conds)
 
-    _, trajectory = abcmodel.integrate(state, abcoupler, dt=dt, runtime=runtime)
+    _, trajectory = abcmodel.integrate(state, abcoupler, dt, runtime, tstart)
 
     # return final boundary layer height as scalar
     return trajectory.atmos.mixed.h_abl[-1]

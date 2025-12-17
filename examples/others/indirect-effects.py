@@ -11,6 +11,8 @@ def run_wrapper(wg: float, q: float, config):
     dt = 60.0
     # total run time [s]
     runtime = 12 * 3600.0
+    # start time of the day [h]
+    tstart = 6.8
 
     # rad with clouds
     rad_init_conds = abcmodel.rad.StandardRadiationInitConds(
@@ -75,7 +77,7 @@ def run_wrapper(wg: float, q: float, config):
         atmos_init_conds,
     )
 
-    return abcmodel.integrate(state, abcoupler, dt=dt, runtime=runtime)
+    return abcmodel.integrate(state, abcoupler, dt, runtime, tstart)
 
 
 def make_fancy_plot(

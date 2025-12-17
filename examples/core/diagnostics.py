@@ -10,6 +10,8 @@ def main():
     dt = 60.0
     # total run time [s]
     runtime = 12 * 3600.0
+    # start time of the day [h]
+    tstart = 6.8
 
     # rad
     rad_init_conds = abcmodel.rad.StandardRadiationInitConds(
@@ -72,7 +74,7 @@ def main():
     )
 
     # run model with diagnostics enabled
-    time, trajectory = abcmodel.integrate(state, abcoupler, dt=dt, runtime=runtime)
+    time, trajectory = abcmodel.integrate(state, abcoupler, dt, runtime, tstart)
     const = PhysicalConstants()
 
     # plot diagnostic evolution

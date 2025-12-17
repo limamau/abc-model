@@ -37,10 +37,10 @@
   <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
     <script src="../../_static/documentation_options.js?v=a1637f0b"></script>
-    <script src="../../_static/doctools.js?v=9bcbadda"></script>
-    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
-    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'source/api/abcmodel.atmos.mixed_layer.bulk';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -443,258 +443,258 @@ document.write(`
 <span id="bulk"></span><h1>Bulk<a class="headerlink" href="#module-abcmodel.atmos.mixed_layer.bulk" title="Link to this heading">#</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abcmodel.atmos.mixed_layer.bulk.</span></span><span class="sig-name descname"><span class="pre">BulkMixedLayerState</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">h_abl</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theta</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deltatheta</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wtheta</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">q</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dq</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">co2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deltaCO2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wCO2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">u</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">du</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dv</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dz_h</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">surf_pressure</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wstar=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">we=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">thetav=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deltathetav=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wthetav=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wqe=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wCO2e=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wthetae=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wthetave=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lcl=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">top_rh=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">top_p=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">top_T=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">utend=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dutend=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vtend=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dvtend=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h_abl_tend=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">thetatend=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deltathetatend=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qtend=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dqtend=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">co2tend=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deltaCO2tend=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dztend=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ws=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wf=&lt;factory&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/abcmodel/atmos/mixed_layer/bulk.html#BulkMixedLayerState"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState" title="Link to this definition">#</a></dt>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">abcmodel.atmos.mixed_layer.bulk.</span></span><span class="sig-name descname"><span class="pre">BulkMixedLayerState</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">h_abl</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theta</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deltatheta</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wtheta</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">q</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dq</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">co2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deltaCO2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wCO2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">u</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">du</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dv</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dz_h</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">surf_pressure</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wstar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">we</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">thetav</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deltathetav</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wthetav</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wqe</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wCO2e</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wthetae</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wthetave</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lcl</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">top_rh</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">top_p</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">top_T</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">utend</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dutend</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vtend</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dvtend</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h_abl_tend</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">thetatend</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deltathetatend</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qtend</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dqtend</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">co2tend</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deltaCO2tend</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dztend</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ws</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wf</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/abcmodel/atmos/mixed_layer/bulk.html#BulkMixedLayerState"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference internal" href="abcmodel.atmos.abstracts.html#abcmodel.atmos.abstracts.AbstractMixedLayerState" title="abcmodel.atmos.abstracts.AbstractMixedLayerState"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractMixedLayerState</span></code></a></p>
 <p>Data class for bulk mixed layer model state.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.h_abl">
-<span class="sig-name descname"><span class="pre">h_abl</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code></em><a class="headerlink" href="#abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.h_abl" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">h_abl</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Array</span></span><a class="headerlink" href="#abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.h_abl" title="Link to this definition">#</a></dt>
 <dd><p>Initial atmospheric boundary layer (ABL) height [m].</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.theta">
-<span class="sig-name descname"><span class="pre">theta</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code></em><a class="headerlink" href="#abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.theta" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">theta</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Array</span></span><a class="headerlink" href="#abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.theta" title="Link to this definition">#</a></dt>
 <dd><p>Initial mixed-layer potential temperature [K].</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.deltatheta">
-<span class="sig-name descname"><span class="pre">deltatheta</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code></em><a class="headerlink" href="#abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.deltatheta" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">deltatheta</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Array</span></span><a class="headerlink" href="#abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.deltatheta" title="Link to this definition">#</a></dt>
 <dd><p>Initial temperature jump at the top of the ABL [K].</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.wtheta">
-<span class="sig-name descname"><span class="pre">wtheta</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code></em><a class="headerlink" href="#abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.wtheta" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">wtheta</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Array</span></span><a class="headerlink" href="#abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.wtheta" title="Link to this definition">#</a></dt>
 <dd><p>Surface kinematic heat flux [K m/s].</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.q">
-<span class="sig-name descname"><span class="pre">q</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code></em><a class="headerlink" href="#abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.q" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">q</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Array</span></span><a class="headerlink" href="#abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.q" title="Link to this definition">#</a></dt>
 <dd><p>Initial mixed-layer specific humidity [kg/kg].</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.dq">
-<span class="sig-name descname"><span class="pre">dq</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code></em><a class="headerlink" href="#abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.dq" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">dq</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Array</span></span><a class="headerlink" href="#abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.dq" title="Link to this definition">#</a></dt>
 <dd><p>Initial specific humidity jump at h [kg/kg].</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.co2">
-<span class="sig-name descname"><span class="pre">co2</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code></em><a class="headerlink" href="#abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.co2" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">co2</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Array</span></span><a class="headerlink" href="#abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.co2" title="Link to this definition">#</a></dt>
 <dd><p>Initial mixed-layer CO2 [ppm].</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.deltaCO2">
-<span class="sig-name descname"><span class="pre">deltaCO2</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code></em><a class="headerlink" href="#abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.deltaCO2" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">deltaCO2</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Array</span></span><a class="headerlink" href="#abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.deltaCO2" title="Link to this definition">#</a></dt>
 <dd><p>Initial CO2 jump at the top of the ABL [ppm].</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.wCO2">
-<span class="sig-name descname"><span class="pre">wCO2</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code></em><a class="headerlink" href="#abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.wCO2" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">wCO2</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Array</span></span><a class="headerlink" href="#abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.wCO2" title="Link to this definition">#</a></dt>
 <dd><p>Surface kinematic CO2 flux [mgC/m²/s].</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.u">
-<span class="sig-name descname"><span class="pre">u</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code></em><a class="headerlink" href="#abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.u" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">u</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Array</span></span><a class="headerlink" href="#abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.u" title="Link to this definition">#</a></dt>
 <dd><p>Initial mixed-layer u-wind speed [m/s].</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.du">
-<span class="sig-name descname"><span class="pre">du</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code></em><a class="headerlink" href="#abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.du" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">du</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Array</span></span><a class="headerlink" href="#abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.du" title="Link to this definition">#</a></dt>
 <dd><p>Initial u-wind jump at the top of the ABL [m/s].</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.v">
-<span class="sig-name descname"><span class="pre">v</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code></em><a class="headerlink" href="#abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.v" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">v</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Array</span></span><a class="headerlink" href="#abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.v" title="Link to this definition">#</a></dt>
 <dd><p>Initial mixed-layer v-wind speed [m/s].</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.dv">
-<span class="sig-name descname"><span class="pre">dv</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code></em><a class="headerlink" href="#abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.dv" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">dv</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Array</span></span><a class="headerlink" href="#abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.dv" title="Link to this definition">#</a></dt>
 <dd><p>Initial v-wind jump at the top of the ABL [m/s].</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.dz_h">
-<span class="sig-name descname"><span class="pre">dz_h</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code></em><a class="headerlink" href="#abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.dz_h" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">dz_h</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Array</span></span><a class="headerlink" href="#abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.dz_h" title="Link to this definition">#</a></dt>
 <dd><p>Transition layer thickness [m].</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.surf_pressure">
-<span class="sig-name descname"><span class="pre">surf_pressure</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code></em><a class="headerlink" href="#abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.surf_pressure" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">surf_pressure</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Array</span></span><a class="headerlink" href="#abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.surf_pressure" title="Link to this definition">#</a></dt>
 <dd><p>Surface pressure, which is actually not updated (not a state), it’s only here for simplicity [Pa].</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.wstar">
-<span class="sig-name descname"><span class="pre">wstar</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code></em><a class="headerlink" href="#abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.wstar" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">wstar</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Array</span></span><a class="headerlink" href="#abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.wstar" title="Link to this definition">#</a></dt>
 <dd><p>Convective velocity scale [m s-1].</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.we">
-<span class="sig-name descname"><span class="pre">we</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code></em><a class="headerlink" href="#abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.we" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">we</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Array</span></span><a class="headerlink" href="#abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.we" title="Link to this definition">#</a></dt>
 <dd><p>Entrainment velocity [m s-1].</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.thetav">
-<span class="sig-name descname"><span class="pre">thetav</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code></em><a class="headerlink" href="#abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.thetav" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">thetav</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Array</span></span><a class="headerlink" href="#abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.thetav" title="Link to this definition">#</a></dt>
 <dd><p>Mixed-layer potential temperature [K].</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.deltathetav">
-<span class="sig-name descname"><span class="pre">deltathetav</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code></em><a class="headerlink" href="#abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.deltathetav" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">deltathetav</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Array</span></span><a class="headerlink" href="#abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.deltathetav" title="Link to this definition">#</a></dt>
 <dd><p>Virtual temperature jump at the top of the ABL [K].</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.wthetav">
-<span class="sig-name descname"><span class="pre">wthetav</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code></em><a class="headerlink" href="#abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.wthetav" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">wthetav</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Array</span></span><a class="headerlink" href="#abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.wthetav" title="Link to this definition">#</a></dt>
 <dd><p>Surface kinematic virtual heat flux [K m s-1].</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.wqe">
-<span class="sig-name descname"><span class="pre">wqe</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code></em><a class="headerlink" href="#abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.wqe" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">wqe</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Array</span></span><a class="headerlink" href="#abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.wqe" title="Link to this definition">#</a></dt>
 <dd><p>Entrainment moisture flux [kg kg-1 m s-1].</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.wCO2e">
-<span class="sig-name descname"><span class="pre">wCO2e</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code></em><a class="headerlink" href="#abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.wCO2e" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">wCO2e</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Array</span></span><a class="headerlink" href="#abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.wCO2e" title="Link to this definition">#</a></dt>
 <dd><p>Entrainment CO2 flux [mgC/m²/s].</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.wthetae">
-<span class="sig-name descname"><span class="pre">wthetae</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code></em><a class="headerlink" href="#abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.wthetae" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">wthetae</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Array</span></span><a class="headerlink" href="#abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.wthetae" title="Link to this definition">#</a></dt>
 <dd><p>Entrainment potential temperature flux [K m s-1].</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.wthetave">
-<span class="sig-name descname"><span class="pre">wthetave</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code></em><a class="headerlink" href="#abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.wthetave" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">wthetave</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Array</span></span><a class="headerlink" href="#abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.wthetave" title="Link to this definition">#</a></dt>
 <dd><p>Entrainment virtual heat flux [K m s-1].</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.lcl">
-<span class="sig-name descname"><span class="pre">lcl</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code></em><a class="headerlink" href="#abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.lcl" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">lcl</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Array</span></span><a class="headerlink" href="#abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.lcl" title="Link to this definition">#</a></dt>
 <dd><p>Lifting condensation level [m].</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.top_rh">
-<span class="sig-name descname"><span class="pre">top_rh</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code></em><a class="headerlink" href="#abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.top_rh" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">top_rh</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Array</span></span><a class="headerlink" href="#abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.top_rh" title="Link to this definition">#</a></dt>
 <dd><p>Top of mixed layer relative humidity [%].</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.top_p">
-<span class="sig-name descname"><span class="pre">top_p</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code></em><a class="headerlink" href="#abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.top_p" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">top_p</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Array</span></span><a class="headerlink" href="#abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.top_p" title="Link to this definition">#</a></dt>
 <dd><p>Pressure at top of mixed layer [Pa].</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.top_T">
-<span class="sig-name descname"><span class="pre">top_T</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code></em><a class="headerlink" href="#abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.top_T" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">top_T</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Array</span></span><a class="headerlink" href="#abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.top_T" title="Link to this definition">#</a></dt>
 <dd><p>Temperature at top of mixed layer [K].</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.utend">
-<span class="sig-name descname"><span class="pre">utend</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code></em><a class="headerlink" href="#abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.utend" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">utend</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Array</span></span><a class="headerlink" href="#abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.utend" title="Link to this definition">#</a></dt>
 <dd><p>Zonal wind velocity tendency [m s-2].</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.dutend">
-<span class="sig-name descname"><span class="pre">dutend</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code></em><a class="headerlink" href="#abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.dutend" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">dutend</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Array</span></span><a class="headerlink" href="#abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.dutend" title="Link to this definition">#</a></dt>
 <dd><p>Zonal wind velocity tendency at the ABL height [m s-2].</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.vtend">
-<span class="sig-name descname"><span class="pre">vtend</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code></em><a class="headerlink" href="#abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.vtend" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">vtend</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Array</span></span><a class="headerlink" href="#abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.vtend" title="Link to this definition">#</a></dt>
 <dd><p>Meridional wind velocity tendency [m s-2].</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.dvtend">
-<span class="sig-name descname"><span class="pre">dvtend</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code></em><a class="headerlink" href="#abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.dvtend" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">dvtend</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Array</span></span><a class="headerlink" href="#abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.dvtend" title="Link to this definition">#</a></dt>
 <dd><p>Meridional wind velocity tendency at the ABL height [m/s²].</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.h_abl_tend">
-<span class="sig-name descname"><span class="pre">h_abl_tend</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code></em><a class="headerlink" href="#abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.h_abl_tend" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">h_abl_tend</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Array</span></span><a class="headerlink" href="#abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.h_abl_tend" title="Link to this definition">#</a></dt>
 <dd><p>Tendency of CBL [m s-1].</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.thetatend">
-<span class="sig-name descname"><span class="pre">thetatend</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code></em><a class="headerlink" href="#abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.thetatend" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">thetatend</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Array</span></span><a class="headerlink" href="#abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.thetatend" title="Link to this definition">#</a></dt>
 <dd><p>Tendency of mixed-layer potential temperature [K s-1].</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.deltathetatend">
-<span class="sig-name descname"><span class="pre">deltathetatend</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code></em><a class="headerlink" href="#abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.deltathetatend" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">deltathetatend</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Array</span></span><a class="headerlink" href="#abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.deltathetatend" title="Link to this definition">#</a></dt>
 <dd><p>Tendency of mixed-layer potential temperature at the ABL height [K s-1].</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.qtend">
-<span class="sig-name descname"><span class="pre">qtend</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code></em><a class="headerlink" href="#abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.qtend" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">qtend</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Array</span></span><a class="headerlink" href="#abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.qtend" title="Link to this definition">#</a></dt>
 <dd><p>Tendency of mixed-layer specific humidity [kg/kg s-1].</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.dqtend">
-<span class="sig-name descname"><span class="pre">dqtend</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code></em><a class="headerlink" href="#abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.dqtend" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">dqtend</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Array</span></span><a class="headerlink" href="#abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.dqtend" title="Link to this definition">#</a></dt>
 <dd><p>Tendency of mixed-layer specific humidity at the ABL height [kg/kg s-1].</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.co2tend">
-<span class="sig-name descname"><span class="pre">co2tend</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code></em><a class="headerlink" href="#abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.co2tend" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">co2tend</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Array</span></span><a class="headerlink" href="#abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.co2tend" title="Link to this definition">#</a></dt>
 <dd><p>Tendency of CO2 concentration [ppm s-1].</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.deltaCO2tend">
-<span class="sig-name descname"><span class="pre">deltaCO2tend</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code></em><a class="headerlink" href="#abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.deltaCO2tend" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">deltaCO2tend</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Array</span></span><a class="headerlink" href="#abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.deltaCO2tend" title="Link to this definition">#</a></dt>
 <dd><p>Tendency of CO2 concentration at the ABL height [ppm s-1].</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.dztend">
-<span class="sig-name descname"><span class="pre">dztend</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code></em><a class="headerlink" href="#abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.dztend" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">dztend</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Array</span></span><a class="headerlink" href="#abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.dztend" title="Link to this definition">#</a></dt>
 <dd><p>Tendency of transition layer thickness [m s-1].</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.ws">
-<span class="sig-name descname"><span class="pre">ws</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code></em><a class="headerlink" href="#abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.ws" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">ws</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Array</span></span><a class="headerlink" href="#abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.ws" title="Link to this definition">#</a></dt>
 <dd><p>Large-scale vertical velocity (subsidence) [m s-1].</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.wf">
-<span class="sig-name descname"><span class="pre">wf</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code></em><a class="headerlink" href="#abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.wf" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">wf</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Array</span></span><a class="headerlink" href="#abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState.wf" title="Link to this definition">#</a></dt>
 <dd><p>Mixed-layer growth due to cloud top radiative divergence [m s-1].</p>
 </dd></dl>
 
@@ -708,7 +708,7 @@ document.write(`
 
 <dl class="py class">
 <dt class="sig sig-object py" id="abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerModel">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abcmodel.atmos.mixed_layer.bulk.</span></span><span class="sig-name descname"><span class="pre">BulkMixedLayerModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">divU</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coriolis_param</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gammatheta</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">advtheta</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">beta</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gammaq</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">advq</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gammaCO2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">advCO2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gammau</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">advu</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gammav</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">advv</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dFz</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_shear_growing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_fix_free_trop</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_wind_prog</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/abcmodel/atmos/mixed_layer/bulk.html#BulkMixedLayerModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerModel" title="Link to this definition">#</a></dt>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">abcmodel.atmos.mixed_layer.bulk.</span></span><span class="sig-name descname"><span class="pre">BulkMixedLayerModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">divU</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coriolis_param</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gammatheta</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">advtheta</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">beta</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gammaq</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">advq</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gammaCO2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">advCO2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gammau</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">advu</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gammav</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">advv</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dFz</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_shear_growing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_fix_free_trop</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_wind_prog</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/abcmodel/atmos/mixed_layer/bulk.html#BulkMixedLayerModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerModel" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference internal" href="abcmodel.atmos.mixed_layer.stats.html#abcmodel.atmos.mixed_layer.stats.AbstractStandardStatsModel" title="abcmodel.atmos.mixed_layer.stats.AbstractStandardStatsModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractStandardStatsModel</span></code></a>, <a class="reference internal" href="abcmodel.atmos.abstracts.html#abcmodel.atmos.abstracts.AbstractMixedLayerModel" title="abcmodel.atmos.abstracts.AbstractMixedLayerModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractMixedLayerModel</span></code></a>[<a class="reference internal" href="#abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState" title="abcmodel.atmos.mixed_layer.bulk.BulkMixedLayerState"><code class="xref py py-class docutils literal notranslate"><span class="pre">BulkMixedLayerState</span></code></a>]</p>
 <p>Bulk mixed layer model with full atmospheric boundary layer dynamics.</p>
 <p>Complete mixed layer model that simulates atmospheric boundary layer evolution

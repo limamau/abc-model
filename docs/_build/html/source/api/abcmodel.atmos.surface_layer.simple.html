@@ -37,8 +37,8 @@
   <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
     <script src="../../_static/documentation_options.js?v=a1637f0b"></script>
-    <script src="../../_static/doctools.js?v=9bcbadda"></script>
-    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'source/api/abcmodel.atmos.surface_layer.simple';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
@@ -382,30 +382,30 @@ document.write(`
 <span id="minimal"></span><h1>Minimal<a class="headerlink" href="#module-abcmodel.atmos.surface_layer.simple" title="Link to this heading">#</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="abcmodel.atmos.surface_layer.simple.SimpleSurfaceLayerState">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abcmodel.atmos.surface_layer.simple.</span></span><span class="sig-name descname"><span class="pre">SimpleSurfaceLayerState</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ustar</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">uw=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vw=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ra=&lt;factory&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/abcmodel/atmos/surface_layer/simple.html#SimpleSurfaceLayerState"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#abcmodel.atmos.surface_layer.simple.SimpleSurfaceLayerState" title="Link to this definition">#</a></dt>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">abcmodel.atmos.surface_layer.simple.</span></span><span class="sig-name descname"><span class="pre">SimpleSurfaceLayerState</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ustar</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">uw</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vw</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ra</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/abcmodel/atmos/surface_layer/simple.html#SimpleSurfaceLayerState"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#abcmodel.atmos.surface_layer.simple.SimpleSurfaceLayerState" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference internal" href="abcmodel.atmos.abstracts.html#abcmodel.atmos.abstracts.AbstractSurfaceLayerState" title="abcmodel.atmos.abstracts.AbstractSurfaceLayerState"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractSurfaceLayerState</span></code></a></p>
 <p>Minimal surface layer model initial state.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abcmodel.atmos.surface_layer.simple.SimpleSurfaceLayerState.ustar">
-<span class="sig-name descname"><span class="pre">ustar</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code></em><a class="headerlink" href="#abcmodel.atmos.surface_layer.simple.SimpleSurfaceLayerState.ustar" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">ustar</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Array</span></span><a class="headerlink" href="#abcmodel.atmos.surface_layer.simple.SimpleSurfaceLayerState.ustar" title="Link to this definition">#</a></dt>
 <dd><p>Surface friction velocity [m/s].</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abcmodel.atmos.surface_layer.simple.SimpleSurfaceLayerState.uw">
-<span class="sig-name descname"><span class="pre">uw</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code></em><a class="headerlink" href="#abcmodel.atmos.surface_layer.simple.SimpleSurfaceLayerState.uw" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">uw</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Array</span></span><a class="headerlink" href="#abcmodel.atmos.surface_layer.simple.SimpleSurfaceLayerState.uw" title="Link to this definition">#</a></dt>
 <dd><p>Zonal surface momentum flux [m2 s-2].</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abcmodel.atmos.surface_layer.simple.SimpleSurfaceLayerState.vw">
-<span class="sig-name descname"><span class="pre">vw</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code></em><a class="headerlink" href="#abcmodel.atmos.surface_layer.simple.SimpleSurfaceLayerState.vw" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">vw</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Array</span></span><a class="headerlink" href="#abcmodel.atmos.surface_layer.simple.SimpleSurfaceLayerState.vw" title="Link to this definition">#</a></dt>
 <dd><p>Meridional surface momentum flux [m2 s-2].</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abcmodel.atmos.surface_layer.simple.SimpleSurfaceLayerState.ra">
-<span class="sig-name descname"><span class="pre">ra</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Array</span></code></em><a class="headerlink" href="#abcmodel.atmos.surface_layer.simple.SimpleSurfaceLayerState.ra" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">ra</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Array</span></span><a class="headerlink" href="#abcmodel.atmos.surface_layer.simple.SimpleSurfaceLayerState.ra" title="Link to this definition">#</a></dt>
 <dd><p>Aerodynamic resistance [s/m].</p>
 </dd></dl>
 
@@ -419,12 +419,12 @@ document.write(`
 
 <dl class="py class">
 <dt class="sig sig-object py" id="abcmodel.atmos.surface_layer.simple.SimpleSurfaceLayerModel">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abcmodel.atmos.surface_layer.simple.</span></span><span class="sig-name descname"><span class="pre">SimpleSurfaceLayerModel</span></span><a class="reference internal" href="../../_modules/abcmodel/atmos/surface_layer/simple.html#SimpleSurfaceLayerModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#abcmodel.atmos.surface_layer.simple.SimpleSurfaceLayerModel" title="Link to this definition">#</a></dt>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">abcmodel.atmos.surface_layer.simple.</span></span><span class="sig-name descname"><span class="pre">SimpleSurfaceLayerModel</span></span><a class="reference internal" href="../../_modules/abcmodel/atmos/surface_layer/simple.html#SimpleSurfaceLayerModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#abcmodel.atmos.surface_layer.simple.SimpleSurfaceLayerModel" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference internal" href="abcmodel.atmos.abstracts.html#abcmodel.atmos.abstracts.AbstractSurfaceLayerModel" title="abcmodel.atmos.abstracts.AbstractSurfaceLayerModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractSurfaceLayerModel</span></code></a>[<a class="reference internal" href="#abcmodel.atmos.surface_layer.simple.SimpleSurfaceLayerState" title="abcmodel.atmos.surface_layer.simple.SimpleSurfaceLayerState"><code class="xref py py-class docutils literal notranslate"><span class="pre">SimpleSurfaceLayerState</span></code></a>]</p>
 <p>Simple surface layer model with constant friction velocity.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="abcmodel.atmos.surface_layer.simple.SimpleSurfaceLayerModel.calculate_momentum_fluxes">
-<em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">calculate_momentum_fluxes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">u</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ustar</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/abcmodel/atmos/surface_layer/simple.html#SimpleSurfaceLayerModel.calculate_momentum_fluxes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#abcmodel.atmos.surface_layer.simple.SimpleSurfaceLayerModel.calculate_momentum_fluxes" title="Link to this definition">#</a></dt>
+<span class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">calculate_momentum_fluxes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">u</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ustar</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/abcmodel/atmos/surface_layer/simple.html#SimpleSurfaceLayerModel.calculate_momentum_fluxes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#abcmodel.atmos.surface_layer.simple.SimpleSurfaceLayerModel.calculate_momentum_fluxes" title="Link to this definition">#</a></dt>
 <dd><p>Calculate momentum fluxes from wind components and friction velocity.</p>
 </dd></dl>
 
@@ -434,10 +434,7 @@ document.write(`
 <dd><p>Run the model.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>state</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="abcmodel.abstracts.html#abcmodel.abstracts.AbstractCoupledState" title="abcmodel.abstracts.AbstractCoupledState"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractCoupledState</span></code></a></span>) – CoupledState.</p></li>
-<li><p><strong>const</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="abcmodel.utils.html#abcmodel.utils.PhysicalConstants" title="abcmodel.utils.PhysicalConstants"><code class="xref py py-class docutils literal notranslate"><span class="pre">PhysicalConstants</span></code></a></span>) – PhysicalConstants.</p></li>
-</ul>
+<dd class="field-odd"><p><strong>state</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="abcmodel.abstracts.html#abcmodel.abstracts.AbstractCoupledState" title="abcmodel.abstracts.AbstractCoupledState"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractCoupledState</span></code></a></span>)</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>The updated surface layer state.</p>
@@ -447,7 +444,7 @@ document.write(`
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abcmodel.atmos.surface_layer.simple.SimpleSurfaceLayerModel.compute_ra">
-<em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">compute_ra</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">u</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wstar</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ustar</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/abcmodel/atmos/surface_layer/simple.html#SimpleSurfaceLayerModel.compute_ra"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#abcmodel.atmos.surface_layer.simple.SimpleSurfaceLayerModel.compute_ra" title="Link to this definition">#</a></dt>
+<span class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">compute_ra</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">u</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wstar</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ustar</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/abcmodel/atmos/surface_layer/simple.html#SimpleSurfaceLayerModel.compute_ra"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#abcmodel.atmos.surface_layer.simple.SimpleSurfaceLayerModel.compute_ra" title="Link to this definition">#</a></dt>
 <dd><p>Calculate aerodynamic resistance from wind speed and friction velocity.</p>
 </dd></dl>
 

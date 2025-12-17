@@ -9,6 +9,8 @@ def main():
     dt = 60.0
     # total run time [s]
     runtime = 12 * 3600.0
+    # start time of the day [h]
+    tstart = 6.8
 
     # define rad model
     rad_init_conds = abcmodel.rad.StandardRadiationInitConds(
@@ -71,7 +73,7 @@ def main():
     )
 
     # run run run
-    abcmodel.integrate(state, abcoupler, dt=dt, runtime=runtime)
+    abcmodel.integrate(state, abcoupler, dt, runtime, tstart)
 
 
 if __name__ == "__main__":
