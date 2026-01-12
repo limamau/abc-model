@@ -17,9 +17,10 @@ class AbstractStandardStatsModel(AbstractMixedLayerModel):
     def statistics(self, state: AbstractCoupledState, t: int):
         """Compute standard meteorological statistics and diagnostics."""
         mixed_state = state.atmos.mixed
+        land_state = state.land
         thetav = self.compute_thetav(mixed_state.theta, mixed_state.q)
         wthetav = self.compute_wthetav(
-            mixed_state.wtheta, mixed_state.theta, state.land.wq
+            land_state.wtheta, mixed_state.theta, land_state.wq
         )
         deltathetav = self.compute_deltathetav(
             mixed_state.theta,

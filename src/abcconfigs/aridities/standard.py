@@ -19,6 +19,7 @@ ags_state_kwargs = {
     "surf_temp": 290.0,
     "wl": 0.0000,
     "wq": 1e-4,
+    "wtheta": 0.1,
 }
 """"""
 ags_model_kwargs = {
@@ -57,7 +58,6 @@ bulk_ml_state_kwargs = {
     "h_abl": 200.0,
     "theta": 288.0,
     "deltatheta": 1.0,
-    "wtheta": 0.1,
     "q": 0.008,
     "dq": -0.001,
     "co2": 422.0,

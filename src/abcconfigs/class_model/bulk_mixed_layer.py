@@ -2,7 +2,6 @@ state_kwargs = {
     "h_abl": 200.0,
     "theta": 288.0,
     "deltatheta": 1.0,
-    "wtheta": 0.1,
     "q": 0.008,
     "dq": -0.001,
     "co2": 422.0,

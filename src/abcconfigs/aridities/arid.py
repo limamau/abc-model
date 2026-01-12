@@ -20,6 +20,7 @@ ags_state_kwargs = {
     "surf_temp": 297.0,  # hot surface
     "wl": 0.00002,  # minimal liquid water on leaves
     "wq": 5e-5,
+    "wtheta": 0.1,
 }
 """"""
 ags_model_kwargs = {
@@ -58,7 +59,6 @@ bulk_ml_state_kwargs = {
     "h_abl": 250.0,
     "theta": 294.0,
     "deltatheta": 2.0,  # stronger inversion
-    "wtheta": 0.1,
     "q": 0.004,  # low humidity
     "dq": -0.0015,
     "co2": 422.0,

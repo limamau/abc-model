@@ -20,8 +20,6 @@ class BulkMixedLayerState(AbstractMixedLayerState):
     """Initial mixed-layer potential temperature [K]."""
     deltatheta: Array
     """Initial temperature jump at the top of the ABL [K]."""
-    wtheta: Array
-    """Surface kinematic heat flux [K m/s]."""
     q: Array
     """Initial mixed-layer specific humidity [kg/kg]."""
     dq: Array
@@ -175,7 +173,6 @@ class BulkMixedLayerModel(
         h_abl: float,
         theta: float,
         deltatheta: float,
-        wtheta: float,
         q: float,
         dq: float,
         co2: float,
@@ -191,21 +188,20 @@ class BulkMixedLayerModel(
         """Initialize the model state.
 
         Args:
-            h_abl: Atmospheric boundary layer height [m].
-            theta: Mixed-layer potential temperature [K].
-            deltatheta: Potential temperature jump at h [K].
-            wtheta: Surface kinematic heat flux [K m/s].
-            q: Mixed-layer specific humidity [kg/kg].
-            dq: Specific humidity jump at h [kg/kg].
-            co2: Mixed-layer CO2 [ppm].
+            h_abl: atmospheric boundary layer height [m].
+            theta: mixed-layer potential temperature [K].
+            deltatheta: potential temperature jump at h [K].
+            q: mixed-layer specific humidity [kg/kg].
+            dq: specific humidity jump at h [kg/kg].
+            co2: mixed-layer CO2 [ppm].
             deltaCO2: CO2 jump at h [ppm].
-            wCO2: Surface kinematic CO2 flux [mgC/m²/s].
-            u: Mixed-layer u-wind speed [m/s].
+            wCO2: surface kinematic CO2 flux [mgC/m²/s].
+            u: mixed-layer u-wind speed [m/s].
             du: u-wind jump at h [m/s].
-            v: Mixed-layer v-wind speed [m/s].
+            v: mixed-layer v-wind speed [m/s].
             dv: v-wind jump at h [m/s].
-            dz_h: Transition layer thickness [m].
-            surf_pressure: Surface pressure [Pa].
+            dz_h: transition layer thickness [m].
+            surf_pressure: surface pressure [Pa].
 
         Returns:
             The initial mixed layer state.
@@ -214,7 +210,6 @@ class BulkMixedLayerModel(
             h_abl=jnp.array(h_abl),
             theta=jnp.array(theta),
             deltatheta=jnp.array(deltatheta),
-            wtheta=jnp.array(wtheta),
             q=jnp.array(q),
             dq=jnp.array(dq),
             co2=jnp.array(co2),
@@ -247,13 +242,19 @@ class BulkMixedLayerModel(
         w_th_ft = self.compute_w_th_ft(ws)
         w_q_ft = self.compute_w_q_ft(ws)
         w_CO2_ft = self.compute_w_CO2_ft(ws)
+
+        # compute virtual heat flux at surface
+        wthetav = land_state.wtheta * (
+            1.0 + 0.61 * ml_state.q
+        ) + 0.61 * ml_state.theta * land_state.wq
+
         wstar = self.compute_wstar(
             ml_state.h_abl,
-            ml_state.wthetav,
+            wthetav,
             ml_state.thetav,
             cst.g,
         )
-        wthetave = self.compute_wthetave(ml_state.wthetav)
+        wthetave = self.compute_wthetave(wthetav)
         we = self.compute_we(
             ml_state.h_abl,
             wthetave,
@@ -294,6 +295,7 @@ class BulkMixedLayerModel(
             ws=ws,
             wf=wf,
             wstar=wstar,
+            wthetav=wthetav,
             wthetave=wthetave,
             we=we,
             wthetae=wthetae,

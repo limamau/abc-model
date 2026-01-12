@@ -6,6 +6,7 @@ state_kwargs = {
     "surf_temp": 290.0,
     "wl": 0.0000,
     "wq": 1e-4,
+    "wtheta": 0.1,
 }
 """"""
 model_kwargs = {

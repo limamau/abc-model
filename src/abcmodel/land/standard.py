@@ -31,6 +31,8 @@ class StandardLandState(AbstractLandState):
     """No water content in the canopy [m]."""
     wq: Array
     """Kinematic moisture flux [kg/kg m/s]."""
+    wtheta: Array
+    """Kinematic heat flux [K m/s]."""
 
     rs: Array = field(default_factory=lambda: jnp.array(1.0e6))
     """Surface resistance [m s-1]."""
@@ -48,8 +50,6 @@ class StandardLandState(AbstractLandState):
     """Vapor pressure [Pa]."""
     qsatsurf: Array = field(default_factory=lambda: jnp.array(jnp.nan))
     """Saturation specific humidity at surface temperature [kg/kg]."""
-    wtheta: Array = field(default_factory=lambda: jnp.array(jnp.nan))
-    """Kinematic heat flux [K m/s]."""
     wCO2: Array = field(default_factory=lambda: jnp.array(jnp.nan))
     """Kinematic CO2 flux [kg/kg m/s] or [mol m-2 s-1]."""
     cliq: Array = field(default_factory=lambda: jnp.array(jnp.nan))
@@ -160,7 +160,7 @@ class AbstractStandardLandModel(AbstractLandModel):
         surf_temp: float,
         wl: float,
         wq: float,
-        wtheta: float = 0.0,
+        wtheta: float,
         rs: float = 1.0e6,
         rssoil: float = 1.0e6,
     ) -> StandardLandState:
