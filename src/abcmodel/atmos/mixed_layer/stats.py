@@ -132,10 +132,10 @@ class AbstractStandardStatsModel(AbstractMixedLayerModel):
 
             # update lcl based on current relative humidity
             lcl_adjustment = (1.0 - rhlcl) * 1000.0
-            
+
             # convergence check could be done here but scan runs all steps
             # we damp the adjustment if already converged to avoid jitter, though simple replacement is fine
-            
+
             new_lcl = lcl + lcl_adjustment
 
             # calculate new relative humidity at updated lcl
@@ -145,10 +145,8 @@ class AbstractStandardStatsModel(AbstractMixedLayerModel):
 
             return (new_lcl, new_rhlcl), None
 
-        # Fixed number of iterations
+        # now we have a fixed number of iterations
         n_iter = 30
-        
-        # Scan over dummy array
         (final_lcl, final_rhlcl), _ = jax.lax.scan(
             lcl_iteration_body, (initial_lcl, initial_rhlcl), None, length=n_iter
         )

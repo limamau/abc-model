@@ -46,7 +46,8 @@ def timestep(
 def integrate(
     state: AbstractCoupledState[RadT, LandT, AtmosT],
     coupler: ABCoupler,
-    dt: float,
+    inner_dt: float,
+    outter_dt: float,
     runtime: float,
     tstart: float,
 ) -> tuple[Array, AbstractCoupledState[RadT, LandT, AtmosT]]:
@@ -55,26 +56,37 @@ def integrate(
     Args:
         state: Initial coupled state.
         coupler: ABCoupler instance.
-        dt: Time step [s].
+        inner_dt: Inner time step (the one used to run the model) [s].
+        outter_dt: Outer time step (the one used to save diagnostics) [s].
         runtime: Total runtime [s].
 
     Returns:
         times: Array of time values [h].
         trajectory: CoupledState containing the full state trajectory.
     """
-    tsteps = int(np.floor(runtime / dt))
+    inner_tsteps = int(np.floor(outter_dt / inner_dt))
+    outter_tsteps = int(np.floor(runtime / outter_dt))
 
-    # warmup
-    state = warmup(state, coupler, 0, dt, tstart)
+    state = warmup(state, coupler, 0, inner_dt, tstart)
     state = coupler.compute_diagnostics(state)
 
-    def iter_fn(state, t):
-        state = timestep(state, coupler, t, dt, tstart)
+    def inner_step_fn(state, t):
+        state = timestep(state, coupler, t, inner_dt, tstart)
         return state, state
 
-    timesteps = jnp.arange(tsteps)
-    state, trajectory = jax.lax.scan(iter_fn, state, timesteps, length=tsteps)
+    def outter_step_fn(state, t):
+        timesteps = t + jnp.arange(inner_tsteps)
+        state, inner_traj = jax.lax.scan(
+            inner_step_fn, state, timesteps, length=inner_tsteps
+        )
+        avg_traj = jax.tree.map(lambda x: jnp.mean(x, axis=0), inner_traj)
+        return state, avg_traj
 
-    times = jnp.arange(tsteps) * dt / 3600.0 + tstart
+    timesteps = jnp.arange(outter_tsteps) * inner_tsteps
+    state, trajectory = jax.lax.scan(
+        outter_step_fn, state, timesteps, length=outter_tsteps
+    )
+
+    times = jnp.arange(outter_tsteps) * outter_dt / 3600.0 + tstart
 
     return times, trajectory

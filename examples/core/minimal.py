@@ -4,7 +4,8 @@ import abcmodel
 
 def main():
     # time step [s]
-    dt = 60.0
+    inner_dt = 60.0
+    outter_dt = 60.0 * 30
     # total run time [s]
     runtime = 12 * 3600.0
     # start time of the day [h]
@@ -67,7 +68,7 @@ def main():
     )
 
     # run run run
-    abcmodel.integrate(state, abcoupler, dt, runtime, tstart)
+    abcmodel.integrate(state, abcoupler, inner_dt, outter_dt, runtime, tstart)
 
 
 if __name__ == "__main__":

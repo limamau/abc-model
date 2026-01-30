@@ -8,7 +8,8 @@ from abcmodel.utils import compute_esat
 
 def run_wrapper(wg: float, q: float, config):
     # time step [s]
-    dt = 60.0
+    inner_dt = 60.0
+    outter_dt = 60.0 * 30
     # total run time [s]
     runtime = 12 * 3600.0
     # start time of the day [h]
@@ -69,7 +70,7 @@ def run_wrapper(wg: float, q: float, config):
         atmos_state,
     )
 
-    return abcmodel.integrate(state, abcoupler, dt, runtime, tstart)
+    return abcmodel.integrate(state, abcoupler, inner_dt, outter_dt, runtime, tstart)
 
 
 def make_fancy_plot(

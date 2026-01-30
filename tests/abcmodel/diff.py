@@ -7,7 +7,8 @@ import abcmodel
 
 
 def run_model(theta0: float) -> Array:
-    dt = 60.0
+    inner_dt = 60.0
+    outter_dt = 60.0 * 30
     runtime = 12 * 3600.0
     tstart = 6.8
 
@@ -53,7 +54,9 @@ def run_model(theta0: float) -> Array:
     )
     state = abcoupler.init_state(rad_state, land_state, atmos_state)
 
-    _, trajectory = abcmodel.integrate(state, abcoupler, dt, runtime, tstart)
+    _, trajectory = abcmodel.integrate(
+        state, abcoupler, inner_dt, outter_dt, runtime, tstart
+    )
 
     # return final boundary layer height as scalar
     return trajectory.atmos.mixed.h_abl[-1]
@@ -65,15 +68,13 @@ def main():
     theta0 = 290.0
     dhf_dtheta0 = grad_fn(theta0)
     assert dhf_dtheta0 < 0.0
-    print("∂h_final / ∂theta_0 =", dhf_dtheta0)
+    print("forward mode: ∂h_final / ∂theta_0 =", dhf_dtheta0)
 
     # reverse mode
     grad_fn = jax.jacrev(run_model)
     theta0 = 290.0
-    try:
-        dhf_dtheta0 = grad_fn(theta0)
-    except Exception as e:
-        print(f"{e}")
+    dhf_dtheta0 = grad_fn(theta0)
+    print("reverse mode: ∂h_final / ∂theta_0 =", dhf_dtheta0)
 
 
 if __name__ == "__main__":

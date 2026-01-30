@@ -10,7 +10,7 @@ from tqdm import tqdm
 import abcconfigs.class_model as cm
 import abcmodel
 
-NUM_TRAJS = 100
+NUM_TRAJS = 1000
 
 
 @jax.jit
@@ -85,12 +85,15 @@ def run_simulation(h_abl, theta, q, deltatheta, u, v, wg, d1, cc, temp_soil):
     )
 
     # integration settings
-    dt = 15.0
+    inner_dt = 60.0
+    outter_dt = 60.0 * 30
     runtime = 12 * 3600.0
     tstart = 6.5
 
     # run integration
-    times, trajectory = abcmodel.integrate(state, abcoupler, dt, runtime, tstart)
+    times, trajectory = abcmodel.integrate(
+        state, abcoupler, inner_dt, outter_dt, runtime, tstart
+    )
 
     # extract core variables to save
     output = {
@@ -268,8 +271,8 @@ def main():
             alpha=0.2,
             label="±std",
         )
-        plt.plot(times_template, min_val, "--", label="min", color="C0")
-        plt.plot(times_template, max_val, "--", label="max", color="C0")
+        plt.plot(times_template, min_val, "--", label="min & max", color="C0")
+        plt.plot(times_template, max_val, "--", color="C0")
         plt.xlabel("time [h]")
         plt.ylabel(ylabel)
         plt.legend()

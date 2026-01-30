@@ -6,7 +6,8 @@ import abcmodel
 
 def main():
     # time step [s]
-    dt = 60.0
+    inner_dt = 60.0
+    outter_dt = 60.0 * 30
     # total run time [s]
     runtime = 12 * 3600.0
     # start time of the day [h]
@@ -61,7 +62,9 @@ def main():
     state = abcoupler.init_state(rad_state, land_state, atmos_state)
 
     # run run run
-    time, trajectory = abcmodel.integrate(state, abcoupler, dt, runtime, tstart)
+    time, trajectory = abcmodel.integrate(
+        state, abcoupler, inner_dt, outter_dt, runtime, tstart
+    )
 
     # plot output
     plt.figure(figsize=(12, 8))

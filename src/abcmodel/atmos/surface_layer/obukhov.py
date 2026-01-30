@@ -402,7 +402,6 @@ def ribtol(zsl: Array, rib_number: Array, z0h: Array, z0m: Array):
     oblen = jnp.where(rib_number > 0.0, 1.0, -1.0)
     oblen0 = jnp.where(rib_number > 0.0, 2.0, -2.0)
 
-    convergence_threshold = 0.001
     perturbation = 0.001
     max_oblen = 1e4
 
@@ -426,22 +425,16 @@ def ribtol(zsl: Array, rib_number: Array, z0h: Array, z0m: Array):
         update = fx / fxdif
         # simple clamping logic if needed, but bounded iterations help safety
         oblen_new = oblen - update
-        
+
         # limit range
         oblen_new = jnp.clip(oblen_new, -max_oblen, max_oblen)
-        
-        # also avoid zero oblen to prevent division by zero in next step
-        # though compute_rib_function uses zsl/oblen so oblen=0 is bad.
-        # usually oblen is large (neutral) or small (stable/unstable)
-        # we can just accept the new value, potentially check convergence if we want to stop early (but scan runs all)
 
         return (oblen_new, oblen), None
 
-    # Fixed number of iterations
+    # now we have a fixed number of iterations!
     n_iter = 20
-    
     (oblen, _), _ = jax.lax.scan(body_fun_scan, (oblen, oblen0), None, length=n_iter)
-    
+
     return oblen
 
 
