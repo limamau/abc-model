@@ -17,7 +17,7 @@ from ..dayonly import DayOnlyAtmosphereState
 
 
 @dataclass
-class ObukhovSurfaceLayerState(AbstractSurfaceLayerState):
+class ObukhovState(AbstractSurfaceLayerState):
     """Standard surface layer model state."""
 
     ustar: Array
@@ -70,14 +70,14 @@ StateAlias = AbstractCoupledState[
     RadT,
     LandT,
     DayOnlyAtmosphereState[
-        ObukhovSurfaceLayerState,
+        ObukhovState,
         MixedT,
         CloudT,
     ],
 ]
 
 
-class ObukhovSurfaceLayerModel(AbstractSurfaceLayerModel):
+class ObukhovModel(AbstractSurfaceLayerModel):
     """Standard surface layer model with atmospheric stability corrections.
 
     Calculates surface-atmosphere exchange using Monin-Obukhov similarity theory
@@ -92,7 +92,7 @@ class ObukhovSurfaceLayerModel(AbstractSurfaceLayerModel):
         ustar: float,
         z0m: float,
         z0h: float,
-    ) -> ObukhovSurfaceLayerState:
+    ) -> ObukhovState:
         """Initialize the model state.
 
         Args:
@@ -103,7 +103,7 @@ class ObukhovSurfaceLayerModel(AbstractSurfaceLayerModel):
         Returns:
             The initial surface layer state.
         """
-        return ObukhovSurfaceLayerState(
+        return ObukhovState(
             ustar=jnp.array(ustar),
             z0m=jnp.array(z0m),
             z0h=jnp.array(z0h),

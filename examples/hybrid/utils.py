@@ -3,7 +3,7 @@
 from flax import nnx
 from jax import Array
 
-from abcmodel.atmos.surface_layer.obukhov import ObukhovSurfaceLayerModel
+from abcmodel.atmos.surface_layer.obukhov import ObukhovModel
 
 
 class NeuralNetwork(nnx.Module):
@@ -27,7 +27,7 @@ class NeuralNetwork(nnx.Module):
         return x
 
 
-class HybridObukhovModel(ObukhovSurfaceLayerModel):
+class HybridObukhovModel(ObukhovModel):
     def __init__(
         self,
         psim_emulator: NeuralNetwork,
