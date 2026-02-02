@@ -3,7 +3,6 @@ import os
 import h5py
 import jax
 import jax.numpy as jnp
-import jax.tree_util as jtu
 import matplotlib.pyplot as plt
 import optax
 from flax import nnx
@@ -94,7 +93,7 @@ def load_batched_data(key: Array, template_state, ratio: float = 0.8):
     print("loading data structure...")
     # here we walk through the template state and
     # load the matching .h5 data for every variable
-    traj_ensembles = jtu.tree_map_with_path(load_leaf, template_state)
+    traj_ensembles = jax.tree.map_with_path(load_leaf, template_state)
 
     # the two prep functions follow:
     # 1) x = state[t], y = LE[t+1]
@@ -111,7 +110,7 @@ def load_batched_data(key: Array, template_state, ratio: float = 0.8):
         return sliced.reshape(-1)
 
     # apply prep functions
-    x_full = jtu.tree_map(prep_input, traj_ensembles)
+    x_full = jax.tree.map(prep_input, traj_ensembles)
     # our target is latent heat
     y_full = prep_target(traj_ensembles.land.le)
 
@@ -126,7 +125,7 @@ def load_batched_data(key: Array, template_state, ratio: float = 0.8):
 
     # helper to slice a PyTree by index
     def subset(tree, indices):
-        return jtu.tree_map(lambda x: x[indices], tree)
+        return jax.tree.map(lambda x: x[indices], tree)
 
     x_train = subset(x_full, train_idxs)
     x_test = subset(x_full, test_idxs)
@@ -137,11 +136,11 @@ def load_batched_data(key: Array, template_state, ratio: float = 0.8):
 
 
 def normalize_tree(tree, mean_tree: Array, std_tree: Array):
-    return jtu.tree_map(lambda x, m, s: (x - m) / s, tree, mean_tree, std_tree)
+    return jax.tree.map(lambda x, m, s: (x - m) / s, tree, mean_tree, std_tree)
 
 
 def unnormalize_tree(tree, mean_tree: Array, std_tree: Array):
-    return jtu.tree_map(lambda x, m, s: x * s + m, tree, mean_tree, std_tree)
+    return jax.tree.map(lambda x, m, s: x * s + m, tree, mean_tree, std_tree)
 
 
 def create_dataloader(x_state, y: Array, batch_size: int, key: Array):
@@ -151,7 +150,7 @@ def create_dataloader(x_state, y: Array, batch_size: int, key: Array):
     num_batches = num_samples // batch_size
 
     def get_batch(tree, idxs):
-        return jtu.tree_map(lambda x: x[idxs], tree)
+        return jax.tree.map(lambda x: x[idxs], tree)
 
     for i in range(num_batches):
         batch_idx = indices[i * batch_size : (i + 1) * batch_size]
