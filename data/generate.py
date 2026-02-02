@@ -124,10 +124,8 @@ def get_path_string(path_tuple):
     for p in path_tuple:
         if hasattr(p, "name"):
             keys.append(p.name)
-        elif hasattr(p, "key"):
-            keys.append(str(p.key))
-        elif hasattr(p, "idx"):
-            keys.append(str(p.idx))
+        else:
+            raise ValueError(f"Unsupported path element: {p}")
     return "/".join(keys)
 
 
@@ -135,23 +133,33 @@ def main():
     script_dir = os.path.dirname(os.path.abspath(__file__))
     output_file = script_dir + "/dataset.h5"
     figs_dir = script_dir + "/../figs"
+    os.makedirs(figs_dir, exist_ok=True)
     plot_file = figs_dir + "/statistics.png"
 
     key = random.PRNGKey(42)
     running_stats = {}
     times_template = None
 
+    pbar = tqdm(total=NUM_TRAJS, desc="generating valid trajectories")
+    valid_count = 0
+    total_attempts = 0
+
     with h5py.File(output_file, "w") as f:
         datasets = {}
 
-        for i in tqdm(range(NUM_TRAJS), desc="generating trajectories"):
+        while valid_count < NUM_TRAJS:
+            total_attempts += 1
             key, subkey = random.split(key)
+
+            # run simulation
             h_abl, theta, q, deltatheta, u, v, wg, d1, cc, temp_soil = sample_params(
                 subkey
             )
             traj_jax, times_jax = run_simulation(
                 h_abl, theta, q, deltatheta, u, v, wg, d1, cc, temp_soil
             )
+
+            # convert to numpy for checking/saving
             trajectory = jax.tree.map(np.array, traj_jax)
             times = np.array(times_jax)
 
@@ -159,15 +167,28 @@ def main():
                 times_template = times
                 f.create_dataset("time", data=times)
 
-            # this discovers the structure dynamically
-            # leaves is a list of (path_tuple, value)
+            # check for NaNs
             leaves, _ = jax.tree.flatten_with_path(trajectory)
+            has_nan = False
+            nan_vars = []
 
-            # first run for inits
-            if i == 0:
+            for path, data in leaves:
+                if np.isnan(data).any():
+                    has_nan = True
+                    var_name = get_path_string(path)
+                    nan_vars.append(var_name)
+
+            if has_nan:
+                print(
+                    f"[Warning] NaN detected in attempt {total_attempts}. "
+                    f"Skipping. Variables affected: {nan_vars}"
+                )
+                continue
+
+            # inits
+            if valid_count == 0:
                 timesteps = len(times)
                 for path, data in leaves:
-                    # convert path object to string: "atmos/mixed/u"
                     var_name = get_path_string(path)
 
                     # create HDF5 dataset
@@ -178,7 +199,7 @@ def main():
                     )
                     datasets[var_name] = ds
 
-                    # init stats arrays inside dict
+                    # init stats arrays
                     running_stats[var_name] = {
                         "sum": np.zeros(timesteps),
                         "sum_sq": np.zeros(timesteps),
@@ -186,10 +207,10 @@ def main():
                         "max": np.full(timesteps, -np.inf),
                     }
 
-            # save dataset and update stats
+            # save data
             for path, data in leaves:
                 var_name = get_path_string(path)
-                datasets[var_name][i, :] = data
+                datasets[var_name][valid_count, :] = data
 
                 running_stats[var_name]["sum"] += data
                 running_stats[var_name]["sum_sq"] += data**2
@@ -200,11 +221,16 @@ def main():
                     running_stats[var_name]["max"], data
                 )
 
-        # final stats
+            valid_count += 1
+            pbar.update(1)
+
+        pbar.close()
+
+        # finals stats calculation
         final_stats = {}
         for var_name, stats in running_stats.items():
             mean = stats["sum"] / NUM_TRAJS
-            std = np.sqrt(stats["sum_sq"] / NUM_TRAJS - mean**2)
+            std = np.sqrt(np.clip(stats["sum_sq"] / NUM_TRAJS - mean**2, 0.0, None))
             final_stats[var_name] = {
                 "mean": mean,
                 "std": std,
@@ -212,9 +238,11 @@ def main():
                 "max": stats["max"],
             }
 
-    print(f"saved dataset in {output_file}")
+    print(
+        f"saved dataset in {output_file} ({total_attempts} attempts for {NUM_TRAJS} valid samples)"
+    )
 
-    # stats plot
+    # plot to check if the trajectories are plausible
     plt.figure(figsize=(15, 10))
     plot_vars = [
         ("atmos/mixed/h_abl", "h [m]", 231),

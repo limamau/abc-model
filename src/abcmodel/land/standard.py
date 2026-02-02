@@ -76,8 +76,6 @@ class StandardLandState(AbstractLandState):
     """Potential latent heat flux [W m-2]."""
     le_ref: Array = field(default_factory=lambda: jnp.array(jnp.nan))
     """Reference latent heat flux [W m-2]."""
-    ra: Array = field(default_factory=lambda: jnp.array(jnp.nan))
-    """Aerodynamic resistance [s m-1]."""
     wtheta: Array = field(default_factory=lambda: jnp.array(jnp.nan))
     """Kinematic heat flux [K m/s]."""
     wq: Array = field(default_factory=lambda: jnp.array(jnp.nan))
