@@ -4,6 +4,7 @@ import h5py
 import jax
 import jax.numpy as jnp
 import jax.tree_util as jtu
+import matplotlib.pyplot as plt
 import optax
 from flax import nnx
 from jax import Array
@@ -13,9 +14,6 @@ import abcconfigs.class_model as cm
 import abcmodel
 from abcmodel.integration import outter_step
 from abcmodel.utils import get_path_string
-
-# to maybe debug NaNs
-jax.config.update("jax_debug_nans", True)
 
 
 def load_model_and_template_state(key: Array):
@@ -171,7 +169,7 @@ def train(model, template_state):
     inner_tsteps = int(outter_dt / inner_dt)
     lr = 1e-5
     batch_size = 4
-    epochs = 100
+    epochs = 1
 
     # data setup
     key = jax.random.PRNGKey(42)
@@ -210,9 +208,15 @@ def train(model, template_state):
     @nnx.jit
     def update_step(model, optimizer, x, y):
         loss, grads = nnx.value_and_grad(loss_fn)(model, x, y)
-        grad_norm = optax.global_norm(grads)
-        jax.debug.print("Loss: {}, Grad Norm: {}", loss, grad_norm)
+
+        # replace any NaN in the gradients with 0.0
+        grads = jax.tree.map(lambda g: jnp.nan_to_num(g), grads)
+
+        # clip gradients to prevent "real" explosions
+        grads = jax.tree.map(lambda g: jnp.clip(g, -1.0, 1.0), grads)
+
         optimizer.update(grads)
+
         return loss
 
     # training loop
@@ -225,7 +229,6 @@ def train(model, template_state):
 
         for x_batch, y_batch in loader:
             loss = update_step(model, optimizer, x_batch, y_batch)
-            print("loss:", loss)
             total_loss += loss
             count += 1
 
@@ -234,10 +237,128 @@ def train(model, template_state):
     return model
 
 
+def benchmark_plot(hybrid_coupler):
+    # time step [s]
+    inner_dt = 60.0
+    outter_dt = 60.0 * 30
+    # total run time [s]
+    runtime = 12 * 3600.0
+    # start time of the day [h]
+    tstart = 6.5
+
+    # rad with clouds
+    rad_model = abcmodel.rad.CloudyRadiationModel(
+        **cm.cloudy_radiation.model_kwargs,
+    )
+    rad_state = rad_model.init_state(**cm.cloudy_radiation.state_kwargs)
+
+    # land surface
+    land_model = abcmodel.land.AgsModel(
+        **cm.ags.model_kwargs,
+    )
+    land_state = land_model.init_state(
+        **cm.ags.state_kwargs,
+    )
+
+    # surface layer
+    surface_layer_model = abcmodel.atmos.surface_layer.ObukhovSurfaceLayerModel()
+    surface_layer_state = surface_layer_model.init_state(
+        **cm.obukhov_surface_layer.state_kwargs
+    )
+
+    # mixed layer
+    mixed_layer_model = abcmodel.atmos.mixed_layer.BulkMixedLayerModel(
+        **cm.bulk_mixed_layer.model_kwargs,
+    )
+    mixed_layer_state = mixed_layer_model.init_state(
+        **cm.bulk_mixed_layer.state_kwargs,
+    )
+
+    # clouds
+    cloud_model = abcmodel.atmos.clouds.CumulusModel()
+    cloud_state = cloud_model.init_state()
+
+    # define atmos model
+    atmos_model = abcmodel.atmos.DayOnlyAtmosphereModel(
+        surface_layer=surface_layer_model,
+        mixed_layer=mixed_layer_model,
+        clouds=cloud_model,
+    )
+    atmos_state = atmos_model.init_state(
+        surface=surface_layer_state,
+        mixed=mixed_layer_state,
+        clouds=cloud_state,
+    )
+
+    # define coupler and coupled state
+    abcoupler = abcmodel.ABCoupler(
+        rad=rad_model,
+        land=land_model,
+        atmos=atmos_model,
+    )
+    state = abcoupler.init_state(
+        rad_state,
+        land_state,
+        atmos_state,
+    )
+
+    # run run run
+    time, std_trajectory = abcmodel.integrate(
+        state, abcoupler, inner_dt, outter_dt, runtime, tstart
+    )
+    time, hybrid_trajectory = abcmodel.integrate(
+        state, hybrid_coupler, inner_dt, outter_dt, runtime, tstart
+    )
+
+    # plot output
+    plt.figure(figsize=(12, 8))
+
+    plt.subplot(231)
+    plt.plot(time, std_trajectory.atmos.mixed.h_abl)
+    plt.plot(time, hybrid_trajectory.atmos.mixed.h_abl)
+    plt.xlabel("time [h]")
+    plt.ylabel("h [m]")
+
+    plt.subplot(234)
+    plt.plot(time, std_trajectory.atmos.mixed.theta)
+    plt.plot(time, hybrid_trajectory.atmos.mixed.theta)
+    plt.xlabel("time [h]")
+    plt.ylabel("theta [K]")
+
+    plt.subplot(232)
+    plt.plot(time, std_trajectory.atmos.mixed.q * 1000.0)
+    plt.plot(time, hybrid_trajectory.atmos.mixed.q * 1000.0)
+    plt.xlabel("time [h]")
+    plt.ylabel("q [g kg-1]")
+
+    plt.subplot(235)
+    plt.plot(time, std_trajectory.atmos.clouds.cc_frac)
+    plt.plot(time, hybrid_trajectory.atmos.clouds.cc_frac)
+    plt.xlabel("time [h]")
+    plt.ylabel("cloud fraction [-]")
+
+    plt.subplot(233)
+    plt.plot(time, std_trajectory.land.gf, label="standard")
+    plt.plot(time, hybrid_trajectory.land.gf, label="hybrid")
+    plt.xlabel("time [h]")
+    plt.ylabel("ground heat flux [W m-2]")
+    plt.legend()
+
+    plt.subplot(236)
+    plt.plot(time, std_trajectory.land.le_veg)
+    plt.plot(time, hybrid_trajectory.land.le_veg)
+    plt.xlabel("time [h]")
+    plt.ylabel("latent heat flux from vegetation [W m-2]")
+
+    plt.tight_layout()
+    plt.show()
+
+
 def main():
     key = jax.random.PRNGKey(42)
-    model, template_state = load_model_and_template_state(key)
-    train(model, template_state)
+    hybrid_model, template_state = load_model_and_template_state(key)
+    hybrid_model = train(hybrid_model, template_state)
+    benchmark_plot(hybrid_model)
 
 
 if __name__ == "__main__":
