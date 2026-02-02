@@ -241,7 +241,7 @@ def main():
 
     for var_name, ylabel, plot_id in plot_vars:
         if var_name not in final_stats:
-            print(f"Warning: {var_name} not found in stats.")
+            print(f"[Warning]: {var_name} not found in stats.")
             continue
 
         plt.subplot(plot_id)
