@@ -2,6 +2,7 @@ from dataclasses import dataclass, field
 from typing import Generic
 
 import jax.numpy as jnp
+from flax import nnx
 from jax import Array
 
 from .abstracts import (
@@ -28,7 +29,7 @@ class CoupledState(
     total_water_mass: Array = field(default_factory=lambda: jnp.array(0.0))
 
 
-class ABCoupler:
+class ABCoupler(nnx.Module):
     """Coupling class to bound all the components."""
 
     def __init__(
