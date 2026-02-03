@@ -27,7 +27,6 @@ class NeuralNetwork(nnx.Module):
         x = self.linear2(x)
         x = nnx.relu(x)
         x = self.linear3(x)
-        x = nnx.relu(x)
         return x
 
 
@@ -37,10 +36,18 @@ class HybridCumulusModel(CumulusModel):
         self.net = net
 
     def compute_cc_frac(
-        self, q: Array, top_T: Array, top_p: Array, q2_h: Array
+        self,
+        q: Array,
+        top_T: Array,
+        top_p: Array,
+        q2_h: Array,
     ) -> Array:
-        x = jnp.array([q, top_T, top_p, q2_h])
-        return jnp.squeeze(self.net(x))
+        x_mean = jnp.array([7.8847557e-03, 2.8486316e02, 9.3047734e04, 4.9546819e-05])
+        x_std = jnp.array([[2.7700034e-03, 5.7857847e00, 5.2033379e03, 2.0475304e-03]])
+        x = (jnp.array([q, top_T, top_p, q2_h]) - x_mean) / x_std
+        x = jnp.squeeze(self.net(x))
+        x = x * 0.13319749 + 0.052067384
+        return x
 
 
 def load_model_and_template_state(key: Array):
@@ -119,7 +126,7 @@ def load_batched_data(key: Array, template_state, ratio: float = 0.8):
     traj_ensembles = jax.tree.map_with_path(load_leaf, template_state)
 
     # the two prep functions follow:
-    # 1) x = state[t], y = LE[t+1]
+    # 1) x = state[t], y = target_var[t+1]
     # 2) shapes: (num_ens, num_times) -> (num_ens * num_times)
     def prep_input(arr):
         sliced = arr[:, :-1]
@@ -155,6 +162,32 @@ def load_batched_data(key: Array, template_state, ratio: float = 0.8):
     return x_train, x_test, y_train, y_test
 
 
+def get_norms(x, y):
+    # take norms
+    x_in_mean = jnp.array(
+        [
+            jnp.mean(x.atmos.mixed.q),
+            jnp.mean(x.atmos.mixed.top_T),
+            jnp.mean(x.atmos.mixed.top_p),
+            jnp.mean(x.atmos.clouds.q2_h),
+        ]
+    )
+    x_in_std = jnp.array(
+        [
+            jnp.std(x.atmos.mixed.q),
+            jnp.std(x.atmos.mixed.top_T),
+            jnp.std(x.atmos.mixed.top_p),
+            jnp.std(x.atmos.clouds.q2_h),
+        ]
+    )
+    x_out_mean = jnp.mean(x.atmos.clouds.cc_frac)
+    x_out_std = jnp.std(x.atmos.clouds.cc_frac)
+    y_mean = jnp.mean(y)
+    y_std = jnp.std(y)
+
+    return x_in_mean, x_in_std, x_out_mean, x_out_std, y_mean, y_std
+
+
 def train(
     model,
     template_state,
@@ -163,7 +196,7 @@ def train(
     tstart: float,
     lr: float = 1e-5,
     batch_size: int = 4,
-    epochs: int = 1,
+    epochs: int = 3,
     print_every: int = 100,
 ):
     # config
@@ -173,7 +206,13 @@ def train(
     key = jax.random.PRNGKey(42)
     data_key, train_key = jax.random.split(key)
     x_train, x_test, y_train, y_test = load_batched_data(data_key, template_state)
-    y_mean, y_std = jnp.mean(y_train), jnp.std(y_train)
+    x_in_mean, x_in_std, x_out_mean, x_out_std, y_mean, y_std = get_norms(
+        x_train, y_train
+    )
+    print("x in mean:", x_in_mean)
+    print("x in std:", x_in_std)
+    print("x out mean:", x_out_mean)
+    print("x out std:", x_out_std)
 
     # optimizer
     optimizer = nnx.Optimizer(
@@ -221,16 +260,25 @@ def train(
     # training loop
     total_loss = 0.0
     step = 0
+    last_printed_loss = jnp.inf
+    early_stop = False
     for _ in range(epochs):
         train_key, subkey = jax.random.split(train_key)
         loader = create_dataloader(x_train, y_train, batch_size, subkey)
         for x_batch, y_batch in loader:
             loss = update_step(model, optimizer, x_batch, y_batch)
             total_loss += loss
-            if step % print_every == 0:
-                print(f"step {step} | loss: {total_loss / print_every:.6f}")
+            if (step % print_every == 0) & (step > 0):
+                print(f"step {step} | loss: {total_loss / print_every:.6f}", flush=True)
                 total_loss = 0.0
+                if (total_loss / print_every) < last_printed_loss:
+                    last_printed_loss = total_loss / print_every
+                else:
+                    early_stop = True
+                    break
             step += 1
+        if early_stop:
+            break
 
     return model
 
