@@ -7,20 +7,50 @@ import matplotlib.pyplot as plt
 import optax
 from flax import nnx
 from jax import Array
-from utils import HybridObukhovModel, NeuralNetwork
 
 import abcconfigs.class_model as cm
 import abcmodel
+from abcmodel.atmos.surface_layer.obukhov import ObukhovModel
 from abcmodel.integration import outter_step
-from abcmodel.utils import get_path_string
+from abcmodel.utils import create_dataloader, get_path_string
+
+
+class NeuralNetwork(nnx.Module):
+    def __init__(self, rngs: nnx.Rngs):
+        self.linear1 = nnx.Linear(1, 32, rngs=rngs)
+        self.linear2 = nnx.Linear(32, 32, rngs=rngs)
+        self.linear3 = nnx.Linear(32, 1, rngs=rngs)
+
+    def __call__(self, x: Array) -> Array:
+        x = self.linear1(x)
+        x = nnx.relu(x)
+        x = self.linear2(x)
+        x = nnx.relu(x)
+        x = self.linear3(x)
+        x = nnx.tanh(x) * 5
+        return x
+
+
+class HybridObukhovModel(ObukhovModel):
+    def __init__(
+        self,
+        psim_emulator: NeuralNetwork,
+        psih_emulator: NeuralNetwork,
+    ):
+        super().__init__()
+        self.psim_emulator = psim_emulator
+        self.psih_emulator = psih_emulator
+
+    def compute_psim(self, zeta: Array) -> Array:
+        res = self.psim_emulator(jnp.expand_dims(zeta, axis=0))
+        return jnp.squeeze(res)
+
+    def compute_psih(self, zeta: Array) -> Array:
+        res = self.psih_emulator(jnp.expand_dims(zeta, axis=0))
+        return jnp.squeeze(res)
 
 
 def load_model_and_template_state(key: Array):
-    """Loads the standard model and it's template state."""
-    psim_key, psih_key = jax.random.split(key)
-    psim_net = NeuralNetwork(rngs=nnx.Rngs(psim_key))
-    psih_net = NeuralNetwork(rngs=nnx.Rngs(psih_key))
-
     # radiation
     rad_model_kwargs = cm.standard_radiation.model_kwargs
     rad_model = abcmodel.rad.StandardRadiationModel(**rad_model_kwargs)
@@ -34,6 +64,9 @@ def load_model_and_template_state(key: Array):
     land_state = land_model.init_state(**ags_state_kwargs)
 
     # surface layer (the one we build with the neural nets!)
+    psim_key, psih_key = jax.random.split(key)
+    psim_net = NeuralNetwork(rngs=nnx.Rngs(psim_key))
+    psih_net = NeuralNetwork(rngs=nnx.Rngs(psih_key))
     surface_layer_model = HybridObukhovModel(psim_net, psih_net)
     surface_layer_state = surface_layer_model.init_state(
         **cm.obukhov_surface_layer.state_kwargs
@@ -80,7 +113,6 @@ def load_model_and_template_state(key: Array):
 
 
 def load_batched_data(key: Array, template_state, ratio: float = 0.8):
-    """Loads data into the State structure."""
     script_dir = os.path.dirname(os.path.abspath(__file__))
     file_path = os.path.join(script_dir, "../../data/dataset.h5")
 
@@ -130,28 +162,6 @@ def load_batched_data(key: Array, template_state, ratio: float = 0.8):
     y_test = y_full[test_idxs]
 
     return x_train, x_test, y_train, y_test
-
-
-def normalize_tree(tree, mean_tree: Array, std_tree: Array):
-    return jax.tree.map(lambda x, m, s: (x - m) / s, tree, mean_tree, std_tree)
-
-
-def unnormalize_tree(tree, mean_tree: Array, std_tree: Array):
-    return jax.tree.map(lambda x, m, s: x * s + m, tree, mean_tree, std_tree)
-
-
-def create_dataloader(x_state, y: Array, batch_size: int, key: Array):
-    """Yields batches: x_state is a PyTree, y is an array."""
-    num_samples = y.shape[0]
-    indices = jax.random.permutation(key, num_samples)
-    num_batches = num_samples // batch_size
-
-    def get_batch(tree, idxs):
-        return jax.tree.map(lambda x: x[idxs], tree)
-
-    for i in range(num_batches):
-        batch_idx = indices[i * batch_size : (i + 1) * batch_size]
-        yield get_batch(x_state, batch_idx), y[batch_idx]
 
 
 def train(
@@ -209,12 +219,12 @@ def train(
         # clip gradients
         grads = jax.tree.map(lambda g: jnp.clip(g, -1.0, 1.0), grads)
 
-        optimizer.update(model, grads)
+        optimizer.update(grads)
 
         return loss
 
-    print(f"training on {y_train.shape[0]} samples")
-    print(f"training for {epochs} epochs with batch size {batch_size}")
+    print(f"training on {y_train.shape[0]} samples;")
+    print(f"training for {epochs} epochs with batch size {batch_size};")
     print(f"printing avg loss every {print_every} steps...")
 
     # training loop

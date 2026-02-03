@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 
+import jax
 import jax.numpy as jnp
 from jax import Array
 
@@ -112,3 +113,17 @@ def get_path_string(path):
             raise ValueError(f"Unsupported path element: {p}")
 
     return "/".join(parts)
+
+
+def create_dataloader(x_state, y: Array, batch_size: int, key: Array):
+    """Yields batches: x_state is a PyTree, y is an array."""
+    num_samples = y.shape[0]
+    indices = jax.random.permutation(key, num_samples)
+    num_batches = num_samples // batch_size
+
+    def get_batch(tree, idxs):
+        return jax.tree.map(lambda x: x[idxs], tree)
+
+    for i in range(num_batches):
+        batch_idx = indices[i * batch_size : (i + 1) * batch_size]
+        yield get_batch(x_state, batch_idx), y[batch_idx]
