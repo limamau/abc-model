@@ -1,10 +1,9 @@
 default:
   image: python:3.11
-create-pages:
+pages:
   script:
     - mv docs/_build/html public
   artifacts:
     paths:
       - public
-  pages: true
 
