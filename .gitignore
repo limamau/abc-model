@@ -3,3 +3,4 @@ __pycache__/
 .venv
 *.h5
 .DS_Store
+.zed

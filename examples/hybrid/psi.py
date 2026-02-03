@@ -177,7 +177,7 @@ def train(
     # optimizer
     optimizer = nnx.Optimizer(
         model,
-        optax.chain(optax.clip_by_global_norm(1.0), optax.adam(lr)),
+        optax.chain(optax.clip_by_global_norm(1.0), optax.radam(lr)),
         wrt=nnx.Param,
     )
 
@@ -206,10 +206,10 @@ def train(
         # replace any NaN in the gradients with 0.0
         grads = jax.tree.map(lambda g: jnp.nan_to_num(g), grads)
 
-        # clip gradients to prevent "real" explosions
+        # clip gradients
         grads = jax.tree.map(lambda g: jnp.clip(g, -1.0, 1.0), grads)
 
-        optimizer.update(grads)
+        optimizer.update(model, grads)
 
         return loss
 
