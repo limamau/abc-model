@@ -3,8 +3,9 @@
 from abc import abstractmethod
 from typing import Generic, TypeVar
 
+from jax import Array
+
 from ..abstracts import AbstractCoupledState, AbstractModel, AbstractState
-from ..utils import Array
 
 
 class AbstractSurfaceLayerState(AbstractState):
@@ -101,9 +102,7 @@ class AbstractMixedLayerModel(AbstractModel, Generic[MixedT]):
         raise NotImplementedError
 
     @abstractmethod
-    def statistics(
-        self, state: AbstractCoupledState, t: int
-    ) -> MixedT:
+    def statistics(self, state: AbstractCoupledState, t: int) -> MixedT:
         raise NotImplementedError
 
     @abstractmethod

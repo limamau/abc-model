@@ -52,6 +52,7 @@ def inner_step(
     return state, state
 
 
+# @jax.jit(static_argnums=(2, 3, 4, 5))
 def outter_step(
     state: AbstractCoupledState[RadT, LandT, AtmosT],
     _: None,  # this is here because the function signature requires it for a scan

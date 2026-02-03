@@ -1,9 +1,10 @@
 from dataclasses import dataclass, field, replace
 
 import jax.numpy as jnp
+from jax import Array
 
 from ...abstracts import AbstractCoupledState
-from ...utils import Array, compute_qsat
+from ...utils import compute_qsat
 from ..abstracts import AbstractCloudModel, AbstractCloudState
 
 

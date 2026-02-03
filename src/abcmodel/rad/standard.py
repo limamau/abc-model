@@ -1,6 +1,7 @@
 from dataclasses import dataclass, field, replace
 
 import jax.numpy as jnp
+from jax import Array
 
 from ..abstracts import (
     AbstractCoupledState,
@@ -9,7 +10,6 @@ from ..abstracts import (
     AtmosT,
     LandT,
 )
-from ..utils import Array
 from ..utils import PhysicalConstants as cst
 
 

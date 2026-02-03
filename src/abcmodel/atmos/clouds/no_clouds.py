@@ -1,9 +1,9 @@
 from dataclasses import dataclass, field
 
 import jax.numpy as jnp
+from jax import Array
 
 from ...coupling import AbstractCoupledState
-from ...utils import Array
 from ..abstracts import AbstractCloudModel, AbstractCloudState
 
 

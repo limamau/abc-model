@@ -1,6 +1,8 @@
 from dataclasses import dataclass, replace
 from typing import Generic
 
+from jax import Array
+
 from ..abstracts import (
     AbstractAtmosphereModel,
     AbstractAtmosphereState,
@@ -10,7 +12,6 @@ from ..abstracts import (
     LandT,
     RadT,
 )
-from ..utils import Array
 from .abstracts import (
     AbstractCloudModel,
     AbstractMixedLayerModel,
