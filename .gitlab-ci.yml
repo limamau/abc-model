@@ -1,6 +1,6 @@
-create-pages:
+default:
   image: python:3.11
-  stage: deploy
+create-pages:
   script:
     - mv docs/_build/html public
   artifacts:
