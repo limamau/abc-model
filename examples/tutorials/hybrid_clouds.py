@@ -261,9 +261,10 @@ def train(
         # and this is the standard mean squared error (MSE)
         return jnp.mean((pred_le_norm - y_batch_norm) ** 2)
 
-    # it is important to jit the update_step during training loops
+    # it is important to jit the train_step
+    # during training loops to make it faster
     @nnx.jit
-    def update_step(model, optimizer, x, y):
+    def train_step(model, optimizer, x, y):
         loss, grads = nnx.value_and_grad(loss_fn)(model, x, y)
 
         # replace any NaN in the gradients with 0.0
@@ -290,7 +291,7 @@ def train(
         train_key, subkey = jax.random.split(train_key)
         loader = create_dataloader(x_train, y_train, batch_size, subkey)
         for x_batch, y_batch in loader:
-            loss = update_step(model, optimizer, x_batch, y_batch)
+            loss = train_step(model, optimizer, x_batch, y_batch)
             total_loss += loss
             if (step % print_every == 0) & (step > 0):
                 avg_loss = total_loss / print_every
