@@ -192,8 +192,6 @@ Now, for example, you may change from C3 to C4 with something like the following
 
 Then you can redefine the coupler, create a new state and integrate it to see different outcomes. You can do something similar to change initial conditions, or even recreate your own!
 
-It is also possible to jit the model, but please remember to filter functions, which can be easily done with ``equinox.filter_jit(integrate)``. Jitting a run for analysis does not bring any benefit right now, but it becomes important to accelerate eventual training loops for calibration of parameters.
-
 Windows installation
 --------------------
 
