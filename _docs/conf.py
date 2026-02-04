@@ -31,10 +31,10 @@ exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 html_theme = "sphinx_book_theme"
 html_static_path = ["_static"]
 html_theme_options = {
-    "repository_url": "https://git.bgc-jena.mpg.de/abc3/abc-model",
+    "repository_url": "https://github.com/limamau/abc-model",
     "use_repository_button": True,
     "use_fullscreen_button": False,
-    "repository_provider": "gitlab",
+    "repository_provider": "github",
 }
 autosummary_generate = True
 autodoc_member_order = "bysource"
