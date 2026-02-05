@@ -2,7 +2,6 @@ from functools import partial
 
 import jax
 import jax.numpy as jnp
-import numpy as np
 from jax import Array
 
 from .abstracts import AbstractCoupledState, AtmosT, LandT, RadT
@@ -87,9 +86,14 @@ def integrate(
     tstart: float,
 ) -> tuple[Array, AbstractCoupledState[RadT, LandT, AtmosT]]:
     """Integrate the coupler forward in time."""
+    if outter_dt % inner_dt != 0:
+        outter_dt = inner_dt * int(outter_dt / inner_dt)
+        print(
+            "The outter_dt should be a multiple of the inner_dt. Taking the closest multiple."
+        )
 
-    inner_tsteps = int(np.floor(outter_dt / inner_dt))
-    outter_tsteps = int(np.floor(runtime / outter_dt))
+    inner_tsteps = int(outter_dt / inner_dt)
+    outter_tsteps = int(runtime / outter_dt)
 
     # warmup and initial diagnostics (t=0)
     state = warmup(state, 0, coupler, inner_dt, tstart)

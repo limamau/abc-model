@@ -6,8 +6,8 @@ import abcmodel
 
 def main():
     # time step [s]
-    inner_dt = 60.0
-    outter_dt = 60.0 * 30
+    inner_dt = 60.0 * 5
+    outter_dt = 60.0 * 15
     # total run time [s]
     runtime = 12 * 3600.0
     # start time of the day [h]
