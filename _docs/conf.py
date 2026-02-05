@@ -32,8 +32,8 @@ html_theme = "sphinx_book_theme"
 html_static_path = ["_static"]
 html_logo = "../figs/logo.png"
 html_theme_options = {
-    "logo_only": True,
-    "display_version": False,
+    # "logo_only": True,
+    # "display_version": False,
     "repository_url": "https://github.com/limamau/abc-model",
     "use_repository_button": True,
     "use_fullscreen_button": False,

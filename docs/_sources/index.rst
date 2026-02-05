@@ -12,7 +12,7 @@ Install with
 
 .. code-block:: bash
 
-   pip install git+https://git.bgc-jena.mpg.de/abc3/abc-model
+   pip install git@github.com:limamau/abc-model.git
 
 or clone the repo and make an editable install inside your local repo using
 
@@ -156,9 +156,8 @@ To plot the results, we will typically follow something like the code below.
 
 Which should give us something like the figure below.
 
-.. image:: figs/readme-example.png
+.. image:: ../figs/readme-example.png
    :alt: readme_example
-   :title: readme example
 
 Documentation
 -------------

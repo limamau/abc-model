@@ -156,9 +156,8 @@ To plot the results, we will typically follow something like the code below.
 
 Which should give us something like the figure below.
 
-.. image:: figs/readme-example.png
+.. image:: ../figs/readme-example.png
    :alt: readme_example
-   :title: readme example
 
 Documentation
 -------------
