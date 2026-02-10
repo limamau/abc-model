@@ -310,7 +310,7 @@ def benchmark_plot(
     runtime: float,
     tstart: float,
 ):
-    # rad with clouds
+    # radiation
     rad_model = abcmodel.rad.CloudyRadiationModel()
     rad_state = rad_model.init_state()
 
@@ -330,7 +330,7 @@ def benchmark_plot(
     cloud_model = abcmodel.atmos.clouds.CumulusModel()
     cloud_state = cloud_model.init_state()
 
-    # define atmos model
+    # atmos
     atmos_model = abcmodel.atmos.DayOnlyAtmosphereModel(
         surface_layer=surface_layer_model,
         mixed_layer=mixed_layer_model,
@@ -342,7 +342,7 @@ def benchmark_plot(
         clouds=cloud_state,
     )
 
-    # define coupler and coupled state
+    # coupler and coupled state
     abcoupler = abcmodel.ABCoupler(
         rad=rad_model,
         land=land_model,

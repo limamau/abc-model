@@ -7,15 +7,13 @@ from abcmodel.utils import compute_esat
 
 
 def run_wrapper(wg: float, q: float, config):
-    # time step [s]
-    inner_dt = 60.0
+    # integration parameters
+    inner_dt = 15.0
     outter_dt = 60.0 * 30
-    # total run time [s]
     runtime = 12 * 3600.0
-    # start time of the day [h]
-    tstart = 6.8
+    tstart = 6.5
 
-    # rad with clouds
+    # radiation
     rad_model = abcmodel.rad.StandardRadiationModel(**config.std_rad_model_kwargs)
     rad_state = rad_model.init_state(**config.std_rad_state_kwargs)
 
@@ -57,13 +55,12 @@ def run_wrapper(wg: float, q: float, config):
         clouds=cloud_state,
     )
 
-    # define coupler and coupled state
+    # coupler and coupled state
     abcoupler = abcmodel.ABCoupler(
         rad=rad_model,
         land=land_model,
         atmos=atmos_model,
     )
-
     state = abcoupler.init_state(
         rad_state,
         land_state,
@@ -80,12 +77,11 @@ def make_fancy_plot(
     color: str,
     marker,
     label: str,
-    factor: int = 30,
 ):
     # mixed layer
     axes[0, 0].plot(
-        time[::factor],
-        traj.atmos.mixed.h_abl[::factor],
+        time,
+        traj.atmos.mixed.h_abl,
         color=color,
         marker=marker,
         linestyle="None",
@@ -94,8 +90,8 @@ def make_fancy_plot(
     axes[0, 0].set_title("h [m]")
 
     axes[0, 1].plot(
-        time[::factor],
-        traj.land.wCO2A[::factor],
+        time,
+        traj.land.wCO2A,
         color=color,
         marker=marker,
         linestyle="None",
@@ -103,8 +99,8 @@ def make_fancy_plot(
     axes[0, 1].set_title("wCO2A [mgC/m²/s]")
 
     axes[0, 2].plot(
-        time[::factor],
-        traj.land.wCO2R[::factor],
+        time,
+        traj.land.wCO2R,
         color=color,
         marker=marker,
         linestyle="None",
@@ -112,8 +108,8 @@ def make_fancy_plot(
     axes[0, 2].set_title("wCO2R [mgC/m²/s]")
 
     axes[0, 3].plot(
-        time[::factor],
-        traj.land.wCO2[::factor],
+        time,
+        traj.land.wCO2,
         color=color,
         marker=marker,
         linestyle="None",
@@ -122,8 +118,8 @@ def make_fancy_plot(
 
     # temperature
     axes[1, 0].plot(
-        time[::factor],
-        traj.land.temp_soil[::factor],
+        time,
+        traj.land.temp_soil,
         color=color,
         marker=marker,
         linestyle="None",
@@ -131,8 +127,8 @@ def make_fancy_plot(
     axes[1, 0].set_title("temp soil [K]")
 
     axes[1, 1].plot(
-        time[::factor],
-        traj.land.surf_temp[::factor],
+        time,
+        traj.land.surf_temp,
         color=color,
         marker=marker,
         linestyle="None",
@@ -140,8 +136,8 @@ def make_fancy_plot(
     axes[1, 1].set_title("surf temp [K]")
 
     axes[1, 2].plot(
-        time[::factor],
-        traj.atmos.mixed.theta[::factor],
+        time,
+        traj.atmos.mixed.theta,
         color=color,
         marker=marker,
         linestyle="None",
@@ -149,8 +145,8 @@ def make_fancy_plot(
     axes[1, 2].set_title("theta [K]")
 
     axes[1, 3].plot(
-        time[::factor],
-        traj.atmos.surface.temp_2m[::factor],
+        time,
+        traj.atmos.surface.temp_2m,
         color=color,
         marker=marker,
         linestyle="None",
@@ -160,14 +156,12 @@ def make_fancy_plot(
     # water
     # this is the core of this example! #
     vpd = (compute_esat(traj.land.surf_temp) - traj.land.e) / 1000.0  # kPa
-    axes[2, 0].plot(
-        time[::factor], vpd[::factor], color=color, marker=marker, linestyle="None"
-    )
+    axes[2, 0].plot(time, vpd, color=color, marker=marker, linestyle="None")
     axes[2, 0].set_title("VPD [kPa]")
 
     axes[2, 1].plot(
-        time[::factor],
-        traj.land.wg[::factor],
+        time,
+        traj.land.wg,
         color=color,
         marker=marker,
         linestyle="None",
@@ -175,8 +169,8 @@ def make_fancy_plot(
     axes[2, 1].set_title("wg [kg/kg]")
     # - - - - - - - - - - - - - - - - - #
     axes[2, 2].plot(
-        time[::factor],
-        traj.atmos.mixed.q[::factor],
+        time,
+        traj.atmos.mixed.q,
         color=color,
         marker=marker,
         linestyle="None",
@@ -197,8 +191,8 @@ def make_fancy_plot(
 
     # energy fluxes
     axes[3, 0].plot(
-        time[::factor],
-        traj.land.hf[::factor],
+        time,
+        traj.land.hf,
         color=color,
         marker=marker,
         linestyle="None",
@@ -206,8 +200,8 @@ def make_fancy_plot(
     axes[3, 0].set_title("H [W/m²]")
 
     axes[3, 1].plot(
-        time[::factor],
-        traj.land.le[::factor],
+        time,
+        traj.land.le,
         color=color,
         marker=marker,
         linestyle="None",
@@ -215,8 +209,8 @@ def make_fancy_plot(
     axes[3, 1].set_title("LE [W/m²]")
 
     axes[3, 2].plot(
-        time[::factor],
-        traj.land.le_veg[::factor],
+        time,
+        traj.land.le_veg,
         color=color,
         marker=marker,
         linestyle="None",
@@ -224,8 +218,8 @@ def make_fancy_plot(
     axes[3, 2].set_title("LEveg [W/m²]")
 
     axes[3, 3].plot(
-        time[::factor],
-        traj.land.le_liq[::factor],
+        time,
+        traj.land.le_liq,
         color=color,
         marker=marker,
         linestyle="None",
@@ -234,8 +228,8 @@ def make_fancy_plot(
 
     # rad
     axes[4, 0].plot(
-        time[::factor],
-        traj.rad.in_srad[::factor],
+        time,
+        traj.rad.in_srad,
         color=color,
         marker=marker,
         linestyle="None",
@@ -243,8 +237,8 @@ def make_fancy_plot(
     axes[4, 0].set_title("SWin [W/m²]")
 
     axes[4, 1].plot(
-        time[::factor],
-        traj.rad.out_srad[::factor],
+        time,
+        traj.rad.out_srad,
         color=color,
         marker=marker,
         linestyle="None",
@@ -252,8 +246,8 @@ def make_fancy_plot(
     axes[4, 1].set_title("SWout [W/m²]")
 
     axes[4, 2].plot(
-        time[::factor],
-        traj.rad.in_lrad[::factor],
+        time,
+        traj.rad.in_lrad,
         color=color,
         marker=marker,
         linestyle="None",
@@ -261,8 +255,8 @@ def make_fancy_plot(
     axes[4, 2].set_title("LWin [W/m²]")
 
     axes[4, 3].plot(
-        time[::factor],
-        traj.rad.out_lrad[::factor],
+        time,
+        traj.rad.out_lrad,
         color=color,
         marker=marker,
         linestyle="None",

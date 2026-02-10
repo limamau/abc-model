@@ -4,15 +4,13 @@ import abcmodel
 
 
 def main():
-    # time step [s]
+    # integration parameters
     inner_dt = 15.0
     outter_dt = 60.0 * 5
-    # total run time [s]
     runtime = 12 * 3600.0
-    # start time of the day [h]
-    tstart = 6.8
+    tstart = 6.5
 
-    # define rad model
+    # radiation
     rad_model = abcmodel.rad.StandardRadiationModel()
     rad_state = rad_model.init_state()
 
@@ -32,7 +30,7 @@ def main():
     cloud_model = abcmodel.atmos.clouds.CumulusModel()
     cloud_state = cloud_model.init_state()
 
-    # define atmos model
+    # atmos
     atmos_model = abcmodel.atmos.DayOnlyAtmosphereModel(
         surface_layer=surface_layer_model,
         mixed_layer=mixed_layer_model,
@@ -42,7 +40,7 @@ def main():
         surface=surface_layer_state, mixed=mixed_layer_state, clouds=cloud_state
     )
 
-    # define coupler and coupled state
+    # coupler and coupled state
     abcoupler = abcmodel.ABCoupler(rad=rad_model, land=land_model, atmos=atmos_model)
     state = abcoupler.init_state(rad_state, land_state, atmos_state)
 
