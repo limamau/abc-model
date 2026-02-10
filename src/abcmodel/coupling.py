@@ -42,16 +42,16 @@ class ABCoupler(nnx.Module):
         self.land = land
         self.atmos = atmos
 
-    @staticmethod
     def init_state(
-        rad_state: RadT,
-        land_state: LandT,
-        atmos_state: AtmosT,
+        self,
+        rad_state: RadT | None,
+        land_state: LandT | None,
+        atmos_state: AtmosT | None,
     ) -> CoupledState[RadT, LandT, AtmosT]:
         return CoupledState(
-            rad=rad_state,
-            land=land_state,
-            atmos=atmos_state,
+            rad=rad_state if rad_state is not None else self.rad.init_state(),
+            land=land_state if land_state is not None else self.land.init_state(),
+            atmos=atmos_state if atmos_state is not None else self.atmos.init_state(),
         )
 
     def compute_diagnostics(self, state: AbstractCoupledState) -> AbstractCoupledState:
