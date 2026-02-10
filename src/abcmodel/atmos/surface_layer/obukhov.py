@@ -96,9 +96,9 @@ class ObukhovModel(AbstractSurfaceLayerModel):
         """Initialize the model state.
 
         Args:
-            ustar: Friction velocity [m s-1].
-            z0m: Surface roughness length for momentum [m].
-            z0h: Surface roughness length for heat [m].
+            ustar: Friction velocity [m s-1]. Default is 0.3.
+            z0m: Surface roughness length for momentum [m]. Default is 0.02.
+            z0h: Surface roughness length for heat [m]. Default is 0.002.
 
         Returns:
             The initial surface layer state.

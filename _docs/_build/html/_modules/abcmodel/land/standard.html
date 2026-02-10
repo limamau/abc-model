@@ -407,46 +407,46 @@ document.write(`
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Abstract standard land surface model with comprehensive soil-vegetation dynamics.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        a: Clapp and Hornberger (1978) retention curve parameter.</span>
-<span class="sd">        b: Clapp and Hornberger (1978) retention curve parameter.</span>
-<span class="sd">        p: Clapp and Hornberger (1978) retention curve parameter.</span>
-<span class="sd">        cgsat: saturated soil heat capacity [J m-3 K-1].</span>
-<span class="sd">        wsat: saturated soil moisture content [m3 m-3].</span>
-<span class="sd">        wfc: soil moisture content at field capacity [m3 m-3].</span>
-<span class="sd">        wwilt: soil moisture content at wilting point [m3 m-3].</span>
-<span class="sd">        w2: soil moisture content at the second layer [m3 m-3].</span>
-<span class="sd">        d1: depth of the top soil layer [m].</span>
-<span class="sd">        c1sat: saturated soil hydraulic conductivity parameter [-].</span>
-<span class="sd">        c2ref: reference soil hydraulic conductivity parameter [-].</span>
-<span class="sd">        lai: leaf area index [m2 m-2].</span>
-<span class="sd">        gD: canopy rad extinction coefficient [-].</span>
-<span class="sd">        rsmin: minimum stomatal resistance [s m-1].</span>
-<span class="sd">        rssoilmin: minimum soil resistance [s m-1].</span>
-<span class="sd">        cveg: vegetation fraction [-].</span>
-<span class="sd">        wmax: maximum water storage capacity of the canopy [m].</span>
-<span class="sd">        lam: thermal diffusivity of the soil [W m-1 K-1].</span>
+<span class="sd">        a: Clapp and Hornberger (1978) retention curve parameter. Default is 0.219.</span>
+<span class="sd">        b: Clapp and Hornberger (1978) retention curve parameter. Default is 4.90.</span>
+<span class="sd">        p: Clapp and Hornberger (1978) retention curve parameter. Default is 4.0.</span>
+<span class="sd">        cgsat: saturated soil heat capacity [J m-3 K-1]. Default is 3.56e-6.</span>
+<span class="sd">        wsat: saturated soil moisture content [m3 m-3]. Default is 0.472.</span>
+<span class="sd">        wfc: soil moisture content at field capacity [m3 m-3]. Default is 0.323.</span>
+<span class="sd">        wwilt: soil moisture content at wilting point [m3 m-3]. Default is 0.171.</span>
+<span class="sd">        w2: soil moisture content at the second layer [m3 m-3]. Default is 0.21.</span>
+<span class="sd">        d1: depth of the top soil layer [m]. Default is 0.1.</span>
+<span class="sd">        c1sat: saturated soil hydraulic conductivity parameter [-]. Default is 0.132.</span>
+<span class="sd">        c2ref: reference soil hydraulic conductivity parameter [-]. Default is 1.8.</span>
+<span class="sd">        lai: leaf area index [m2 m-2]. Default is 2.0.</span>
+<span class="sd">        gD: canopy rad extinction coefficient [-]. Default is 0.0.</span>
+<span class="sd">        rsmin: minimum stomatal resistance [s m-1]. Default is 110.0.</span>
+<span class="sd">        rssoilmin: minimum soil resistance [s m-1]. Default is 50.0.</span>
+<span class="sd">        cveg: vegetation fraction [-]. Default is 0.85.</span>
+<span class="sd">        wmax: maximum water storage capacity of the canopy [m]. Default is 0.0002.</span>
+<span class="sd">        lam: thermal diffusivity of the soil [W m-1 K-1]. Default is 5.9.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
-        <span class="n">a</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
-        <span class="n">b</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
-        <span class="n">p</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
-        <span class="n">cgsat</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
-        <span class="n">wsat</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
-        <span class="n">wfc</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
-        <span class="n">wwilt</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
-        <span class="n">w2</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
-        <span class="n">d1</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
-        <span class="n">c1sat</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
-        <span class="n">c2ref</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
-        <span class="n">lai</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
-        <span class="n">gD</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
-        <span class="n">rsmin</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
-        <span class="n">rssoilmin</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
-        <span class="n">cveg</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
-        <span class="n">wmax</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
-        <span class="n">lam</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">a</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.219</span><span class="p">,</span>
+        <span class="n">b</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">4.90</span><span class="p">,</span>
+        <span class="n">p</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">4.0</span><span class="p">,</span>
+        <span class="n">cgsat</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">3.56e-6</span><span class="p">,</span>
+        <span class="n">wsat</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.472</span><span class="p">,</span>
+        <span class="n">wfc</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.323</span><span class="p">,</span>
+        <span class="n">wwilt</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.171</span><span class="p">,</span>
+        <span class="n">w2</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.21</span><span class="p">,</span>
+        <span class="n">d1</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span>
+        <span class="n">c1sat</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.132</span><span class="p">,</span>
+        <span class="n">c2ref</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.8</span><span class="p">,</span>
+        <span class="n">lai</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">2.0</span><span class="p">,</span>
+        <span class="n">gD</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span>
+        <span class="n">rsmin</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">110.0</span><span class="p">,</span>
+        <span class="n">rssoilmin</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">50.0</span><span class="p">,</span>
+        <span class="n">cveg</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.85</span><span class="p">,</span>
+        <span class="n">wmax</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0002</span><span class="p">,</span>
+        <span class="n">lam</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">5.9</span><span class="p">,</span>
     <span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">a</span> <span class="o">=</span> <span class="n">a</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">b</span> <span class="o">=</span> <span class="n">b</span>
@@ -472,30 +472,30 @@ document.write(`
 <a class="viewcode-back" href="../../../source/api/abcmodel.land.standard.html#abcmodel.land.standard.AbstractStandardLandModel.init_state">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">init_state</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
-        <span class="n">alpha</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
-        <span class="n">wg</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
-        <span class="n">temp_soil</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
-        <span class="n">temp2</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
-        <span class="n">surf_temp</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
-        <span class="n">wl</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
-        <span class="n">wq</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
-        <span class="n">wtheta</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">alpha</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.25</span><span class="p">,</span>
+        <span class="n">wg</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.21</span><span class="p">,</span>
+        <span class="n">temp_soil</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">285.0</span><span class="p">,</span>
+        <span class="n">temp2</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">286.0</span><span class="p">,</span>
+        <span class="n">surf_temp</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">290.0</span><span class="p">,</span>
+        <span class="n">wl</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0000</span><span class="p">,</span>
+        <span class="n">wq</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-4</span><span class="p">,</span>
+        <span class="n">wtheta</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span>
         <span class="n">rs</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0e6</span><span class="p">,</span>
         <span class="n">rssoil</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0e6</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">StandardLandState</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize the model state.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            alpha: albedo [-].</span>
-<span class="sd">            wg: Volumetric soil moisture [m3 m-3].</span>
-<span class="sd">            temp_soil: Soil temperature [K].</span>
-<span class="sd">            temp2: Deep soil temperature [K].</span>
-<span class="sd">            surf_temp: Surface temperature [K].</span>
-<span class="sd">            wl: Canopy water content [m].</span>
-<span class="sd">            wq: Kinematic moisture flux [kg/kg m/s].</span>
-<span class="sd">            wtheta: Kinematic heat flux [K m/s].</span>
-<span class="sd">            rs: Surface resistance [s m-1].</span>
-<span class="sd">            rssoil: Soil resistance [s m-1].</span>
+<span class="sd">            alpha: albedo [-]. Default is 0.25.</span>
+<span class="sd">            wg: Volumetric soil moisture [m3 m-3]. Default is 0.21.</span>
+<span class="sd">            temp_soil: Soil temperature [K]. Default is 285.0.</span>
+<span class="sd">            temp2: Deep soil temperature [K]. Default is 286.0.</span>
+<span class="sd">            surf_temp: Surface temperature [K]. Default is 290.0.</span>
+<span class="sd">            wl: Canopy water content [m]. Default is 0.0000.</span>
+<span class="sd">            wq: Kinematic moisture flux [kg/kg m/s]. Default is 1e-4.</span>
+<span class="sd">            wtheta: Kinematic heat flux [K m/s]. Default is 0.1.</span>
+<span class="sd">            rs: Surface resistance [s m-1]. Default is 1.0e6.</span>
+<span class="sd">            rssoil: Soil resistance [s m-1]. Default is 1.0e6.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            The initial land state.</span>

@@ -201,15 +201,6 @@
 <li class="toctree-l3"><a class="reference internal" href="abcconfigs.aridities.standard.html">Standard</a></li>
 </ul>
 </details></li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="abcconfigs.class_model.html">Class Model</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l3"><a class="reference internal" href="abcconfigs.class_model.ags.html">Ags</a></li>
-<li class="toctree-l3"><a class="reference internal" href="abcconfigs.class_model.bulk_mixed_layer.html">Bulk Mixed Layer</a></li>
-<li class="toctree-l3"><a class="reference internal" href="abcconfigs.class_model.jarvis_stewart.html">Jarvis Stewart</a></li>
-<li class="toctree-l3"><a class="reference internal" href="abcconfigs.class_model.standard_radiation.html">Standard Radiation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="abcconfigs.class_model.cloudy_radiation.html">Cloudy Radiation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="abcconfigs.class_model.obukhov_surface_layer.html">Standard Surface Layer</a></li>
-</ul>
-</details></li>
 </ul>
 </details></li>
 </ul>
@@ -553,14 +544,14 @@ document.write(`
 with stability functions and iterative solution for Obukhov length.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="abcmodel.atmos.surface_layer.obukhov.ObukhovModel.init_state">
-<span class="sig-name descname"><span class="pre">init_state</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ustar</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z0m</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z0h</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/abcmodel/atmos/surface_layer/obukhov.html#ObukhovModel.init_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#abcmodel.atmos.surface_layer.obukhov.ObukhovModel.init_state" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">init_state</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ustar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z0m</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.02</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z0h</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.002</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/abcmodel/atmos/surface_layer/obukhov.html#ObukhovModel.init_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#abcmodel.atmos.surface_layer.obukhov.ObukhovModel.init_state" title="Link to this definition">#</a></dt>
 <dd><p>Initialize the model state.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>ustar</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></span>) – Friction velocity [m s-1].</p></li>
-<li><p><strong>z0m</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></span>) – Surface roughness length for momentum [m].</p></li>
-<li><p><strong>z0h</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></span>) – Surface roughness length for heat [m].</p></li>
+<li><p><strong>ustar</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></span>) – Friction velocity [m s-1]. Default is 0.3.</p></li>
+<li><p><strong>z0m</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></span>) – Surface roughness length for momentum [m]. Default is 0.02.</p></li>
+<li><p><strong>z0h</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></span>) – Surface roughness length for heat [m]. Default is 0.002.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>

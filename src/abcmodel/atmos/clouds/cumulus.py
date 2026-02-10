@@ -38,8 +38,8 @@ class CumulusModel(AbstractCloudModel[CumulusState]):
     to determine what fraction reaches saturation.
 
     Args:
-        tcc_cc: ratio of total cloud cove to core cloud fraction [-], greater or equal to 1.
-        tcc_trans: mean transmittance of cloud cover [-], range 0 to 1.
+        tcc_cc: ratio of total cloud cove to core cloud fraction [-], greater or equal to 1. Default is 2.0.
+        tcc_trans: mean transmittance of cloud cover [-], range 0 to 1. Default is 0.6.
     """
 
     def __init__(self, tcc_cc: float = 2.0, tcc_trans: float = 0.6):

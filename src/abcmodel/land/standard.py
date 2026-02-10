@@ -88,24 +88,24 @@ class AbstractStandardLandModel(AbstractLandModel):
     """Abstract standard land surface model with comprehensive soil-vegetation dynamics.
 
     Args:
-        a: Clapp and Hornberger (1978) retention curve parameter.
-        b: Clapp and Hornberger (1978) retention curve parameter.
-        p: Clapp and Hornberger (1978) retention curve parameter.
-        cgsat: saturated soil heat capacity [J m-3 K-1].
-        wsat: saturated soil moisture content [m3 m-3].
-        wfc: soil moisture content at field capacity [m3 m-3].
-        wwilt: soil moisture content at wilting point [m3 m-3].
-        w2: soil moisture content at the second layer [m3 m-3].
-        d1: depth of the top soil layer [m].
-        c1sat: saturated soil hydraulic conductivity parameter [-].
-        c2ref: reference soil hydraulic conductivity parameter [-].
-        lai: leaf area index [m2 m-2].
-        gD: canopy rad extinction coefficient [-].
-        rsmin: minimum stomatal resistance [s m-1].
-        rssoilmin: minimum soil resistance [s m-1].
-        cveg: vegetation fraction [-].
-        wmax: maximum water storage capacity of the canopy [m].
-        lam: thermal diffusivity of the soil [W m-1 K-1].
+        a: Clapp and Hornberger (1978) retention curve parameter. Default is 0.219.
+        b: Clapp and Hornberger (1978) retention curve parameter. Default is 4.90.
+        p: Clapp and Hornberger (1978) retention curve parameter. Default is 4.0.
+        cgsat: saturated soil heat capacity [J m-3 K-1]. Default is 3.56e-6.
+        wsat: saturated soil moisture content [m3 m-3]. Default is 0.472.
+        wfc: soil moisture content at field capacity [m3 m-3]. Default is 0.323.
+        wwilt: soil moisture content at wilting point [m3 m-3]. Default is 0.171.
+        w2: soil moisture content at the second layer [m3 m-3]. Default is 0.21.
+        d1: depth of the top soil layer [m]. Default is 0.1.
+        c1sat: saturated soil hydraulic conductivity parameter [-]. Default is 0.132.
+        c2ref: reference soil hydraulic conductivity parameter [-]. Default is 1.8.
+        lai: leaf area index [m2 m-2]. Default is 2.0.
+        gD: canopy rad extinction coefficient [-]. Default is 0.0.
+        rsmin: minimum stomatal resistance [s m-1]. Default is 110.0.
+        rssoilmin: minimum soil resistance [s m-1]. Default is 50.0.
+        cveg: vegetation fraction [-]. Default is 0.85.
+        wmax: maximum water storage capacity of the canopy [m]. Default is 0.0002.
+        lam: thermal diffusivity of the soil [W m-1 K-1]. Default is 5.9.
     """
 
     def __init__(
@@ -165,16 +165,16 @@ class AbstractStandardLandModel(AbstractLandModel):
         """Initialize the model state.
 
         Args:
-            alpha: albedo [-].
-            wg: Volumetric soil moisture [m3 m-3].
-            temp_soil: Soil temperature [K].
-            temp2: Deep soil temperature [K].
-            surf_temp: Surface temperature [K].
-            wl: Canopy water content [m].
-            wq: Kinematic moisture flux [kg/kg m/s].
-            wtheta: Kinematic heat flux [K m/s].
-            rs: Surface resistance [s m-1].
-            rssoil: Soil resistance [s m-1].
+            alpha: albedo [-]. Default is 0.25.
+            wg: Volumetric soil moisture [m3 m-3]. Default is 0.21.
+            temp_soil: Soil temperature [K]. Default is 285.0.
+            temp2: Deep soil temperature [K]. Default is 286.0.
+            surf_temp: Surface temperature [K]. Default is 290.0.
+            wl: Canopy water content [m]. Default is 0.0000.
+            wq: Kinematic moisture flux [kg/kg m/s]. Default is 1e-4.
+            wtheta: Kinematic heat flux [K m/s]. Default is 0.1.
+            rs: Surface resistance [s m-1]. Default is 1.0e6.
+            rssoil: Soil resistance [s m-1]. Default is 1.0e6.
 
         Returns:
             The initial land state.

@@ -199,15 +199,6 @@
 <li class="toctree-l3"><a class="reference internal" href="../../../source/api/abcconfigs.aridities.standard.html">Standard</a></li>
 </ul>
 </details></li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../../../source/api/abcconfigs.class_model.html">Class Model</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../../source/api/abcconfigs.class_model.ags.html">Ags</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../source/api/abcconfigs.class_model.bulk_mixed_layer.html">Bulk Mixed Layer</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../source/api/abcconfigs.class_model.jarvis_stewart.html">Jarvis Stewart</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../source/api/abcconfigs.class_model.standard_radiation.html">Standard Radiation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../source/api/abcconfigs.class_model.cloudy_radiation.html">Cloudy Radiation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../source/api/abcconfigs.class_model.obukhov_surface_layer.html">Standard Surface Layer</a></li>
-</ul>
-</details></li>
 </ul>
 </details></li>
 </ul>
@@ -540,7 +531,7 @@ document.write(`
 
 <div class="viewcode-block" id="DayOnlyAtmosphereModel.statistics">
 <a class="viewcode-back" href="../../../source/api/abcmodel.atmos.dayonly.html#abcmodel.atmos.dayonly.DayOnlyAtmosphereModel.statistics">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">statistics</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="n">StateAlias</span><span class="p">,</span> <span class="n">t</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DayOnlyAtmosphereState</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">statistics</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="n">StateAlias</span><span class="p">,</span> <span class="n">t</span><span class="p">:</span> <span class="n">Array</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DayOnlyAtmosphereState</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Update statistics.&quot;&quot;&quot;</span>
         <span class="n">ml_state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mixed_layer</span><span class="o">.</span><span class="n">statistics</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">state</span><span class="o">.</span><span class="n">atmos</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">mixed</span><span class="o">=</span><span class="n">ml_state</span><span class="p">)</span></div>
@@ -553,7 +544,7 @@ document.write(`
         <span class="n">radmodel</span><span class="p">:</span> <span class="n">AbstractRadiationModel</span><span class="p">,</span>
         <span class="n">landmodel</span><span class="p">:</span> <span class="n">AbstractLandModel</span><span class="p">,</span>
         <span class="n">state</span><span class="p">:</span> <span class="n">StateAlias</span><span class="p">,</span>
-        <span class="n">t</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">t</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span>
         <span class="n">dt</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
         <span class="n">tstart</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">StateAlias</span><span class="p">:</span>

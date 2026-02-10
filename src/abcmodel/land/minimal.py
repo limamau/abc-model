@@ -61,12 +61,12 @@ class MinimalLandSurfaceModel(AbstractLandModel):
         """Initialize the model state.
 
         Args:
-            alpha: surface albedo [-], range 0 to 1.
-            surf_temp: Surface temperature [K].
-            rs: Surface resistance [s m-1].
-            wg: Volumetric soil moisture [m3 m-3].
-            wl: Canopy water content [m].
-            wtheta: Kinematic heat flux [K m/s].
+            alpha: surface albedo [-], range 0 to 1. Default is 0.25.
+            surf_temp: Surface temperature [K]. Default is 290.0.
+            rs: Surface resistance [s m-1]. Default is 1.0e6.
+            wg: Volumetric soil moisture [m3 m-3]. Default is 0.0.
+            wl: Canopy water content [m]. Default is 0.0.
+            wtheta: Kinematic heat flux [K m/s]. Default is 0.0.
 
         Returns:
             The initial land state.

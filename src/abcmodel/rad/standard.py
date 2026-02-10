@@ -40,10 +40,10 @@ class StandardRadiationModel(AbstractRadiationModel[StandardRadiationState]):
     rad components.
 
     Args:
-        lat: latitude [degrees], range -90 to +90.
-        lon: longitude [degrees], range -180 to +180.
-        doy: day of year [-], range 1 to 365.
-        cc: cloud cover fraction [-], range 0 to 1.
+        lat: latitude [degrees], range -90 to +90. Default is 51.97 (Cabauw, NL).
+        lon: longitude [degrees], range -180 to +180. Default is -4.93 (Cabauw, NL).
+        doy: day of year [-], range 1 to 365. Default is 268.0.
+        cc: cloud cover fraction [-], range 0 to 1. Default is 0.0.
     """
 
     def __init__(
@@ -62,7 +62,7 @@ class StandardRadiationModel(AbstractRadiationModel[StandardRadiationState]):
         """Initialize the model state.
 
         Args:
-            net_rad: Net surface radiation [W m-2].
+            net_rad: Net surface radiation [W m-2]. Default is 400.0.
 
         Returns:
             The initial radiation state.

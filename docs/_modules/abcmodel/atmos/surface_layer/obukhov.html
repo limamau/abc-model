@@ -130,8 +130,14 @@
   
   
   
+    
+    
+      
+    
+    
+    <img src="../../../../_static/logo.png" class="logo__image only-light" alt="abc-model 0.1.0 documentation - Home"/>
+    <script>document.write(`<img src="../../../../_static/logo.png" class="logo__image only-dark" alt="abc-model 0.1.0 documentation - Home"/>`);</script>
   
-    <p class="title logo__title">abc-model 0.1.0 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -191,15 +197,6 @@
 <li class="toctree-l3"><a class="reference internal" href="../../../../source/api/abcconfigs.aridities.arid.html">Arid</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../../source/api/abcconfigs.aridities.humid.html">Humid</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../../source/api/abcconfigs.aridities.standard.html">Standard</a></li>
-</ul>
-</details></li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../source/api/abcconfigs.class_model.html">Class Model</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../../../source/api/abcconfigs.class_model.ags.html">Ags</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../../source/api/abcconfigs.class_model.bulk_mixed_layer.html">Bulk Mixed Layer</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../../source/api/abcconfigs.class_model.jarvis_stewart.html">Jarvis Stewart</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../../source/api/abcconfigs.class_model.standard_radiation.html">Standard Radiation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../../source/api/abcconfigs.class_model.cloudy_radiation.html">Cloudy Radiation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../../source/api/abcconfigs.class_model.obukhov_surface_layer.html">Standard Surface Layer</a></li>
 </ul>
 </details></li>
 </ul>
@@ -404,16 +401,16 @@ document.write(`
 <a class="viewcode-back" href="../../../../source/api/abcmodel.atmos.surface_layer.obukhov.html#abcmodel.atmos.surface_layer.obukhov.ObukhovModel.init_state">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">init_state</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
-        <span class="n">ustar</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
-        <span class="n">z0m</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
-        <span class="n">z0h</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">ustar</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.3</span><span class="p">,</span>
+        <span class="n">z0m</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.02</span><span class="p">,</span>
+        <span class="n">z0h</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.002</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ObukhovState</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize the model state.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            ustar: Friction velocity [m s-1].</span>
-<span class="sd">            z0m: Surface roughness length for momentum [m].</span>
-<span class="sd">            z0h: Surface roughness length for heat [m].</span>
+<span class="sd">            ustar: Friction velocity [m s-1]. Default is 0.3.</span>
+<span class="sd">            z0m: Surface roughness length for momentum [m]. Default is 0.02.</span>
+<span class="sd">            z0h: Surface roughness length for heat [m]. Default is 0.002.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            The initial surface layer state.</span>

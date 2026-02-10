@@ -41,16 +41,16 @@ class JarvisStewartModel(AbstractStandardLandModel):
         """Initialize the model state.
 
         Args:
-            alpha: albedo [-].
-            wg: Volumetric soil moisture [m3 m-3].
-            temp_soil: Soil temperature [K].
-            temp2: Deep soil temperature [K].
-            surf_temp: Surface temperature [K].
-            wl: Canopy water content [m].
-            wq: Kinematic moisture flux [kg/kg m/s].
-            wtheta: Kinematic heat flux [K m/s].
-            rs: Surface resistance [s m-1].
-            rssoil: Soil resistance [s m-1].
+            alpha: albedo [-]. Default is 0.25.
+            wg: Volumetric soil moisture [m3 m-3]. Default is 0.21.
+            temp_soil: Soil temperature [K]. Default is 285.0.
+            temp2: Deep soil temperature [K]. Default is 286.0.
+            surf_temp: Surface temperature [K]. Default is 290.0.
+            wl: Canopy water content [m]. Default is 0.0000.
+            wq: Kinematic moisture flux [kg/kg m/s]. Default is 1e-4.
+            wtheta: Kinematic heat flux [K m/s]. Default is 0.1.
+            rs: Surface resistance [s m-1]. Default is 1.0e6.
+            rssoil: Soil resistance [s m-1]. Default is 1.0e6.
 
         Returns:
             The initial land state.

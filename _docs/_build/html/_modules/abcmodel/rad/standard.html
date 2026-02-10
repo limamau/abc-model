@@ -359,18 +359,18 @@ document.write(`
 <span class="sd">    rad components.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        lat: latitude [degrees], range -90 to +90.</span>
-<span class="sd">        lon: longitude [degrees], range -180 to +180.</span>
-<span class="sd">        doy: day of year [-], range 1 to 365.</span>
-<span class="sd">        cc: cloud cover fraction [-], range 0 to 1.</span>
+<span class="sd">        lat: latitude [degrees], range -90 to +90. Default is 51.97 (Cabauw, NL).</span>
+<span class="sd">        lon: longitude [degrees], range -180 to +180. Default is -4.93 (Cabauw, NL).</span>
+<span class="sd">        doy: day of year [-], range 1 to 365. Default is 268.0.</span>
+<span class="sd">        cc: cloud cover fraction [-], range 0 to 1. Default is 0.0.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
-        <span class="n">lat</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
-        <span class="n">lon</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
-        <span class="n">doy</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
-        <span class="n">cc</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">lat</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">51.97</span><span class="p">,</span>
+        <span class="n">lon</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="o">-</span><span class="mf">4.93</span><span class="p">,</span>
+        <span class="n">doy</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">268.0</span><span class="p">,</span>
+        <span class="n">cc</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span>
     <span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">lat</span> <span class="o">=</span> <span class="n">lat</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">lon</span> <span class="o">=</span> <span class="n">lon</span>
@@ -379,11 +379,11 @@ document.write(`
 
 <div class="viewcode-block" id="StandardRadiationModel.init_state">
 <a class="viewcode-back" href="../../../source/api/abcmodel.rad.standard.html#abcmodel.rad.standard.StandardRadiationModel.init_state">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">init_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">net_rad</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">StandardRadiationState</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">init_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">net_rad</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">400.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">StandardRadiationState</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize the model state.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            net_rad: Net surface radiation [W m-2].</span>
+<span class="sd">            net_rad: Net surface radiation [W m-2]. Default is 400.0.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            The initial radiation state.</span>

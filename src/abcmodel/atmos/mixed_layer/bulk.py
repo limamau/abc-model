@@ -113,23 +113,23 @@ class BulkModel(AbstractMixedLayerModel[BulkState]):
     including entrainment, subsidence, cloud effects, and wind dynamics.
 
     Args:
-        divU: horizontal large-scale divergence of wind [s-1].
-        coriolis_param: Coriolis parameter [s-1].
-        gammatheta: free atmos potential temperature lapse rate [K m-1].
-        advtheta: advection of heat [K s-1].
-        beta: entrainment ratio for virtual heat [-].
-        gammaq: free atmos specific humidity lapse rate [kg/kg m-1].
-        advq: advection of moisture [kg/kg s-1].
-        gammaCO2: free atmos CO2 lapse rate [ppm m-1].
-        advCO2: advection of CO2 [ppm s-1].
-        gammau: free atmos u-wind speed lapse rate [s-1].
-        advu: advection of u-wind [m s-2].
-        gammav: free atmos v-wind speed lapse rate [s-1].
-        advv: advection of v-wind [m s-2].
-        dFz: cloud top radiative divergence [W m-2].
-        is_shear_growing: shear growth mixed-layer switch.
-        is_fix_free_trop: fix the free-troposphere switch.
-        is_wind_prog: prognostic wind switch.
+        divU: horizontal large-scale divergence of wind [s-1]. Default is 0.0.
+        coriolis_param: Coriolis parameter [s-1]. Default is 1e-4.
+        gammatheta: free atmos potential temperature lapse rate [K m-1]. Default is 0.006.
+        advtheta: advection of heat [K s-1]. Default is 0.0.
+        beta: entrainment ratio for virtual heat [-]. Default is 0.2.
+        gammaq: free atmos specific humidity lapse rate [kg/kg m-1]. Default is 0.0.
+        advq: advection of moisture [kg/kg s-1]. Default is 0.0.
+        gammaCO2: free atmos CO2 lapse rate [ppm m-1]. Default is 0.0.
+        advCO2: advection of CO2 [ppm s-1]. Default is 0.0.
+        gammau: free atmos u-wind speed lapse rate [s-1]. Default is 0.0.
+        advu: advection of u-wind [m s-2]. Default is 0.0.
+        gammav: free atmos v-wind speed lapse rate [s-1]. Default is 0.0.
+        advv: advection of v-wind [m s-2]. Default is 0.0.
+        dFz: cloud top radiative divergence [W m-2]. Default is 0.0.
+        is_shear_growing: shear growth mixed-layer switch. Default is True.
+        is_fix_free_trop: fix the free-troposphere switch. Default is True.
+        is_wind_prog: prognostic wind switch. Default is True.
     """
 
     def __init__(
@@ -190,20 +190,20 @@ class BulkModel(AbstractMixedLayerModel[BulkState]):
         """Initialize the model state.
 
         Args:
-            h_abl: atmospheric boundary layer height [m].
-            theta: mixed-layer potential temperature [K].
-            deltatheta: potential temperature jump at h [K].
-            q: mixed-layer specific humidity [kg/kg].
-            dq: specific humidity jump at h [kg/kg].
-            co2: mixed-layer CO2 [ppm].
-            deltaCO2: CO2 jump at h [ppm].
-            wCO2: surface kinematic CO2 flux [mgC/m²/s].
-            u: mixed-layer u-wind speed [m/s].
-            du: u-wind jump at h [m/s].
-            v: mixed-layer v-wind speed [m/s].
-            dv: v-wind jump at h [m/s].
-            dz_h: transition layer thickness [m].
-            surf_pressure: surface pressure [Pa].
+            h_abl: atmospheric boundary layer height [m]. Default is 200.0.
+            theta: mixed-layer potential temperature [K]. Default is 288.0.
+            deltatheta: potential temperature jump at h [K]. Default is 1.0.
+            q: mixed-layer specific humidity [kg/kg]. Default is 0.008.
+            dq: specific humidity jump at h [kg/kg]. Default is -0.001.
+            co2: mixed-layer CO2 [ppm]. Default is 422.0.
+            deltaCO2: CO2 jump at h [ppm]. Default is -44.0.
+            wCO2: surface kinematic CO2 flux [mgC/m²/s]. Default is 0.0.
+            u: mixed-layer u-wind speed [m/s]. Default is 6.0.
+            du: u-wind jump at h [m/s]. Default is 4.0.
+            v: mixed-layer v-wind speed [m/s]. Default is -4.0.
+            dv: v-wind jump at h [m/s]. Default is 4.0.
+            dz_h: transition layer thickness [m]. Default is 150.0.
+            surf_pressure: surface pressure [Pa]. Default is 101300.0.
 
         Returns:
             The initial mixed layer state.

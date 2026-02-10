@@ -130,8 +130,14 @@
   
   
   
+    
+    
+      
+    
+    
+    <img src="../../../../_static/logo.png" class="logo__image only-light" alt="abc-model 0.1.0 documentation - Home"/>
+    <script>document.write(`<img src="../../../../_static/logo.png" class="logo__image only-dark" alt="abc-model 0.1.0 documentation - Home"/>`);</script>
   
-    <p class="title logo__title">abc-model 0.1.0 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -191,15 +197,6 @@
 <li class="toctree-l3"><a class="reference internal" href="../../../../source/api/abcconfigs.aridities.arid.html">Arid</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../../source/api/abcconfigs.aridities.humid.html">Humid</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../../source/api/abcconfigs.aridities.standard.html">Standard</a></li>
-</ul>
-</details></li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../source/api/abcconfigs.class_model.html">Class Model</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../../../source/api/abcconfigs.class_model.ags.html">Ags</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../../source/api/abcconfigs.class_model.bulk_mixed_layer.html">Bulk Mixed Layer</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../../source/api/abcconfigs.class_model.jarvis_stewart.html">Jarvis Stewart</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../../source/api/abcconfigs.class_model.standard_radiation.html">Standard Radiation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../../source/api/abcconfigs.class_model.cloudy_radiation.html">Cloudy Radiation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../../source/api/abcconfigs.class_model.obukhov_surface_layer.html">Standard Surface Layer</a></li>
 </ul>
 </details></li>
 </ul>
@@ -351,8 +348,8 @@ document.write(`
 <span class="sd">    to determine what fraction reaches saturation.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        tcc_cc: ratio of total cloud cove to core cloud fraction [-], greater or equal to 1.</span>
-<span class="sd">        tcc_trans: mean transmittance of cloud cover [-], range 0 to 1.</span>
+<span class="sd">        tcc_cc: ratio of total cloud cove to core cloud fraction [-], greater or equal to 1. Default is 2.0.</span>
+<span class="sd">        tcc_trans: mean transmittance of cloud cover [-], range 0 to 1. Default is 0.6.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tcc_cc</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">2.0</span><span class="p">,</span> <span class="n">tcc_trans</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.6</span><span class="p">):</span>

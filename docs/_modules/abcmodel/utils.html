@@ -130,8 +130,14 @@
   
   
   
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.png" class="logo__image only-light" alt="abc-model 0.1.0 documentation - Home"/>
+    <script>document.write(`<img src="../../_static/logo.png" class="logo__image only-dark" alt="abc-model 0.1.0 documentation - Home"/>`);</script>
   
-    <p class="title logo__title">abc-model 0.1.0 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -191,15 +197,6 @@
 <li class="toctree-l3"><a class="reference internal" href="../../source/api/abcconfigs.aridities.arid.html">Arid</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../source/api/abcconfigs.aridities.humid.html">Humid</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../source/api/abcconfigs.aridities.standard.html">Standard</a></li>
-</ul>
-</details></li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../../source/api/abcconfigs.class_model.html">Class Model</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../source/api/abcconfigs.class_model.ags.html">Ags</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../source/api/abcconfigs.class_model.bulk_mixed_layer.html">Bulk Mixed Layer</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../source/api/abcconfigs.class_model.jarvis_stewart.html">Jarvis Stewart</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../source/api/abcconfigs.class_model.standard_radiation.html">Standard Radiation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../source/api/abcconfigs.class_model.cloudy_radiation.html">Cloudy Radiation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../source/api/abcconfigs.class_model.obukhov_surface_layer.html">Standard Surface Layer</a></li>
 </ul>
 </details></li>
 </ul>
@@ -428,6 +425,8 @@ document.write(`
     <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">path</span><span class="p">:</span>
         <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">):</span>
             <span class="n">parts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+        <span class="k">elif</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="s2">&quot;key&quot;</span><span class="p">):</span>
+            <span class="n">parts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">key</span><span class="p">))</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unsupported path element: </span><span class="si">{</span><span class="n">p</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
