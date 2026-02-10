@@ -1,12 +1,12 @@
 # Import packages
 import matplotlib.pyplot as plt
+
 import abcconfigs.class_model as cm
 import abcmodel
 
 
 # define main function
 def main():
-
     ##########################################################
     # first define time steps necessary for the model run
     ##########################################################
@@ -21,7 +21,7 @@ def main():
     tstart = 6.8
 
     ##########################################################
-    # define all models with respective initial states and 
+    # define all models with respective initial states and
     # arguments from abcconfigs
     # in this tutorial we run two simulations with different
     # CO2 concentrations to compare them
@@ -40,19 +40,11 @@ def main():
     )
 
     # mixed layer with default
-    mixed_layer_model = abcmodel.atmos.mixed_layer.BulkModel(
-        **cm.bulk_mixed_layer.model_kwargs,
-    )
-    bml_state = cm.bulk_mixed_layer.state_kwargs
-    mixed_layer_state_default = mixed_layer_model.init_state(
-            **bml_state,
-    )
+    mixed_layer_model = abcmodel.atmos.mixed_layer.BulkModel()
+    mixed_layer_state_default = mixed_layer_model.init_state()
 
     # generate an additional mixed layer initial state with double CO2
-    bml_state.update({"co2": 844.0})
-    mixed_layer_state_2xCO2 = mixed_layer_model.init_state(
-            **bml_state,
-    )
+    mixed_layer_state_2xCO2 = mixed_layer_model.init_state(co2=844.0)
 
     # clouds
     cloud_model = abcmodel.atmos.clouds.CumulusModel()
@@ -61,9 +53,7 @@ def main():
     # in this tutorial we can compare two land models using this switch
     use_ags = True
 
-
     if use_ags:
-
         # you can use the ags model, that includes
         # CO2-induced stomatal closure
         land_model = abcmodel.land.AgsModel(
@@ -81,7 +71,6 @@ def main():
         land_state = land_model.init_state(
             **cm.jarvis_stewart.state_kwargs,
         )
-
 
     ##########################################################
     # define atmos model with all its components

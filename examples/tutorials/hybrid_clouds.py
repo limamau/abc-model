@@ -87,11 +87,8 @@ def load_model_and_template_state(key: Array):
     )
 
     # mixed layer
-    mixed_state_kwargs = cm.bulk_mixed_layer.state_kwargs
-    mixed_layer_model = abcmodel.atmos.mixed_layer.BulkModel(
-        **cm.bulk_mixed_layer.model_kwargs
-    )
-    mixed_layer_state = mixed_layer_model.init_state(**mixed_state_kwargs)
+    mixed_layer_model = abcmodel.atmos.mixed_layer.BulkModel()
+    mixed_layer_state = mixed_layer_model.init_state()
 
     # clouds
     net = NeuralNetwork(rngs=nnx.Rngs(key))
@@ -341,12 +338,8 @@ def benchmark_plot(
     )
 
     # mixed layer
-    mixed_layer_model = abcmodel.atmos.mixed_layer.BulkModel(
-        **cm.bulk_mixed_layer.model_kwargs,
-    )
-    mixed_layer_state = mixed_layer_model.init_state(
-        **cm.bulk_mixed_layer.state_kwargs,
-    )
+    mixed_layer_model = abcmodel.atmos.mixed_layer.BulkModel()
+    mixed_layer_state = mixed_layer_model.init_state()
 
     # clouds
     cloud_model = abcmodel.atmos.clouds.CumulusModel()

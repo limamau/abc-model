@@ -39,22 +39,14 @@ def run_simulation(h_abl, theta, q, deltatheta, u, v, wg, d1, temp_soil):
     )
 
     # mixed layer
-    mixed_state_kwargs = cm.bulk_mixed_layer.state_kwargs
-    mixed_state_kwargs.update(
-        {
-            "h_abl": h_abl,
-            "theta": theta,
-            "deltatheta": deltatheta,
-            "q": q,
-            "u": u,
-            "v": v,
-        }
-    )
-    mixed_layer_model = abcmodel.atmos.mixed_layer.BulkModel(
-        **cm.bulk_mixed_layer.model_kwargs,
-    )
+    mixed_layer_model = abcmodel.atmos.mixed_layer.BulkModel()
     mixed_layer_state = mixed_layer_model.init_state(
-        **mixed_state_kwargs,
+        h_abl=h_abl,
+        theta=theta,
+        deltatheta=deltatheta,
+        q=q,
+        u=u,
+        v=v,
     )
 
     # clouds

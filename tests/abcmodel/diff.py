@@ -10,7 +10,7 @@ def run_model(theta0: float) -> Array:
     inner_dt = 60.0
     outter_dt = 60.0 * 30
     runtime = 12 * 3600.0
-    tstart = 6.8
+    tstart = 6.5
 
     rad_model = abcmodel.rad.StandardRadiationModel(
         **cm.standard_radiation.model_kwargs
@@ -25,10 +25,8 @@ def run_model(theta0: float) -> Array:
         **cm.obukhov_surface_layer.state_kwargs
     )
 
-    mixed_layer_model = abcmodel.atmos.mixed_layer.BulkModel(
-        **cm.bulk_mixed_layer.model_kwargs
-    )
-    mixed_layer_state = mixed_layer_model.init_state(**cm.bulk_mixed_layer.state_kwargs)
+    mixed_layer_model = abcmodel.atmos.mixed_layer.BulkModel()
+    mixed_layer_state = mixed_layer_model.init_state()
     mixed_layer_state = mixed_layer_state.replace(
         theta=jnp.array(theta0)  # <--- perturb initial condition
     )

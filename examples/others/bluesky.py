@@ -30,10 +30,8 @@ def main():
     )
 
     # mixed layer
-    mixed_layer_model = abcmodel.atmos.mixed_layer.BulkModel(
-        **cm.bulk_mixed_layer.model_kwargs,
-    )
-    mixed_layer_state = mixed_layer_model.init_state(**cm.bulk_mixed_layer.state_kwargs)
+    mixed_layer_model = abcmodel.atmos.mixed_layer.BulkModel()
+    mixed_layer_state = mixed_layer_model.init_state()
 
     # clouds
     cloud_model = abcmodel.atmos.clouds.NoCloudModel()
