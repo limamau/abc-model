@@ -2,7 +2,6 @@ import jax
 import jax.numpy as jnp
 from jax import Array
 
-import abcconfigs.class_model as cm
 import abcmodel
 
 
@@ -12,10 +11,8 @@ def run_model(theta0: float) -> Array:
     runtime = 12 * 3600.0
     tstart = 6.5
 
-    rad_model = abcmodel.rad.StandardRadiationModel(
-        **cm.standard_radiation.model_kwargs
-    )
-    rad_state = rad_model.init_state(**cm.standard_radiation.state_kwargs)
+    rad_model = abcmodel.rad.StandardRadiationModel()
+    rad_state = rad_model.init_state()
 
     land_model = abcmodel.land.JarvisStewartModel()
     land_state = land_model.init_state()

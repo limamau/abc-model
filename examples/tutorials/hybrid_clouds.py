@@ -8,7 +8,6 @@ import optax
 from flax import nnx
 from jax import Array
 
-import abcconfigs.class_model as cm
 import abcmodel
 from abcmodel.atmos.clouds.cumulus import CumulusModel
 from abcmodel.integration import outter_step
@@ -69,9 +68,8 @@ def load_model_and_template_state(key: Array):
     # but the cloud model will now be replaced with out hybrid version!
 
     # radiation
-    rad_model_kwargs = cm.standard_radiation.model_kwargs
-    rad_model = abcmodel.rad.StandardRadiationModel(**rad_model_kwargs)
-    rad_state = rad_model.init_state(**cm.standard_radiation.state_kwargs)
+    rad_model = abcmodel.rad.StandardRadiationModel()
+    rad_state = rad_model.init_state()
 
     # land
     land_model = abcmodel.land.AgsModel()
@@ -313,10 +311,8 @@ def benchmark_plot(
     tstart: float,
 ):
     # rad with clouds
-    rad_model = abcmodel.rad.CloudyRadiationModel(
-        **cm.cloudy_radiation.model_kwargs,
-    )
-    rad_state = rad_model.init_state(**cm.cloudy_radiation.state_kwargs)
+    rad_model = abcmodel.rad.CloudyRadiationModel()
+    rad_state = rad_model.init_state()
 
     # land surface
     land_model = abcmodel.land.AgsModel()

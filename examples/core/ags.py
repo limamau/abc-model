@@ -1,6 +1,5 @@
 import matplotlib.pyplot as plt
 
-import abcconfigs.class_model as cm
 import abcmodel
 
 
@@ -14,8 +13,8 @@ def main():
     tstart = 6.8
 
     # rad with clouds
-    rad_model = abcmodel.rad.CloudyRadiationModel(**cm.cloudy_radiation.model_kwargs)
-    rad_state = rad_model.init_state(**cm.cloudy_radiation.state_kwargs)
+    rad_model = abcmodel.rad.CloudyRadiationModel()
+    rad_state = rad_model.init_state()
 
     # land surface
     land_model = abcmodel.land.AgsModel()

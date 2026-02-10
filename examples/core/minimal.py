@@ -1,4 +1,3 @@
-import abcconfigs.class_model as cm
 import abcmodel
 
 
@@ -12,10 +11,8 @@ def main():
     tstart = 6.8
 
     # define rad model
-    rad_model = abcmodel.rad.StandardRadiationModel(
-        **cm.standard_radiation.model_kwargs,
-    )
-    rad_state = rad_model.init_state(**cm.standard_radiation.state_kwargs)
+    rad_model = abcmodel.rad.StandardRadiationModel()
+    rad_state = rad_model.init_state()
 
     # land surface
     land_model = abcmodel.land.MinimalLandSurfaceModel()

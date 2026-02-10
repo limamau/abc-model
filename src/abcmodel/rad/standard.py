@@ -48,17 +48,17 @@ class StandardRadiationModel(AbstractRadiationModel[StandardRadiationState]):
 
     def __init__(
         self,
-        lat: float,
-        lon: float,
-        doy: float,
-        cc: float,
+        lat: float = 51.97,
+        lon: float = -4.93,
+        doy: float = 268.0,
+        cc: float = 0.0,
     ):
         self.lat = lat
         self.lon = lon
         self.doy = doy
         self.cc = cc
 
-    def init_state(self, net_rad: float) -> StandardRadiationState:
+    def init_state(self, net_rad: float = 400.0) -> StandardRadiationState:
         """Initialize the model state.
 
         Args:
