@@ -42,10 +42,10 @@ We will do this using the `abcmodel` module, which is the _de facto_ module in t
 import abcmodel
 
 # setup models
-rad_model = abcmodel.rad.StandardRadiationModel(**cm.standard_rad.model_kwargs)
-land_model = abcmodel.land.JarvisStewartModel(**cm.jarvis_stewart.model_kwargs)
+rad_model = abcmodel.rad.StandardRadiationModel()
+land_model = abcmodel.land.JarvisStewartModel()
 surface_layer_model = abcmodel.atmos.surface_layer.ObukhovSurfaceLayerModel()
-mixed_layer_model = abcmodel.atmos.mixed_layer.BulkMixedLayerModel(**cm.bulk_mixed_layer.model_kwargs)
+mixed_layer_model = abcmodel.atmos.mixed_layer.BulkMixedLayerModel()
 cloud_model = abcmodel.atmos.clouds.CumulusModel()
 
 # setup atmos model
@@ -63,10 +63,10 @@ abcoupler = abcmodel.ABCoupler(
 )
 
 # setup initial conditions for each model
-rad_state = rad_model.init_state(**cm.standard_rad.state_kwargs)
-land_state = land_model.init_state(**cm.jarvis_stewart.state_kwargs)
-surface_layer_state = surface_layer_model.init_state(**cm.obukhov_surface_layer.state_kwargs)
-mixed_layer_state = mixed_layer_model.init_state(**cm.bulk_mixed_layer.state_kwargs)
+rad_state = rad_model.init_state()
+land_state = land_model.init_state()
+surface_layer_state = surface_layer_model.init_state()
+mixed_layer_state = mixed_layer_model.init_state()
 cloud_state = cloud_model.init_state()
 
 # setup atmos state
