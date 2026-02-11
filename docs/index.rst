@@ -1,4 +1,4 @@
-ABC Model Documentation
+ABC Model
 =========
 
 A simple model coupling biosphere and atmosphere made fully differentiable using JAX built up on the `CLASS model <https://github.com/classmodel/modelpy>`_.
