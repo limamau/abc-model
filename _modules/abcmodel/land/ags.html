@@ -1,0 +1,1041 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>abcmodel.land.ags &#8212; abc-model 0.1.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../../_static/documentation_options.js?v=a1637f0b"></script>
+    <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/abcmodel/land/ags';</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../_static/logo.png" class="logo__image only-light" alt="abc-model 0.1.0 documentation - Home"/>
+    <script>document.write(`<img src="../../../_static/logo.png" class="logo__image only-dark" alt="abc-model 0.1.0 documentation - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../source/api/abcmodel.html">ABC Model</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../source/api/abcmodel.rad.html">Radiation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/api/abcmodel.rad.standard.html">Standard</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/api/abcmodel.rad.cloudy.html">Cloudy</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../source/api/abcmodel.land.html">Land</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/api/abcmodel.land.ags.html">Ags</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/api/abcmodel.land.jarvis_stewart.html">Jarvis Stewart</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/api/abcmodel.land.minimal.html">Minimal</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/api/abcmodel.land.standard.html">Standard</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../source/api/abcmodel.atmos.html">Atmosphere</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/api/abcmodel.atmos.dayonly.html">Dayonly</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../source/api/abcmodel.atmos.surface_layer.html">Surface Layer</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../source/api/abcmodel.atmos.surface_layer.simple.html">Simple</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../source/api/abcmodel.atmos.surface_layer.obukhov.html">Obukhov</a></li>
+</ul>
+</details></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../source/api/abcmodel.atmos.mixed_layer.html">Mixed Layer</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../source/api/abcmodel.atmos.mixed_layer.bulk.html">Bulk</a></li>
+</ul>
+</details></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../source/api/abcmodel.atmos.clouds.html">Clouds</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../source/api/abcmodel.atmos.clouds.cumulus.html">Cumulus</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../source/api/abcmodel.atmos.clouds.no_clouds.html">No Clouds</a></li>
+</ul>
+</details></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/api/abcmodel.atmos.abstracts.html">Abstracts</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../source/api/abcmodel.abstracts.html">Abstracts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../source/api/abcmodel.coupling.html">Coupling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../source/api/abcmodel.integration.html">Integration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../source/api/abcmodel.utils.html">Utils</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../source/api/abcconfigs.html">ABC Configs</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../source/api/abcconfigs.aridities.html">Aridities</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/api/abcconfigs.aridities.arid.html">Arid</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/api/abcconfigs.aridities.humid.html">Humid</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../source/api/abcconfigs.aridities.standard.html">Standard</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/limamau/abc-model" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1></h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for abcmodel.land.ags</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="n">replace</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">jax</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">jax.numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">jnp</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">jax</span><span class="w"> </span><span class="kn">import</span> <span class="n">Array</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">jax.scipy.special</span><span class="w"> </span><span class="kn">import</span> <span class="n">exp1</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">..abstracts</span><span class="w"> </span><span class="kn">import</span> <span class="n">AbstractCoupledState</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">PhysicalConstants</span> <span class="k">as</span> <span class="n">cst</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">compute_esat</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.standard</span><span class="w"> </span><span class="kn">import</span> <span class="n">AbstractStandardLandModel</span><span class="p">,</span> <span class="n">StandardLandState</span>
+
+
+<div class="viewcode-block" id="AgsState">
+<a class="viewcode-back" href="../../../source/api/abcmodel.land.ags.html#abcmodel.land.ags.AgsState">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">AgsState</span><span class="p">(</span><span class="n">StandardLandState</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A-gs model state.&quot;&quot;&quot;</span>
+
+    <span class="n">rsCO2</span><span class="p">:</span> <span class="n">Array</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="mf">0.0</span><span class="p">))</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Stomatal resistance to CO2.&quot;&quot;&quot;</span>
+    <span class="n">gcco2</span><span class="p">:</span> <span class="n">Array</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="mf">0.0</span><span class="p">))</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Conductance to CO2.&quot;&quot;&quot;</span>
+    <span class="n">ci</span><span class="p">:</span> <span class="n">Array</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="mf">0.0</span><span class="p">))</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Intercellular CO2 concentration.&quot;&quot;&quot;</span>
+    <span class="n">co2abs</span><span class="p">:</span> <span class="n">Array</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="mf">0.0</span><span class="p">))</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;CO2 assimilation rate.&quot;&quot;&quot;</span>
+    <span class="n">wCO2A</span><span class="p">:</span> <span class="n">Array</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="mf">0.0</span><span class="p">))</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Net assimilation flux [mol m-2 s-1].&quot;&quot;&quot;</span>
+    <span class="n">wCO2R</span><span class="p">:</span> <span class="n">Array</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="mf">0.0</span><span class="p">))</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Respiration flux [mol m-2 s-1].&quot;&quot;&quot;</span>
+    <span class="n">wCO2</span><span class="p">:</span> <span class="n">Array</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="mf">0.0</span><span class="p">))</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Total CO2 flux [mol m-2 s-1].&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="AgsModel">
+<a class="viewcode-back" href="../../../source/api/abcmodel.land.ags.html#abcmodel.land.ags.AgsModel">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">AgsModel</span><span class="p">(</span><span class="n">AbstractStandardLandModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Ags land surface model with coupled photosynthesis and stomatal conductance.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        c3c4: string indicating whether the model should use C3 or C4 photosynthesis. Default is &quot;c3&quot;.</span>
+<span class="sd">        **kwargs: additional keyword arguments to pass to the base class.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c3c4</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;c3&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">c3c4</span> <span class="o">==</span> <span class="s2">&quot;c3&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">c3c4</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">elif</span> <span class="n">c3c4</span> <span class="o">==</span> <span class="s2">&quot;c4&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">c3c4</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;&#39;&#39;Invalid option &quot;</span><span class="si">{</span><span class="n">c3c4</span><span class="si">}</span><span class="s1">&quot; for &quot;c3c4&quot;.&#39;&#39;&#39;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">co2comp298</span> <span class="o">=</span> <span class="mf">68.5</span> <span class="k">if</span> <span class="n">c3c4</span> <span class="o">==</span> <span class="s2">&quot;c3&quot;</span> <span class="k">else</span> <span class="mf">4.3</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">net_rad10CO2</span> <span class="o">=</span> <span class="mf">1.5</span> <span class="k">if</span> <span class="n">c3c4</span> <span class="o">==</span> <span class="s2">&quot;c3&quot;</span> <span class="k">else</span> <span class="mf">1.5</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gm298</span> <span class="o">=</span> <span class="mf">7.0</span> <span class="k">if</span> <span class="n">c3c4</span> <span class="o">==</span> <span class="s2">&quot;c3&quot;</span> <span class="k">else</span> <span class="mf">17.5</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ammax298</span> <span class="o">=</span> <span class="mf">2.2</span> <span class="k">if</span> <span class="n">c3c4</span> <span class="o">==</span> <span class="s2">&quot;c3&quot;</span> <span class="k">else</span> <span class="mf">1.7</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">net_rad10gm</span> <span class="o">=</span> <span class="mf">2.0</span> <span class="k">if</span> <span class="n">c3c4</span> <span class="o">==</span> <span class="s2">&quot;c3&quot;</span> <span class="k">else</span> <span class="mf">2.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">temp1gm</span> <span class="o">=</span> <span class="mf">278.0</span> <span class="k">if</span> <span class="n">c3c4</span> <span class="o">==</span> <span class="s2">&quot;c3&quot;</span> <span class="k">else</span> <span class="mf">286.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">temp2gm</span> <span class="o">=</span> <span class="mf">301.0</span> <span class="k">if</span> <span class="n">c3c4</span> <span class="o">==</span> <span class="s2">&quot;c3&quot;</span> <span class="k">else</span> <span class="mf">309.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">net_rad10Am</span> <span class="o">=</span> <span class="mf">2.0</span> <span class="k">if</span> <span class="n">c3c4</span> <span class="o">==</span> <span class="s2">&quot;c3&quot;</span> <span class="k">else</span> <span class="mf">2.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">temp1Am</span> <span class="o">=</span> <span class="mf">281.0</span> <span class="k">if</span> <span class="n">c3c4</span> <span class="o">==</span> <span class="s2">&quot;c3&quot;</span> <span class="k">else</span> <span class="mf">286.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">temp2Am</span> <span class="o">=</span> <span class="mf">311.0</span> <span class="k">if</span> <span class="n">c3c4</span> <span class="o">==</span> <span class="s2">&quot;c3&quot;</span> <span class="k">else</span> <span class="mf">311.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">f0</span> <span class="o">=</span> <span class="mf">0.89</span> <span class="k">if</span> <span class="n">c3c4</span> <span class="o">==</span> <span class="s2">&quot;c3&quot;</span> <span class="k">else</span> <span class="mf">0.85</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ad</span> <span class="o">=</span> <span class="mf">0.07</span> <span class="k">if</span> <span class="n">c3c4</span> <span class="o">==</span> <span class="s2">&quot;c3&quot;</span> <span class="k">else</span> <span class="mf">0.15</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">alpha0</span> <span class="o">=</span> <span class="mf">0.017</span> <span class="k">if</span> <span class="n">c3c4</span> <span class="o">==</span> <span class="s2">&quot;c3&quot;</span> <span class="k">else</span> <span class="mf">0.014</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">kx</span> <span class="o">=</span> <span class="mf">0.7</span> <span class="k">if</span> <span class="n">c3c4</span> <span class="o">==</span> <span class="s2">&quot;c3&quot;</span> <span class="k">else</span> <span class="mf">0.7</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gmin</span> <span class="o">=</span> <span class="mf">0.25e-3</span> <span class="k">if</span> <span class="n">c3c4</span> <span class="o">==</span> <span class="s2">&quot;c3&quot;</span> <span class="k">else</span> <span class="mf">0.25e-3</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nuco2q</span> <span class="o">=</span> <span class="mf">1.6</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cw</span> <span class="o">=</span> <span class="mf">0.0016</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">wmax</span> <span class="o">=</span> <span class="mf">0.55</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">wmin</span> <span class="o">=</span> <span class="mf">0.005</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">r10</span> <span class="o">=</span> <span class="mf">0.23</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">e0</span> <span class="o">=</span> <span class="mf">53.3e3</span>
+
+<div class="viewcode-block" id="AgsModel.init_state">
+<a class="viewcode-back" href="../../../source/api/abcmodel.land.ags.html#abcmodel.land.ags.AgsModel.init_state">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">init_state</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">alpha</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.25</span><span class="p">,</span>
+        <span class="n">wg</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.21</span><span class="p">,</span>
+        <span class="n">temp_soil</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">285.0</span><span class="p">,</span>
+        <span class="n">temp2</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">286.0</span><span class="p">,</span>
+        <span class="n">surf_temp</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">290.0</span><span class="p">,</span>
+        <span class="n">wl</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0000</span><span class="p">,</span>
+        <span class="n">wq</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-4</span><span class="p">,</span>
+        <span class="n">wtheta</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span>
+        <span class="n">rs</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0e6</span><span class="p">,</span>
+        <span class="n">rssoil</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0e6</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AgsState</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize the model state.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            alpha: albedo [-]. Default is 0.25.</span>
+<span class="sd">            wg: Volumetric soil moisture [m3 m-3]. Default is 0.21.</span>
+<span class="sd">            temp_soil: Soil temperature [K]. Default is 285.0.</span>
+<span class="sd">            temp2: Deep soil temperature [K]. Default is 286.0.</span>
+<span class="sd">            surf_temp: Surface temperature [K]. Default is 290.0.</span>
+<span class="sd">            wl: Canopy water content [m]. Default is 0.0000.</span>
+<span class="sd">            wq: Kinematic moisture flux [kg/kg m/s]. Default is 1e-4.</span>
+<span class="sd">            wtheta: Kinematic heat flux [K m/s]. Default is 0.1.</span>
+<span class="sd">            rs: Surface resistance [s m-1]. Default is 1.0e6.</span>
+<span class="sd">            rssoil: Soil resistance [s m-1]. Default is 1.0e6.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            The initial land state.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">AgsState</span><span class="p">(</span>
+            <span class="n">alpha</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">alpha</span><span class="p">),</span>
+            <span class="n">wg</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">wg</span><span class="p">),</span>
+            <span class="n">temp_soil</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">temp_soil</span><span class="p">),</span>
+            <span class="n">temp2</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">temp2</span><span class="p">),</span>
+            <span class="n">surf_temp</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">surf_temp</span><span class="p">),</span>
+            <span class="n">wl</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">wl</span><span class="p">),</span>
+            <span class="n">wq</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">wq</span><span class="p">),</span>
+            <span class="n">wtheta</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">wtheta</span><span class="p">),</span>
+            <span class="n">rs</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">rs</span><span class="p">),</span>
+            <span class="n">rssoil</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">rssoil</span><span class="p">),</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="AgsModel.compute_co2comp">
+<a class="viewcode-back" href="../../../source/api/abcmodel.land.ags.html#abcmodel.land.ags.AgsModel.compute_co2comp">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">compute_co2comp</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">thetasurf</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Array</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute the CO₂ compensation concentration.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            thetasurf: surface potential temperature :math:`\\theta_s` [K].</span>
+<span class="sd">            rho: air density [kg m⁻³].</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            The CO₂ compensation concentration :math:`\\gamma` [ppmv].</span>
+
+<span class="sd">        Notes:</span>
+<span class="sd">            The CO₂ compensation point is computed as</span>
+
+<span class="sd">            .. math::</span>
+<span class="sd">                \\gamma = \\rho \\gamma_{298} Q_{10} e^{(T_s-298)/10}</span>
+
+<span class="sd">            where :math:`\\gamma_{298}` and :math:`Q_{10}` are parameters depending on the plant type (C3 or C4).</span>
+<span class="sd">            Here, :math:`\\theta_s` is used instead of the skin temperature :math:`T_s` to compute the exponential term,</span>
+<span class="sd">            probably because this comes before in the order of updates for stability?</span>
+
+<span class="sd">        References:</span>
+<span class="sd">            Equation E.2 of the CLASS book.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># limamau: why are we using thetasurf here instead of surf_temp?</span>
+        <span class="c1"># where is this rho coming from?</span>
+        <span class="n">temp_diff</span> <span class="o">=</span> <span class="mf">0.1</span> <span class="o">*</span> <span class="p">(</span><span class="n">thetasurf</span> <span class="o">-</span> <span class="mf">298.0</span><span class="p">)</span>
+        <span class="n">exp_term</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">net_rad10CO2</span><span class="p">,</span> <span class="n">temp_diff</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">co2comp298</span> <span class="o">*</span> <span class="n">cst</span><span class="o">.</span><span class="n">rho</span> <span class="o">*</span> <span class="n">exp_term</span></div>
+
+
+<div class="viewcode-block" id="AgsModel.compute_gm">
+<a class="viewcode-back" href="../../../source/api/abcmodel.land.ags.html#abcmodel.land.ags.AgsModel.compute_gm">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">compute_gm</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">thetasurf</span><span class="p">:</span> <span class="n">Array</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Array</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute the mesophyll conductance.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            thetasurf: surface potential temperature :math:`\\theta_s` [K].</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Mesophyll conductance :math:`g_m` [mm s⁻¹].</span>
+
+<span class="sd">        Notes:</span>
+<span class="sd">            This is given by</span>
+
+<span class="sd">            .. math::</span>
+<span class="sd">                g_m</span>
+<span class="sd">                = \\frac{g_{m298} \\cdot \\exp((T_s - 298)/10)}</span>
+<span class="sd">                {[1 + \\exp(0.3 \\cdot (T_{1g_m} - T_s))] \\cdot [1 + \\exp(0.3 \\cdot (T_s - T_{2g_m}))]},</span>
+
+<span class="sd">            where :math:`g_{m298}`, :math:`T_{1g_m}` and :math:`T_{2g_m}` are parameters depending on the plant type (C3 or C4).</span>
+<span class="sd">            Here again, instead of using the skin temperature :math:`T_s`, we use :math:`\\theta_s`.</span>
+
+<span class="sd">        References:</span>
+<span class="sd">            Equation E.7 from the CLASS book.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">temp_diff</span> <span class="o">=</span> <span class="mf">0.1</span> <span class="o">*</span> <span class="p">(</span><span class="n">thetasurf</span> <span class="o">-</span> <span class="mf">298.0</span><span class="p">)</span>
+        <span class="n">exp_term</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">net_rad10gm</span><span class="p">,</span> <span class="n">temp_diff</span><span class="p">)</span>
+        <span class="n">temp_factor1</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">+</span> <span class="n">jnp</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mf">0.3</span> <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">temp1gm</span> <span class="o">-</span> <span class="n">thetasurf</span><span class="p">))</span>
+        <span class="n">temp_factor2</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">+</span> <span class="n">jnp</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mf">0.3</span> <span class="o">*</span> <span class="p">(</span><span class="n">thetasurf</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">temp2gm</span><span class="p">))</span>
+        <span class="n">gm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gm298</span> <span class="o">*</span> <span class="n">exp_term</span> <span class="o">/</span> <span class="p">(</span><span class="n">temp_factor1</span> <span class="o">*</span> <span class="n">temp_factor2</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">gm</span> <span class="o">/</span> <span class="mf">1000.0</span></div>
+
+
+<div class="viewcode-block" id="AgsModel.compute_fmin">
+<a class="viewcode-back" href="../../../source/api/abcmodel.land.ags.html#abcmodel.land.ags.AgsModel.compute_fmin">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">compute_fmin</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">gm</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Array</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute minimum stomatal conductance factor (fmin).</span>
+
+<span class="sd">        Notes:</span>
+<span class="sd">            The minimum stomatal conductance factor is computed by solving the quadratic equation:</span>
+
+<span class="sd">            .. math::</span>
+<span class="sd">                f_{min}^2 + f_{min} \\left( \\frac{g_{min}}{\\nu_{CO2}} - \\frac{1}{9} g_m \\right) - \\frac{g_{min}}{\\nu_{CO2}} g_m = 0</span>
+
+<span class="sd">            which leads to</span>
+
+<span class="sd">            .. math::</span>
+<span class="sd">                f_{min} = -f_{min,0} + \\frac{\\sqrt{f_{min,0}^2 + 4 \\frac{g_{min}}{\\nu_{CO2}} g_m}}{2 g_m}</span>
+
+<span class="sd">            where :math:`f_{min,0} = \\frac{g_{min}}{\\nu_{CO2}} - \\frac{1}{9} g_m`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">fmin0</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gmin</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">nuco2q</span> <span class="o">-</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="mf">9.0</span> <span class="o">*</span> <span class="n">gm</span>
+        <span class="n">fmin_sq_term</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">fmin0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">)</span> <span class="o">+</span> <span class="mi">4</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">gmin</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">nuco2q</span> <span class="o">*</span> <span class="n">gm</span>
+        <span class="n">fmin</span> <span class="o">=</span> <span class="o">-</span><span class="n">fmin0</span> <span class="o">+</span> <span class="n">jnp</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">fmin_sq_term</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">gm</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">fmin</span></div>
+
+
+<div class="viewcode-block" id="AgsModel.compute_ds">
+<a class="viewcode-back" href="../../../source/api/abcmodel.land.ags.html#abcmodel.land.ags.AgsModel.compute_ds">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">compute_ds</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">surf_temp</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span>
+        <span class="n">e</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Array</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute vapor pressure deficit (ds) in kPa.</span>
+
+<span class="sd">        Notes:</span>
+<span class="sd">            The vapor pressure deficit is given by</span>
+
+<span class="sd">            .. math::</span>
+<span class="sd">                d_s = \\frac{e_{sat}(T_s) - e}{1000}</span>
+
+<span class="sd">            where :math:`e_{sat}(T_s)` is the saturation vapor pressure at surface temperature</span>
+<span class="sd">            and :math:`e` is the actual vapor pressure.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ds</span> <span class="o">=</span> <span class="p">(</span><span class="n">compute_esat</span><span class="p">(</span><span class="n">surf_temp</span><span class="p">)</span> <span class="o">-</span> <span class="n">e</span><span class="p">)</span> <span class="o">/</span> <span class="mf">1000.0</span>  <span class="c1"># kPa</span>
+        <span class="k">return</span> <span class="n">ds</span></div>
+
+
+<div class="viewcode-block" id="AgsModel.compute_d0">
+<a class="viewcode-back" href="../../../source/api/abcmodel.land.ags.html#abcmodel.land.ags.AgsModel.compute_d0">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">compute_d0</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">fmin</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Array</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute reference vapor pressure deficit (d0) in kPa.</span>
+
+<span class="sd">        Notes:</span>
+<span class="sd">            The reference vapor pressure deficit is given by</span>
+
+<span class="sd">            .. math::</span>
+<span class="sd">                d_0 = \\frac{f_0 - f_{min}}{a_d}</span>
+
+<span class="sd">            where :math:`f_0` and :math:`a_d` are empirical parameters.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">d0</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">f0</span> <span class="o">-</span> <span class="n">fmin</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">ad</span>
+        <span class="k">return</span> <span class="n">d0</span></div>
+
+
+<div class="viewcode-block" id="AgsModel.compute_internal_co2">
+<a class="viewcode-back" href="../../../source/api/abcmodel.land.ags.html#abcmodel.land.ags.AgsModel.compute_internal_co2">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">compute_internal_co2</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">ds</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span>
+        <span class="n">d0</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span>
+        <span class="n">fmin</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span>
+        <span class="n">co2</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span>
+        <span class="n">co2comp</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Array</span><span class="p">,</span> <span class="n">Array</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute cfrac, co2abs, and ci (internal CO2 concentration).</span>
+
+<span class="sd">        Notes:</span>
+<span class="sd">            The fraction of internal to ambient CO2 concentration :math:`c_{frac}` is given by</span>
+
+<span class="sd">            .. math::</span>
+<span class="sd">                c_{frac} = f_0 (1 - d_s/d_0) + f_{min} (d_s/d_0)</span>
+
+<span class="sd">            The ambient CO2 concentration in partial pressure units :math:`C_a` is</span>
+
+<span class="sd">            .. math::</span>
+<span class="sd">                C_a = [CO_2] \\frac{M_{CO2}}{M_{air}} \\rho</span>
+
+<span class="sd">            The internal CO2 concentration :math:`C_i` is then</span>
+
+<span class="sd">            .. math::</span>
+<span class="sd">                C_i = c_{frac} (C_a - \\gamma) + \\gamma</span>
+
+<span class="sd">            where :math:`\\gamma` is the CO2 compensation point.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">cfrac</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">f0</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="p">(</span><span class="n">ds</span> <span class="o">/</span> <span class="n">d0</span><span class="p">))</span> <span class="o">+</span> <span class="n">fmin</span> <span class="o">*</span> <span class="p">(</span><span class="n">ds</span> <span class="o">/</span> <span class="n">d0</span><span class="p">)</span>
+        <span class="n">co2abs</span> <span class="o">=</span> <span class="n">co2</span> <span class="o">*</span> <span class="p">(</span><span class="n">cst</span><span class="o">.</span><span class="n">mco2</span> <span class="o">/</span> <span class="n">cst</span><span class="o">.</span><span class="n">mair</span><span class="p">)</span> <span class="o">*</span> <span class="n">cst</span><span class="o">.</span><span class="n">rho</span>
+        <span class="n">ci</span> <span class="o">=</span> <span class="n">cfrac</span> <span class="o">*</span> <span class="p">(</span><span class="n">co2abs</span> <span class="o">-</span> <span class="n">co2comp</span><span class="p">)</span> <span class="o">+</span> <span class="n">co2comp</span>
+        <span class="k">return</span> <span class="n">ci</span><span class="p">,</span> <span class="n">co2abs</span></div>
+
+
+<div class="viewcode-block" id="AgsModel.compute_max_gross_primary_production">
+<a class="viewcode-back" href="../../../source/api/abcmodel.land.ags.html#abcmodel.land.ags.AgsModel.compute_max_gross_primary_production">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">compute_max_gross_primary_production</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">thetasurf</span><span class="p">:</span> <span class="n">Array</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Array</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute maximal gross primary production in high light conditions ``ammax``.</span>
+
+<span class="sd">        Notes:</span>
+<span class="sd">            The maximal gross primary production is given by</span>
+
+<span class="sd">            .. math::</span>
+<span class="sd">                A_{m,max} = A_{m,max,298} Q_{10} e^{(T_s-298)/10} f_Q(T_s),</span>
+
+<span class="sd">            where :math:`A_{m,max,298}` is the value at 298 K, :math:`Q_{10}` is the temperature coefficient,</span>
+<span class="sd">            and :math:`f_Q(T_s)` is a temperature correction function given by</span>
+
+<span class="sd">            .. math::</span>
+<span class="sd">                f_Q(T_s) = \\frac{1}{[1 + \\exp(0.3(T_{1Am}-T_s))] [1 + \\exp(0.3(T_s-T_{2Am}))]}.</span>
+
+<span class="sd">        References:</span>
+<span class="sd">            Equation E.3 from the CLASS book.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">temp_diff</span> <span class="o">=</span> <span class="mf">0.1</span> <span class="o">*</span> <span class="p">(</span><span class="n">thetasurf</span> <span class="o">-</span> <span class="mf">298.0</span><span class="p">)</span>
+        <span class="n">exp_term</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">net_rad10Am</span><span class="p">,</span> <span class="n">temp_diff</span><span class="p">)</span>
+        <span class="n">temp_factor1</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">+</span> <span class="n">jnp</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mf">0.3</span> <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">temp1Am</span> <span class="o">-</span> <span class="n">thetasurf</span><span class="p">))</span>
+        <span class="n">temp_factor2</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">+</span> <span class="n">jnp</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mf">0.3</span> <span class="o">*</span> <span class="p">(</span><span class="n">thetasurf</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">temp2Am</span><span class="p">))</span>
+        <span class="n">ammax</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ammax298</span> <span class="o">*</span> <span class="n">exp_term</span> <span class="o">/</span> <span class="p">(</span><span class="n">temp_factor1</span> <span class="o">*</span> <span class="n">temp_factor2</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ammax</span></div>
+
+
+<div class="viewcode-block" id="AgsModel.compute_soil_moisture_stress_factor">
+<a class="viewcode-back" href="../../../source/api/abcmodel.land.ags.html#abcmodel.land.ags.AgsModel.compute_soil_moisture_stress_factor">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">compute_soil_moisture_stress_factor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">w2</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Array</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute effect of soil moisture stress on gross assimilation rate ``fstr``.</span>
+
+<span class="sd">        Notes:</span>
+<span class="sd">            The soil moisture stress factor is calculated based on the relative soil moisture content</span>
+<span class="sd">            and the parameter :math:`c_{\\beta}`.</span>
+
+<span class="sd">            .. math::</span>
+<span class="sd">                f_{str} = \\frac{1 - e^{-p \\beta_w}}{1 - e^{-p}}</span>
+
+<span class="sd">            where :math:`\\beta_w` is the relative soil moisture and :math:`p` depends on :math:`c_{\\beta}`.</span>
+
+<span class="sd">        References:</span>
+<span class="sd">            Equation E.19 from the CLASS book.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># soil moisture ratio</span>
+        <span class="n">soil_moisture_ratio</span> <span class="o">=</span> <span class="p">(</span><span class="n">w2</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">wwilt</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">wfc</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">wwilt</span><span class="p">)</span>
+        <span class="n">betaw</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">soil_moisture_ratio</span><span class="p">,</span> <span class="mf">1e-3</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>
+
+        <span class="c1"># branch functions for different c_beta ranges</span>
+        <span class="k">def</span><span class="w"> </span><span class="nf">case_zero</span><span class="p">(</span><span class="n">_</span><span class="p">):</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;c_beta == 0: return betaw directly&quot;&quot;&quot;</span>
+            <span class="k">return</span> <span class="n">betaw</span>
+
+        <span class="k">def</span><span class="w"> </span><span class="nf">case_low</span><span class="p">(</span><span class="n">_</span><span class="p">):</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;c_beta &lt; 0.25: p = 6.4 * c_beta&quot;&quot;&quot;</span>
+            <span class="n">p</span> <span class="o">=</span> <span class="mf">6.4</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">c_beta</span>
+            <span class="n">numerator</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="n">jnp</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">p</span> <span class="o">*</span> <span class="n">betaw</span><span class="p">)</span>
+            <span class="n">denominator</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="n">jnp</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">p</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">numerator</span> <span class="o">/</span> <span class="n">denominator</span>
+
+        <span class="k">def</span><span class="w"> </span><span class="nf">case_medium</span><span class="p">(</span><span class="n">_</span><span class="p">):</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;0.25 &lt;= c_beta &lt; 0.50: p = 7.6 * c_beta - 0.3&quot;&quot;&quot;</span>
+            <span class="n">p</span> <span class="o">=</span> <span class="mf">7.6</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">c_beta</span> <span class="o">-</span> <span class="mf">0.3</span>
+            <span class="n">numerator</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="n">jnp</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">p</span> <span class="o">*</span> <span class="n">betaw</span><span class="p">)</span>
+            <span class="n">denominator</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="n">jnp</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">p</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">numerator</span> <span class="o">/</span> <span class="n">denominator</span>
+
+        <span class="k">def</span><span class="w"> </span><span class="nf">case_high</span><span class="p">(</span><span class="n">_</span><span class="p">):</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;c_beta &gt;= 0.50: p = 2^(3.66 * c_beta + 0.34) - 1&quot;&quot;&quot;</span>
+            <span class="n">p</span> <span class="o">=</span> <span class="mf">2.0</span> <span class="o">**</span> <span class="p">(</span><span class="mf">3.66</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">c_beta</span> <span class="o">+</span> <span class="mf">0.34</span><span class="p">)</span> <span class="o">-</span> <span class="mf">1.0</span>
+            <span class="n">numerator</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="n">jnp</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">p</span> <span class="o">*</span> <span class="n">betaw</span><span class="p">)</span>
+            <span class="n">denominator</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="n">jnp</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">p</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">numerator</span> <span class="o">/</span> <span class="n">denominator</span>
+
+        <span class="c1"># determine which case to use based on c_beta value</span>
+        <span class="n">branch_index</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">c_beta</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="mi">0</span><span class="p">,</span>
+            <span class="n">jnp</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">c_beta</span> <span class="o">&lt;</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">c_beta</span> <span class="o">&lt;</span> <span class="mf">0.50</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)),</span>
+        <span class="p">)</span>
+
+        <span class="c1"># select the appropriate function</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">lax</span><span class="o">.</span><span class="n">switch</span><span class="p">(</span>
+            <span class="n">branch_index</span><span class="p">,</span> <span class="p">[</span><span class="n">case_zero</span><span class="p">,</span> <span class="n">case_low</span><span class="p">,</span> <span class="n">case_medium</span><span class="p">,</span> <span class="n">case_high</span><span class="p">],</span> <span class="kc">None</span>
+        <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">result</span></div>
+
+
+<div class="viewcode-block" id="AgsModel.compute_gross_assimilation">
+<a class="viewcode-back" href="../../../source/api/abcmodel.land.ags.html#abcmodel.land.ags.AgsModel.compute_gross_assimilation">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">compute_gross_assimilation</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">ammax</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span>
+        <span class="n">gm</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span>
+        <span class="n">ci</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span>
+        <span class="n">co2comp</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Array</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute gross assimilation rate (am).</span>
+
+<span class="sd">        Notes:</span>
+<span class="sd">            The gross assimilation rate is given by</span>
+
+<span class="sd">            .. math::</span>
+<span class="sd">                A_m = A_{m,max} \\left[ 1 - \\exp\\left( -\\frac{g_m(C_i - \\gamma)}{A_{m,max}} \\right) \\right]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">assimilation_factor</span> <span class="o">=</span> <span class="o">-</span><span class="p">(</span><span class="n">gm</span> <span class="o">*</span> <span class="p">(</span><span class="n">ci</span> <span class="o">-</span> <span class="n">co2comp</span><span class="p">)</span> <span class="o">/</span> <span class="n">ammax</span><span class="p">)</span>
+        <span class="n">am</span> <span class="o">=</span> <span class="n">ammax</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">jnp</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">assimilation_factor</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">am</span></div>
+
+
+<div class="viewcode-block" id="AgsModel.compute_dark_respiration">
+<a class="viewcode-back" href="../../../source/api/abcmodel.land.ags.html#abcmodel.land.ags.AgsModel.compute_dark_respiration">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">compute_dark_respiration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">am</span><span class="p">:</span> <span class="n">Array</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Array</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute dark respiration (rdark) as a fraction of gross assimilation.</span>
+
+<span class="sd">        Notes:</span>
+<span class="sd">            Dark respiration is assumed to be proportional to gross assimilation:</span>
+
+<span class="sd">            .. math::</span>
+<span class="sd">                R_{dark} = \\frac{1}{9} A_m</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">rdark</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">/</span> <span class="mf">9.0</span><span class="p">)</span> <span class="o">*</span> <span class="n">am</span>
+        <span class="k">return</span> <span class="n">rdark</span></div>
+
+
+<div class="viewcode-block" id="AgsModel.compute_absorbed_par">
+<a class="viewcode-back" href="../../../source/api/abcmodel.land.ags.html#abcmodel.land.ags.AgsModel.compute_absorbed_par">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">compute_absorbed_par</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">in_srad</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Array</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute absorbed photosynthetically active rad (PAR).</span>
+
+<span class="sd">        Notes:</span>
+<span class="sd">            Absorbed PAR is estimated as 50% of the incoming shortwave rad scaled by vegetation cover:</span>
+
+<span class="sd">            .. math::</span>
+<span class="sd">                PAR = 0.5 \\cdot S_{\\downarrow} \\cdot c_{veg}</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">par</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="mf">1e-1</span><span class="p">,</span> <span class="n">in_srad</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">cveg</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">par</span></div>
+
+
+<div class="viewcode-block" id="AgsModel.compute_light_use_efficiency">
+<a class="viewcode-back" href="../../../source/api/abcmodel.land.ags.html#abcmodel.land.ags.AgsModel.compute_light_use_efficiency">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">compute_light_use_efficiency</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">co2abs</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span>
+        <span class="n">co2comp</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Array</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute light use efficiency (alphac).</span>
+
+<span class="sd">        Notes:</span>
+<span class="sd">            The light use efficiency is given by</span>
+
+<span class="sd">            .. math::</span>
+<span class="sd">                \\alpha_c = \\alpha_0 \\frac{C_a - \\gamma}{C_a + 2\\gamma}</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">co2_ratio</span> <span class="o">=</span> <span class="p">(</span><span class="n">co2abs</span> <span class="o">-</span> <span class="n">co2comp</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">co2abs</span> <span class="o">+</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">co2comp</span><span class="p">)</span>
+        <span class="n">alphac</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">alpha0</span> <span class="o">*</span> <span class="n">co2_ratio</span>
+        <span class="k">return</span> <span class="n">alphac</span></div>
+
+
+<div class="viewcode-block" id="AgsModel.compute_canopy_co2_conductance">
+<a class="viewcode-back" href="../../../source/api/abcmodel.land.ags.html#abcmodel.land.ags.AgsModel.compute_canopy_co2_conductance">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">compute_canopy_co2_conductance</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">alphac</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span>
+        <span class="n">par</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span>
+        <span class="n">am</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span>
+        <span class="n">rdark</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span>
+        <span class="n">fstr</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span>
+        <span class="n">co2abs</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span>
+        <span class="n">co2comp</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span>
+        <span class="n">ds</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span>
+        <span class="n">d0</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span>
+        <span class="n">fmin</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Array</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute upscaling from leaf to canopy and CO2 conductance at canopy level ``gcco2``.</span>
+
+<span class="sd">        Notes:</span>
+<span class="sd">            The canopy conductance is obtained by integrating the leaf conductance over the canopy depth,</span>
+<span class="sd">            assuming an exponential decay of rad and photosynthetic capacity.</span>
+
+<span class="sd">        References:</span>
+<span class="sd">            Equations E.13, E.14, E.15 from the CLASS book.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">alphac</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">kx</span> <span class="o">*</span> <span class="n">par</span> <span class="o">/</span> <span class="p">(</span><span class="n">am</span> <span class="o">+</span> <span class="n">rdark</span><span class="p">)</span>
+        <span class="n">exp1_arg1</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">y</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">kx</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">lai</span><span class="p">)])</span>
+        <span class="n">exp1_arg2</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">y</span><span class="p">])</span>
+        <span class="n">exp1_term</span> <span class="o">=</span> <span class="n">exp1</span><span class="p">(</span><span class="n">exp1_arg1</span><span class="p">)</span> <span class="o">-</span> <span class="n">exp1</span><span class="p">(</span><span class="n">exp1_arg2</span><span class="p">)</span>
+        <span class="n">exp1_term</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">exp1_term</span><span class="p">)</span>
+        <span class="n">an</span> <span class="o">=</span> <span class="p">(</span><span class="n">am</span> <span class="o">+</span> <span class="n">rdark</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">/</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">kx</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">lai</span><span class="p">))</span> <span class="o">*</span> <span class="n">exp1_term</span><span class="p">)</span>
+        <span class="n">a1</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">f0</span><span class="p">)</span>
+        <span class="n">dstar</span> <span class="o">=</span> <span class="n">d0</span> <span class="o">/</span> <span class="p">(</span><span class="n">a1</span> <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">f0</span> <span class="o">-</span> <span class="n">fmin</span><span class="p">))</span>
+        <span class="n">conductance_factor</span> <span class="o">=</span> <span class="n">a1</span> <span class="o">*</span> <span class="n">fstr</span> <span class="o">*</span> <span class="n">an</span> <span class="o">/</span> <span class="p">((</span><span class="n">co2abs</span> <span class="o">-</span> <span class="n">co2comp</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="n">ds</span> <span class="o">/</span> <span class="n">dstar</span><span class="p">))</span>
+        <span class="n">gcco2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lai</span> <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gmin</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">nuco2q</span> <span class="o">+</span> <span class="n">conductance_factor</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">gcco2</span></div>
+
+
+<div class="viewcode-block" id="AgsModel.compute_rs">
+<a class="viewcode-back" href="../../../source/api/abcmodel.land.ags.html#abcmodel.land.ags.AgsModel.compute_rs">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">compute_rs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gcco2</span><span class="p">:</span> <span class="n">Array</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute surface resistance from canopy CO2 conductance.</span>
+
+<span class="sd">        Notes:</span>
+<span class="sd">            The surface resistance is related to the canopy CO2 conductance by</span>
+
+<span class="sd">            .. math::</span>
+<span class="sd">                r_s = \\frac{1}{1.6 g_{c,CO2}}</span>
+
+<span class="sd">            where the factor 1.6 accounts for the ratio of diffusivities of water vapor and CO2.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="p">(</span><span class="mf">1.6</span> <span class="o">*</span> <span class="n">gcco2</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="AgsModel.update_surface_resistance">
+<a class="viewcode-back" href="../../../source/api/abcmodel.land.ags.html#abcmodel.land.ags.AgsModel.update_surface_resistance">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">update_surface_resistance</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="n">AbstractCoupledState</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AbstractCoupledState</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute surface resistance using Ags photosynthesis-conductance model.&quot;&quot;&quot;</span>
+        <span class="n">land_state</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">land</span>
+        <span class="n">atmos</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">atmos</span>
+        <span class="n">thetasurf</span> <span class="o">=</span> <span class="n">atmos</span><span class="o">.</span><span class="n">thetasurf</span>
+        <span class="n">co2comp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_co2comp</span><span class="p">(</span><span class="n">thetasurf</span><span class="p">)</span>
+        <span class="n">gm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_gm</span><span class="p">(</span><span class="n">thetasurf</span><span class="p">)</span>
+        <span class="n">fmin</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_fmin</span><span class="p">(</span><span class="n">gm</span><span class="p">)</span>
+        <span class="n">ds</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_ds</span><span class="p">(</span><span class="n">thetasurf</span><span class="p">,</span> <span class="n">land_state</span><span class="o">.</span><span class="n">e</span><span class="p">)</span>
+        <span class="n">d0</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_d0</span><span class="p">(</span><span class="n">fmin</span><span class="p">)</span>
+        <span class="n">ci</span><span class="p">,</span> <span class="n">co2abs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_internal_co2</span><span class="p">(</span>
+            <span class="n">ds</span><span class="p">,</span>
+            <span class="n">d0</span><span class="p">,</span>
+            <span class="n">fmin</span><span class="p">,</span>
+            <span class="n">atmos</span><span class="o">.</span><span class="n">co2</span><span class="p">,</span>
+            <span class="n">co2comp</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">ammax</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_max_gross_primary_production</span><span class="p">(</span><span class="n">thetasurf</span><span class="p">)</span>
+        <span class="n">fstr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_soil_moisture_stress_factor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">w2</span><span class="p">)</span>
+        <span class="n">am</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_gross_assimilation</span><span class="p">(</span><span class="n">ammax</span><span class="p">,</span> <span class="n">gm</span><span class="p">,</span> <span class="n">ci</span><span class="p">,</span> <span class="n">co2comp</span><span class="p">)</span>
+        <span class="n">rdark</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_dark_respiration</span><span class="p">(</span><span class="n">am</span><span class="p">)</span>
+        <span class="n">par</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_absorbed_par</span><span class="p">(</span><span class="n">state</span><span class="o">.</span><span class="n">in_srad</span><span class="p">)</span>
+        <span class="n">alphac</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_light_use_efficiency</span><span class="p">(</span><span class="n">co2abs</span><span class="p">,</span> <span class="n">co2comp</span><span class="p">)</span>
+        <span class="n">gcco2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_canopy_co2_conductance</span><span class="p">(</span>
+            <span class="n">alphac</span><span class="p">,</span>
+            <span class="n">par</span><span class="p">,</span>
+            <span class="n">am</span><span class="p">,</span>
+            <span class="n">rdark</span><span class="p">,</span>
+            <span class="n">fstr</span><span class="p">,</span>
+            <span class="n">co2abs</span><span class="p">,</span>
+            <span class="n">co2comp</span><span class="p">,</span>
+            <span class="n">ds</span><span class="p">,</span>
+            <span class="n">d0</span><span class="p">,</span>
+            <span class="n">fmin</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">rs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_rs</span><span class="p">(</span><span class="n">gcco2</span><span class="p">)</span>
+        <span class="n">new_land</span> <span class="o">=</span> <span class="n">replace</span><span class="p">(</span><span class="n">land_state</span><span class="p">,</span> <span class="n">ci</span><span class="o">=</span><span class="n">ci</span><span class="p">,</span> <span class="n">co2abs</span><span class="o">=</span><span class="n">co2abs</span><span class="p">,</span> <span class="n">gcco2</span><span class="o">=</span><span class="n">gcco2</span><span class="p">,</span> <span class="n">rs</span><span class="o">=</span><span class="n">rs</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">state</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">land</span><span class="o">=</span><span class="n">new_land</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="AgsModel.compute_surface_co2_resistance">
+<a class="viewcode-back" href="../../../source/api/abcmodel.land.ags.html#abcmodel.land.ags.AgsModel.compute_surface_co2_resistance">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">compute_surface_co2_resistance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gcco2</span><span class="p">:</span> <span class="n">Array</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Array</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute surface resistance to CO₂ (rsCO2) from canopy conductance.</span>
+
+<span class="sd">        Notes:</span>
+<span class="sd">            .. math::</span>
+<span class="sd">                r_{s,CO2} = \\frac{1}{g_{c,CO2}}</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">gcco2</span></div>
+
+
+<div class="viewcode-block" id="AgsModel.compute_net_assimilation">
+<a class="viewcode-back" href="../../../source/api/abcmodel.land.ags.html#abcmodel.land.ags.AgsModel.compute_net_assimilation">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">compute_net_assimilation</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">co2abs</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span> <span class="n">ci</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span> <span class="n">ra</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span> <span class="n">rsCO2</span><span class="p">:</span> <span class="n">Array</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Array</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute net CO₂ assimilation rate (an).</span>
+
+<span class="sd">        Notes:</span>
+<span class="sd">            The net assimilation rate is given by the diffusion equation:</span>
+
+<span class="sd">            .. math::</span>
+<span class="sd">                A_n = -\\frac{C_a - C_i}{r_a + r_{s,CO2}}</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="o">-</span><span class="p">(</span><span class="n">co2abs</span> <span class="o">-</span> <span class="n">ci</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">ra</span> <span class="o">+</span> <span class="n">rsCO2</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="AgsModel.compute_soil_water_fraction">
+<a class="viewcode-back" href="../../../source/api/abcmodel.land.ags.html#abcmodel.land.ags.AgsModel.compute_soil_water_fraction">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">compute_soil_water_fraction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">wg</span><span class="p">:</span> <span class="n">Array</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Array</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute soil water fraction (fw) for respiration scaling.</span>
+
+<span class="sd">        Notes:</span>
+<span class="sd">            .. math::</span>
+<span class="sd">                f_w = \\frac{c_w W_{max}}{w_g + w_{min}}</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cw</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">wmax</span> <span class="o">/</span> <span class="p">(</span><span class="n">wg</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">wmin</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="AgsModel.compute_respiration">
+<a class="viewcode-back" href="../../../source/api/abcmodel.land.ags.html#abcmodel.land.ags.AgsModel.compute_respiration">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">compute_respiration</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">temp_soil</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span>
+        <span class="n">fw</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Array</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute soil respiration (resp) as a function of temperature and soil water.</span>
+
+<span class="sd">        Notes:</span>
+<span class="sd">            Soil respiration is given by</span>
+
+<span class="sd">            .. math::</span>
+<span class="sd">                R_{soil} = R_{10} (1 - f_w) \\exp\\left( \\frac{E_0}{R T_{ref}} (1 - T_{ref}/T_{soil}) \\right)</span>
+
+<span class="sd">            where :math:`R_{10}` is the reference respiration at 10°C, :math:`E_0` is the activation energy,</span>
+<span class="sd">            and :math:`T_{ref} = 283.15` K.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">temp_ratio</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="mf">283.15</span> <span class="o">/</span> <span class="n">temp_soil</span>
+        <span class="n">resp_factor</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">e0</span> <span class="o">/</span> <span class="p">(</span><span class="mf">283.15</span> <span class="o">*</span> <span class="mf">8.314</span><span class="p">)</span> <span class="o">*</span> <span class="n">temp_ratio</span><span class="p">)</span>
+        <span class="n">resp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">r10</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">fw</span><span class="p">)</span> <span class="o">*</span> <span class="n">resp_factor</span>
+        <span class="k">return</span> <span class="n">resp</span></div>
+
+
+<div class="viewcode-block" id="AgsModel.scale_flux_to_mol">
+<a class="viewcode-back" href="../../../source/api/abcmodel.land.ags.html#abcmodel.land.ags.AgsModel.scale_flux_to_mol">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">scale_flux_to_mol</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">flux</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Array</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Scale a flux to mol m⁻² s⁻¹ using physical constants.</span>
+
+<span class="sd">        Notes:</span>
+<span class="sd">            The scaling is given by</span>
+
+<span class="sd">            .. math::</span>
+<span class="sd">                F_{mol} = F \\frac{M_{air}}{\\rho M_{CO2}}</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">flux</span> <span class="o">*</span> <span class="p">(</span><span class="n">cst</span><span class="o">.</span><span class="n">mair</span> <span class="o">/</span> <span class="p">(</span><span class="n">cst</span><span class="o">.</span><span class="n">rho</span> <span class="o">*</span> <span class="n">cst</span><span class="o">.</span><span class="n">mco2</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="AgsModel.update_co2_flux">
+<a class="viewcode-back" href="../../../source/api/abcmodel.land.ags.html#abcmodel.land.ags.AgsModel.update_co2_flux">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">update_co2_flux</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="n">AbstractCoupledState</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AbstractCoupledState</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute the CO₂ flux and update the state.</span>
+
+<span class="sd">        Notes:</span>
+<span class="sd">            This method updates the CO2 flux variables in the state:</span>
+<span class="sd">            - ``rsCO2``: Surface resistance to CO2</span>
+<span class="sd">            - ``wCO2A``: Net assimilation flux (scaled to mol)</span>
+<span class="sd">            - ``wCO2R``: Respiration flux (scaled to mol)</span>
+<span class="sd">            - ``wCO2``: Total CO2 flux</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">land_state</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">land</span>
+        <span class="n">atmos</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">atmos</span>
+        <span class="n">rsCO2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_surface_co2_resistance</span><span class="p">(</span><span class="n">land_state</span><span class="o">.</span><span class="n">gcco2</span><span class="p">)</span>
+        <span class="n">an</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_net_assimilation</span><span class="p">(</span>
+            <span class="n">land_state</span><span class="o">.</span><span class="n">co2abs</span><span class="p">,</span> <span class="n">land_state</span><span class="o">.</span><span class="n">ci</span><span class="p">,</span> <span class="n">atmos</span><span class="o">.</span><span class="n">ra</span><span class="p">,</span> <span class="n">rsCO2</span>
+        <span class="p">)</span>
+        <span class="n">fw</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_soil_water_fraction</span><span class="p">(</span><span class="n">land_state</span><span class="o">.</span><span class="n">wg</span><span class="p">)</span>
+        <span class="n">resp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_respiration</span><span class="p">(</span><span class="n">land_state</span><span class="o">.</span><span class="n">temp_soil</span><span class="p">,</span> <span class="n">fw</span><span class="p">)</span>
+        <span class="n">wCO2A</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scale_flux_to_mol</span><span class="p">(</span><span class="n">an</span><span class="p">)</span>
+        <span class="n">wCO2R</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scale_flux_to_mol</span><span class="p">(</span><span class="n">resp</span><span class="p">)</span>
+        <span class="n">wCO2</span> <span class="o">=</span> <span class="n">wCO2A</span> <span class="o">+</span> <span class="n">wCO2R</span>
+        <span class="n">new_land</span> <span class="o">=</span> <span class="n">replace</span><span class="p">(</span><span class="n">land_state</span><span class="p">,</span> <span class="n">rsCO2</span><span class="o">=</span><span class="n">rsCO2</span><span class="p">,</span> <span class="n">wCO2A</span><span class="o">=</span><span class="n">wCO2A</span><span class="p">,</span> <span class="n">wCO2R</span><span class="o">=</span><span class="n">wCO2R</span><span class="p">,</span> <span class="n">wCO2</span><span class="o">=</span><span class="n">wCO2</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">state</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">land</span><span class="o">=</span><span class="n">new_land</span><span class="p">)</span></div>
+</div>
+
+</pre></div>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By ABC³ Group
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright ABC³ Group.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
