@@ -51,7 +51,6 @@ def inner_step(
     return state, state
 
 
-# @jax.jit(static_argnums=(2, 3, 4, 5))
 def outter_step(
     state: AbstractCoupledState[RadT, LandT, AtmosT],
     _: None,  # this is here because the function signature requires it for a scan
@@ -65,14 +64,15 @@ def outter_step(
 ]:
     """A block of inner steps averaging the result."""
     initial_t = state.t
-    step_fn_configured = partial(
-        inner_step, coupler=coupler, dt=inner_dt, tstart=tstart
+    step_fn = partial(
+        inner_step,
+        coupler=coupler,
+        dt=inner_dt,
+        tstart=tstart,
     )
-    state, inner_traj = jax.lax.scan(
-        step_fn_configured, state, None, length=inner_tsteps
-    )
+    state, inner_traj = jax.lax.scan(step_fn, state, None, length=inner_tsteps)
     avg_traj = jax.tree.map(lambda x: jnp.mean(x, axis=0), inner_traj)
-    # this average block is tagged with the initial time
+    # the average block is tagged with the initial time
     avg_traj = avg_traj.replace(t=initial_t)
     return state, avg_traj
 

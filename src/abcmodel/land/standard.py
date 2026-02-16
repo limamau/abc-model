@@ -76,12 +76,8 @@ class StandardLandState(AbstractLandState):
     """Potential latent heat flux [W m-2]."""
     le_ref: Array = field(default_factory=lambda: jnp.array(0.0))
     """Reference latent heat flux [W m-2]."""
-    wtheta: Array = field(default_factory=lambda: jnp.array(0.0))
-    """Kinematic heat flux [K m/s]."""
-    wq: Array = field(default_factory=lambda: jnp.array(0.0))
-    """Kinematic moisture flux [kg/kg m/s]."""
-    wCO2: Array = field(default_factory=lambda: jnp.array(0.0))
-    """Kinematic CO2 flux [kg/kg m/s] or [mol m-2 s-1]."""
+    vpd: Array = field(default_factory=lambda: jnp.array(0.0))
+    """Vapor pressure deficit [Pa]."""
 
 
 class AbstractStandardLandModel(AbstractLandModel):
@@ -299,9 +295,9 @@ class AbstractStandardLandModel(AbstractLandModel):
             gf, land_state.temp_soil, land_state.temp2
         )
         wgtend = self.compute_wgtend(land_state.wg, le_soil)
-
         wtheta = self.compute_wtheta(hf)
         wq = self.compute_wq(le)
+        vpd = self.compute_vpd(atmos.q, land_state.qsat)
         return land_state.replace(
             rssoil=rssoil,
             cliq=cliq,
@@ -320,6 +316,7 @@ class AbstractStandardLandModel(AbstractLandModel):
             wgtend=wgtend,
             wtheta=wtheta,
             wq=wq,
+            vpd=vpd,
         )
 
     def compute_dqsatdT(self, esat: Array, theta: float, surf_pressure: float) -> Array:
@@ -868,3 +865,12 @@ class AbstractStandardLandModel(AbstractLandModel):
             :math:`L_v` is the latent heat of vaporization.
         """
         return le / (cst.rho * cst.lv)
+
+    def compute_vpd(self, q: Array, qsat: Array) -> Array:
+        """Compute the vapor pressure deficit ``vpd``.
+
+        Notes:
+            The vapor pressure deficit :math:`\\d_q` is defined as the difference between the
+            saturation vapor pressure :math:`\\q_{sat}` and the actual vapor pressure :math:`e`.
+        """
+        return qsat - q
